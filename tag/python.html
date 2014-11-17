@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie blog - python</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/2014.html">2014</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2014-07-11.html">2014-07-11</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-07-11T14:30:00+02:00">
+                Published: Fri 11 July 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> <a href="/tag/git.html">git</a> </p>
+</footer><!-- /.post-info --><h1>pelican的安装</h1>
+<h2>依赖包</h2>
+<p>feedgenerator, jinja2, pygments, docutils, pytz, blinker, unidecode, six,
+python-dateutil, markupsafe, markdown</p>
+<h2>安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>pip install -e git+https://github.com/getpelican/pelican.git#egg<span class="o">=</span>pelican
+</pre></div>
+
+
+<h2>使用</h2>
+<div class="highlight"><pre><span class="nv">$ </span>pelican-quickstart
+
+<span class="nv">$ </span>fab build
+<span class="nv">$ </span>fab serve
+
+<span class="nv">$ </span>pelican content
+<span class="nv">$ </span><span class="nb">cd </span>output
+<span class="nv">$ </span>sudo python -m http.server 80
+</pre></div>
+
+
+<h2>配置</h2>
+<p>pelicanconf.py中设置"THEME"，值为pelican-bootstrap3的路径</p>
+<h2>在github建个人博客</h2>
+<p>以"hnlaomie.github.io"建立repository，签出，进入并建立"blog"目录和如下设置".gitignore"</p>
+<div class="highlight"><pre>blog
+blog/*
+</pre></div>
+
+
+<p>master提交新加的"blog"目录</p>
+<div class="highlight"><pre><span class="nv">$ </span>git add .
+<span class="nv">$ </span>git commit -m <span class="s2">&quot;init empty blog&quot;</span>
+</pre></div>
+
+
+<p>将已有的博客复制到"blog"目录，并建立代码分支</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>blog
+<span class="nv">$ </span>git checkout -b <span class="nb">source</span>
+<span class="nv">$ </span>git add .
+<span class="nv">$ </span>git commit -m <span class="s2">&quot;add blog&quot;</span>
+</pre></div>
+
+
+<p>将博客发布到"master"</p>
+<div class="highlight"><pre><span class="nv">$ </span>pelican content
+<span class="nv">$ </span>ghp-import -b master output
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git push --all
+</pre></div>
+
+
+<h1>github使用</h1>
+<h2>常用命令</h2>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/hnlaomie/backup
+<span class="nv">$ </span><span class="nb">cd </span>backup
+<span class="nv">$ </span>git add .
+<span class="nv">$ </span>git commit -m <span class="s1">&#39;first commit&#39;</span>
+<span class="nv">$ </span>git push origin master
+</pre></div>
+
+
+<p>http://blogs.skicelab.com/maurizio/unicode-common-pitfalls.html
+http://ntanjerome.org/blog/how-to-setup-github-user-page-with-pelican/
+http://moparx.com/2014/04/adding-search-capabilities-within-your-pelican-powered-site-using-tipue-search/</p>                </article>
+<p class="paginator">
+    Page 1 / 1
+</p>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
