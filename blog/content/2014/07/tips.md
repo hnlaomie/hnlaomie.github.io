@@ -1,0 +1,13 @@
+Title: 2014-07-12
+Date: 2014-07-12 10:30
+Category: 2014
+Tags: 201407, mariadb
+Author: hnlaomie
+Summary: mariadb 常见问题的解决办法
+
+mariadb设置root密码
+======================
+
+    mysqladmin -u root password "passwd"
+
+
