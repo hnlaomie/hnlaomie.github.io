@@ -28,7 +28,7 @@
     <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-30T22:30:00+02:00">
-                Published: Wed 30 July 2014
+                Published: 三 30 七月 2014
         </abbr>
 
         <address class="vcard author">
@@ -92,23 +92,17 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 
 
 <h2>hadoop配置文件设置</h2>
-<ol>
-<li>为"libexec/hadoop-config.sh"设置"JAVA_HOME"</li>
-</ol>
+<p>1. 为"libexec/hadoop-config.sh"设置"JAVA_HOME"</p>
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk7&#39;</span>
 </pre></div>
 
 
-<ol>
-<li>为"etc/hadoop/hadoop-env.sh"设置"JAVA_HOME"</li>
-</ol>
+<p>2. 为"etc/hadoop/hadoop-env.sh"设置"JAVA_HOME"</p>
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk7&#39;</span>
 </pre></div>
 
 
-<ol>
-<li>设置"etc/hadoop/yarn-site.xml"</li>
-</ol>
+<p>3. 设置"etc/hadoop/yarn-site.xml"</p>
 <div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
     <span class="c">&lt;!-- Site specific YARN configuration properties --&gt;</span>
     <span class="nt">&lt;property&gt;</span>
@@ -137,9 +131,7 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 </pre></div>
 
 
-<ol>
-<li>设置"etc/hadoop/core-site.xml"</li>
-</ol>
+<p>4. 设置"etc/hadoop/core-site.xml"</p>
 <div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>fs.default.name<span class="nt">&lt;/name&gt;</span>
@@ -153,9 +145,7 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 </pre></div>
 
 
-<ol>
-<li>设置"etc/hadoop/mapred-site.xml" （注：mapred-site.xml.template生成mapred-site.xml）</li>
-</ol>
+<p>5. 设置"etc/hadoop/mapred-site.xml" （注：mapred-site.xml.template生成mapred-site.xml）</p>
 <div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
@@ -165,9 +155,7 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 </pre></div>
 
 
-<ol>
-<li>设置"etc/hadoop/hdfs-site.xml"</li>
-</ol>
+<p>6. 设置"etc/hadoop/hdfs-site.xml"</p>
 <div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
@@ -204,7 +192,7 @@ stop-dfs.sh
 
 
 <h2>hadoop服务</h2>
-<ol>
+<ul>
 <li>
 <p>namenode (50070)</p>
 </li>
@@ -217,7 +205,7 @@ stop-dfs.sh
 <li>
 <p>datanode (50075)</p>
 </li>
-</ol>
+</ul>
 <h2>多节点hadoop设置</h2>
 <p>在"/etc/hosts"设置主从节点机</p>
 <div class="highlight"><pre>192.168.1.12  laomie-pc
@@ -254,9 +242,9 @@ sudo yaourt -S findbugs
 </pre></div>
 
 
-<p>links</p>
-<p>http://www.cnblogs.com/lanxuezaipiao/p/3525554.html</p>
-<p>http://solaimurugan.blogspot.com/2013/11/setup-multi-node-hadoop-20-cluster.html</p>
+<h2>references</h2>
+<p><a href="http://www.cnblogs.com/lanxuezaipiao/p/3525554.html">http://www.cnblogs.com/lanxuezaipiao/p/3525554.html</a>
+<a href="http://solaimurugan.blogspot.com/2013/11/setup-multi-node-hadoop-20-cluster.html">http://solaimurugan.blogspot.com/2013/11/setup-multi-node-hadoop-20-cluster.html</a></p>
     </div><!-- /.entry-content -->
 
   </article>
