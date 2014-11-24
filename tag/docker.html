@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>laomie blog - laomie</title>
+        <title>laomie blog - docker</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -18,33 +18,51 @@
                 </ul></nav>
         </header><!-- /#banner -->
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="9">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-11.html" rel="bookmark"
-                           title="Permalink to 2014-07-11">2014-07-11</a></h1>
-                </header>
-
-                <div class="entry-content">
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2014-11-21.html">2014-11-21</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2014-07-11T14:30:00+02:00">
-                Published: 五 11 七月 2014
+        <abbr class="published" title="2014-11-21T14:30:00+01:00">
+                Published: Fri 21 November 2014
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/laomie.html">laomie</a>
         </address>
 <p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> <a href="/tag/git.html">git</a> </p>
-</footer><!-- /.post-info -->                <p>pelican的安装和github发布</p>
-                <a class="readmore" href="/2014-07-11.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/docker.html">docker</a> </p>
+</footer><!-- /.post-info --><h2>image管理</h2>
+<div class="highlight"><pre><span class="c"># 列出所有image</span>
+<span class="nv">$ </span>sudo docker images
+
+<span class="c"># 删除image（注：需要先删除相关的container）</span>
+<span class="nv">$ </span>sudo docker rmi ubuntu:latest
+<span class="nv">$ </span>sudo docker rmi <span class="o">[</span>image id<span class="o">]</span>
+
+<span class="c"># 根据path下的Dockerfile创建image</span>
+<span class="nv">$ </span>sudo docker build -t ubuntu-java:latest /path
+
+<span class="c"># 更改某个image的tag</span>
+<span class="nv">$ </span>sudo docker tag ubuntu-java:latest
+
+<span class="c"># 库中查找相关image</span>
+<span class="nv">$ </span>sudo docker search ubuntu:latest
+
+<span class="c"># 从库中下载image</span>
+<span class="nv">$ </span>sudo docker pull ubuntu:latest
+
+<span class="c"># 上传image到库</span>
+<span class="nv">$ </span>sudo docker push ubuntu:latest
+</pre></div>
+
+
+<h2>container管理</h2>
+<div class="highlight"><pre>
+</pre></div>                </article>
 <p class="paginator">
-        <a href="/author/laomie.html">&laquo;</a>
-    Page 2 / 2
+    Page 1 / 1
 </p>
+            </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

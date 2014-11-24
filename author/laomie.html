@@ -20,10 +20,117 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2014-11-18.html">2014-11-18</a></h1>
+                    <h1 class="entry-title"><a href="/2014-11-23.html">2014-11-23</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-11-23T22:30:00+01:00">
+                Published: Sun 23 November 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/java.html">java</a> </p>
+</footer><!-- /.post-info --><h2>usb刻录</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo dd <span class="nv">bs</span><span class="o">=</span>4M <span class="k">if</span><span class="o">=</span>/home/laomie/ubuntu-14.04.1-desktop-amd64.iso <span class="nv">of</span><span class="o">=</span>/dev/sdc <span class="o">&amp;&amp;</span> sync
+</pre></div>
+
+
+<h2>开发源和安装软件</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:git-core/ppa
+<span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+<span class="nv">$ DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+</pre></div>
+
+
+<h2>grub启动</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
+<span class="nv">$ </span>sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg<span class="o">)</span>
+</pre></div>
+
+
+<h2>设置dns</h2>
+<p>方法1，修改"/etc/resolvconf/resolv.conf.d/head"</p>
+<div class="highlight"><pre>nameserver 208.67.222.222
+nameserver 8.8.8.8
+</pre></div>
+
+
+<p>方法2，修改"/etc/network/interfaces"</p>
+<div class="highlight"><pre>auto eth0
+iface eth0 inet static
+    . . .
+dns-nameservers 208.67.222.222 8.8.8.8
+dns-search <span class="nb">local</span>
+</pre></div>
+
+
+<h2>安装docker</h2>
+<p>编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容</p>
+<div class="highlight"><pre>deb https://get.docker.com/ubuntu docker main
+</pre></div>
+
+
+<p>导入key和安装</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+<span class="nv">$ </span>sudo apt-get install lxc-docker
+</pre></div>
+
+
+<h2>修改"/etc/default/ufw"</h2>
+<div class="highlight"><pre><span class="nv">DEFAULT_FORWARD_POLICY</span><span class="o">=</span><span class="s2">&quot;ACCEPT&quot;</span>
+</pre></div>
+
+
+<h2>它机访问docker容器</h2>
+<div class="highlight"><pre>sudo ufw allow 2375/tcp
+</pre></div>
+
+
+<h2>修改"/etc/default/docker"，设置容器的dns</h2>
+<div class="highlight"><pre><span class="nv">DOCKER_OPTS</span><span class="o">=</span><span class="s2">&quot;--dns 208.67.222.222&quot;</span>
+</pre></div>
+
+
+<p>相关链接[http://get.docker.com/ubuntu]</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-11-21.html" rel="bookmark"
+                           title="Permalink to 2014-11-21">2014-11-21</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-21T14:30:00+01:00">
+                Published: Fri 21 November 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/docker.html">docker</a> </p>
+</footer><!-- /.post-info -->                <p>docker的使用</p>
+                <a class="readmore" href="/2014-11-21.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-11-18.html" rel="bookmark"
+                           title="Permalink to 2014-11-18">2014-11-18</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-18T21:30:00+01:00">
-                Published: 二 18 十一月 2014
+                Published: Tue 18 November 2014
         </abbr>
 
         <address class="vcard author">
@@ -31,30 +138,10 @@
         </address>
 <p>In <a href="/category/2014.html">2014</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/java.html">java</a> <a href="/tag/maven.html">maven</a> <a href="/tag/gradle.html">gradle</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
-</footer><!-- /.post-info --><h2>解压安装jdk8，maven3，gradle</h2>
-<p>jdk-8u25-linux-x64.tar.gz
-apache-maven-3.2.3-bin.tar.gz
-gradle-2.2-all.zip</p>
-<h2>设置环境变量</h2>
-<p>修改"~/.bashrc"</p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/local/tools/jdk8
-<span class="nb">export </span><span class="nv">CLASSPATH</span><span class="o">=</span>/usr/local/tools/jdk8/lib
-<span class="nb">export </span><span class="nv">MAVEN_HOME</span><span class="o">=</span>/usr/local/tools/maven3
-<span class="nb">export </span><span class="nv">GRADLE_HOME</span><span class="o">=</span>/usr/local/tools/gradle
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$GRADLE_HOME</span>/bin:<span class="nv">$MAVEN_HOME</span>/bin
-</pre></div>
-
-
-<h2>系统设置jdk</h2>
-<div class="highlight"><pre>sudo update-alternatives --install /usr/bin/java java /usr/local/tools/jdk8/bin/java 300
-sudo update-alternatives --install /usr/bin/javac javac /usr/local/tools/jdk8/bin/javac 300
-sudo update-alternatives --config java
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>ubuntu下java环境</p>
+                <a class="readmore" href="/2014-11-18.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -65,7 +152,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-10T21:30:00+01:00">
-                Published: 一 10 十一月 2014
+                Published: Mon 10 November 2014
         </abbr>
 
         <address class="vcard author">
@@ -87,7 +174,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-08T13:30:00+01:00">
-                Published: 六 08 十一月 2014
+                Published: Sat 08 November 2014
         </abbr>
 
         <address class="vcard author">
@@ -109,7 +196,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-08-27T17:00:00+02:00">
-                Published: 三 27 八月 2014
+                Published: Wed 27 August 2014
         </abbr>
 
         <address class="vcard author">
@@ -131,7 +218,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-08-04T21:00:00+02:00">
-                Published: 一 04 八月 2014
+                Published: Mon 04 August 2014
         </abbr>
 
         <address class="vcard author">
@@ -153,7 +240,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-30T22:30:00+02:00">
-                Published: 三 30 七月 2014
+                Published: Wed 30 July 2014
         </abbr>
 
         <address class="vcard author">
@@ -175,7 +262,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-30T22:10:00+02:00">
-                Published: 三 30 七月 2014
+                Published: Wed 30 July 2014
         </abbr>
 
         <address class="vcard author">
@@ -197,7 +284,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-28T22:10:00+02:00">
-                Published: 一 28 七月 2014
+                Published: Mon 28 July 2014
         </abbr>
 
         <address class="vcard author">
@@ -219,7 +306,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-27T21:30:00+02:00">
-                Published: 日 27 七月 2014
+                Published: Sun 27 July 2014
         </abbr>
 
         <address class="vcard author">
@@ -241,7 +328,7 @@ sudo update-alternatives --config java
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-26T21:30:00+02:00">
-                Published: 六 26 七月 2014
+                Published: Sat 26 July 2014
         </abbr>
 
         <address class="vcard author">
@@ -253,10 +340,31 @@ sudo update-alternatives --config java
                 <a class="readmore" href="/2014-07-26.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-07-11.html" rel="bookmark"
+                           title="Permalink to 2014-07-11">2014-07-11</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-07-11T14:30:00+02:00">
+                Published: Fri 11 July 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> <a href="/tag/git.html">git</a> </p>
+</footer><!-- /.post-info -->                <p>pelican的安装和github发布</p>
+                <a class="readmore" href="/2014-07-11.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
-    Page 1 / 2
-        <a href="/author/laomie2.html">&raquo;</a>
+    Page 1 / 1
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
