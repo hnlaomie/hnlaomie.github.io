@@ -20,10 +20,109 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2014-11-23.html">2014-11-23</a></h1>
+                    <h1 class="entry-title"><a href="/2014-11-26.html">2014-11-26</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-11-26T23:10:00+01:00">
+                Published: 三 26 十一月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/terminator.html">terminator</a> </p>
+</footer><!-- /.post-info --><h2>安装相关软件</h2>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/ghuntley/terminator-solarized.git
+<span class="nv">$ </span>mkdir -p ~/.config/terminator/
+<span class="nv">$ </span>cp terminator-solarized/config ~/.config/terminator/
+<span class="nv">$ </span>git clone https://github.com/seebi/dircolors-solarized.git
+<span class="nv">$ </span>cp dircolors-solarized/dircolors.256dark ~/.dircolors
+</pre></div>
+
+
+<h2>设置".bashrc"</h2>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color  
+<span class="c"># enable color support of ls and also add handy aliases</span>
+<span class="k">if</span> <span class="o">[</span> -x /usr/bin/dircolors <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="nb">test</span> -r ~/.dircolors <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b ~/.dircolors<span class="k">)</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">alias </span><span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
+<span class="c">#alias dir=&#39;dir --color=auto&#39;</span>
+<span class="c">#alias vdir=&#39;vdir --color=auto&#39;</span>
+
+<span class="nb">alias </span><span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
+<span class="nb">alias </span><span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
+<span class="nb">alias </span><span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
+<span class="k">fi</span>
+
+<span class="c"># some more ls aliases</span>
+<span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -alF&#39;</span>
+<span class="nb">alias </span><span class="nv">la</span><span class="o">=</span><span class="s1">&#39;ls -A&#39;</span>
+<span class="nb">alias </span><span class="nv">l</span><span class="o">=</span><span class="s1">&#39;ls -CF&#39;</span>
+</pre></div>
+
+
+<h2>常用快捷键</h2>
+<div class="highlight"><pre>Shift-Pageup       Scroll back through the current terminal
+Shift-Pagedown     Scroll forward through the current terminal
+
+Ctrl-Shift-o       Split the screen horizontally
+Alt+Up             Move to the terminal above the current one.
+Alt+Down           Move to the terminal below the current one.
+
+Ctrl-Shift-e       Split the screen vertically
+Alt+Left           Move to the terminal left of the current one.
+Alt+Right          Move to the terminal right of the current one.
+
+Ctrl+Shift+N or Ctrl+Tab
+Move to next terminal within the same tab, use Ctrl+PageDown  to
+move to the next tab. If cycle_term_tab is False, cycle within
+the same tab will be disabled
+
+Ctrl+Shift+P or Ctrl+Shift+Tab
+Move to previous terminal within the same tab, use Ctrl+PageUp
+to move to the previous tab. If cycle_term_tab is False, cycle
+within the same tab will be disabled
+
+
+Ctrl-Shift-t      Open a new tab
+Ctrl+PageDown     Move to next Tab
+Ctrl+PageUp       Move to previous Tab
+
+Ctrl+Shift+c      Copy selected text to clipboard
+Ctrl+Shift+v      Paste clipboard text
+Ctrl+Shift+w      Close the current terminal.
+Ctrl+Shift+q      Quits Terminator
+Ctrl+Shift+x      Toggle between  showing  all  terminals  and  only  showing the current one (maximise).
+Ctrl+Shift+z      Toggle  between  showing all terminals and only showing a scaled version of the current one (zoom).
+
+Ctrl+Plus (+)
+Increase font size. Note: this may require you to press shift,
+depending on your keyboard
+
+Ctrl+Minus (-)
+Decrease font size. Note: this may require you to press shift,
+depending on your keyboard
+
+Ctrl+Zero (0)     Restore font size to original setting.
+
+F11               Toggle fullscreen
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-11-23.html" rel="bookmark"
+                           title="Permalink to 2014-11-23">2014-11-23</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-23T22:30:00+01:00">
-                Published: Sun 23 November 2014
+                Published: 日 23 十一月 2014
         </abbr>
 
         <address class="vcard author">
@@ -31,73 +130,10 @@
         </address>
 <p>In <a href="/category/2014.html">2014</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/java.html">java</a> </p>
-</footer><!-- /.post-info --><h2>usb刻录</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo dd <span class="nv">bs</span><span class="o">=</span>4M <span class="k">if</span><span class="o">=</span>/home/laomie/ubuntu-14.04.1-desktop-amd64.iso <span class="nv">of</span><span class="o">=</span>/dev/sdc <span class="o">&amp;&amp;</span> sync
-</pre></div>
-
-
-<h2>开发源和安装软件</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:git-core/ppa
-<span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
-<span class="nv">$ DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
-</pre></div>
-
-
-<h2>grub启动</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
-<span class="nv">$ </span>sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg<span class="o">)</span>
-</pre></div>
-
-
-<h2>设置dns</h2>
-<p>方法1，修改"/etc/resolvconf/resolv.conf.d/head"</p>
-<div class="highlight"><pre>nameserver 208.67.222.222
-nameserver 8.8.8.8
-</pre></div>
-
-
-<p>方法2，修改"/etc/network/interfaces"</p>
-<div class="highlight"><pre>auto eth0
-iface eth0 inet static
-    . . .
-dns-nameservers 208.67.222.222 8.8.8.8
-dns-search <span class="nb">local</span>
-</pre></div>
-
-
-<h2>安装docker</h2>
-<p>编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容</p>
-<div class="highlight"><pre>deb https://get.docker.com/ubuntu docker main
-</pre></div>
-
-
-<p>导入key和安装</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-<span class="nv">$ </span>sudo apt-get install lxc-docker
-</pre></div>
-
-
-<h2>修改"/etc/default/ufw"</h2>
-<div class="highlight"><pre><span class="nv">DEFAULT_FORWARD_POLICY</span><span class="o">=</span><span class="s2">&quot;ACCEPT&quot;</span>
-</pre></div>
-
-
-<h2>它机访问docker容器</h2>
-<div class="highlight"><pre>sudo ufw allow 2375/tcp
-</pre></div>
-
-
-<h2>修改"/etc/default/docker"，设置容器的dns</h2>
-<div class="highlight"><pre><span class="nv">DOCKER_OPTS</span><span class="o">=</span><span class="s2">&quot;--dns 208.67.222.222&quot;</span>
-</pre></div>
-
-
-<p>相关链接[http://get.docker.com/ubuntu]</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>ubuntu安装</p>
+                <a class="readmore" href="/2014-11-23.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -108,7 +144,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-21T14:30:00+01:00">
-                Published: Fri 21 November 2014
+                Published: 五 21 十一月 2014
         </abbr>
 
         <address class="vcard author">
@@ -130,7 +166,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-18T21:30:00+01:00">
-                Published: Tue 18 November 2014
+                Published: 二 18 十一月 2014
         </abbr>
 
         <address class="vcard author">
@@ -152,7 +188,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-10T21:30:00+01:00">
-                Published: Mon 10 November 2014
+                Published: 一 10 十一月 2014
         </abbr>
 
         <address class="vcard author">
@@ -174,7 +210,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-08T13:30:00+01:00">
-                Published: Sat 08 November 2014
+                Published: 六 08 十一月 2014
         </abbr>
 
         <address class="vcard author">
@@ -196,7 +232,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-08-27T17:00:00+02:00">
-                Published: Wed 27 August 2014
+                Published: 三 27 八月 2014
         </abbr>
 
         <address class="vcard author">
@@ -218,7 +254,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-08-04T21:00:00+02:00">
-                Published: Mon 04 August 2014
+                Published: 一 04 八月 2014
         </abbr>
 
         <address class="vcard author">
@@ -240,7 +276,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-30T22:30:00+02:00">
-                Published: Wed 30 July 2014
+                Published: 三 30 七月 2014
         </abbr>
 
         <address class="vcard author">
@@ -262,7 +298,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-30T22:10:00+02:00">
-                Published: Wed 30 July 2014
+                Published: 三 30 七月 2014
         </abbr>
 
         <address class="vcard author">
@@ -284,7 +320,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-28T22:10:00+02:00">
-                Published: Mon 28 July 2014
+                Published: 一 28 七月 2014
         </abbr>
 
         <address class="vcard author">
@@ -306,7 +342,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-27T21:30:00+02:00">
-                Published: Sun 27 July 2014
+                Published: 日 27 七月 2014
         </abbr>
 
         <address class="vcard author">
@@ -328,7 +364,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-26T21:30:00+02:00">
-                Published: Sat 26 July 2014
+                Published: 六 26 七月 2014
         </abbr>
 
         <address class="vcard author">
@@ -350,7 +386,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-07-11T14:30:00+02:00">
-                Published: Fri 11 July 2014
+                Published: 五 11 七月 2014
         </abbr>
 
         <address class="vcard author">

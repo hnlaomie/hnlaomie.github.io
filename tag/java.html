@@ -23,7 +23,7 @@
                     <h1 class="entry-title"><a href="/2014-11-23.html">2014-11-23</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2014-11-23T22:30:00+01:00">
-                Published: Sun 23 November 2014
+                Published: 日 23 十一月 2014
         </abbr>
 
         <address class="vcard author">
@@ -39,7 +39,9 @@
 <h2>开发源和安装软件</h2>
 <div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:git-core/ppa
 <span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
-<span class="nv">$ DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+<span class="nv">$ </span>sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+<span class="nv">$ </span>sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
+<span class="nv">$ </span>sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromium-browser
 </pre></div>
 
 
@@ -50,18 +52,44 @@
 
 
 <h2>设置dns</h2>
-<p>方法1，修改"/etc/resolvconf/resolv.conf.d/head"</p>
-<div class="highlight"><pre>nameserver 208.67.222.222
-nameserver 8.8.8.8
+<p>安装dnsmasq</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install dnsmasq
 </pre></div>
 
 
-<p>方法2，修改"/etc/network/interfaces"</p>
-<div class="highlight"><pre>auto eth0
-iface eth0 inet static
-    . . .
-dns-nameservers 208.67.222.222 8.8.8.8
-dns-search <span class="nb">local</span>
+<p>修改"/etc/dnsmasq.conf"</p>
+<div class="highlight"><pre>listen-address<span class="o">=</span>127.0.0.1
+resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
+</pre></div>
+
+
+<p>修改"/etc/NetworkManager/dnsmasq.d/cache"</p>
+<div class="highlight"><pre>cache-size<span class="o">=</span>1000
+</pre></div>
+
+
+<p>新增"/etc/resolv.dnsmasq.conf"</p>
+<div class="highlight"><pre><span class="c"># OneDNS 北方</span>
+114.215.126.16
+<span class="c"># 114DNS</span>
+114.114.114.114
+114.114.115.115
+<span class="c"># 阿里DNS</span>
+223.5.5.5
+223.6.6.6
+<span class="c"># OpenDNS</span>
+208.67.222.222
+208.67.220.220
+<span class="c"># V2EX DNS</span>
+199.91.73.222
+178.79.131.110
+<span class="c"># Google DNS</span>
+8.8.8.8
+8.8.4.4
+<span class="c"># OpenerDNS</span>
+42.120.21.30
+<span class="c"># OneDNS 南方</span>
+112.124.47.27
 </pre></div>
 
 
@@ -77,22 +105,23 @@ dns-search <span class="nb">local</span>
 </pre></div>
 
 
-<h2>修改"/etc/default/ufw"</h2>
+<p>修改"/etc/default/ufw"</p>
 <div class="highlight"><pre><span class="nv">DEFAULT_FORWARD_POLICY</span><span class="o">=</span><span class="s2">&quot;ACCEPT&quot;</span>
 </pre></div>
 
 
-<h2>它机访问docker容器</h2>
+<p>它机访问docker容器</p>
 <div class="highlight"><pre>sudo ufw allow 2375/tcp
 </pre></div>
 
 
-<h2>修改"/etc/default/docker"，设置容器的dns</h2>
+<p>修改"/etc/default/docker"，设置容器的dns</p>
 <div class="highlight"><pre><span class="nv">DOCKER_OPTS</span><span class="o">=</span><span class="s2">&quot;--dns 208.67.222.222&quot;</span>
 </pre></div>
 
 
-<p>相关链接[http://get.docker.com/ubuntu]</p>                </article>
+<p>相关链接
+<a href="http://get.docker.com/ubuntu">http://get.docker.com/ubuntu</a></p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
@@ -108,7 +137,7 @@ dns-search <span class="nb">local</span>
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-18T21:30:00+01:00">
-                Published: Tue 18 November 2014
+                Published: 二 18 十一月 2014
         </abbr>
 
         <address class="vcard author">
