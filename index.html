@@ -20,7 +20,135 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2014-11-26.html">2014-11-26</a></h1>
+                    <h1 class="entry-title"><a href="/2014-11-30.html">2014-11-30</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-11-30T22:50:00+01:00">
+                Published: 日 30 十一月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hbase.html">hbase</a> </p>
+</footer><!-- /.post-info --><h2>建目录</h2>
+<div class="highlight"><pre><span class="nv">$ </span>hdfs dfs -mkdir -p /hbase
+<span class="nv">$ </span>mkdir -p <span class="nv">$HBASE_HOME</span>/zookeeper
+</pre></div>
+
+
+<h2>设置".bashrc"</h2>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">HBASE_HOME</span><span class="o">=</span><span class="s1">&#39;/usr/local/tools/hbase&#39;</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HBASE_HOME</span>/bin
+</pre></div>
+
+
+<h2>设置"conf/hbase-env.sh"</h2>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-oracle
+<span class="nb">export </span><span class="nv">HBASE_REGIONSERVERS</span><span class="o">=</span><span class="si">${</span><span class="nv">HBASE_HOME</span><span class="si">}</span>/conf/regionservers
+<span class="nb">export </span><span class="nv">HBASE_MANAGES_ZK</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<h2>设置"conf/hbase-site.xml" (for pseudo-distributed)</h2>
+<div class="highlight"><pre><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.rootdir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hdfs://192.168.18.6:9000/hbase<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.cluster.distributed<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>192.168.18.6<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.clientPort<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>2181<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.dataDir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/usr/local/tools/hbase/zookeeper<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<h2>复制hadoop的jar</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$HBASE_HOME</span>/lib
+<span class="nv">$ </span>rm -fr slf4j*.jar
+<span class="nv">$ </span>rm -fr hadoop*.jar
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/common/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/hdfs/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/mapreduce/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/tools/lib/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/yarn/hadoop*.jar .
+</pre></div>
+
+
+<h2>修改"/etc/hosts"</h2>
+<p>将"127.0.1.1"改为"127.0.0.1"或删除</p>
+<h2>启动，停止hbase</h2>
+<div class="highlight"><pre><span class="nv">$ </span>start-hbase.sh
+<span class="nv">$ </span>stop-hbase.sh
+</pre></div>
+
+
+<h2>hbase简单操作</h2>
+<div class="highlight"><pre><span class="nv">$ </span>hbase shell
+
+<span class="c"># create a table</span>
+hbase&gt; create <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;cf&#39;</span>
+
+<span class="c"># list information about your table</span>
+hbase&gt; list <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># put data into your table</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>, <span class="s1">&#39;cf:a&#39;</span>, <span class="s1">&#39;value1&#39;</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row2&#39;</span>, <span class="s1">&#39;cf:b&#39;</span>, <span class="s1">&#39;value2&#39;</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row3&#39;</span>, <span class="s1">&#39;cf:c&#39;</span>, <span class="s1">&#39;value3&#39;</span>
+
+<span class="c"># scan the table for all data at once</span>
+hbase&gt; scan <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># get a single row of data</span>
+hbase&gt; get <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>
+
+<span class="c"># disable, enable table</span>
+hbase&gt; disable <span class="s1">&#39;test&#39;</span>
+hbase&gt; <span class="nb">enable</span> <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># drop the table</span>
+hbase&gt; drop <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># exit the hbase shell</span>
+hbase&gt; quit
+</pre></div>
+
+
+<h2>references</h2>
+<ul>
+<li><a href="https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/">https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/</a></li>
+<li><a href="http://hbase.apache.org/book/quickstart.html">http://hbase.apache.org/book/quickstart.html</a></li>
+<li><a href="http://www.cnblogs.com/junrong624/p/3564699.html">http://www.cnblogs.com/junrong624/p/3564699.html</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-11-26.html" rel="bookmark"
+                           title="Permalink to 2014-11-26">2014-11-26</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-26T23:10:00+01:00">
                 Published: 三 26 十一月 2014
@@ -31,87 +159,10 @@
         </address>
 <p>In <a href="/category/2014.html">2014</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/terminator.html">terminator</a> </p>
-</footer><!-- /.post-info --><h2>安装相关软件</h2>
-<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/ghuntley/terminator-solarized.git
-<span class="nv">$ </span>mkdir -p ~/.config/terminator/
-<span class="nv">$ </span>cp terminator-solarized/config ~/.config/terminator/
-<span class="nv">$ </span>git clone https://github.com/seebi/dircolors-solarized.git
-<span class="nv">$ </span>cp dircolors-solarized/dircolors.256dark ~/.dircolors
-</pre></div>
-
-
-<h2>设置".bashrc"</h2>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color  
-<span class="c"># enable color support of ls and also add handy aliases</span>
-<span class="k">if</span> <span class="o">[</span> -x /usr/bin/dircolors <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<span class="nb">test</span> -r ~/.dircolors <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b ~/.dircolors<span class="k">)</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nb">alias </span><span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
-<span class="c">#alias dir=&#39;dir --color=auto&#39;</span>
-<span class="c">#alias vdir=&#39;vdir --color=auto&#39;</span>
-
-<span class="nb">alias </span><span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
-<span class="nb">alias </span><span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
-<span class="nb">alias </span><span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
-<span class="k">fi</span>
-
-<span class="c"># some more ls aliases</span>
-<span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -alF&#39;</span>
-<span class="nb">alias </span><span class="nv">la</span><span class="o">=</span><span class="s1">&#39;ls -A&#39;</span>
-<span class="nb">alias </span><span class="nv">l</span><span class="o">=</span><span class="s1">&#39;ls -CF&#39;</span>
-</pre></div>
-
-
-<h2>常用快捷键</h2>
-<div class="highlight"><pre>Shift-Pageup       Scroll back through the current terminal
-Shift-Pagedown     Scroll forward through the current terminal
-
-Ctrl-Shift-o       Split the screen horizontally
-Alt+Up             Move to the terminal above the current one.
-Alt+Down           Move to the terminal below the current one.
-
-Ctrl-Shift-e       Split the screen vertically
-Alt+Left           Move to the terminal left of the current one.
-Alt+Right          Move to the terminal right of the current one.
-
-Ctrl+Shift+N or Ctrl+Tab
-Move to next terminal within the same tab, use Ctrl+PageDown  to
-move to the next tab. If cycle_term_tab is False, cycle within
-the same tab will be disabled
-
-Ctrl+Shift+P or Ctrl+Shift+Tab
-Move to previous terminal within the same tab, use Ctrl+PageUp
-to move to the previous tab. If cycle_term_tab is False, cycle
-within the same tab will be disabled
-
-
-Ctrl-Shift-t      Open a new tab
-Ctrl+PageDown     Move to next Tab
-Ctrl+PageUp       Move to previous Tab
-
-Ctrl+Shift+c      Copy selected text to clipboard
-Ctrl+Shift+v      Paste clipboard text
-Ctrl+Shift+w      Close the current terminal.
-Ctrl+Shift+q      Quits Terminator
-Ctrl+Shift+x      Toggle between  showing  all  terminals  and  only  showing the current one (maximise).
-Ctrl+Shift+z      Toggle  between  showing all terminals and only showing a scaled version of the current one (zoom).
-
-Ctrl+Plus (+)
-Increase font size. Note: this may require you to press shift,
-depending on your keyboard
-
-Ctrl+Minus (-)
-Decrease font size. Note: this may require you to press shift,
-depending on your keyboard
-
-Ctrl+Zero (0)     Restore font size to original setting.
-
-F11               Toggle fullscreen
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>terminator安装</p>
+                <a class="readmore" href="/2014-11-26.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

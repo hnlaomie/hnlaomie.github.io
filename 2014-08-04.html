@@ -115,6 +115,15 @@ cp mysql-connector-java-5.1.31.jar <span class="nv">$HIVE_HOME</span>/auxlib
 </pre></div>
 
 
+<h2>mysql表数据导出csv</h2>
+<div class="highlight"><pre><span class="k">select</span> <span class="o">*</span>
+<span class="k">from</span> <span class="n">employs</span>
+<span class="k">into</span> <span class="n">outfile</span> <span class="s1">&#39;/home/hduser/tools/data/employs.csv&#39;</span>
+<span class="n">fields</span> <span class="n">terminated</span> <span class="k">by</span> <span class="s1">&#39;\t&#39;</span>
+<span class="n">lines</span> <span class="n">terminated</span> <span class="k">by</span> <span class="s1">&#39;\n&#39;</span>
+</pre></div>
+
+
 <h2>hive建表导入数据</h2>
 <div class="highlight"><pre>create table employs(empid int, name string, surname string)
 row format delimited
@@ -123,12 +132,9 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 </pre></div>
 
 
-<h2>mysql表数据导出csv</h2>
-<div class="highlight"><pre><span class="k">select</span> <span class="o">*</span>
-<span class="k">from</span> <span class="n">employs</span>
-<span class="k">into</span> <span class="n">outfile</span> <span class="s1">&#39;/home/hduser/tools/data/employs.csv&#39;</span>
-<span class="n">fields</span> <span class="n">terminated</span> <span class="k">by</span> <span class="s1">&#39;\t&#39;</span>
-<span class="n">lines</span> <span class="n">terminated</span> <span class="k">by</span> <span class="s1">&#39;\n&#39;</span>
+<h2>hive启动</h2>
+<div class="highlight"><pre><span class="nv">$ </span>hive --service hiveserver2
+<span class="nv">$ </span>netstat -anp <span class="p">|</span> grep 10000
 </pre></div>
     </div><!-- /.entry-content -->
 

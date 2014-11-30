@@ -223,7 +223,7 @@ stop-dfs.sh
 </pre></div>
 
 
-<h2>hadoop的代码编译</h2>
+<h2>hadoop的代码编译 (archlinux)</h2>
 <p>安装下列依赖软件</p>
 <div class="highlight"><pre>sudo pacman -S cmake apache-ant base-devel protobuf maven
 ln -s /etc/profile.d/jre.sh /etc/profile.d/jdk.sh
@@ -239,6 +239,29 @@ sudo yaourt -S findbugs
 
 <p>编译hadoop</p>
 <div class="highlight"><pre>mvn package -Pdist,native,docs,src -DskipTests -Dtar
+</pre></div>
+
+
+<h2>hadoop的代码编译 (ubuntu)</h2>
+<p>安装下列依赖软件</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+<span class="nv">$ </span>sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+</pre></div>
+
+
+<p>安装protobuf2.5.0</p>
+<div class="highlight"><pre><span class="nv">$ </span>./configure
+<span class="nv">$ </span>make
+<span class="nv">$ </span>make check
+<span class="nv">$ </span>sudo make install
+<span class="nv">$ </span>sudo ldconfig
+</pre></div>
+
+
+<p>安装findbugs3.0.0
+* 解压并如上设置环境变量</p>
+<p>jdk8编译hadoop （注：不能编译doc）</p>
+<div class="highlight"><pre>mvn package -Pdist,native -DskipTests -Dtar -Dmaven.javadoc.skip<span class="o">=</span><span class="nb">true</span> 
 </pre></div>
 
 
