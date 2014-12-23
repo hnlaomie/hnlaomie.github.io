@@ -1,0 +1,98 @@
+Title: utuntu installation
+Date: 2014-11-23 22:30
+Category: tools 
+Tags: 201411, ubuntu, java
+Author: laomie
+Summary: ubuntu安装
+
+
+usb刻录
+---------------------------------
+```bash
+$ sudo dd bs=4M if=/home/laomie/ubuntu-14.04.1-desktop-amd64.iso of=/dev/sdc && sync
+```
+
+开发源和安装软件
+------------------------
+```bash
+$ sudo add-apt-repository ppa:git-core/ppa
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+$ sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
+$ sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromium-browser
+```
+
+grub启动
+--------------------------
+```bash
+$ sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
+$ sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg)
+```
+
+设置dns
+---------------------------
+安装dnsmasq
+```bash
+$ sudo apt-get install dnsmasq
+```
+修改"/etc/dnsmasq.conf"
+```bash
+listen-address=127.0.0.1
+resolv-file=/etc/resolv.dnsmasq.conf
+```
+修改"/etc/NetworkManager/dnsmasq.d/cache"
+```bash
+cache-size=1000
+```
+新增"/etc/resolv.dnsmasq.conf"
+```bash
+# OneDNS 北方
+114.215.126.16
+# 114DNS
+114.114.114.114
+114.114.115.115
+# 阿里DNS
+223.5.5.5
+223.6.6.6
+# OpenDNS
+208.67.222.222
+208.67.220.220
+# V2EX DNS
+199.91.73.222
+178.79.131.110
+# Google DNS
+8.8.8.8
+8.8.4.4
+# OpenerDNS
+42.120.21.30
+# OneDNS 南方
+112.124.47.27
+```
+
+安装docker
+-------------------------
+编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容
+```bash
+deb https://get.docker.com/ubuntu docker main
+```
+导入key和安装
+```bash
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+$ sudo apt-get install lxc-docker
+```
+修改"/etc/default/ufw"
+```bash
+DEFAULT_FORWARD_POLICY="ACCEPT"
+```
+它机访问docker容器
+```bash
+$ sudo ufw allow 2375/tcp
+```
+修改"/etc/default/docker"，设置容器的dns
+```bash
+DOCKER_OPTS="--dns 208.67.222.222"
+```
+相关链接
+<http://get.docker.com/ubuntu>
+
+

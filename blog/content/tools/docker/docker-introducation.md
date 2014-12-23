@@ -1,0 +1,42 @@
+Title: docker introduction
+Date: 2014-11-21 14:30
+Category: tools 
+Tags: 201411, docker
+Author: laomie
+Summary: docker的使用
+
+
+image管理
+---------------------------------
+```bash
+# 列出所有image
+$ sudo docker images
+
+# 删除image（注：需要先删除相关的container）
+$ sudo docker rmi ubuntu:latest
+$ sudo docker rmi [image id]
+
+# 根据path下的Dockerfile创建image
+$ sudo docker build -t ubuntu-java:latest /path
+
+# 更改某个image的tag
+$ sudo docker tag ubuntu-java:latest
+
+# 库中查找相关image
+$ sudo docker search ubuntu:latest
+
+# 从库中下载image
+$ sudo docker pull ubuntu:latest
+
+# 上传image到库
+$ sudo docker push ubuntu:latest
+```
+
+container管理
+------------------------
+```bash
+
+```
+
+
+
