@@ -71,6 +71,7 @@ net.ipv6.conf.lo.disable_ipv6 = 1
 <span class="c"># Native Path</span>
 <span class="nb">export </span><span class="nv">HADOOP_COMMON_LIB_NATIVE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_PREFIX</span><span class="si">}</span>/lib/native
 <span class="nb">export </span><span class="nv">HADOOP_OPTS</span><span class="o">=</span><span class="s2">&quot;-Djava.library.path=</span><span class="nv">$HADOOP_PREFIX</span><span class="s2">/lib&quot;</span>
+<span class="nb">export </span><span class="nv">JAVA_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_PREFIX</span><span class="si">}</span>/lib/native 
 <span class="c">#Java path</span>
 <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk7&#39;</span>
 <span class="c"># Add Hadoop bin/ directory to PATH</span>
@@ -135,6 +136,10 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
     <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>hadoop.tmp.dir<span class="nt">&lt;/name&gt;</span>
         <span class="nt">&lt;value&gt;</span>/home/hduser/tools/hadoop/tmp<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>hadoop.native.lib<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
     <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>

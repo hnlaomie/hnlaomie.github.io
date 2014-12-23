@@ -20,7 +20,77 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/2014-11-30.html">2014-11-30</a></h1>
+                    <h1 class="entry-title"><a href="/2014-12-23.html">2014-12-23</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-12-23T10:10:00+01:00">
+                Published: 二 23 十二月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/shell.html">shell</a> </p>
+</footer><!-- /.post-info --><h2>查找最近修改的文件</h2>
+<div class="highlight"><pre>find /home/laomie/ -maxdepth <span class="m">10</span> -mtime -10
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-12-22.html" rel="bookmark"
+                           title="Permalink to 2014-12-22">2014-12-22</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-12-22T15:10:00+01:00">
+                Published: 一 22 十二月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/pgsql.html">pgsql</a> </p>
+</footer><!-- /.post-info -->                <p>postgresql tips</p>
+                <a class="readmore" href="/2014-12-22.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-12-18.html" rel="bookmark"
+                           title="Permalink to 2014-12-18">2014-12-18</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-12-18T15:10:00+01:00">
+                Published: 四 18 十二月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/gradle.html">gradle</a> </p>
+</footer><!-- /.post-info -->                <p>gradle tips</p>
+                <a class="readmore" href="/2014-12-18.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2014-11-30.html" rel="bookmark"
+                           title="Permalink to 2014-11-30">2014-11-30</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-11-30T22:50:00+01:00">
                 Published: 日 30 十一月 2014
@@ -31,116 +101,10 @@
         </address>
 <p>In <a href="/category/2014.html">2014</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hbase.html">hbase</a> </p>
-</footer><!-- /.post-info --><h2>建目录</h2>
-<div class="highlight"><pre><span class="nv">$ </span>hdfs dfs -mkdir -p /hbase
-<span class="nv">$ </span>mkdir -p <span class="nv">$HBASE_HOME</span>/zookeeper
-</pre></div>
-
-
-<h2>设置".bashrc"</h2>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">HBASE_HOME</span><span class="o">=</span><span class="s1">&#39;/usr/local/tools/hbase&#39;</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HBASE_HOME</span>/bin
-</pre></div>
-
-
-<h2>设置"conf/hbase-env.sh"</h2>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-oracle
-<span class="nb">export </span><span class="nv">HBASE_REGIONSERVERS</span><span class="o">=</span><span class="si">${</span><span class="nv">HBASE_HOME</span><span class="si">}</span>/conf/regionservers
-<span class="nb">export </span><span class="nv">HBASE_MANAGES_ZK</span><span class="o">=</span><span class="nb">true</span>
-</pre></div>
-
-
-<h2>设置"conf/hbase-site.xml" (for pseudo-distributed)</h2>
-<div class="highlight"><pre><span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hbase.rootdir<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>hdfs://192.168.18.6:9000/hbase<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hbase.cluster.distributed<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>192.168.18.6<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.clientPort<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>2181<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.dataDir<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>/usr/local/tools/hbase/zookeeper<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-</pre></div>
-
-
-<h2>复制hadoop的jar</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$HBASE_HOME</span>/lib
-<span class="nv">$ </span>rm -fr slf4j*.jar
-<span class="nv">$ </span>rm -fr hadoop*.jar
-<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/common/hadoop*.jar .
-<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/hdfs/hadoop*.jar .
-<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/mapreduce/hadoop*.jar .
-<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/tools/lib/hadoop*.jar .
-<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/yarn/hadoop*.jar .
-</pre></div>
-
-
-<h2>修改"/etc/hosts"</h2>
-<p>将"127.0.1.1"改为"127.0.0.1"或删除</p>
-<h2>启动，停止hbase</h2>
-<div class="highlight"><pre><span class="nv">$ </span>start-hbase.sh
-<span class="nv">$ </span>stop-hbase.sh
-</pre></div>
-
-
-<h2>hbase简单操作</h2>
-<div class="highlight"><pre><span class="nv">$ </span>hbase shell
-
-<span class="c"># create a table</span>
-hbase&gt; create <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;cf&#39;</span>
-
-<span class="c"># list information about your table</span>
-hbase&gt; list <span class="s1">&#39;test&#39;</span>
-
-<span class="c"># put data into your table</span>
-hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>, <span class="s1">&#39;cf:a&#39;</span>, <span class="s1">&#39;value1&#39;</span>
-hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row2&#39;</span>, <span class="s1">&#39;cf:b&#39;</span>, <span class="s1">&#39;value2&#39;</span>
-hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row3&#39;</span>, <span class="s1">&#39;cf:c&#39;</span>, <span class="s1">&#39;value3&#39;</span>
-
-<span class="c"># scan the table for all data at once</span>
-hbase&gt; scan <span class="s1">&#39;test&#39;</span>
-
-<span class="c"># get a single row of data</span>
-hbase&gt; get <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>
-
-<span class="c"># disable, enable table</span>
-hbase&gt; disable <span class="s1">&#39;test&#39;</span>
-hbase&gt; <span class="nb">enable</span> <span class="s1">&#39;test&#39;</span>
-
-<span class="c"># drop the table</span>
-hbase&gt; drop <span class="s1">&#39;test&#39;</span>
-
-<span class="c"># exit the hbase shell</span>
-hbase&gt; quit
-</pre></div>
-
-
-<h2>references</h2>
-<ul>
-<li><a href="https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/">https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/</a></li>
-<li><a href="http://hbase.apache.org/book/quickstart.html">http://hbase.apache.org/book/quickstart.html</a></li>
-<li><a href="http://www.cnblogs.com/junrong624/p/3564699.html">http://www.cnblogs.com/junrong624/p/3564699.html</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>hbase安装</p>
+                <a class="readmore" href="/2014-11-30.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -273,185 +237,10 @@ hbase&gt; quit
                 <a class="readmore" href="/2014-11-08.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-08-27.html" rel="bookmark"
-                           title="Permalink to 2014-08-27">2014-08-27</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-27T17:00:00+02:00">
-                Published: 三 27 八月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/spark.html">spark</a> </p>
-</footer><!-- /.post-info -->                <p>spark安装</p>
-                <a class="readmore" href="/2014-08-27.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-08-04.html" rel="bookmark"
-                           title="Permalink to 2014-08-04">2014-08-04</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-04T21:00:00+02:00">
-                Published: 一 04 八月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info -->                <p>hive安装</p>
-                <a class="readmore" href="/2014-08-04.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-29.html" rel="bookmark"
-                           title="Permalink to 2014-07-29">2014-07-29</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-30T22:30:00+02:00">
-                Published: 三 30 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info -->                <p>hadoop安装</p>
-                <a class="readmore" href="/2014-07-29.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-30.html" rel="bookmark"
-                           title="Permalink to 2014-07-30">2014-07-30</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-30T22:10:00+02:00">
-                Published: 三 30 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/diary.html">diary</a> <a href="/tag/linux.html">linux</a> </p>
-</footer><!-- /.post-info -->                <p>2014-07-30日志</p>
-                <a class="readmore" href="/2014-07-30.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-28.html" rel="bookmark"
-                           title="Permalink to 2014-07-28">2014-07-28</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-28T22:10:00+02:00">
-                Published: 一 28 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/markdown.html">markdown</a> </p>
-</footer><!-- /.post-info -->                <p>markdown tutorial</p>
-                <a class="readmore" href="/2014-07-28.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-27.html" rel="bookmark"
-                           title="Permalink to 2014-07-27">2014-07-27</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-27T21:30:00+02:00">
-                Published: 日 27 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/firefox.html">firefox</a> </p>
-</footer><!-- /.post-info -->                <p>firefox使用技巧</p>
-                <a class="readmore" href="/2014-07-27.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-26.html" rel="bookmark"
-                           title="Permalink to 2014-07-26">2014-07-26</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-26T21:30:00+02:00">
-                Published: 六 26 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/virtualbox.html">virtualbox</a> <a href="/tag/tuntap.html">tuntap</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
-</footer><!-- /.post-info -->                <p>virtualbox使用技巧</p>
-                <a class="readmore" href="/2014-07-26.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/2014-07-11.html" rel="bookmark"
-                           title="Permalink to 2014-07-11">2014-07-11</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-11T14:30:00+02:00">
-                Published: 五 11 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/2014.html">2014</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> <a href="/tag/git.html">git</a> </p>
-</footer><!-- /.post-info -->                <p>pelican的安装和github发布</p>
-                <a class="readmore" href="/2014-07-11.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
-    Page 1 / 1
+    Page 1 / 2
+        <a href="/author/laomie2.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
