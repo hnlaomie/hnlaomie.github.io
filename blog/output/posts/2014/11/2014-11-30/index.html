@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>2014-11-30</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/2014.html">2014</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/11/2014-11-30/" rel="bookmark"
+           title="Permalink to 2014-11-30">2014-11-30</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-30T22:50:00+01:00">
+                Published: 日 30 十一月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hbase.html">hbase</a> </p>
+</footer><!-- /.post-info -->      <h2>建目录</h2>
+<div class="highlight"><pre><span class="nv">$ </span>hdfs dfs -mkdir -p /hbase
+<span class="nv">$ </span>mkdir -p <span class="nv">$HBASE_HOME</span>/zookeeper
+</pre></div>
+
+
+<h2>设置".bashrc"</h2>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">HBASE_HOME</span><span class="o">=</span><span class="s1">&#39;/usr/local/tools/hbase&#39;</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HBASE_HOME</span>/bin
+</pre></div>
+
+
+<h2>设置"conf/hbase-env.sh"</h2>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-oracle
+<span class="nb">export </span><span class="nv">HBASE_REGIONSERVERS</span><span class="o">=</span><span class="si">${</span><span class="nv">HBASE_HOME</span><span class="si">}</span>/conf/regionservers
+<span class="nb">export </span><span class="nv">HBASE_MANAGES_ZK</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<h2>设置"conf/hbase-site.xml" (for pseudo-distributed)</h2>
+<div class="highlight"><pre><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.rootdir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hdfs://192.168.18.6:9000/hbase<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.cluster.distributed<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>192.168.18.6<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.clientPort<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>2181<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.dataDir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/usr/local/tools/hbase/zookeeper<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<h2>复制hadoop的jar</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$HBASE_HOME</span>/lib
+<span class="nv">$ </span>rm -fr slf4j*.jar
+<span class="nv">$ </span>rm -fr hadoop*.jar
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/common/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/hdfs/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/mapreduce/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/tools/lib/hadoop*.jar .
+<span class="nv">$ </span>cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/yarn/hadoop*.jar .
+</pre></div>
+
+
+<h2>修改"/etc/hosts"</h2>
+<p>将"127.0.1.1"改为"127.0.0.1"或删除</p>
+<h2>启动，停止hbase</h2>
+<div class="highlight"><pre><span class="nv">$ </span>start-hbase.sh
+<span class="nv">$ </span>stop-hbase.sh
+</pre></div>
+
+
+<h2>hbase简单操作</h2>
+<div class="highlight"><pre><span class="nv">$ </span>hbase shell
+
+<span class="c"># create a table</span>
+hbase&gt; create <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;cf&#39;</span>
+
+<span class="c"># list information about your table</span>
+hbase&gt; list <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># put data into your table</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>, <span class="s1">&#39;cf:a&#39;</span>, <span class="s1">&#39;value1&#39;</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row2&#39;</span>, <span class="s1">&#39;cf:b&#39;</span>, <span class="s1">&#39;value2&#39;</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row3&#39;</span>, <span class="s1">&#39;cf:c&#39;</span>, <span class="s1">&#39;value3&#39;</span>
+
+<span class="c"># scan the table for all data at once</span>
+hbase&gt; scan <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># get a single row of data</span>
+hbase&gt; get <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>
+
+<span class="c"># disable, enable table</span>
+hbase&gt; disable <span class="s1">&#39;test&#39;</span>
+hbase&gt; <span class="nb">enable</span> <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># drop the table</span>
+hbase&gt; drop <span class="s1">&#39;test&#39;</span>
+
+<span class="c"># exit the hbase shell</span>
+hbase&gt; quit
+</pre></div>
+
+
+<h2>references</h2>
+<ul>
+<li><a href="https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/">https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/</a></li>
+<li><a href="http://hbase.apache.org/book/quickstart.html">http://hbase.apache.org/book/quickstart.html</a></li>
+<li><a href="http://www.cnblogs.com/junrong624/p/3564699.html">http://www.cnblogs.com/junrong624/p/3564699.html</a></li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

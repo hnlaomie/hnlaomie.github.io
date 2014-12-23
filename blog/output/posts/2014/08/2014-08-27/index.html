@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>2014-08-27</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/2014.html">2014</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/08/2014-08-27/" rel="bookmark"
+           title="Permalink to 2014-08-27">2014-08-27</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-08-27T17:00:00+02:00">
+                Published: 三 27 八月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/2014.html">2014</a>. </p>
+<p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/spark.html">spark</a> </p>
+</footer><!-- /.post-info -->      <h2>maven编译</h2>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">MAVEN_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m&quot;</span>
+mvn -Pyarn -Phive -Pscala-211 -Dhadoop.version<span class="o">=</span>2.5.2 -Dyarn.version<span class="o">=</span>2.5.2 -DskipTests clean package
+</pre></div>
+
+
+<h2>sbt编译</h2>
+<div class="highlight"><pre><span class="nv">SPARK_HADOOP_VERSION</span><span class="o">=</span>2.5.2 <span class="nv">SPARK_YARN</span><span class="o">=</span><span class="nb">true </span><span class="nv">SPARK_HIVE</span><span class="o">=</span><span class="nb">true </span>sbt/sbt clean assembly
+</pre></div>
+
+
+<p>生成spark部署包</p>
+<div class="highlight"><pre>./make-distribution.sh --tgz -Pyarn -Dyarn.version<span class="o">=</span>2.5.2 -Phadoop-2.4 -Dhadoop.version<span class="o">=</span>2.5.2 -Phive -Phive-thriftserver -DskipTests
+</pre></div>
+
+
+<h2>intellij调试spark代码</h2>
+<p>安装jdk8，scala2.10，sbt0.13并在"~/.bashrc"设置相关环境变量</p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/home/laomie/tools/scala-2.10
+<span class="nb">export </span><span class="nv">SBT_HOME</span><span class="o">=</span>/home/laomie/tools/sbt
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-7-openjdk
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$SCALA_HOME</span>/bin:<span class="nv">$SBT_HOME</span>/bin
+</pre></div>
+
+
+<p>intellij安装"scala"插件</p>
+<p>下载spark代码</p>
+<div class="highlight"><pre>git clone https://github.com/apache/spark.git
+</pre></div>
+
+
+<p>在intellij导入spark代码
+  选择File-&gt;Import Project, 在弹出的窗口中指定spark源码目录
+  选择项目类型为sbt project，然后点击next
+  在新弹出的窗口中先选中"Use auto-import",然后点击Finish</p>
+<p>依赖项设置
+  选择File-&gt;Project Structure-&gt;Modules 
+  streaming-twitter, streaming-kafka, streaming-flume, streaming-mqtt, streaming-zeromq等项目的"Dependencies"
+  的"Library..."加入"SBT: org.apache.spark:spark-core_2.10:1.0.0"</p>
+<p>flume-sink代码生成
+  到external/flume-sink执行以下代码
+  mvn generate-sources</p>
+<p>vm设置
+  -Dspark.master=local[4]
+  -Dspark.master=spark://inspiron1520:7077</p>
+<p>环境变量
+  MASTER=local[4]
+  MASTER=spark://inspiron1520:7077</p>
+<h2>spark on local</h2>
+<div class="highlight"><pre>run-example SparkPi 10
+</pre></div>
+
+
+<h2>spark on yarn</h2>
+<div class="highlight"><pre><span class="nv">SPARK_JAR</span><span class="o">=</span>./assembly/target/scala-2.10/spark-assembly-1.2.0-SNAPSHOT-hadoop2.5.0.jar <span class="nv">HADOOP_CONF_DIR</span><span class="o">=</span>/home/hduser/tools/hadoop2.5-single ./bin/spark-submit --master yarn --deploy-mode cluster --class org.apache.spark.examples.SparkPi --num-executors <span class="m">3</span> --driver-memory 2g --executor-memory 1g --executor-cores <span class="m">1</span> examples/target/scala-2.10/spark-examples-1.2.0-SNAPSHOT-hadoop2.5.0.jar
+
+<span class="nv">SPARK_JAR</span><span class="o">=</span>./assembly/target/scala-2.10/spark-assembly-1.2.0-SNAPSHOT-hadoop2.5.0.jar <span class="nv">HADOOP_CONF_DIR</span><span class="o">=</span>/home/hduser/tools/hadoop2.5-single/etc/hadoop <span class="nv">MASTER</span><span class="o">=</span>yarn-client ./bin/spark-shell
+</pre></div>
+
+
+<h2>问题一览</h2>
+<p>单机运行spark-shell出现ERROR Remoting: Remoting error:，在"conf/spark-env.sh"增加以下环境变量</p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>localhost
+<span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>localhost
+</pre></div>
+
+
+<h2>参考</h2>
+<ul>
+<li><a href="http://mmicky.blog.163.com/blog/static/1502901542014312101657612/">http://mmicky.blog.163.com/blog/static/1502901542014312101657612/</a></li>
+<li><a href="http://www.cnblogs.com/hseagle/p/3732492.html">http://www.cnblogs.com/hseagle/p/3732492.html</a></li>
+<li><a href="http://parambirs.wordpress.com/2014/05/20/running-spark-1-0-0-snapshot-on-hadoopyarn-2-4-0/">http://parambirs.wordpress.com/2014/05/20/running-spark-1-0-0-snapshot-on-hadoopyarn-2-4-0/</a></li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
