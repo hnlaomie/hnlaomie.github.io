@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>laomie blog - Tags</title>
+        <title>ubuntu tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -16,45 +16,38 @@
                 <nav><ul>
                     <li><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
-                    <li><a href="/category/tools.html">tools</a></li>
+                    <li class="active"><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-
 <section id="content" class="body">
-    <h1>Tags for laomie blog</h1>
-    <ul>
-        <li><a href="/tag/201407.html">201407</a> (7)</li>
-        <li><a href="/tag/201408.html">201408</a> (2)</li>
-        <li><a href="/tag/201411.html">201411</a> (7)</li>
-        <li><a href="/tag/201412.html">201412</a> (3)</li>
-        <li><a href="/tag/201502.html">201502</a> (3)</li>
-        <li><a href="/tag/docker.html">docker</a> (1)</li>
-        <li><a href="/tag/firefox.html">firefox</a> (1)</li>
-        <li><a href="/tag/git.html">git</a> (1)</li>
-        <li><a href="/tag/gradle.html">gradle</a> (2)</li>
-        <li><a href="/tag/hadoop.html">hadoop</a> (3)</li>
-        <li><a href="/tag/hbase.html">hbase</a> (1)</li>
-        <li><a href="/tag/hive.html">hive</a> (1)</li>
-        <li><a href="/tag/java.html">java</a> (2)</li>
-        <li><a href="/tag/linux.html">linux</a> (1)</li>
-        <li><a href="/tag/mariadb.html">mariadb</a> (1)</li>
-        <li><a href="/tag/markdown.html">markdown</a> (1)</li>
-        <li><a href="/tag/maven.html">maven</a> (1)</li>
-        <li><a href="/tag/mysql.html">mysql</a> (1)</li>
-        <li><a href="/tag/pelican.html">pelican</a> (1)</li>
-        <li><a href="/tag/pgsql.html">pgsql</a> (1)</li>
-        <li><a href="/tag/python.html">python</a> (1)</li>
-        <li><a href="/tag/shell.html">shell</a> (1)</li>
-        <li><a href="/tag/spark.html">spark</a> (1)</li>
-        <li><a href="/tag/terminator.html">terminator</a> (1)</li>
-        <li><a href="/tag/tuntap.html">tuntap</a> (1)</li>
-        <li><a href="/tag/ubuntu.html">ubuntu</a> (6)</li>
-        <li><a href="/tag/vagrant.html">vagrant</a> (1)</li>
-        <li><a href="/tag/vim.html">vim</a> (1)</li>
-        <li><a href="/tag/virtualbox.html">virtualbox</a> (1)</li>
-    </ul>
-</section>
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2015/02/ubuntu-tips/" rel="bookmark"
+           title="Permalink to ubuntu tips">ubuntu tips</a></h1>
+    </header>
 
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-02-02T10:30:00+01:00">
+                Published: 一 02 二月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>. </p>
+<p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
+</footer><!-- /.post-info -->      <h2>禁用笔记本触摸板</h2>
+<p>安装 gpointing-device-settings
+system settings -&gt; mouse &amp; touchpad</p>
+<h2>删除旧内核</h2>
+<div class="highlight"><pre>sudo aptitude purge ~ilinux-image-.*<span class="se">\(\!\(</span><span class="sb">`</span>uname -r<span class="sb">`</span><span class="se">\|</span>generic-.*<span class="se">\)\)</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
