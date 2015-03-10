@@ -41,6 +41,11 @@
 </footer><!-- /.post-info -->      <h2>查找最近修改的文件</h2>
 <div class="highlight"><pre>find /home/laomie/ -maxdepth <span class="m">10</span> -mtime -10
 </pre></div>
+
+
+<h2>在目录中查找带有某内容的文件</h2>
+<div class="highlight"><pre>egrep -ir --include=*.{java,js} &quot;(document.cookie|setcookie)&quot; .
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

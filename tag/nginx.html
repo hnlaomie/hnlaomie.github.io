@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>laomie blog - shell</title>
+        <title>laomie blog - nginx</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -22,25 +22,75 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2014/12/shell-tips/">shell tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/03/php-installation/">php installation</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2014-12-23T10:10:00+01:00">
-                Published: 二 23 十二月 2014
+        <abbr class="published" title="2015-03-03T10:30:00+01:00">
+                Published: 二 03 三月 2015
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/laomie.html">laomie</a>
         </address>
-<p>In <a href="/category/tools.html">tools</a>. </p>
-<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/shell.html">shell</a> </p>
-</footer><!-- /.post-info --><h2>查找最近修改的文件</h2>
-<div class="highlight"><pre>find /home/laomie/ -maxdepth <span class="m">10</span> -mtime -10
+<p>In <a href="/category/programming.html">programming</a>. </p>
+<p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/php.html">php</a> <a href="/tag/nginx.html">nginx</a> </p>
+</footer><!-- /.post-info --><h2>php安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install php5-fpm php5-gd php5-mcrypt php5-mysql php5-readline php-gettext
 </pre></div>
 
 
-<h2>在目录中查找带有某内容的文件</h2>
-<div class="highlight"><pre>egrep -ir --include=*.{java,js} &quot;(document.cookie|setcookie)&quot; .
-</pre></div>                </article>
+<h2>nginx安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:nginx/stable
+<span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span>sudo apt-get install nginx
+</pre></div>
+
+
+<h2>php和nginx设置</h2>
+<p>修改/etc/php5/fpm/php.ini，将"cgi.fix_pathinfo=1"改为"cgi.fix_pathinfo=0"</p>
+<p>修改/etc/php5/fpm/pool.d/www.conf，将"listen = 127.0.0.1:9000"改为"listen = /var/run/php5-fpm.sock"</p>
+<p>修改/etc/nginx/sites-available/default</p>
+<div class="highlight"><pre>[...]
+server {
+    listen   80;
+
+    root /usr/local/data/env/www;
+    index index.php index.html index.htm;
+
+    server_name example.com;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    error_page 404 /404.html;
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/local/data/env/www;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on the php-fpm socket
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+}
+[...]
+
+重启服务
+```bash
+$ sudo service nginx restart
+$ sudo service php5-fpm restart
+</pre></div>
+
+
+<p>```</p>
+<h2>相关链接</h2>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04">https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04</a></p>                </article>
 <p class="paginator">
     Page 1 / 1
 </p>

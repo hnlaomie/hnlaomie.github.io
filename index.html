@@ -22,7 +22,88 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/02/idea-tips/">idea tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/03/php-installation/">php installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-03-03T10:30:00+01:00">
+                Published: 二 03 三月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>. </p>
+<p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/php.html">php</a> <a href="/tag/nginx.html">nginx</a> </p>
+</footer><!-- /.post-info --><h2>php安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install php5-fpm php5-gd php5-mcrypt php5-mysql php5-readline php-gettext
+</pre></div>
+
+
+<h2>nginx安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:nginx/stable
+<span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span>sudo apt-get install nginx
+</pre></div>
+
+
+<h2>php和nginx设置</h2>
+<p>修改/etc/php5/fpm/php.ini，将"cgi.fix_pathinfo=1"改为"cgi.fix_pathinfo=0"</p>
+<p>修改/etc/php5/fpm/pool.d/www.conf，将"listen = 127.0.0.1:9000"改为"listen = /var/run/php5-fpm.sock"</p>
+<p>修改/etc/nginx/sites-available/default</p>
+<div class="highlight"><pre>[...]
+server {
+    listen   80;
+
+    root /usr/local/data/env/www;
+    index index.php index.html index.htm;
+
+    server_name example.com;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    error_page 404 /404.html;
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/local/data/env/www;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on the php-fpm socket
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+}
+[...]
+
+重启服务
+```bash
+$ sudo service nginx restart
+$ sudo service php5-fpm restart
+</pre></div>
+
+
+<p>```</p>
+<h2>相关链接</h2>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04">https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04</a></p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/02/idea-tips/" rel="bookmark"
+                           title="Permalink to idea tips">idea tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-02-02T10:30:00+01:00">
                 Published: 一 02 二月 2015
@@ -33,34 +114,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
-</footer><!-- /.post-info --><h2>基本设置</h2>
-<ul>
-<li>
-<p>显示行号
-  Editor -&gt; General -&gt; Appearance -&gt; Show line numbers</p>
-</li>
-<li>
-<p>用*标识编辑过的文件<br />
-  Editor -&gt; General -&gt; Editor Tabs -&gt; Mark modified tabs with asterisk</p>
-</li>
-<li>
-<p>文件说明模板
-  Editor -&gt; Code Style -&gt; File and Code Templates -&gt; Includes</p>
-</li>
-<li>
-<p>修改字体
-  Editor -&gt; Colors &amp; Fonts -&gt; Font</p>
-</li>
-<li>
-<p>资源文件相关
-  Editor -&gt; File Encodings </p>
-</li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>intellij idea 技巧</p>
+                <a class="readmore" href="/posts/2015/02/idea-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -455,28 +512,6 @@
 <p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/firefox.html">firefox</a> </p>
 </footer><!-- /.post-info -->                <p>firefox使用技巧</p>
                 <a class="readmore" href="/posts/2014/07/firefox-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/07/virtualbox-tips/" rel="bookmark"
-                           title="Permalink to virtualbox tips">virtualbox tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-26T21:30:00+02:00">
-                Published: 六 26 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/virtualbox.html">virtualbox</a> <a href="/tag/tuntap.html">tuntap</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
-</footer><!-- /.post-info -->                <p>virtualbox使用技巧</p>
-                <a class="readmore" href="/posts/2014/07/virtualbox-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
