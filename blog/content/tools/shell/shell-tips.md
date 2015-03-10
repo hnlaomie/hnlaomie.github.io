@@ -10,3 +10,9 @@ Summary: shell tips
 ```bash
 find /home/laomie/ -maxdepth 10 -mtime -10
 ```
+
+在目录中查找带有某内容的文件
+---------------------------------
+```
+egrep -ir --include=*.{java,js} "(document.cookie|setcookie)" .
+```

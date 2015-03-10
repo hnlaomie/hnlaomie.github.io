@@ -16,5 +16,8 @@ system settings -> mouse & touchpad
 sudo aptitude purge ~ilinux-image-.*\(\!\(`uname -r`\|generic-.*\)\)
 ```
 
+启动菜单
+---------------------------------------
+/usr/share/applications
 
 
