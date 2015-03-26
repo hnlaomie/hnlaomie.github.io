@@ -22,7 +22,54 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/02/idea-tips/">idea tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/03/centos-tips/">centos tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-03-24T16:30:00+01:00">
+                Published: 二 24 三月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>. </p>
+<p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/centos.html">centos</a> </p>
+</footer><!-- /.post-info --><h1>新增用户</h1>
+<div class="highlight"><pre>groupadd dev
+useradd -g dev laomie
+passwd laomie
+</pre></div>
+
+
+<p>sudo权限设置，输入visudo，然后写入以下内容
+  laomie ALL=(ALL)   ALL</p>
+<h1>安装python3</h1>
+<div class="highlight"><pre>yum groupinstall <span class="s2">&quot;Development tools&quot;</span>
+yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
+vim /etc/ld.so.conf  <span class="o">(</span>add <span class="s1">&#39;/usr/local/lib&#39;</span><span class="o">)</span>
+./configure --prefix<span class="o">=</span>/usr/local --enable-shared
+make
+make altinstall
+ln -s /usr/local/bin/python3.4 /usr/bin/python3
+vim /usr/bin/yum  <span class="o">(</span>change to <span class="s1">&#39;#!/usr/bin/python2.6&#39;</span><span class="o">)</span>
+ldconfig
+
+yum install lapack lapack-devel blas blas-devel
+pip3.4 install numpy
+pip3.4 install scipy
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/02/idea-tips/" rel="bookmark"
+                           title="Permalink to idea tips">idea tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-02-02T10:30:00+01:00">
                 Published: 一 02 二月 2015
@@ -33,34 +80,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
-</footer><!-- /.post-info --><h2>基本设置</h2>
-<ul>
-<li>
-<p>显示行号
-  Editor -&gt; General -&gt; Appearance -&gt; Show line numbers</p>
-</li>
-<li>
-<p>用*标识编辑过的文件<br />
-  Editor -&gt; General -&gt; Editor Tabs -&gt; Mark modified tabs with asterisk</p>
-</li>
-<li>
-<p>文件说明模板
-  Editor -&gt; Code Style -&gt; File and Code Templates -&gt; Includes</p>
-</li>
-<li>
-<p>修改字体
-  Editor -&gt; Colors &amp; Fonts -&gt; Font</p>
-</li>
-<li>
-<p>资源文件相关
-  Editor -&gt; File Encodings </p>
-</li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>intellij idea 技巧</p>
+                <a class="readmore" href="/posts/2015/02/idea-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

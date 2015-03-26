@@ -22,7 +22,54 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/03/php-installation/">php installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/03/centos-tips/">centos tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-03-24T16:30:00+01:00">
+                Published: 二 24 三月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>. </p>
+<p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/centos.html">centos</a> </p>
+</footer><!-- /.post-info --><h1>新增用户</h1>
+<div class="highlight"><pre>groupadd dev
+useradd -g dev laomie
+passwd laomie
+</pre></div>
+
+
+<p>sudo权限设置，输入visudo，然后写入以下内容
+  laomie ALL=(ALL)   ALL</p>
+<h1>安装python3</h1>
+<div class="highlight"><pre>yum groupinstall <span class="s2">&quot;Development tools&quot;</span>
+yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
+vim /etc/ld.so.conf  <span class="o">(</span>add <span class="s1">&#39;/usr/local/lib&#39;</span><span class="o">)</span>
+./configure --prefix<span class="o">=</span>/usr/local --enable-shared
+make
+make altinstall
+ln -s /usr/local/bin/python3.4 /usr/bin/python3
+vim /usr/bin/yum  <span class="o">(</span>change to <span class="s1">&#39;#!/usr/bin/python2.6&#39;</span><span class="o">)</span>
+ldconfig
+
+yum install lapack lapack-devel blas blas-devel
+pip3.4 install numpy
+pip3.4 install scipy
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/03/php-installation/" rel="bookmark"
+                           title="Permalink to php installation">php installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-03-03T10:30:00+01:00">
                 Published: 二 03 三月 2015
@@ -33,69 +80,10 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>. </p>
 <p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/php.html">php</a> <a href="/tag/nginx.html">nginx</a> </p>
-</footer><!-- /.post-info --><h2>php安装</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install php5-fpm php5-gd php5-mcrypt php5-mysql php5-readline php-gettext
-</pre></div>
-
-
-<h2>nginx安装</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:nginx/stable
-<span class="nv">$ </span>sudo apt-get update
-<span class="nv">$ </span>sudo apt-get install nginx
-</pre></div>
-
-
-<h2>php和nginx设置</h2>
-<p>修改/etc/php5/fpm/php.ini，将"cgi.fix_pathinfo=1"改为"cgi.fix_pathinfo=0"</p>
-<p>修改/etc/php5/fpm/pool.d/www.conf，将"listen = 127.0.0.1:9000"改为"listen = /var/run/php5-fpm.sock"</p>
-<p>修改/etc/nginx/sites-available/default</p>
-<div class="highlight"><pre>[...]
-server {
-    listen   80;
-
-    root /usr/local/data/env/www;
-    index index.php index.html index.htm;
-
-    server_name example.com;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    error_page 404 /404.html;
-
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-        root /usr/local/data/env/www;
-    }
-
-    # pass the PHP scripts to FastCGI server listening on the php-fpm socket
-    location ~ \.php$ {
-        try_files $uri =404;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-
-}
-[...]
-
-重启服务
-```bash
-$ sudo service nginx restart
-$ sudo service php5-fpm restart
-</pre></div>
-
-
-<p>```</p>
-<h2>相关链接</h2>
-<p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04">https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04</a></p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>php安装</p>
+                <a class="readmore" href="/posts/2015/03/php-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -490,28 +478,6 @@ $ sudo service php5-fpm restart
 <p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/markdown.html">markdown</a> </p>
 </footer><!-- /.post-info -->                <p>markdown tutorial</p>
                 <a class="readmore" href="/posts/2014/07/markdown-tutorial/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/07/firefox-tips/" rel="bookmark"
-                           title="Permalink to firefox tips">firefox tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-27T21:30:00+02:00">
-                Published: 日 27 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/firefox.html">firefox</a> </p>
-</footer><!-- /.post-info -->                <p>firefox使用技巧</p>
-                <a class="readmore" href="/posts/2014/07/firefox-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
