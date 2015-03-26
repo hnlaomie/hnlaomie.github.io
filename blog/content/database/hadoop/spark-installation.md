@@ -9,7 +9,7 @@ maven编译
 -----------------------------
 ```bash
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
-mvn -Pyarn -Phive -Pscala-211 -Dhadoop.version=2.5.2 -Dyarn.version=2.5.2 -DskipTests clean package
+mvn -Pyarn --Dyarn.version=2.5.2 -Phadoop-2.4 -Dhadoop.version=2.5.2 -Phive -Phive-thriftserver -Dscala-2.11 -DskipTests clean package
 ```
 
 sbt编译
@@ -20,7 +20,8 @@ SPARK_HADOOP_VERSION=2.5.2 SPARK_YARN=true SPARK_HIVE=true sbt/sbt clean assembl
 
 生成spark部署包
 ```bash
-./make-distribution.sh --tgz -Pyarn -Dyarn.version=2.5.2 -Phadoop-2.4 -Dhadoop.version=2.5.2 -Phive -Phive-thriftserver -DskipTests
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
+./make-distribution.sh --tgz --with-tachyon -Pyarn -Dyarn.version=2.5.2 -Phadoop-2.4 -Dhadoop.version=2.5.2 -Phive -Phive-thriftserver -DskipTests
 ```
 
 intellij调试spark代码
