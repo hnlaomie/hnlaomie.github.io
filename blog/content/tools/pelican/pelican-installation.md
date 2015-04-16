@@ -34,9 +34,17 @@ $ cd output
 $ sudo python -m http.server 80
 ```
 
-配置
-----------
-  pelicanconf.py中设置"THEME"，值为pelican-bootstrap3的路径
+配置日期目录放博客
+-------------------
+pelicanconf.py中设置做以下设置
+```
+ARTICLE_URL = 'posts/{date:%Y}/{date:%m}/{slug}/'
+ARTICLE_SAVE_AS = 'posts/{date:%Y}/{date:%m}/{slug}/index.html'
+PAGE_URL = 'pages/{slug}/'
+PAGE_SAVE_AS = 'pages/{slug}/index.html'
+TAG_URL = 'tag/{slug}.html'
+TAG_SAVE_AS = 'tag/{slug}.html'
+```
 
 在github建个人博客
 -------------------------

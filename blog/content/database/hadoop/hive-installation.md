@@ -6,7 +6,7 @@ Author: laomie
 Summary: hive安装
 
 环境变量设置
----------------------
+=========================
 在"hduser“用户路径下的".bashrc”里加入以下内容
 ```bash
 export HIVE_HOME='/home/hduser/tools/hive0.13'
@@ -14,9 +14,11 @@ export PATH=$PATH:$HIVE_HOME/bin
 ```
 
 设置mysql，用于保存hive的元数据
-----------------------------------
+===================================
 ```
 create user 'hadoop'@'localhost' identified by 'hadoop';
+-- 修改用户密码
+-- set password for 'hadoop'@'localhost' = password('hadoop');
 grant all privileges on *.* to 'hadoop'@'localhost' with grant option;
 flush privileges;
 create database hadoop2 default character set utf8 default collate utf8_general_ci;
@@ -24,7 +26,7 @@ alter database hadoop2 character set latin1;
 ```
 
 复制mysql驱动，并建相关目录
------------------------------------------
+================================
 ```bash
 mkdir -p $HIVE_HOME/warehouse
 mkdir -p $HIVE_HOME/auxlib
@@ -32,7 +34,7 @@ cp mysql-connector-java-5.1.31.jar $HIVE_HOME/auxlib
 ```
 
 新增"conf/hive-site.xml"文件
-------------------------------------------------------------------------
+================================
 ```xml
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -89,7 +91,7 @@ cp mysql-connector-java-5.1.31.jar $HIVE_HOME/auxlib
 
 ```
 mysql表数据导出csv
---------------------------
+============================
 ```sql
 select *
 from employs
@@ -99,7 +101,7 @@ lines terminated by '\n'
 ```
 
 hive建表导入数据
------------------------
+=======================
 ```
 create table employs(empid int, name string, surname string)
 row format delimited
@@ -108,8 +110,21 @@ load data local inpath '/home/hduser/tools/data/employs.csv' overwrite into tabl
 ```
 
 hive启动
----------------------
+=====================
 ```bash
 $ hive --service hiveserver2
 $ netstat -anp | grep 10000
+```
+
+hive1.1的jline问题
+=======================
+删除$HADOOP_HOME/share/hadoop/yarn/lib/jline-0.9.94.jar
+
+mysql日志写入问题
+=============================
+ubuntu在/etc/mysql/my.cnf加入以下内容
+```bash
+[mysqld]                                                                                                                
+# for hive                                                                                                              
+binlog_format=mixed 
 ```
