@@ -33,7 +33,7 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>. </p>
 <p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/gradle.html">gradle</a> </p>
-</footer><!-- /.post-info --><h2>gradle对junit的支持</h2>
+</footer><!-- /.post-info --><h1>gradle对junit的支持</h1>
 <p>在build.gradle增加以下内容</p>
 <div class="highlight"><pre><span class="nb">test</span> <span class="o">{</span>
     testLogging <span class="o">{</span>
@@ -43,8 +43,21 @@
 </pre></div>
 
 
-<p>运行单个测试</p>
+<h1>运行单个测试</h1>
 <div class="highlight"><pre>gradle -Dtest.single<span class="o">=</span>SampleTest :project1:test
+</pre></div>
+
+
+<h1>jvm options</h1>
+<p>gradle.properties内的org.gradle.jvmargs加入以下内容</p>
+<div class="highlight"><pre>-DconfigPath=/home/laomie/projects/working/biconfig
+</pre></div>
+
+
+<p>build.gradle内加入以下内容</p>
+<div class="highlight"><pre>test {
+    systemProperties = System.properties
+}
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">

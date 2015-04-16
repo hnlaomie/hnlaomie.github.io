@@ -33,8 +33,20 @@
         </address>
 <p>In <a href="/category/database.html">database</a>. </p>
 <p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/mysql.html">mysql</a> <a href="/tag/mariadb.html">mariadb</a> </p>
-</footer><!-- /.post-info --><h2>mariadb设置root密码</h2>
+</footer><!-- /.post-info --><h1>mariadb设置root密码</h1>
 <div class="highlight"><pre>mysqladmin -u root password <span class="s2">&quot;passwd&quot;</span>
+</pre></div>
+
+
+<h1>数据库导入导出</h1>
+<div class="highlight"><pre>-- 导出整个库
+mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test</span>
+-- 导出表
+mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test </span>table1 table2
+-- 导出表结构
+mysqldump -d -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test </span>table1
+-- 导入数据
+mysql -uroot -ppassword -P3306 -h127.0.0.1 <span class="nb">test</span> &lt; test.sql
 </pre></div>                </article>
 <p class="paginator">
     Page 1 / 1

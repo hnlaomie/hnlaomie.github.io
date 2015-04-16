@@ -33,15 +33,17 @@
         </address>
 <p>In <a href="/category/database.html">database</a>. </p>
 <p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info --><h2>环境变量设置</h2>
+</footer><!-- /.post-info --><h1>环境变量设置</h1>
 <p>在"hduser“用户路径下的".bashrc”里加入以下内容</p>
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">HIVE_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/hive0.13&#39;</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HIVE_HOME</span>/bin
 </pre></div>
 
 
-<h2>设置mysql，用于保存hive的元数据</h2>
+<h1>设置mysql，用于保存hive的元数据</h1>
 <div class="highlight"><pre>create user &#39;hadoop&#39;@&#39;localhost&#39; identified by &#39;hadoop&#39;;
+-- 修改用户密码
+-- set password for &#39;hadoop&#39;@&#39;localhost&#39; = password(&#39;hadoop&#39;);
 grant all privileges on *.* to &#39;hadoop&#39;@&#39;localhost&#39; with grant option;
 flush privileges;
 create database hadoop2 default character set utf8 default collate utf8_general_ci;
@@ -49,14 +51,14 @@ alter database hadoop2 character set latin1;
 </pre></div>
 
 
-<h2>复制mysql驱动，并建相关目录</h2>
+<h1>复制mysql驱动，并建相关目录</h1>
 <div class="highlight"><pre>mkdir -p <span class="nv">$HIVE_HOME</span>/warehouse
 mkdir -p <span class="nv">$HIVE_HOME</span>/auxlib
 cp mysql-connector-java-5.1.31.jar <span class="nv">$HIVE_HOME</span>/auxlib
 </pre></div>
 
 
-<h2>新增"conf/hive-site.xml"文件</h2>
+<h1>新增"conf/hive-site.xml"文件</h1>
 <div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <span class="cp">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
@@ -112,7 +114,7 @@ cp mysql-connector-java-5.1.31.jar <span class="nv">$HIVE_HOME</span>/auxlib
 </pre></div>
 
 
-<h2>mysql表数据导出csv</h2>
+<h1>mysql表数据导出csv</h1>
 <div class="highlight"><pre><span class="k">select</span> <span class="o">*</span>
 <span class="k">from</span> <span class="n">employs</span>
 <span class="k">into</span> <span class="n">outfile</span> <span class="s1">&#39;/home/hduser/tools/data/employs.csv&#39;</span>
@@ -121,7 +123,7 @@ cp mysql-connector-java-5.1.31.jar <span class="nv">$HIVE_HOME</span>/auxlib
 </pre></div>
 
 
-<h2>hive建表导入数据</h2>
+<h1>hive建表导入数据</h1>
 <div class="highlight"><pre>create table employs(empid int, name string, surname string)
 row format delimited
 fields terminated by &#39;\t&#39;;
@@ -129,9 +131,19 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 </pre></div>
 
 
-<h2>hive启动</h2>
+<h1>hive启动</h1>
 <div class="highlight"><pre><span class="nv">$ </span>hive --service hiveserver2
 <span class="nv">$ </span>netstat -anp <span class="p">|</span> grep 10000
+</pre></div>
+
+
+<h1>hive1.1的jline问题</h1>
+<p>删除$HADOOP_HOME/share/hadoop/yarn/lib/jline-0.9.94.jar</p>
+<h1>mysql日志写入问题</h1>
+<p>ubuntu在/etc/mysql/my.cnf加入以下内容</p>
+<div class="highlight"><pre><span class="o">[</span>mysqld<span class="o">]</span>                                                                                                                
+<span class="c"># for hive                                                                                                              </span>
+<span class="nv">binlog_format</span><span class="o">=</span>mixed 
 </pre></div>                </article>
 <p class="paginator">
     Page 1 / 1

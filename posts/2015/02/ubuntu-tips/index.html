@@ -38,16 +38,21 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
-</footer><!-- /.post-info -->      <h2>禁用笔记本触摸板</h2>
+</footer><!-- /.post-info -->      <h1>禁用笔记本触摸板</h1>
 <p>安装 gpointing-device-settings
 system settings -&gt; mouse &amp; touchpad</p>
-<h2>删除旧内核</h2>
+<h1>删除旧内核</h1>
 <div class="highlight"><pre>sudo aptitude purge ~ilinux-image-.*<span class="se">\(\!\(</span><span class="sb">`</span>uname -r<span class="sb">`</span><span class="se">\|</span>generic-.*<span class="se">\)\)</span>
 </pre></div>
 
 
-<h2>启动菜单</h2>
+<h1>启动菜单</h1>
 <p>/usr/share/applications</p>
+<h1>取消ssh远程连接键盘失灵</h1>
+<p>在"~/.ssh/config"中加入以下内容</p>
+<div class="highlight"><pre>Host *
+ServerAliveInterval 180
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
