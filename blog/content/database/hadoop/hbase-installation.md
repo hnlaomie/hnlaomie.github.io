@@ -6,21 +6,21 @@ Author: laomie
 Summary: hbase安装
 
 建目录
----------------------------------
+============================
 ```bash
 $ hdfs dfs -mkdir -p /hbase
 $ mkdir -p $HBASE_HOME/zookeeper
 ```
 
 设置".bashrc"
-------------------------
+===========================
 ```bash
 export HBASE_HOME='/usr/local/tools/hbase'
 export PATH=$PATH:$HBASE_HOME/bin
 ```
 
 设置"conf/hbase-env.sh"
-------------------------
+===============================
 ```bash
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export HBASE_REGIONSERVERS=${HBASE_HOME}/conf/regionservers
@@ -28,11 +28,27 @@ export HBASE_MANAGES_ZK=true
 ```
 
 设置"conf/hbase-site.xml" (for pseudo-distributed)
---------------------------------
+=========================================
 ```xml
 <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://192.168.18.6:9000/hbase</value>
+    <value>hdfs://master:9000/hbase</value>
+</property>
+<property>
+    <name>hbase.tmp.dir</name>
+    <value>/usr/local/data/tools/hbase/tmp</value>
+</property>
+<property>
+    <name>hbase.master</name>
+    <value>hdfs://master:60000</value>
+</property>
+<property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/usr/local/data/tools/zookeeper</value>
+</property>
+<property>
+    <name>hbase.zookeeper.property.clientPort</name>
+    <value>2181</value>
 </property>
 <property>
     <name>hbase.cluster.distributed</name>
@@ -40,24 +56,26 @@ export HBASE_MANAGES_ZK=true
 </property>
 <property>
     <name>hbase.zookeeper.quorum</name>
-    <value>192.168.18.6</value>
+    <value>master</value>  
 </property>
 <property>
     <name>dfs.replication</name>
     <value>1</value>
 </property>
-<property>
-    <name>hbase.zookeeper.property.clientPort</name>
-    <value>2181</value>
+<property>     
+    <name>dfs.socket.timeout</name>    
+    <value>180000</value>
 </property>
 <property>
-    <name>hbase.zookeeper.property.dataDir</name>
-    <value>/usr/local/tools/hbase/zookeeper</value>
+    <name>hbase.master.maxclockskew</name>
+    <value>180000</value>
 </property>
+</configuration>
 ```
 
 复制hadoop的jar
------------------------
+============================
+（注：自编译的hbase不需要）
 ```bash
 $ cd $HBASE_HOME/lib
 $ rm -fr slf4j*.jar
@@ -70,18 +88,21 @@ $ cp $HADOOP_HOME/share/hadoop/yarn/hadoop*.jar .
 ```
 
 修改"/etc/hosts"
-------------------------
-将"127.0.1.1"改为"127.0.0.1"或删除
+=====================================
+将"127.0.1.1"改为"127.0.0.1"或删除，"master"指向具体的ip
 
 启动，停止hbase
----------------------
+==========================
+因HMaster占用16020端口，HRegionServer启不了，需要手动启
 ```bash
 $ start-hbase.sh
+$ local-regionservers.sh start 2
 $ stop-hbase.sh
+$ local-regionservers.sh stop 2
 ```
 
 hbase简单操作
------------------------
+============================
 ```bash
 $ hbase shell
 
@@ -113,8 +134,22 @@ hbase> drop 'test'
 hbase> quit
 ```
 
+编译源码
+======================
+```
+mvn clean install assembly:single -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.6.0
+```
+
+安装phoenix
+============================
+编译
+```
+mvn package -DskipTests -Dmaven.javadoc.skip=true -Dhadoop.profile=2 -Dhadoop-two.version=2.6.0
+```
+解压安装 phoenix-assembly/target/phoenix-4.3.1.tar.gz，并将phoenix-4.3.1-server.jar复制到hbase的lib目录
+
 references
-------------------------
+=========================
 * <https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/>
 * <http://hbase.apache.org/book/quickstart.html>
 * <http://www.cnblogs.com/junrong624/p/3564699.html>

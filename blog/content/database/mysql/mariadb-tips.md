@@ -24,5 +24,13 @@ mysqldump -d -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set=utf8 -
 mysql -uroot -ppassword -P3306 -h127.0.0.1 test < test.sql
 ```
 
+字符集设置为utf-8
+=======================
+/etc/my.cnf做如下修改
+```
+[mysqld]
+skip-character-set-client-handshake=1
+default-character-set=utf8
+```
 
 
