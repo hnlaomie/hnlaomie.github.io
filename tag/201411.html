@@ -33,29 +33,32 @@
         </address>
 <p>In <a href="/category/database.html">database</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hbase.html">hbase</a> </p>
-</footer><!-- /.post-info --><h2>建目录</h2>
+</footer><!-- /.post-info --><h1>建目录</h1>
 <div class="highlight"><pre><span class="nv">$ </span>hdfs dfs -mkdir -p /hbase
 <span class="nv">$ </span>mkdir -p <span class="nv">$HBASE_HOME</span>/zookeeper
 </pre></div>
 
 
-<h2>设置".bashrc"</h2>
+<h1>设置".bashrc"</h1>
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">HBASE_HOME</span><span class="o">=</span><span class="s1">&#39;/usr/local/tools/hbase&#39;</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HBASE_HOME</span>/bin
 </pre></div>
 
 
-<h2>设置"conf/hbase-env.sh"</h2>
+<h1>设置"conf/hbase-env.sh"</h1>
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-oracle
-<span class="nb">export </span><span class="nv">HBASE_REGIONSERVERS</span><span class="o">=</span><span class="si">${</span><span class="nv">HBASE_HOME</span><span class="si">}</span>/conf/regionservers
 <span class="nb">export </span><span class="nv">HBASE_MANAGES_ZK</span><span class="o">=</span><span class="nb">true</span>
 </pre></div>
 
 
-<h2>设置"conf/hbase-site.xml" (for pseudo-distributed)</h2>
+<h1>设置"conf/hbase-site.xml" (for pseudo-distributed)</h1>
 <div class="highlight"><pre><span class="nt">&lt;property&gt;</span>
     <span class="nt">&lt;name&gt;</span>hbase.rootdir<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>hdfs://192.168.18.6:9000/hbase<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hdfs://master:9000/hbase<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.tmp.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/usr/local/data/tools/hbase/tmp<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
     <span class="nt">&lt;name&gt;</span>hbase.cluster.distributed<span class="nt">&lt;/name&gt;</span>
@@ -63,24 +66,21 @@
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
     <span class="nt">&lt;name&gt;</span>hbase.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>192.168.18.6<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;value&gt;</span>master<span class="nt">&lt;/value&gt;</span>  
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.dataDir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/usr/local/data/tools/hbase/zookeeper<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
     <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.clientPort<span class="nt">&lt;/name&gt;</span>
     <span class="nt">&lt;value&gt;</span>2181<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.dataDir<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>/usr/local/tools/hbase/zookeeper<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
 </pre></div>
 
 
-<h2>复制hadoop的jar</h2>
+<h1>复制hadoop的jar</h1>
+<p>（注：自编译的hbase不需要）</p>
 <div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$HBASE_HOME</span>/lib
 <span class="nv">$ </span>rm -fr slf4j*.jar
 <span class="nv">$ </span>rm -fr hadoop*.jar
@@ -92,15 +92,15 @@
 </pre></div>
 
 
-<h2>修改"/etc/hosts"</h2>
-<p>将"127.0.1.1"改为"127.0.0.1"或删除</p>
-<h2>启动，停止hbase</h2>
+<h1>修改"/etc/hosts"</h1>
+<p>将"127.0.1.1"改为"127.0.0.1"或删除，"master"指向具体的ip</p>
+<h1>启动，停止hbase</h1>
 <div class="highlight"><pre><span class="nv">$ </span>start-hbase.sh
 <span class="nv">$ </span>stop-hbase.sh
 </pre></div>
 
 
-<h2>hbase简单操作</h2>
+<h1>hbase简单操作</h1>
 <div class="highlight"><pre><span class="nv">$ </span>hbase shell
 
 <span class="c"># create a table</span>
@@ -132,7 +132,19 @@ hbase&gt; quit
 </pre></div>
 
 
-<h2>references</h2>
+<h1>编译源码</h1>
+<div class="highlight"><pre>mvn clean install assembly:single -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.5.2
+</pre></div>
+
+
+<h1>安装phoenix</h1>
+<p>编译</p>
+<div class="highlight"><pre>mvn package -DskipTests -Dmaven.javadoc.skip=true -Dhadoop.profile=2 -Dhadoop-two.version=2.5.2
+</pre></div>
+
+
+<p>解压安装 phoenix-assembly/target/phoenix-4.3.1.tar.gz，并将phoenix-4.3.1-server.jar复制到hbase的lib目录</p>
+<h1>references</h1>
 <ul>
 <li><a href="https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/">https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/</a></li>
 <li><a href="http://hbase.apache.org/book/quickstart.html">http://hbase.apache.org/book/quickstart.html</a></li>

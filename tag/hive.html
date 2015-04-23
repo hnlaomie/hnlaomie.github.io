@@ -33,7 +33,12 @@
         </address>
 <p>In <a href="/category/database.html">database</a>. </p>
 <p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info --><h1>环境变量设置</h1>
+</footer><!-- /.post-info --><h1>编译hive</h1>
+<div class="highlight"><pre>mvn clean install -Phadoop-2,dist -DskipTests
+</pre></div>
+
+
+<h1>环境变量设置</h1>
 <p>在"hduser“用户路径下的".bashrc”里加入以下内容</p>
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">HIVE_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/hive0.13&#39;</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HIVE_HOME</span>/bin

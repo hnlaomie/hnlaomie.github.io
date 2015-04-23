@@ -47,6 +47,14 @@ mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span clas
 mysqldump -d -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test </span>table1
 -- 导入数据
 mysql -uroot -ppassword -P3306 -h127.0.0.1 <span class="nb">test</span> &lt; test.sql
+</pre></div>
+
+
+<h1>字符集设置为utf-8</h1>
+<p>/etc/my.cnf做如下修改</p>
+<div class="highlight"><pre><span class="k">[mysqld]</span>
+<span class="na">skip-character-set-client-handshake</span><span class="o">=</span><span class="s">1</span>
+<span class="na">default-character-set</span><span class="o">=</span><span class="s">utf8</span>
 </pre></div>                </article>
 <p class="paginator">
     Page 1 / 1

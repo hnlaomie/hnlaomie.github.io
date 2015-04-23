@@ -63,13 +63,7 @@ net.ipv6.conf.lo.disable_ipv6 = 1
 <h2>环境变量设置</h2>
 <p>在"hduser“用户路径下的".bashrc”里加入以下内容</p>
 <div class="highlight"><pre><span class="c"># Set Hadoop-related environment variables</span>
-<span class="nb">export </span><span class="nv">HADOOP_PREFIX</span><span class="o">=</span>/home/hduser/tools/hadoop
 <span class="nb">export </span><span class="nv">HADOOP_HOME</span><span class="o">=</span>/home/hduser/tools/hadoop
-<span class="nb">export </span><span class="nv">HADOOP_MAPRED_HOME</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>
-<span class="nb">export </span><span class="nv">HADOOP_COMMON_HOME</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>
-<span class="nb">export </span><span class="nv">HADOOP_HDFS_HOME</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>
-<span class="nb">export </span><span class="nv">YARN_HOME</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>
-<span class="nb">export </span><span class="nv">HADOOP_CONF_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>/etc/hadoop
 <span class="c"># Native Path</span>
 <span class="nb">export </span><span class="nv">HADOOP_COMMON_LIB_NATIVE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_PREFIX</span><span class="si">}</span>/lib/native
 <span class="nb">export </span><span class="nv">HADOOP_OPTS</span><span class="o">=</span><span class="s2">&quot;-Djava.library.path=</span><span class="nv">$HADOOP_PREFIX</span><span class="s2">/lib&quot;</span>
