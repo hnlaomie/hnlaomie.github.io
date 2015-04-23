@@ -5,6 +5,12 @@ Tags: 201408, hadoop, hive
 Author: laomie
 Summary: hive安装
 
+编译hive
+=========================
+```
+mvn clean install -Phadoop-2,dist -DskipTests
+```
+
 环境变量设置
 =========================
 在"hduser“用户路径下的".bashrc”里加入以下内容
