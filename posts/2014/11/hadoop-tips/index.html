@@ -38,7 +38,7 @@
         </address>
 <p>In <a href="/category/database.html">database</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info -->      <h2>hdfs dfs 常用命令</h2>
+</footer><!-- /.post-info -->      <h1>hdfs dfs 常用命令</h1>
 <div class="highlight"><pre><span class="c"># 生成目录</span>
 hdfs dfs -mkdir -p /user/laomie/temp
 
@@ -53,6 +53,10 @@ hdfs dfs -get <span class="o">[</span>-ignorecrc<span class="o">]</span> <span c
 <span class="c"># 删除目录</span>
 hdfs dfs -rmr <span class="o">[</span>-skipTrash<span class="o">]</span> URI <span class="o">[</span>URI ...<span class="o">]</span>
 </pre></div>
+
+
+<h1>hadoop无法停止</h1>
+<p>当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止</p>
     </div><!-- /.entry-content -->
 
   </article>

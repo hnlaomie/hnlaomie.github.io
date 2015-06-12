@@ -22,7 +22,97 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/03/centos-tips/">centos tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/05/log4j-tips/">log4j tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-05-12T19:30:00+02:00">
+                Published: 二 12 五月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>. </p>
+<p>tags: <a href="/tag/201505.html">201505</a> <a href="/tag/java.html">java</a> <a href="/tag/log4j.html">log4j</a> </p>
+</footer><!-- /.post-info --><h1>依赖包</h1>
+<div class="highlight"><pre>log4j-core
+log4j-api
+log4j-slf4j-imp
+slf4j-api
+slf4j-ext
+</pre></div>
+
+
+<h1>log4j2.xml用例１</h1>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration</span> <span class="na">status=</span><span class="s">&quot;OFF&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;appenders&gt;</span>
+        <span class="nt">&lt;Console</span> <span class="na">name=</span><span class="s">&quot;Console&quot;</span> <span class="na">target=</span><span class="s">&quot;SYSTEM_OUT&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Console&gt;</span>
+    <span class="nt">&lt;/appenders&gt;</span>
+    <span class="nt">&lt;loggers&gt;</span>
+        <span class="c">&lt;!--我们只让这个logger输出trace信息，其他的都是error级别--&gt;</span>
+        <span class="c">&lt;!--</span>
+<span class="c">        additivity开启的话，由于这个logger也是满足root的，所以会被打印两遍。</span>
+<span class="c">        不过root logger 的level是error，为什么Bar 里面的trace信息也被打印两遍呢</span>
+<span class="c">        --&gt;</span>
+        <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;cn.lsw.base.log4j2.Hello&quot;</span> <span class="na">level=</span><span class="s">&quot;trace&quot;</span> <span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;Console&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/logger&gt;</span>
+        <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;error&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;Console&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/root&gt;</span>
+    <span class="nt">&lt;/loggers&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>
+
+
+<h1>log4j2.xml用例２</h1>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration</span> <span class="na">status=</span><span class="s">&quot;error&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--先定义所有的appender--&gt;</span>
+    <span class="nt">&lt;appenders&gt;</span>
+        <span class="c">&lt;!--这个输出控制台的配置--&gt;</span>
+        <span class="nt">&lt;Console</span> <span class="na">name=</span><span class="s">&quot;Console&quot;</span> <span class="na">target=</span><span class="s">&quot;SYSTEM_OUT&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）--&gt;</span>
+            <span class="nt">&lt;ThresholdFilter</span> <span class="na">level=</span><span class="s">&quot;trace&quot;</span> <span class="na">onMatch=</span><span class="s">&quot;ACCEPT&quot;</span> <span class="na">onMismatch=</span><span class="s">&quot;DENY&quot;</span><span class="nt">/&gt;</span>
+            <span class="c">&lt;!--这个都知道是输出日志的格式--&gt;</span>
+            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Console&gt;</span>
+        <span class="c">&lt;!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用--&gt;</span>
+        <span class="nt">&lt;File</span> <span class="na">name=</span><span class="s">&quot;log&quot;</span> <span class="na">fileName=</span><span class="s">&quot;log/test.log&quot;</span> <span class="na">append=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/File&gt;</span>
+        <span class="c">&lt;!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档--&gt;</span>
+        <span class="nt">&lt;RollingFile</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">fileName=</span><span class="s">&quot;logs/app.log&quot;</span>
+                     <span class="na">filePattern=</span><span class="s">&quot;log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{yyyy-MM-dd &#39;at&#39; HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;SizeBasedTriggeringPolicy</span> <span class="na">size=</span><span class="s">&quot;50MB&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/RollingFile&gt;</span>
+    <span class="nt">&lt;/appenders&gt;</span>
+    <span class="c">&lt;!--然后定义logger，只有定义了logger并引入的appender，appender才会生效--&gt;</span>
+    <span class="nt">&lt;loggers&gt;</span>
+        <span class="c">&lt;!--建立一个默认的root的logger--&gt;</span>
+        <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;trace&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;Console&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/root&gt;</span>
+    <span class="nt">&lt;/loggers&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/03/centos-tips/" rel="bookmark"
+                           title="Permalink to centos tips">centos tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-03-24T16:30:00+01:00">
                 Published: 二 24 三月 2015
@@ -33,35 +123,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/centos.html">centos</a> </p>
-</footer><!-- /.post-info --><h1>新增用户</h1>
-<div class="highlight"><pre>groupadd dev
-useradd -g dev laomie
-passwd laomie
-</pre></div>
-
-
-<p>sudo权限设置，输入visudo，然后写入以下内容
-  laomie ALL=(ALL)   ALL</p>
-<h1>安装python3</h1>
-<div class="highlight"><pre>yum groupinstall <span class="s2">&quot;Development tools&quot;</span>
-yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
-vim /etc/ld.so.conf  <span class="o">(</span>add <span class="s1">&#39;/usr/local/lib&#39;</span><span class="o">)</span>
-./configure --prefix<span class="o">=</span>/usr/local --enable-shared
-make
-make altinstall
-ln -s /usr/local/bin/python3.4 /usr/bin/python3
-vim /usr/bin/yum  <span class="o">(</span>change to <span class="s1">&#39;#!/usr/bin/python2.6&#39;</span><span class="o">)</span>
-ldconfig
-
-yum install lapack lapack-devel blas blas-devel
-pip3.4 install numpy
-pip3.4 install scipy
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>centos技巧</p>
+                <a class="readmore" href="/posts/2015/03/centos-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

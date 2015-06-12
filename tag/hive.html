@@ -46,10 +46,14 @@
 
 
 <h1>设置mysql，用于保存hive的元数据</h1>
-<div class="highlight"><pre>create user &#39;hadoop&#39;@&#39;localhost&#39; identified by &#39;hadoop&#39;;
+<div class="highlight"><pre>-- 匹配所有用&quot;%&quot;，例如&quot;192.168.1.%&quot;
+create user &#39;hadoop&#39;@&#39;localhost&#39; identified by &#39;hadoop&#39;;
 -- 修改用户密码
 -- set password for &#39;hadoop&#39;@&#39;localhost&#39; = password(&#39;hadoop&#39;);
 grant all privileges on *.* to &#39;hadoop&#39;@&#39;localhost&#39; with grant option;
+-- 删除用户权限
+revoke all privileges on *.* from &#39;hadoop&#39;@&#39;localhost&#39;;
+drop user &#39;hadoop&#39;@&#39;localhost&#39;;
 flush privileges;
 create database hadoop2 default character set utf8 default collate utf8_general_ci;
 alter database hadoop2 character set latin1;

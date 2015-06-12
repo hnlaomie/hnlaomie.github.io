@@ -47,6 +47,8 @@ mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span clas
 mysqldump -d -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test </span>table1
 -- 导入数据
 mysql -uroot -ppassword -P3306 -h127.0.0.1 <span class="nb">test</span> &lt; test.sql
+-- 导入csv数据
+mysql -uroot -p123456 -Dsampledata -e <span class="s2">&quot;load data local infile &#39;date.txt&#39; into table time_day columns terminated by &#39;,&#39; lines terminated by &#39;\n&#39;&quot;</span>
 </pre></div>
 
 
@@ -55,6 +57,28 @@ mysql -uroot -ppassword -P3306 -h127.0.0.1 <span class="nb">test</span> &lt; tes
 <div class="highlight"><pre><span class="k">[mysqld]</span>
 <span class="na">skip-character-set-client-handshake</span><span class="o">=</span><span class="s">1</span>
 <span class="na">default-character-set</span><span class="o">=</span><span class="s">utf8</span>
+</pre></div>
+
+
+<h1>移动存放数据目录</h1>
+<div class="highlight"><pre>sudo /etc/init.d/mysqld stop
+<span class="nb">cd</span> /var/lib
+sudo tar -zcvf mysql.tar.gz mysql
+sudo mkdir -p /data/mysql
+sudo chown -R mysql.mysql /data/mysql
+sudo su mysql
+<span class="nb">cd</span> /data/mysql
+cp /var/lib/mysql.tar.gz .
+tar -zxvf mysql.tar.gz
+mv mysql data
+<span class="nb">exit</span>
+</pre></div>
+
+
+<p>/etc/my.cnf做如下修改</p>
+<div class="highlight"><pre><span class="k">[mysqld]</span>
+<span class="c1">#datadir=/var/lib/mysql</span>
+<span class="na">datadir</span><span class="o">=</span><span class="s">/data/mysql/data</span>
 </pre></div>                </article>
 <p class="paginator">
     Page 1 / 1
