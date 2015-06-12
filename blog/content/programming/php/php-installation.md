@@ -34,7 +34,7 @@ server {
     root /usr/local/data/env/www;
     index index.php index.html index.htm;
 
-    server_name example.com;
+    server_name localhost;
 
     location / {
         try_files $uri $uri/ /index.html;
@@ -69,5 +69,6 @@ $ sudo service php5-fpm restart
 相关链接
 -------------------
 <https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04>
+<http://www.lonelycoder.be/nginx-php-fpm-mysql-phpmyadmin-on-ubuntu-12-04/>
 
 

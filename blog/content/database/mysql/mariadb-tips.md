@@ -22,6 +22,8 @@ mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set=utf8 --re
 mysqldump -d -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set=utf8 --result-file=test.sql test table1
 -- 导入数据
 mysql -uroot -ppassword -P3306 -h127.0.0.1 test < test.sql
+-- 导入csv数据
+mysql -uroot -p123456 -Dsampledata -e "load data local infile 'date.txt' into table time_day columns terminated by ',' lines terminated by '\n'"
 ```
 
 字符集设置为utf-8
@@ -31,6 +33,28 @@ mysql -uroot -ppassword -P3306 -h127.0.0.1 test < test.sql
 [mysqld]
 skip-character-set-client-handshake=1
 default-character-set=utf8
+```
+
+移动存放数据目录
+=====================
+```bash
+sudo /etc/init.d/mysqld stop
+cd /var/lib
+sudo tar -zcvf mysql.tar.gz mysql
+sudo mkdir -p /data/mysql
+sudo chown -R mysql.mysql /data/mysql
+sudo su mysql
+cd /data/mysql
+cp /var/lib/mysql.tar.gz .
+tar -zxvf mysql.tar.gz
+mv mysql data
+exit
+```
+/etc/my.cnf做如下修改
+```
+[mysqld]
+#datadir=/var/lib/mysql
+datadir=/data/mysql/data
 ```
 
 

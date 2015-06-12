@@ -123,7 +123,7 @@ mvn clean install assembly:single -DskipTests -Dmaven.javadoc.skip=true -Dhadoop
 ============================
 编译
 ```
-mvn package -DskipTests -Dmaven.javadoc.skip=true -Dhadoop.profile=2 -Dhadoop-two.version=2.5.2
+mvn package -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.5.2
 ```
 解压安装 phoenix-assembly/target/phoenix-4.3.1.tar.gz，并将phoenix-4.3.1-server.jar复制到hbase的lib目录
 

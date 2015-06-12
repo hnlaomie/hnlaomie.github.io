@@ -22,10 +22,14 @@ export PATH=$PATH:$HIVE_HOME/bin
 设置mysql，用于保存hive的元数据
 ===================================
 ```
+-- 匹配所有用"%"，例如"192.168.1.%"
 create user 'hadoop'@'localhost' identified by 'hadoop';
 -- 修改用户密码
 -- set password for 'hadoop'@'localhost' = password('hadoop');
 grant all privileges on *.* to 'hadoop'@'localhost' with grant option;
+-- 删除用户权限
+revoke all privileges on *.* from 'hadoop'@'localhost';
+drop user 'hadoop'@'localhost';
 flush privileges;
 create database hadoop2 default character set utf8 default collate utf8_general_ci;
 alter database hadoop2 character set latin1;

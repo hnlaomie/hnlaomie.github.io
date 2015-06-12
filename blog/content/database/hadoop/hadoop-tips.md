@@ -6,7 +6,7 @@ Author: laomie
 Summary: hadoop使用指南
 
 hdfs dfs 常用命令
------------------
+========================
 ```bash
 # 生成目录
 hdfs dfs -mkdir -p /user/laomie/temp
@@ -22,3 +22,7 @@ hdfs dfs -get [-ignorecrc] [-crc] <src> <localdst>
 # 删除目录
 hdfs dfs -rmr [-skipTrash] URI [URI ...]
 ```
+
+hadoop无法停止
+=========================
+当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止

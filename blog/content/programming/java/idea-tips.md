@@ -20,5 +20,5 @@ Summary: intellij idea 技巧
   Editor -> Colors & Fonts -> Font
 
 * 资源文件相关
-  Editor -> File Encodings 
+  Editor -> File Encodings -> Transparent native-to-ascii conversion
 
