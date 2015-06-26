@@ -26,3 +26,13 @@ hdfs dfs -rmr [-skipTrash] URI [URI ...]
 hadoop无法停止
 =========================
 当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止
+
+hadoop升级
+=========================
+namenode升级
+```
+hadoop-daemon.sh start namenode -upgrade
+```
+* <http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html>
+* <http://wiki.apache.org/hadoop/Hadoop_Upgrade>
+* <http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/>

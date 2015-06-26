@@ -7,13 +7,13 @@ Summary: ubuntu安装
 
 
 usb刻录
----------------------------------
+====================================
 ```bash
 $ sudo dd bs=4M if=/home/laomie/ubuntu-14.04.1-desktop-amd64.iso of=/dev/sdc && sync
 ```
 
 开发源和安装软件
-------------------------
+==========================
 ```bash
 $ sudo add-apt-repository ppa:git-core/ppa
 $ sudo add-apt-repository ppa:webupd8team/java
@@ -23,14 +23,14 @@ $ sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromiu
 ```
 
 grub启动
---------------------------
+========================
 ```bash
 $ sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
 $ sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg)
 ```
 
 设置dns
----------------------------
+==========================
 安装dnsmasq
 ```bash
 $ sudo apt-get install dnsmasq
@@ -46,17 +46,19 @@ cache-size=1000
 ```
 新增"/etc/resolv.dnsmasq.conf"
 ```bash
-# OneDNS 北方
-114.215.126.16
-# 114DNS
-114.114.114.114
-114.114.115.115
-# 阿里DNS
-223.5.5.5
-223.6.6.6
+# baidu dns
+180.76.76.76
 # OpenDNS
 208.67.222.222
 208.67.220.220
+# 阿里DNS
+223.5.5.5
+223.6.6.6
+# 114DNS
+114.114.114.114
+114.114.115.115
+# OneDNS 北方
+114.215.126.16
 # V2EX DNS
 199.91.73.222
 178.79.131.110
@@ -70,7 +72,7 @@ cache-size=1000
 ```
 
 安装docker
--------------------------
+=============================
 编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容
 ```bash
 deb https://get.docker.com/ubuntu docker main
@@ -95,4 +97,13 @@ DOCKER_OPTS="--dns 208.67.222.222"
 相关链接
 <http://get.docker.com/ubuntu>
 
-
+安装qq
+==========================
+```bash
+sudo apt-get install libgtk2.0-0:i386
+sudo apt-get install lib32ncurses5
+sudo apt-get -f install
+dpkg -i *.deb
+```
+相关链接
+<http://www.ubuntukylin.com/applications/showimg.php?lang=cn&id=23>

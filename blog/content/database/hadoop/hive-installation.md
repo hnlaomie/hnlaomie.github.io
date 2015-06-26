@@ -138,3 +138,11 @@ ubuntu在/etc/mysql/my.cnf加入以下内容
 # for hive                                                                                                              
 binlog_format=mixed 
 ```
+
+hive导出csv
+=====================
+```bash
+INSERT OVERWRITE LOCAL DIRECTORY '/home/laomie/init.csv' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select * from android_init
+
+hive --database game -e 'select * from android_init' | sed 's/[[:space:]]\+/,/g' > /home/laomie/init.csv
+```

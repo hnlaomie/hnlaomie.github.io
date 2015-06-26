@@ -30,9 +30,12 @@ mysql -uroot -p123456 -Dsampledata -e "load data local infile 'date.txt' into ta
 =======================
 /etc/my.cnf做如下修改
 ```
-[mysqld]
-skip-character-set-client-handshake=1
+[client]
 default-character-set=utf8
+
+[mysqld]
+character-set-server=utf8
+collation-server=utf8_general_ci
 ```
 
 移动存放数据目录
