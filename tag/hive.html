@@ -153,6 +153,13 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 <div class="highlight"><pre><span class="o">[</span>mysqld<span class="o">]</span>                                                                                                                
 <span class="c"># for hive                                                                                                              </span>
 <span class="nv">binlog_format</span><span class="o">=</span>mixed 
+</pre></div>
+
+
+<h1>hive导出csv</h1>
+<div class="highlight"><pre>INSERT OVERWRITE LOCAL DIRECTORY <span class="s1">&#39;/home/laomie/init.csv&#39;</span> ROW FORMAT DELIMITED FIELDS TERMINATED BY <span class="s1">&#39;,&#39;</span> <span class="k">select</span> * from android_init
+
+hive --database game -e <span class="s1">&#39;select * from android_init&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/[[:space:]]\+/,/g&#39;</span> &gt; /home/laomie/init.csv
 </pre></div>                </article>
 <p class="paginator">
     Page 1 / 1

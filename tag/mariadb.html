@@ -54,9 +54,12 @@ mysql -uroot -p123456 -Dsampledata -e <span class="s2">&quot;load data local inf
 
 <h1>字符集设置为utf-8</h1>
 <p>/etc/my.cnf做如下修改</p>
-<div class="highlight"><pre><span class="k">[mysqld]</span>
-<span class="na">skip-character-set-client-handshake</span><span class="o">=</span><span class="s">1</span>
+<div class="highlight"><pre><span class="k">[client]</span>
 <span class="na">default-character-set</span><span class="o">=</span><span class="s">utf8</span>
+
+<span class="k">[mysqld]</span>
+<span class="na">character-set-server</span><span class="o">=</span><span class="s">utf8</span>
+<span class="na">collation-server</span><span class="o">=</span><span class="s">utf8_general_ci</span>
 </pre></div>
 
 

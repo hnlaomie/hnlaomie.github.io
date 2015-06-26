@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>subversion tips</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li class="active"><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2015/06/subversion-tips/" rel="bookmark"
+           title="Permalink to subversion tips">subversion tips</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-06-19T14:30:00+02:00">
+                Published: 五 19 六月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>. </p>
+<p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
+</footer><!-- /.post-info -->      <h1>检出</h1>
+<div class="highlight"><pre>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
+</pre></div>
+
+
+<h1>SVN回滚</h1>
+<div class="highlight"><pre># 正统方法一
+svn merge --dry-run -r73:68 http://my.repository.com/my/project/trunk
+svn merge -r73:68 http://my.repository.com/my/project/trunk
+svn commit -m &quot;Reverted to revision 68.&quot;
+
+# 正统方法二
+svn merge -c -{rev} http://svn.example.com/repos/calc/trunk
+svn commit -m &#39;undo&#39;
+
+# 直观方法
+svn cat -r {rev} filename &gt; filename
+</pre></div>
+
+
+<h1>导出</h1>
+<div class="highlight"><pre>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
+</pre></div>
+
+
+<h1>添加新文件</h1>
+<div class="highlight"><pre>svn add 文件名
+</pre></div>
+
+
+<h1>提交</h1>
+<div class="highlight"><pre>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
+</pre></div>
+
+
+<h1>更新文件</h1>
+<div class="highlight"><pre>svn update
+#将版本库中的文件 Test.java还原到修正版本
+svn update -r 200 Test.java
+</pre></div>
+
+
+<h1>删除文件</h1>
+<div class="highlight"><pre>svn delete 文件名
+</pre></div>
+
+
+<h1>加锁/解锁</h1>
+<div class="highlight"><pre>svn lock -m “加锁备注信息文本“ [--force] 文件名 
+svn unlock
+</pre></div>
+
+
+<h1>比较差异</h1>
+<div class="highlight"><pre>svn diff 文件名
+# 修正版本号200和修正版本号201比较差异
+svn diff -r 200:201 Test.java
+</pre></div>
+
+
+<h1>查看文件或者目录状态</h1>
+<div class="highlight"><pre># ?：不在svn的控制中；M：内容被修改；C：发生冲突
+svn status [-v] [目录/文件]
+</pre></div>
+
+
+<h1>查看日志</h1>
+<div class="highlight"><pre>svn log 文件名
+</pre></div>
+
+
+<h1>查看文件详细信息</h1>
+<div class="highlight"><pre>svn info 文件名
+</pre></div>
+
+
+<h1>查看版本库下的文件和目录列表</h1>
+<div class="highlight"><pre>svn list svn:// 路径(目录或文件的全路径)
+</pre></div>
+
+
+<h1>创建纳入版本控制下的新目录</h1>
+<div class="highlight"><pre>svn mkdir 目录名
+</pre></div>
+
+
+<h1>创建纳入版本控制下的新目录</h1>
+<div class="highlight"><pre>svn mkdir 目录名
+svn add --non-recursive 目录名
+</pre></div>
+
+
+<h1>恢复本地修改</h1>
+<div class="highlight"><pre>svn revert [--recursive] 文件名
+</pre></div>
+
+
+<h1>解决冲突</h1>
+<div class="highlight"><pre>svn resolved [本地目录全路径]
+</pre></div>
+
+
+<h1>不checkout而查看输出特定文件或URL的内容</h1>
+<div class="highlight"><pre>svn cat http://文件全路径
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

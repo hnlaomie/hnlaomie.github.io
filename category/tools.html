@@ -22,7 +22,135 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/05/log4j-tips/">log4j tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/06/subversion-tips/">subversion tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-06-19T14:30:00+02:00">
+                Published: 五 19 六月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>. </p>
+<p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
+</footer><!-- /.post-info --><h1>检出</h1>
+<div class="highlight"><pre>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
+</pre></div>
+
+
+<h1>SVN回滚</h1>
+<div class="highlight"><pre># 正统方法一
+svn merge --dry-run -r73:68 http://my.repository.com/my/project/trunk
+svn merge -r73:68 http://my.repository.com/my/project/trunk
+svn commit -m &quot;Reverted to revision 68.&quot;
+
+# 正统方法二
+svn merge -c -{rev} http://svn.example.com/repos/calc/trunk
+svn commit -m &#39;undo&#39;
+
+# 直观方法
+svn cat -r {rev} filename &gt; filename
+</pre></div>
+
+
+<h1>导出</h1>
+<div class="highlight"><pre>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
+</pre></div>
+
+
+<h1>添加新文件</h1>
+<div class="highlight"><pre>svn add 文件名
+</pre></div>
+
+
+<h1>提交</h1>
+<div class="highlight"><pre>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
+</pre></div>
+
+
+<h1>更新文件</h1>
+<div class="highlight"><pre>svn update
+#将版本库中的文件 Test.java还原到修正版本
+svn update -r 200 Test.java
+</pre></div>
+
+
+<h1>删除文件</h1>
+<div class="highlight"><pre>svn delete 文件名
+</pre></div>
+
+
+<h1>加锁/解锁</h1>
+<div class="highlight"><pre>svn lock -m “加锁备注信息文本“ [--force] 文件名 
+svn unlock
+</pre></div>
+
+
+<h1>比较差异</h1>
+<div class="highlight"><pre>svn diff 文件名
+# 修正版本号200和修正版本号201比较差异
+svn diff -r 200:201 Test.java
+</pre></div>
+
+
+<h1>查看文件或者目录状态</h1>
+<div class="highlight"><pre># ?：不在svn的控制中；M：内容被修改；C：发生冲突
+svn status [-v] [目录/文件]
+</pre></div>
+
+
+<h1>查看日志</h1>
+<div class="highlight"><pre>svn log 文件名
+</pre></div>
+
+
+<h1>查看文件详细信息</h1>
+<div class="highlight"><pre>svn info 文件名
+</pre></div>
+
+
+<h1>查看版本库下的文件和目录列表</h1>
+<div class="highlight"><pre>svn list svn:// 路径(目录或文件的全路径)
+</pre></div>
+
+
+<h1>创建纳入版本控制下的新目录</h1>
+<div class="highlight"><pre>svn mkdir 目录名
+</pre></div>
+
+
+<h1>创建纳入版本控制下的新目录</h1>
+<div class="highlight"><pre>svn mkdir 目录名
+svn add --non-recursive 目录名
+</pre></div>
+
+
+<h1>恢复本地修改</h1>
+<div class="highlight"><pre>svn revert [--recursive] 文件名
+</pre></div>
+
+
+<h1>解决冲突</h1>
+<div class="highlight"><pre>svn resolved [本地目录全路径]
+</pre></div>
+
+
+<h1>不checkout而查看输出特定文件或URL的内容</h1>
+<div class="highlight"><pre>svn cat http://文件全路径
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/05/log4j-tips/" rel="bookmark"
+                           title="Permalink to log4j tips">log4j tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-05-12T19:30:00+02:00">
                 Published: 二 12 五月 2015
@@ -33,78 +161,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201505.html">201505</a> <a href="/tag/java.html">java</a> <a href="/tag/log4j.html">log4j</a> </p>
-</footer><!-- /.post-info --><h1>依赖包</h1>
-<div class="highlight"><pre>log4j-core
-log4j-api
-log4j-slf4j-imp
-slf4j-api
-slf4j-ext
-</pre></div>
-
-
-<h1>log4j2.xml用例１</h1>
-<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;configuration</span> <span class="na">status=</span><span class="s">&quot;OFF&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;appenders&gt;</span>
-        <span class="nt">&lt;Console</span> <span class="na">name=</span><span class="s">&quot;Console&quot;</span> <span class="na">target=</span><span class="s">&quot;SYSTEM_OUT&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Console&gt;</span>
-    <span class="nt">&lt;/appenders&gt;</span>
-    <span class="nt">&lt;loggers&gt;</span>
-        <span class="c">&lt;!--我们只让这个logger输出trace信息，其他的都是error级别--&gt;</span>
-        <span class="c">&lt;!--</span>
-<span class="c">        additivity开启的话，由于这个logger也是满足root的，所以会被打印两遍。</span>
-<span class="c">        不过root logger 的level是error，为什么Bar 里面的trace信息也被打印两遍呢</span>
-<span class="c">        --&gt;</span>
-        <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;cn.lsw.base.log4j2.Hello&quot;</span> <span class="na">level=</span><span class="s">&quot;trace&quot;</span> <span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;Console&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/logger&gt;</span>
-        <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;error&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;Console&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/root&gt;</span>
-    <span class="nt">&lt;/loggers&gt;</span>
-<span class="nt">&lt;/configuration&gt;</span>
-</pre></div>
-
-
-<h1>log4j2.xml用例２</h1>
-<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;configuration</span> <span class="na">status=</span><span class="s">&quot;error&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!--先定义所有的appender--&gt;</span>
-    <span class="nt">&lt;appenders&gt;</span>
-        <span class="c">&lt;!--这个输出控制台的配置--&gt;</span>
-        <span class="nt">&lt;Console</span> <span class="na">name=</span><span class="s">&quot;Console&quot;</span> <span class="na">target=</span><span class="s">&quot;SYSTEM_OUT&quot;</span><span class="nt">&gt;</span>
-            <span class="c">&lt;!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）--&gt;</span>
-            <span class="nt">&lt;ThresholdFilter</span> <span class="na">level=</span><span class="s">&quot;trace&quot;</span> <span class="na">onMatch=</span><span class="s">&quot;ACCEPT&quot;</span> <span class="na">onMismatch=</span><span class="s">&quot;DENY&quot;</span><span class="nt">/&gt;</span>
-            <span class="c">&lt;!--这个都知道是输出日志的格式--&gt;</span>
-            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Console&gt;</span>
-        <span class="c">&lt;!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用--&gt;</span>
-        <span class="nt">&lt;File</span> <span class="na">name=</span><span class="s">&quot;log&quot;</span> <span class="na">fileName=</span><span class="s">&quot;log/test.log&quot;</span> <span class="na">append=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/File&gt;</span>
-        <span class="c">&lt;!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档--&gt;</span>
-        <span class="nt">&lt;RollingFile</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">fileName=</span><span class="s">&quot;logs/app.log&quot;</span>
-                     <span class="na">filePattern=</span><span class="s">&quot;log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;PatternLayout</span> <span class="na">pattern=</span><span class="s">&quot;%d{yyyy-MM-dd &#39;at&#39; HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n&quot;</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;SizeBasedTriggeringPolicy</span> <span class="na">size=</span><span class="s">&quot;50MB&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/RollingFile&gt;</span>
-    <span class="nt">&lt;/appenders&gt;</span>
-    <span class="c">&lt;!--然后定义logger，只有定义了logger并引入的appender，appender才会生效--&gt;</span>
-    <span class="nt">&lt;loggers&gt;</span>
-        <span class="c">&lt;!--建立一个默认的root的logger--&gt;</span>
-        <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;trace&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;Console&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/root&gt;</span>
-    <span class="nt">&lt;/loggers&gt;</span>
-<span class="nt">&lt;/configuration&gt;</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>log4j2使用说明</p>
+                <a class="readmore" href="/posts/2015/05/log4j-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

@@ -38,12 +38,12 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/java.html">java</a> </p>
-</footer><!-- /.post-info -->      <h2>usb刻录</h2>
+</footer><!-- /.post-info -->      <h1>usb刻录</h1>
 <div class="highlight"><pre><span class="nv">$ </span>sudo dd <span class="nv">bs</span><span class="o">=</span>4M <span class="k">if</span><span class="o">=</span>/home/laomie/ubuntu-14.04.1-desktop-amd64.iso <span class="nv">of</span><span class="o">=</span>/dev/sdc <span class="o">&amp;&amp;</span> sync
 </pre></div>
 
 
-<h2>开发源和安装软件</h2>
+<h1>开发源和安装软件</h1>
 <div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:git-core/ppa
 <span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
 <span class="nv">$ </span>sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
@@ -52,13 +52,13 @@
 </pre></div>
 
 
-<h2>grub启动</h2>
+<h1>grub启动</h1>
 <div class="highlight"><pre><span class="nv">$ </span>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
 <span class="nv">$ </span>sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg<span class="o">)</span>
 </pre></div>
 
 
-<h2>设置dns</h2>
+<h1>设置dns</h1>
 <p>安装dnsmasq</p>
 <div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install dnsmasq
 </pre></div>
@@ -76,17 +76,19 @@ resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 
 
 <p>新增"/etc/resolv.dnsmasq.conf"</p>
-<div class="highlight"><pre><span class="c"># OneDNS 北方</span>
-114.215.126.16
-<span class="c"># 114DNS</span>
-114.114.114.114
-114.114.115.115
-<span class="c"># 阿里DNS</span>
-223.5.5.5
-223.6.6.6
+<div class="highlight"><pre><span class="c"># baidu dns</span>
+180.76.76.76
 <span class="c"># OpenDNS</span>
 208.67.222.222
 208.67.220.220
+<span class="c"># 阿里DNS</span>
+223.5.5.5
+223.6.6.6
+<span class="c"># 114DNS</span>
+114.114.114.114
+114.114.115.115
+<span class="c"># OneDNS 北方</span>
+114.215.126.16
 <span class="c"># V2EX DNS</span>
 199.91.73.222
 178.79.131.110
@@ -100,7 +102,7 @@ resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 </pre></div>
 
 
-<h2>安装docker</h2>
+<h1>安装docker</h1>
 <p>编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容</p>
 <div class="highlight"><pre>deb https://get.docker.com/ubuntu docker main
 </pre></div>
@@ -129,6 +131,16 @@ resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 
 <p>相关链接
 <a href="http://get.docker.com/ubuntu">http://get.docker.com/ubuntu</a></p>
+<h1>安装qq</h1>
+<div class="highlight"><pre>sudo apt-get install libgtk2.0-0:i386
+sudo apt-get install lib32ncurses5
+sudo apt-get -f install
+dpkg -i *.deb
+</pre></div>
+
+
+<p>相关链接
+<a href="http://www.ubuntukylin.com/applications/showimg.php?lang=cn&amp;id=23">http://www.ubuntukylin.com/applications/showimg.php?lang=cn&amp;id=23</a></p>
     </div><!-- /.entry-content -->
 
   </article>
