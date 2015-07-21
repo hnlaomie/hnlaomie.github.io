@@ -60,4 +60,16 @@ exit
 datadir=/data/mysql/data
 ```
 
-
+centos下安装mysql5.6
+==========================
+到"http://dev.mysql.com/downloads/repo/yum/"下载rpm包
+```bash
+$ sudo rpm -Uvh platform-and-version-specific-package-name.rpm
+$ sudo yum install mysql-community-server
+$ sudo mysqld_safe --skip-grant-tables >/dev/null 2>&1 &
+$ mysql -u root mysql
+mysql> update user set password = Password('your_password') where user = 'root';
+mysql> flush privileges;
+mysql> exit;
+```
+参考：<http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/>

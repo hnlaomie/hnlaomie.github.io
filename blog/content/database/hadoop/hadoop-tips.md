@@ -36,3 +36,9 @@ hadoop-daemon.sh start namenode -upgrade
 * <http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html>
 * <http://wiki.apache.org/hadoop/Hadoop_Upgrade>
 * <http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/>
+
+查看逻辑cpu个数
+====================
+```
+grep "^processor" /proc/cpuinfo | wc -l
+```

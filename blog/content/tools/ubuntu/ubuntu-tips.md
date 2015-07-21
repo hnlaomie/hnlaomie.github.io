@@ -27,3 +27,21 @@ sudo aptitude purge ~ilinux-image-.*\(\!\(`uname -r`\|generic-.*\)\)
 Host *
 ServerAliveInterval 180
 ```
+
+远程桌面
+===========================
+安装teamviewer
+```bash
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo dpkg -i teamviewer_10.0.41499_i386.deb
+sudo apt-get install -f
+```
+
+teamviewer启动，停止
+```bash
+sudo service teamviewerd stop|start|restart
+sudo teamviewer -info
+sudo teamviewer --daemon stop|start|restart
+sudo teamviewer --passwd password
+```

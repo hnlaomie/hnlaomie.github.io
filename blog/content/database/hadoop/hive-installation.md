@@ -146,3 +146,13 @@ INSERT OVERWRITE LOCAL DIRECTORY '/home/laomie/init.csv' ROW FORMAT DELIMITED FI
 
 hive --database game -e 'select * from android_init' | sed 's/[[:space:]]\+/,/g' > /home/laomie/init.csv
 ```
+
+hive的slf4j
+====================
+```
+rm -fr $HADOOP_HOME/share/hadoop/common/lib/slf4j*
+mv $HBASE_HOME/lib/slf4j* $HADOOP_HOME/share/hadoop/common/lib
+jar -xvf $SPARK_HOME/lib/spark-assembly*.jar
+# delete slf4j path and zip the directory
+jar -cvf $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0.jar $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0/
+```
