@@ -166,6 +166,15 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 
 hive --database game -e <span class="s1">&#39;select * from android_init&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/[[:space:]]\+/,/g&#39;</span> &gt; /home/laomie/init.csv
 </pre></div>
+
+
+<h1>hive的slf4j</h1>
+<div class="highlight"><pre><span class="x">rm -fr </span><span class="p">$</span><span class="nv">HADOOP_HOME</span><span class="x">/share/hadoop/common/lib/slf4j*</span>
+<span class="x">mv </span><span class="p">$</span><span class="nv">HBASE_HOME</span><span class="x">/lib/slf4j* </span><span class="p">$</span><span class="nv">HADOOP_HOME</span><span class="x">/share/hadoop/common/lib</span>
+<span class="x">jar -xvf </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x">/lib/spark-assembly*.jar</span>
+<span class="err">#</span><span class="x"> delete slf4j path and zip the directory</span>
+<span class="x">jar -cvf </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x">/lib/spark-assembly-1.4.0-hadoop2.6.0.jar </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x">/lib/spark-assembly-1.4.0-hadoop2.6.0/</span>
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

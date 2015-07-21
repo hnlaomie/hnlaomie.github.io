@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>vim tips</title>
+        <title>hbase tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,62 +14,75 @@
         <header id="banner" class="body">
                 <h1><a href="/">laomie blog </a></h1>
                 <nav><ul>
-                    <li><a href="/category/database.html">database</a></li>
+                    <li class="active"><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
-                    <li class="active"><a href="/category/tools.html">tools</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/posts/2015/02/vim-tips/" rel="bookmark"
-           title="Permalink to vim tips">vim tips</a></h1>
+        <a href="/posts/2015/07/hbase-tips/" rel="bookmark"
+           title="Permalink to hbase tips">hbase tips</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2015-02-02T10:30:00+01:00">
-                Published: 一 02 二月 2015
+        <abbr class="published" title="2015-07-14T10:50:00+02:00">
+                Published: 二 14 七月 2015
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/laomie.html">laomie</a>
         </address>
-<p>In <a href="/category/tools.html">tools</a>. </p>
-<p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info -->      <h1>复制粘贴</h1>
-<div class="highlight"><pre>&quot;ay          复制到a寄存器
-&quot;ap          是从a寄存器粘贴
-&quot;+p          从粘贴板粘贴
-&quot;+y          复制到粘贴板
+<p>In <a href="/category/database.html">database</a>. </p>
+<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
+</footer><!-- /.post-info -->      <h1>hbase优化</h1>
+<p>术语</p>
+<div class="highlight"><pre>Memory type                                Abbr
+Physical memory available for HBase RS     Total
+Memory size for memstore                   MSize
+Memory for block cache (L1) cache          L1Size
+Memory for JVM related components          JHSize
 </pre></div>
 
 
-<h1>vim和终端间切换</h1>
-<div class="highlight"><pre>ctrl + z     切换到终端
-fg           从终端返回vim
+<p>hbase_env.sh HBASE_REGIONSERVER_OPTS</p>
+<div class="highlight"><pre>-Xmx                        Xmx = MSize + L1Size + JHSize
+-XX:MaxDirectMemorySize     DMen = Total - Xmx
 </pre></div>
 
 
-<h1>nerdtree使用</h1>
-<div class="highlight"><pre>,nn          打开nerdtree
-shift + i    显示隐藏目录
-ctrl + ww    nerdtree和vim间切换
+<p>hbase_site.xml</p>
+<div class="highlight"><pre>hbase.regionserver.global.memstore.size              ULimit = MSize / Xmx
+hfile.block.cache.size                               blksz = 0.8 - ULimit
+hbase.bucketcache.size                               bucsz = DMen + (blksz * Xmx)
+hbase.bucketcache.percentage.in.combinedcache        ccsz = 1 - ((blksz * Xmx) / bucsz)
+hbase.bucketcache.ioengine                           ioeng = offheap or file:/localfile
 </pre></div>
 
 
-<h1>格式化代码</h1>
-<div class="highlight"><pre>gg=G
+<p>用例</p>
+<div class="highlight"><pre>Total      20480
+MSize      1024 
+L1Size     1024
+JHSize     512
+Xmx        2560       
+DMen       17920
+ULimit     0.4
+blksz      0.4
+bucsz      18944
+ccsz       0.946
+ioeng      offheap
 </pre></div>
 
 
-<h1>vim替换</h1>
-<div class="highlight"><pre><span class="cp"># 替换行尾的^M</span>
-<span class="nf">%s</span><span class="o">/</span><span class="err">\</span><span class="n">r</span><span class="o">/</span>
-<span class="cp"># 替换制表符为&quot;,&quot;</span>
-<span class="nf">%s</span><span class="o">/</span><span class="err">\</span><span class="n">t</span><span class="o">/</span><span class="p">,</span><span class="o">/</span><span class="n">g</span>
-</pre></div>
+<ul>
+<li><a href="http://www.slideshare.net/bijugs/h-base-performance">http://www.slideshare.net/bijugs/h-base-performance</a></li>
+<li><a href="http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/">http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/</a></li>
+<li><a href="http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/">http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/</a></li>
+</ul>
     </div><!-- /.entry-content -->
 
   </article>

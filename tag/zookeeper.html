@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>laomie blog - vim</title>
+        <title>laomie blog - zookeeper</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -22,49 +22,64 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/02/vim-tips/">vim tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2014/07/zookeeper-installation/">zookeeper installation</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2015-02-02T10:30:00+01:00">
-                Published: 一 02 二月 2015
+        <abbr class="published" title="2014-07-13T13:50:00+02:00">
+                Published: 日 13 七月 2014
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/laomie.html">laomie</a>
         </address>
-<p>In <a href="/category/tools.html">tools</a>. </p>
-<p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info --><h1>复制粘贴</h1>
-<div class="highlight"><pre>&quot;ay          复制到a寄存器
-&quot;ap          是从a寄存器粘贴
-&quot;+p          从粘贴板粘贴
-&quot;+y          复制到粘贴板
+<p>In <a href="/category/database.html">database</a>. </p>
+<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hbase.html">hbase</a> <a href="/tag/hadoop.html">hadoop</a> </p>
+</footer><!-- /.post-info --><h1>单结点(standalone mode)安装</h1>
+<p>设置环境变量</p>
+<div class="highlight"><pre><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
+<span class="x">export </span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/bin</span>
 </pre></div>
 
 
-<h1>vim和终端间切换</h1>
-<div class="highlight"><pre>ctrl + z     切换到终端
-fg           从终端返回vim
+<p>设置配置文件（用默认的修改）</p>
+<div class="highlight"><pre>tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/data/hadoop/zookeeper
+clientPort=2181
 </pre></div>
 
 
-<h1>nerdtree使用</h1>
-<div class="highlight"><pre>,nn          打开nerdtree
-shift + i    显示隐藏目录
-ctrl + ww    nerdtree和vim间切换
+<h1>多结点(multinode cluster)安装</h1>
+<p>设置环境变量</p>
+<div class="highlight"><pre><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
+<span class="x">export </span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/bin</span>
 </pre></div>
 
 
-<h1>格式化代码</h1>
-<div class="highlight"><pre>gg=G
+<p>设置配置文件zoo.cfg（用默认的修改）</p>
+<div class="highlight"><pre>tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/data/hadoop/zookeeper
+clientPort=2181
+server.1=master:2888:3888
+server.2=node1:2888:3888
+server.3=noee2:2888:3888
 </pre></div>
 
 
-<h1>vim替换</h1>
-<div class="highlight"><pre><span class="cp"># 替换行尾的^M</span>
-<span class="nf">%s</span><span class="o">/</span><span class="err">\</span><span class="n">r</span><span class="o">/</span>
-<span class="cp"># 替换制表符为&quot;,&quot;</span>
-<span class="nf">%s</span><span class="o">/</span><span class="err">\</span><span class="n">t</span><span class="o">/</span><span class="p">,</span><span class="o">/</span><span class="n">g</span>
-</pre></div>                </article>
+<p>注：分别各结点上安装</p>
+<p>设置日志路径zookeeper-env.sh</p>
+<div class="highlight"><pre><span class="x">export ZOO_LOG_DIR=</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/logs</span>
+</pre></div>
+
+
+<p>设置myid</p>
+<div class="highlight"><pre>echo 1 &gt; /data/hadoop/zookeeper/myid
+</pre></div>
+
+
+<p>注：分别在各结点上安装，node1为２，node2为３</p>                </article>
 <p class="paginator">
     Page 1 / 1
 </p>

@@ -88,6 +88,21 @@ mv mysql data
 <span class="c1">#datadir=/var/lib/mysql</span>
 <span class="na">datadir</span><span class="o">=</span><span class="s">/data/mysql/data</span>
 </pre></div>
+
+
+<h1>centos下安装mysql5.6</h1>
+<p>到"http://dev.mysql.com/downloads/repo/yum/"下载rpm包</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo rpm -Uvh platform-and-version-specific-package-name.rpm
+<span class="nv">$ </span>sudo yum install mysql-community-server
+<span class="nv">$ </span>sudo mysqld_safe --skip-grant-tables &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+<span class="nv">$ </span>mysql -u root mysql
+mysql&gt; update user <span class="nb">set </span><span class="nv">password</span> <span class="o">=</span> Password<span class="o">(</span><span class="s1">&#39;your_password&#39;</span><span class="o">)</span> where <span class="nv">user</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
+mysql&gt; flush privileges<span class="p">;</span>
+mysql&gt; <span class="nb">exit</span><span class="p">;</span>
+</pre></div>
+
+
+<p>参考：<a href="http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/">http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/</a></p>
     </div><!-- /.entry-content -->
 
   </article>

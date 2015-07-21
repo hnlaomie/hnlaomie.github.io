@@ -22,7 +22,75 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/06/subversion-tips/">subversion tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/07/hbase-tips/">hbase tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-07-14T10:50:00+02:00">
+                Published: 二 14 七月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>. </p>
+<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
+</footer><!-- /.post-info --><h1>hbase优化</h1>
+<p>术语</p>
+<div class="highlight"><pre>Memory type                                Abbr
+Physical memory available for HBase RS     Total
+Memory size for memstore                   MSize
+Memory for block cache (L1) cache          L1Size
+Memory for JVM related components          JHSize
+</pre></div>
+
+
+<p>hbase_env.sh HBASE_REGIONSERVER_OPTS</p>
+<div class="highlight"><pre>-Xmx                        Xmx = MSize + L1Size + JHSize
+-XX:MaxDirectMemorySize     DMen = Total - Xmx
+</pre></div>
+
+
+<p>hbase_site.xml</p>
+<div class="highlight"><pre>hbase.regionserver.global.memstore.size              ULimit = MSize / Xmx
+hfile.block.cache.size                               blksz = 0.8 - ULimit
+hbase.bucketcache.size                               bucsz = DMen + (blksz * Xmx)
+hbase.bucketcache.percentage.in.combinedcache        ccsz = 1 - ((blksz * Xmx) / bucsz)
+hbase.bucketcache.ioengine                           ioeng = offheap or file:/localfile
+</pre></div>
+
+
+<p>用例</p>
+<div class="highlight"><pre>Total      20480
+MSize      1024 
+L1Size     1024
+JHSize     512
+Xmx        2560       
+DMen       17920
+ULimit     0.4
+blksz      0.4
+bucsz      18944
+ccsz       0.946
+ioeng      offheap
+</pre></div>
+
+
+<ul>
+<li><a href="http://www.slideshare.net/bijugs/h-base-performance">http://www.slideshare.net/bijugs/h-base-performance</a></li>
+<li><a href="http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/">http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/</a></li>
+<li><a href="http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/">http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/06/subversion-tips/" rel="bookmark"
+                           title="Permalink to subversion tips">subversion tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-06-19T14:30:00+02:00">
                 Published: 五 19 六月 2015
@@ -33,116 +101,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>. </p>
 <p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
-</footer><!-- /.post-info --><h1>检出</h1>
-<div class="highlight"><pre>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
-</pre></div>
-
-
-<h1>SVN回滚</h1>
-<div class="highlight"><pre># 正统方法一
-svn merge --dry-run -r73:68 http://my.repository.com/my/project/trunk
-svn merge -r73:68 http://my.repository.com/my/project/trunk
-svn commit -m &quot;Reverted to revision 68.&quot;
-
-# 正统方法二
-svn merge -c -{rev} http://svn.example.com/repos/calc/trunk
-svn commit -m &#39;undo&#39;
-
-# 直观方法
-svn cat -r {rev} filename &gt; filename
-</pre></div>
-
-
-<h1>导出</h1>
-<div class="highlight"><pre>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
-</pre></div>
-
-
-<h1>添加新文件</h1>
-<div class="highlight"><pre>svn add 文件名
-</pre></div>
-
-
-<h1>提交</h1>
-<div class="highlight"><pre>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
-</pre></div>
-
-
-<h1>更新文件</h1>
-<div class="highlight"><pre>svn update
-#将版本库中的文件 Test.java还原到修正版本
-svn update -r 200 Test.java
-</pre></div>
-
-
-<h1>删除文件</h1>
-<div class="highlight"><pre>svn delete 文件名
-</pre></div>
-
-
-<h1>加锁/解锁</h1>
-<div class="highlight"><pre>svn lock -m “加锁备注信息文本“ [--force] 文件名 
-svn unlock
-</pre></div>
-
-
-<h1>比较差异</h1>
-<div class="highlight"><pre>svn diff 文件名
-# 修正版本号200和修正版本号201比较差异
-svn diff -r 200:201 Test.java
-</pre></div>
-
-
-<h1>查看文件或者目录状态</h1>
-<div class="highlight"><pre># ?：不在svn的控制中；M：内容被修改；C：发生冲突
-svn status [-v] [目录/文件]
-</pre></div>
-
-
-<h1>查看日志</h1>
-<div class="highlight"><pre>svn log 文件名
-</pre></div>
-
-
-<h1>查看文件详细信息</h1>
-<div class="highlight"><pre>svn info 文件名
-</pre></div>
-
-
-<h1>查看版本库下的文件和目录列表</h1>
-<div class="highlight"><pre>svn list svn:// 路径(目录或文件的全路径)
-</pre></div>
-
-
-<h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre>svn mkdir 目录名
-</pre></div>
-
-
-<h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre>svn mkdir 目录名
-svn add --non-recursive 目录名
-</pre></div>
-
-
-<h1>恢复本地修改</h1>
-<div class="highlight"><pre>svn revert [--recursive] 文件名
-</pre></div>
-
-
-<h1>解决冲突</h1>
-<div class="highlight"><pre>svn resolved [本地目录全路径]
-</pre></div>
-
-
-<h1>不checkout而查看输出特定文件或URL的内容</h1>
-<div class="highlight"><pre>svn cat http://文件全路径
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>subversion技巧</p>
+                <a class="readmore" href="/posts/2015/06/subversion-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -537,28 +499,6 @@ svn add --non-recursive 目录名
 <p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
 </footer><!-- /.post-info -->                <p>hive安装</p>
                 <a class="readmore" href="/posts/2014/08/hive-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/07/hadoop-installation/" rel="bookmark"
-                           title="Permalink to hadoop installation">hadoop installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-30T22:30:00+02:00">
-                Published: 三 30 七月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>. </p>
-<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info -->                <p>hadoop安装</p>
-                <a class="readmore" href="/posts/2014/07/hadoop-installation/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

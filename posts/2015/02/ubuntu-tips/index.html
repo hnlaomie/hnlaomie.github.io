@@ -53,6 +53,23 @@ system settings -&gt; mouse &amp; touchpad</p>
 <div class="highlight"><pre>Host *
 ServerAliveInterval 180
 </pre></div>
+
+
+<h1>远程桌面</h1>
+<p>安装teamviewer</p>
+<div class="highlight"><pre>sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo dpkg -i teamviewer_10.0.41499_i386.deb
+sudo apt-get install -f
+</pre></div>
+
+
+<p>teamviewer启动，停止</p>
+<div class="highlight"><pre>sudo service teamviewerd stop<span class="p">|</span>start<span class="p">|</span>restart
+sudo teamviewer -info
+sudo teamviewer --daemon stop<span class="p">|</span>start<span class="p">|</span>restart
+sudo teamviewer --passwd password
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

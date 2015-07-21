@@ -22,7 +22,75 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2014/12/postgresql-tips/">postgresql tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/07/hbase-tips/">hbase tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-07-14T10:50:00+02:00">
+                Published: 二 14 七月 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>. </p>
+<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
+</footer><!-- /.post-info --><h1>hbase优化</h1>
+<p>术语</p>
+<div class="highlight"><pre>Memory type                                Abbr
+Physical memory available for HBase RS     Total
+Memory size for memstore                   MSize
+Memory for block cache (L1) cache          L1Size
+Memory for JVM related components          JHSize
+</pre></div>
+
+
+<p>hbase_env.sh HBASE_REGIONSERVER_OPTS</p>
+<div class="highlight"><pre>-Xmx                        Xmx = MSize + L1Size + JHSize
+-XX:MaxDirectMemorySize     DMen = Total - Xmx
+</pre></div>
+
+
+<p>hbase_site.xml</p>
+<div class="highlight"><pre>hbase.regionserver.global.memstore.size              ULimit = MSize / Xmx
+hfile.block.cache.size                               blksz = 0.8 - ULimit
+hbase.bucketcache.size                               bucsz = DMen + (blksz * Xmx)
+hbase.bucketcache.percentage.in.combinedcache        ccsz = 1 - ((blksz * Xmx) / bucsz)
+hbase.bucketcache.ioengine                           ioeng = offheap or file:/localfile
+</pre></div>
+
+
+<p>用例</p>
+<div class="highlight"><pre>Total      20480
+MSize      1024 
+L1Size     1024
+JHSize     512
+Xmx        2560       
+DMen       17920
+ULimit     0.4
+blksz      0.4
+bucsz      18944
+ccsz       0.946
+ioeng      offheap
+</pre></div>
+
+
+<ul>
+<li><a href="http://www.slideshare.net/bijugs/h-base-performance">http://www.slideshare.net/bijugs/h-base-performance</a></li>
+<li><a href="http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/">http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/</a></li>
+<li><a href="http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/">http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/12/postgresql-tips/" rel="bookmark"
+                           title="Permalink to postgresql tips">postgresql tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2014-12-22T15:10:00+01:00">
                 Published: 一 22 十二月 2014
@@ -33,28 +101,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>. </p>
 <p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/pgsql.html">pgsql</a> </p>
-</footer><!-- /.post-info --><h2>postgresql修改密码</h2>
-<p>修改“/etc/postgresql/9.1/main/pg_hba.conf"</p>
-<div class="highlight"><pre><span class="nb">local   </span>all    all   md5
-</pre></div>
-
-
-<p>修改密码</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo service postgresql restart
-<span class="nv">$ </span>sudo -u postgres psql
-<span class="nv">postgres</span><span class="o">=</span><span class="c"># \password postgres</span>
-<span class="nv">postgres</span><span class="o">=</span><span class="c"># \q</span>
-</pre></div>
-
-
-<p>恢复“/etc/postgresql/9.1/main/pg_hba.conf"</p>
-<div class="highlight"><pre><span class="nb">local   </span>all    all   peer
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>postgresql tips</p>
+                <a class="readmore" href="/posts/2014/12/postgresql-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -163,6 +213,28 @@
 <p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->                <p>hadoop安装</p>
                 <a class="readmore" href="/posts/2014/07/hadoop-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/07/zookeeper-installation/" rel="bookmark"
+                           title="Permalink to zookeeper installation">zookeeper installation</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-07-13T13:50:00+02:00">
+                Published: 日 13 七月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>. </p>
+<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hbase.html">hbase</a> <a href="/tag/hadoop.html">hadoop</a> </p>
+</footer><!-- /.post-info -->                <p>zookeeper安装</p>
+                <a class="readmore" href="/posts/2014/07/zookeeper-installation/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
