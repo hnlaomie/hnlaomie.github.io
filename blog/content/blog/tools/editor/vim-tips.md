@@ -43,3 +43,7 @@ vim替换
 # 替换制表符为","
 %s/\t/,/g
 ```
+
+参考
+==================
+[vim quick reference card]({filename}/docs/tools/editor/vimqrc.pdf)
