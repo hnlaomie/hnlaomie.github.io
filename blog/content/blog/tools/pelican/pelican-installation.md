@@ -76,6 +76,13 @@ $ git checkout master
 $ git push --all
 ```
 
+删除google字体
+---------------------
+到pelican包的安装目录下找"themes/notmyidea/static/css/main.css"，将以下行注释掉
+```css
+/* @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&subset=latin); */
+```
+
 github使用
 =========================
 
