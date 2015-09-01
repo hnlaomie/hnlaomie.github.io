@@ -139,12 +139,18 @@ ubuntu在/etc/mysql/my.cnf加入以下内容
 binlog_format=mixed 
 ```
 
-hive导出csv
+hive导出csv，默认用"\t"分隔数据
 =====================
 ```bash
 INSERT OVERWRITE LOCAL DIRECTORY '/home/laomie/init.csv' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select * from android_init
 
 hive --database game -e 'select * from android_init' | sed 's/[[:space:]]\+/,/g' > /home/laomie/init.csv
+```
+
+hive导出表结构
+=====================
+```bash
+hive --database game -e 'show create table android_init' > android_init.sql
 ```
 
 hive的slf4j

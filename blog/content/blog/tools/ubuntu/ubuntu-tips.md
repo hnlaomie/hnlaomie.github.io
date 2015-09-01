@@ -45,3 +45,10 @@ sudo teamviewer -info
 sudo teamviewer --daemon stop|start|restart
 sudo teamviewer --passwd password
 ```
+
+ibus-googlepinyin托板单词数
+===============================
+修改 /usr/share/ibus-googlepinyin/engine.py
+```
+self.__lookup_table.set_page_size(9)
+```
