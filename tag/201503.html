@@ -56,6 +56,22 @@ ldconfig
 yum install lapack lapack-devel blas blas-devel
 pip3.4 install numpy
 pip3.4 install scipy
+</pre></div>
+
+
+<h1>安装svn</h1>
+<p>编辑/etc/yum.repos.d/wandisco-svn.repo</p>
+<div class="highlight"><pre><span class="k">[WandiscoSVN]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">Wandisco SVN Repo</span>
+<span class="na">baseurl</span><span class="o">=</span><span class="s">http://opensource.wandisco.com/centos/6/svn-1.8/RPMS/$basearch/</span>
+<span class="na">enabled</span><span class="o">=</span><span class="s">1</span>
+<span class="na">gpgcheck</span><span class="o">=</span><span class="s">0</span>
+</pre></div>
+
+
+<p>安装</p>
+<div class="highlight"><pre># yum clean all
+# yum install subversion
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">

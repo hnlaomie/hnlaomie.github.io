@@ -161,10 +161,15 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 </pre></div>
 
 
-<h1>hive导出csv</h1>
+<h1>hive导出csv，默认用"\t"分隔数据</h1>
 <div class="highlight"><pre>INSERT OVERWRITE LOCAL DIRECTORY <span class="s1">&#39;/home/laomie/init.csv&#39;</span> ROW FORMAT DELIMITED FIELDS TERMINATED BY <span class="s1">&#39;,&#39;</span> <span class="k">select</span> * from android_init
 
 hive --database game -e <span class="s1">&#39;select * from android_init&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/[[:space:]]\+/,/g&#39;</span> &gt; /home/laomie/init.csv
+</pre></div>
+
+
+<h1>hive导出表结构</h1>
+<div class="highlight"><pre>hive --database game -e <span class="s1">&#39;show create table android_init&#39;</span> &gt; android_init.sql
 </pre></div>
 
 

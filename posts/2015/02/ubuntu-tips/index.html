@@ -70,6 +70,12 @@ sudo teamviewer -info
 sudo teamviewer --daemon stop<span class="p">|</span>start<span class="p">|</span>restart
 sudo teamviewer --passwd password
 </pre></div>
+
+
+<h1>ibus-googlepinyin托板单词数</h1>
+<p>修改 /usr/share/ibus-googlepinyin/engine.py</p>
+<div class="highlight"><pre>self.__lookup_table.set_page_size(9)
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
