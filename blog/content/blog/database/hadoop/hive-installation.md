@@ -162,3 +162,20 @@ jar -xvf $SPARK_HOME/lib/spark-assembly*.jar
 # delete slf4j path and zip the directory
 jar -cvf $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0.jar $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0/
 ```
+
+hive的timestamp时间差
+=========================
+```
+CREATE TABLE ts (txt string, st Timestamp, et Timestamp) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+select 
+  txt, 
+  cast(
+    round(
+      cast((e-s) as double) * 1000
+    ) as int
+  ) latency 
+from (select txt, cast(st as double) s, cast(et as double) e from ts) q;
+```

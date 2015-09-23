@@ -73,3 +73,16 @@ mysql> flush privileges;
 mysql> exit;
 ```
 参考：<http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/>
+
+修改表
+=============================
+```
+alter table t1 rename t2;
+alter table t add col1 int;
+alter table t drop column col1;
+alter table t modify column col1 varchar(50) after col2;
+alter table t change col1 col2 int;
+alter table t change col1 col1 bigint not null;
+alter table t add index idx_name (col1, col2);
+alter table t drop index idx_name;
+```
