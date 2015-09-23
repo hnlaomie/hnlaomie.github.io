@@ -12,7 +12,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">laomie blog </a></h1>
+                <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
                     <li class="active"><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
@@ -180,6 +180,22 @@ hive --database game -e <span class="s1">&#39;select * from android_init&#39;</s
 <span class="err">#</span><span class="x"> delete slf4j path and zip the directory</span>
 <span class="x">jar -cvf </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x">/lib/spark-assembly-1.4.0-hadoop2.6.0.jar </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x">/lib/spark-assembly-1.4.0-hadoop2.6.0/</span>
 </pre></div>
+
+
+<h1>hive的timestamp时间差</h1>
+<div class="highlight"><pre>CREATE TABLE ts (txt string, st Timestamp, et Timestamp) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY &#39;,&#39;;
+
+select 
+  txt, 
+  cast(
+    round(
+      cast((e-s) as double) * 1000
+    ) as int
+  ) latency 
+from (select txt, cast(st as double) s, cast(et as double) e from ts) q;
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
@@ -190,8 +206,7 @@ hive --database game -e <span class="s1">&#39;select * from android_init&#39;</s
                         <ul>
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">

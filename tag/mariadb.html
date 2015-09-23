@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>laomie blog - mariadb</title>
+        <title>laomie's blog - mariadb</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -12,7 +12,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">laomie blog </a></h1>
+                <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
                     <li><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
@@ -97,10 +97,17 @@ mysql&gt; <span class="nb">exit</span><span class="p">;</span>
 </pre></div>
 
 
-<p>参考：<a href="http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/">http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/</a></p>                </article>
-<p class="paginator">
-    Page 1 / 1
-</p>
+<p>参考：<a href="http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/">http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/</a></p>
+<h1>修改表</h1>
+<div class="highlight"><pre>alter table t1 rename t2;
+alter table t add col1 int;
+alter table t drop column col1;
+alter table t modify column col1 varchar(50) after col2;
+alter table t change col1 col2 int;
+alter table t change col1 col1 bigint not null;
+alter table t add index idx_name (col1, col2);
+alter table t drop index idx_name;
+</pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
@@ -108,8 +115,7 @@ mysql&gt; <span class="nb">exit</span><span class="p">;</span>
                         <ul>
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
