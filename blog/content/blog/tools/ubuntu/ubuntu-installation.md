@@ -17,6 +17,9 @@ $ sudo dd bs=4M if=/home/laomie/ubuntu-14.04.1-desktop-amd64.iso of=/dev/sdc && 
 ```bash
 $ sudo add-apt-repository ppa:git-core/ppa
 $ sudo add-apt-repository ppa:webupd8team/java
+$ sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+$ sudo add-apt-repository ppa:nginx/stable
+$ sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
 $ sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
 $ sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
 $ sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromium-browser
@@ -75,12 +78,12 @@ cache-size=1000
 =============================
 编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容
 ```bash
-deb https://get.docker.com/ubuntu docker main
+deb https://apt.dockerproject.org/repo ubuntu-trusty main
 ```
 导入key和安装
 ```bash
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-$ sudo apt-get install lxc-docker
+$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+$ sudo apt-get install docker-engine
 ```
 修改"/etc/default/ufw"
 ```bash
@@ -95,6 +98,7 @@ $ sudo ufw allow 2375/tcp
 DOCKER_OPTS="--dns 208.67.222.222"
 ```
 相关链接
+<https://blog.docker.com/2015/07/new-apt-and-yum-repos/>
 <http://get.docker.com/ubuntu>
 
 安装qq

@@ -46,7 +46,10 @@ ccsz       0.946
 ioeng      offheap
 ```
 
-
 * <http://www.slideshare.net/bijugs/h-base-performance>
 * <http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/>
 * <http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/>
+
+phoenix 启动异常"org.apache.phoenix.exception.PhoenixIOException: SYSTEM.CATALOG"
+===================================
+重装hbase后，需要清空zookeeper内的结点，否则导致上述错误。
