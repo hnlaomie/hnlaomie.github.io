@@ -46,6 +46,9 @@
 <h1>开发源和安装软件</h1>
 <div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:git-core/ppa
 <span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+<span class="nv">$ </span>sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+<span class="nv">$ </span>sudo add-apt-repository ppa:nginx/stable
+<span class="nv">$ </span>sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
 <span class="nv">$ </span>sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
 <span class="nv">$ </span>sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
 <span class="nv">$ </span>sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromium-browser
@@ -104,13 +107,13 @@ resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 
 <h1>安装docker</h1>
 <p>编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容</p>
-<div class="highlight"><pre>deb https://get.docker.com/ubuntu docker main
+<div class="highlight"><pre>deb https://apt.dockerproject.org/repo ubuntu-trusty main
 </pre></div>
 
 
 <p>导入key和安装</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-<span class="nv">$ </span>sudo apt-get install lxc-docker
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+<span class="nv">$ </span>sudo apt-get install docker-engine
 </pre></div>
 
 
@@ -130,6 +133,7 @@ resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 
 
 <p>相关链接
+<a href="https://blog.docker.com/2015/07/new-apt-and-yum-repos/">https://blog.docker.com/2015/07/new-apt-and-yum-repos/</a>
 <a href="http://get.docker.com/ubuntu">http://get.docker.com/ubuntu</a></p>
 <h1>安装qq</h1>
 <div class="highlight"><pre>sudo apt-get install libgtk2.0-0:i386

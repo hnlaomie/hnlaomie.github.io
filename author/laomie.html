@@ -22,7 +22,78 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/07/hbase-tips/">hbase tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2015/10/pyenv-installation/">pyenv installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-10-22T17:30:00+08:00">
+                Published: 2015-10-22(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201510.html">201510</a> <a href="/tag/python.html">python</a> </p>
+</footer><!-- /.post-info --><h1>pyenv的安装</h1>
+<p>下载pyenv</p>
+<div class="highlight"><pre>git clone https://github.com/yyuu/pyenv.git ~/tools/pyenv
+</pre></div>
+
+
+<p>在".bashrc"或".bash_profile"设置环境变量</p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/pyenv&quot;</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>pyenv init -<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+
+
+<p>重启shell,让环境变量生效</p>
+<div class="highlight"><pre><span class="nb">exec</span> <span class="nv">$SHELL</span>
+</pre></div>
+
+
+<p>pyenv命令</p>
+<div class="highlight"><pre><span class="c"># 安装python</span>
+pyenv install 3.5.0
+
+<span class="c"># 卸载python</span>
+pyenv uninstall 3.5.0
+
+<span class="c"># 重安装python</span>
+pyenv rebash
+
+<span class="c"># python可用版本</span>
+pyenv versions
+
+<span class="c"># python指定版本</span>
+pyenv <span class="nb">local </span>3.5.0 system
+</pre></div>
+
+
+<p>在"~/tools/pyenv/version"设置python版本</p>
+<div class="highlight"><pre>3.5.0
+system
+2.7.10
+</pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="https://github.com/yyuu/pyenv">https://github.com/yyuu/pyenv</a></li>
+<li><a href="https://github.com/yyuu/pyenv/blob/master/COMMANDS.md">https://github.com/yyuu/pyenv/blob/master/COMMANDS.md</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/07/hbase-tips/" rel="bookmark"
+                           title="Permalink to hbase tips">hbase tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-07-14T10:50:00+08:00">
                 Published: 2015-07-14(二)
@@ -33,56 +104,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
-</footer><!-- /.post-info --><h1>hbase优化</h1>
-<p>术语</p>
-<div class="highlight"><pre>Memory type                                Abbr
-Physical memory available for HBase RS     Total
-Memory size for memstore                   MSize
-Memory for block cache (L1) cache          L1Size
-Memory for JVM related components          JHSize
-</pre></div>
-
-
-<p>hbase_env.sh HBASE_REGIONSERVER_OPTS</p>
-<div class="highlight"><pre>-Xmx                        Xmx = MSize + L1Size + JHSize
--XX:MaxDirectMemorySize     DMen = Total - Xmx
-</pre></div>
-
-
-<p>hbase_site.xml</p>
-<div class="highlight"><pre>hbase.regionserver.global.memstore.size              ULimit = MSize / Xmx
-hfile.block.cache.size                               blksz = 0.8 - ULimit
-hbase.bucketcache.size                               bucsz = DMen + (blksz * Xmx)
-hbase.bucketcache.percentage.in.combinedcache        ccsz = 1 - ((blksz * Xmx) / bucsz)
-hbase.bucketcache.ioengine                           ioeng = offheap or file:/localfile
-</pre></div>
-
-
-<p>用例</p>
-<div class="highlight"><pre>Total      20480
-MSize      1024 
-L1Size     1024
-JHSize     512
-Xmx        2560       
-DMen       17920
-ULimit     0.4
-blksz      0.4
-bucsz      18944
-ccsz       0.946
-ioeng      offheap
-</pre></div>
-
-
-<ul>
-<li><a href="http://www.slideshare.net/bijugs/h-base-performance">http://www.slideshare.net/bijugs/h-base-performance</a></li>
-<li><a href="http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/">http://blog.asquareb.com/blog/2014/11/24/how-to-leverage-large-physical-memory-to-improve-hbase-read-performance/</a></li>
-<li><a href="http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/">http://hadoop-hbase.blogspot.com/2013/01/hbase-region-server-memory-sizing.html/</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>hbase使用指南</p>
+                <a class="readmore" href="/posts/2015/07/hbase-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -257,28 +282,6 @@ ioeng      offheap
 <p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/shell.html">shell</a> </p>
 </footer><!-- /.post-info -->                <p>shell tips</p>
                 <a class="readmore" href="/posts/2014/12/shell-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/12/postgresql-tips/" rel="bookmark"
-                           title="Permalink to postgresql tips">postgresql tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-12-22T15:10:00+08:00">
-                Published: 2014-12-22(一)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/pgsql.html">pgsql</a> </p>
-</footer><!-- /.post-info -->                <p>postgresql tips</p>
-                <a class="readmore" href="/posts/2014/12/postgresql-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
