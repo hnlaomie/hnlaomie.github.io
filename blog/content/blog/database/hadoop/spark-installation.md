@@ -9,28 +9,28 @@ maven编译
 -----------------------------
 ```bash
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
-mvn -Pyarn -Phadoop-2.4 -Dhadoop.version=2.5.2 -Phive -Phive-1.1.0 -Phive-thriftserver -Dscala-2.11 -DskipTests clean package
+mvn -Pyarn -Phadoop-2.6 -Dhadoop.version=2.6.2 -Phive -Phive-thriftserver -Dscala-2.11 -DskipTests clean package
 ```
 
 sbt编译
 ----------------------------
 ```bash
-SPARK_HADOOP_VERSION=2.5.2 SPARK_YARN=true SPARK_HIVE=true sbt/sbt clean assembly
+SPARK_HADOOP_VERSION=2.6.2 SPARK_YARN=true SPARK_HIVE=true sbt/sbt clean assembly
 ```
 
 生成spark部署包
 ```bash
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
-./make-distribution.sh --tgz --with-tachyon -Pyarn -Dyarn.version=2.5.2 -Phadoop-2.4 -Dhadoop.version=2.5.2 -Phive -Phive-1.1.0 -Phive-thriftserver -DskipTests
+./make-distribution.sh --tgz --with-tachyon -Pyarn -Dyarn.version=2.6.2 -Phadoop-2.6 -Dhadoop.version=2.6.2 -Phive -Phive-thriftserver -DskipTests
 ```
 
 intellij调试spark代码
 -------------------------------------
-安装jdk8，scala2.10，sbt0.13并在"~/.bashrc"设置相关环境变量
+安装jdk8，scala2.11，sbt0.13并在"~/.bashrc"设置相关环境变量
 ```bash
-export SCALA_HOME=/home/laomie/tools/scala-2.10
+export SCALA_HOME=/home/laomie/tools/scala-2.11
 export SBT_HOME=/home/laomie/tools/sbt
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin
 ```
 
@@ -72,9 +72,9 @@ run-example SparkPi 10
 spark on yarn
 -----------------------------------------
 ```bash
-SPARK_JAR=./assembly/target/scala-2.10/spark-assembly-1.2.0-SNAPSHOT-hadoop2.5.0.jar HADOOP_CONF_DIR=/home/hduser/tools/hadoop2.5-single ./bin/spark-submit --master yarn --deploy-mode cluster --class org.apache.spark.examples.SparkPi --num-executors 3 --driver-memory 2g --executor-memory 1g --executor-cores 1 examples/target/scala-2.10/spark-examples-1.2.0-SNAPSHOT-hadoop2.5.0.jar
+./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn-cluster --num-executors 5 --driver-memory 16g --executor-memory 8g --executor-cores 3 --queue thequeue lib/spark-examples*.jar 20
 
-SPARK_JAR=./assembly/target/scala-2.10/spark-assembly-1.2.0-SNAPSHOT-hadoop2.5.0.jar HADOOP_CONF_DIR=/home/hduser/tools/hadoop2.5-single/etc/hadoop MASTER=yarn-client ./bin/spark-shell
+./bin/spark-shell --master yarn-client
 ```
 
 问题一览

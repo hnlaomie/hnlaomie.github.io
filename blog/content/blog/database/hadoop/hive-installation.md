@@ -125,6 +125,7 @@ hive启动
 $ hive --service hiveserver2
 $ netstat -anp | grep 10000
 ```
+jdbc连接时，用户用hadoop相关用户，否则有安全方面的异常
 
 hive1.1的jline问题
 =======================
@@ -178,4 +179,12 @@ select
     ) as int
   ) latency 
 from (select txt, cast(st as double) s, cast(et as double) e from ts) q;
+```
+
+hive删除表
+===========================
+```
+truncate table table_name;
+truncate table table_name partition (dt = '2015-12-02');
+alter table table_name drop if exists partition (dt = '2015-12-02');
 ```

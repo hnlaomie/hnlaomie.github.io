@@ -44,9 +44,9 @@ net.ipv6.conf.lo.disable_ipv6 = 1
 # Set Hadoop-related environment variables
 export HADOOP_HOME=/home/hduser/tools/hadoop
 # Native Path
-export HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_PREFIX}/lib/native
-export HADOOP_OPTS="-Djava.library.path=$HADOOP_PREFIX/lib"
-export JAVA_LIBRARY_PATH=${HADOOP_PREFIX}/lib/native 
+export HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_HOME}/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+export JAVA_LIBRARY_PATH=${HADOOP_HOME}/lib/native 
 #Java path
 export JAVA_HOME='/home/hduser/tools/jdk7'
 # Add Hadoop bin/ directory to PATH
@@ -66,57 +66,105 @@ hadoop配置文件设置
 --------------------
 1\. 为"libexec/hadoop-config.sh"设置"JAVA_HOME"
 ```bash
-export JAVA_HOME='/home/hduser/tools/jdk7'
+export JAVA_HOME='/home/hduser/tools/jdk8'
 ```
 
 2\. 为"etc/hadoop/hadoop-env.sh"设置"JAVA_HOME"
 ```bash
-export JAVA_HOME='/home/hduser/tools/jdk7'
+export JAVA_HOME='/home/hduser/tools/jdk8'
 ```
 
 3\. 设置"etc/hadoop/yarn-site.xml"
 ```xml
 <configuration>
-    <!-- Site specific YARN configuration properties -->
-    <property>
-        <name>yarn.nodemanager.aux-services</name>
-        <value>mapreduce_shuffle</value>
+    <property>                                                                                                          
+        <name>yarn.nodemanager.aux-services</name>                                                                      
+        <value>mapreduce_shuffle</value>                                                                                
+    </property>                                                                                                         
+    <property>                                                                                                          
+        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>                                              
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>                                                          
     </property>
     <property>
-        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
-        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+        <name>yarn.resourcemanager.scheduler.class</name>
+        <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
+    </property>
+
+    <!-- performance setting -->
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>512</value>
+        <description>Minimum limit of memory to allocate to each container request at the Resource Manager.</description>
     </property>
     <property>
-        <!-- "laomie-pc" is master node hostname -->
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>3072</value>
+        <description>Maximum limit of memory to allocate to each container request at the Resource Manager.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-vcores</name>
+        <value>1</value>
+        <description>The minimum allocation for every container request at the RM, in terms of virtual CPU cores. Requests lower than this won't take effect, and the specified value will get allocated the minimum.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-vcores</name>
+        <value>4</value>
+        <description>The maximum allocation for every container request at the RM, in terms of virtual CPU cores. Requests higher than this won't take effect, and will get capped to this value.</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>3072</value>
+        <description>Physical memory, in MB, to be made available to running containers</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>4</value>
+        <description>Number of CPU cores that can be allocated for containers.</description>
+    </property>
+    <!-- end of performance setting -->
+
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>localhost:8032</value>
+    </property>
+    <property>
         <name>yarn.resourcemanager.resource-tracker.address</name>
-        <value>laomie-pc:8025</value>
+        <value>localhost:8031</value>
     </property>
     <property>
         <name>yarn.resourcemanager.scheduler.address</name>
-        <value>laomie-pc:8030</value>
+        <value>localhost:8030</value>
     </property>
-    <property>
-        <name>yarn.resourcemanager.address</name>
-        <value>laomie-pc:8040</value>
-    </property>
-
 </configuration>
 ```
 
 4\. 设置"etc/hadoop/core-site.xml"
 ```xml
 <configuration>
+    <property>                                                                                                          
+        <name>fs.defaultFS</name>                                                                                    
+        <value>hdfs://localhost:9000</value>                                                                            
+    </property>                                                                                                         
+    <property>                                                                                                          
+        <name>hadoop.tmp.dir</name>                                                                                     
+        <value>/home/laomie/tools/data/hdfs/tmp</value>                                                                    
+    </property>                                                                                                         
     <property>
-        <name>fs.default.name</name>
-        <value>hdfs://localhost:9000</value>
-    </property>
-    <property>
-        <name>hadoop.tmp.dir</name>
-        <value>/home/hduser/tools/hadoop/tmp</value>
+        <name>fs.trash.interval</name>
+        <value>1440</value>
     </property>
     <property>
         <name>hadoop.native.lib</name>
         <value>true</value>
+    </property>
+    
+    <property>
+        <name>file.stream-buffer-size</name>
+        <value>4096</value>
+    </property>
+    <property>
+        <name>file.blocksize</name>
+        <value>67108864</value>
     </property>
 </configuration>
 ```
@@ -127,30 +175,113 @@ export JAVA_HOME='/home/hduser/tools/jdk7'
     <property>
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
+        <description>Execution framework.</description>
     </property>
+    <property>
+        <name>mapreduce.jobtracker.address</name>
+        <value>localhost:8021</value>
+    </property>
+    <property>
+        <name>mapreduce.map.output.compress</name>
+        <value>true</value>
+    </property>
+
+    <!-- performance setting -->
+    <property>
+        <name>mapreduce.reduce.shuffle.memory.limit.percent</name>
+        <value>0.10</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.resource.mb</name>
+        <value>256</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.command-opts</name>
+        <value>-Xmx192m</value>
+    </property>
+    <property>
+        <name>mapreduce.map.cpu.vcores</name>
+        <value>1</value>
+        <description>The number of virtual cores required for each map task.</description>
+    </property>
+    <property>
+        <name>mapreduce.reduce.cpu.vcores</name>
+        <value>1</value>
+        <description>The number of virtual cores required for each map task.</description>
+    </property>
+    <property>
+        <name>mapreduce.map.memory.mb</name>
+        <value>256</value>
+        <description>Larger resource limit for maps.</description>
+    </property>
+    <property>
+        <name>mapreduce.map.java.opts</name>
+        <value>-Xmx192m</value>
+        <description>Heap-size for child jvms of maps.</description>
+    </property>
+    <property>
+        <name>mapreduce.reduce.memory.mb</name>
+        <value>512</value>
+        <description>Larger resource limit for reduces.</description>
+    </property>
+    <property>
+        <name>mapreduce.reduce.java.opts</name>
+        <value>-Xmx384m</value>
+        <description>Heap-size for child jvms of reduces.</description>
+    </property>
+    <!-- end of performance setting -->
 </configuration>
 ```
 
 6\. 设置"etc/hadoop/hdfs-site.xml"
 ```xml
 <configuration>
-    <property>
-        <name>dfs.replication</name>
-        <!-- the number of nodes -->
-        <value>1</value>
+    <property>                                                                                                              
+        <name>dfs.replication</name>                                                                                        
+        <value>1</value>                                                                                                    
+    </property>                                                                                                             
+    <property>                                                                                                              
+        <name>dfs.namenode.name.dir</name>                                                                                  
+        <value>file:/home/laomie/tools/data/hdfs/namenode</value>                                               
+    </property>                                                                                                             
+    <property>                                                                                                              
+        <name>dfs.datanode.data.dir</name>                                                                                  
+        <value>file:/home/laomie/tools/data/hdfs/datanode</value>                                               
+    </property> 
+    <property>                                                                                                              
+        <name>dfs.permissions</name>                                                                                        
+        <value>false</value>                                                                                                
+    </property>
+    <property>     
+        <name>dfs.socket.timeout</name>    
+        <value>180000</value>
     </property>
     <property>
-        <name>dfs.namenode.name.dir</name>
-        <value>file:/home/hduser/tools/hadoop/yarn_data/hdfs/namenode</value>
+        <name>dfs.namenode.handler.count</name>
+        <value>10</value>
     </property>
     <property>
-        <name>dfs.datanode.data.dir</name>
-        <value>file:/home/hduser/tools/hadoop/yarn_data/hdfs/datanode</value>
+        <name>dfs.namenode.checkpoint.period</name>
+        <value>7200</value>
+    </property>
+    <property> 
+        <name>dfs.balance.bandwidthPerSec</name> 
+        <value>20971520</value> 
     </property>
     <property>
-        <name>dfs.permissions</name>
-        <value>false</value>
+        <name>dfs.blocksize</name>
+        <value>33554432</value>
     </property>
+    <property>
+        <name>dfs.stream-buffer-size</name>
+        <value>8192</value>
+    </property>
+    <!--
+    <property>
+        <name>dfs.namenode.checkpoint.dir</name>
+        <value>file:/usr/local/data/data/hdfs/namesecondary</value>	
+    </property>
+    -->
 </configuration>
 ```
 
@@ -163,10 +294,17 @@ hdfs namenode -format
 hadoop的启动，停止
 --------------------
 ```bash
+# for master
+start-all.sh
 start-dfs.sh
 start-yarn.sh
+stop-all.sh
 stop-yarn.sh
 stop-dfs.sh
+
+# for master and slaves
+hadoop-daemon.sh start namenode|secondarynamenode|datanode
+hadoop-daemon.sh stop namenode|secondarynamenode|datanode
 ```
 
 hadoop服务
@@ -242,7 +380,44 @@ jdk8编译hadoop （注：不能编译doc）
 mvn package -Pdist,native -DskipTests -Dtar -Dmaven.javadoc.skip=true 
 ```
 
+hadoop的升级
+----------------------------
+```bash
+# 备份namenode信息，即etc/hadoop/hdfs-site.xml下的dfs.namenode.name.dir所指向的文件夹
+# 其它备份, 检查
+hadoop dfsadmin -safemode enter
+hadoop fsck / -files -blocks -locations | grep -v -E '^.' > /data/backup/hadoop.bak
+hadoop dfsadmin -safemode leave
+mr-jobhistory-daemon.sh stop historyserver
+
+# 停机并复制配置文件到新版hadoop
+stop-all.sh
+cd $HADOOP_HOME/etc/hadoop
+cp hdfs-site.xml mapred-site.xml yarn-site.xml core-site.xml hadoop-env.sh slaves $NEW_HADOOP_HOME/etc/hadoop/
+cd ~
+mv $HADOOP_HOME $OLD_HADOOP_HOME
+mv $NEW_HADOOP_HOME $HADOOP_HOME
+scp -r $HADOOP_HOME hadoop@node1:/data/apache/
+
+# 升级
+start-dfs.sh -upgrade
+start-yarn.sh
+mr-jobhistory-daemon.sh start historyserver
+
+# 确认没问题后，最终完成升级
+hadoop dfsadmin -finalizeUpgrade
+```
+
 references
 -----------------------------------------------
+* <http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html>
+* <http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/ClusterSetup.html>
+* <http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html>
 * <http://www.cnblogs.com/lanxuezaipiao/p/3525554.html>
 * <http://solaimurugan.blogspot.com/2013/11/setup-multi-node-hadoop-20-cluster.html>
+* <https://www.zybuluo.com/layor/note/161370>
+* <https://www.zybuluo.com/layor/note/162019>
+* <http://www.cnblogs.com/JavaSmart/p/4567173.html>
+
+
+

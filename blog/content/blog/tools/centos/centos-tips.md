@@ -49,3 +49,31 @@ gpgcheck=0
 # yum clean all
 # yum install subversion
 ```
+
+安装mysql5.7
+=========================
+```bash
+wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+yum localinstall mysql57-community-release-el6-7.noarch.rpm
+yum repolist enabled | grep "mysql.*-community.*"
+yum install mysql-community-server
+mkdir -p /data/mysql/data
+mkdir -p /data/mysql/share
+mysql_install_db --datadir=/data/mysql/data --lc-messages-dir=/data/mysql/share
+```
+
+/etc/my.cnf做如下修改
+```
+[mysqld]
+#datadir=/var/lib/mysql
+datadir=/data/mysql/data
+```
+
+设置密码
+```
+chown -R mysql.mysql /data/mysql
+service mysqld start
+cat /root/.mysql_secret
+# 输入cat显示的密码
+mysqladmin -u root -h localhost password '123456' -p
+```

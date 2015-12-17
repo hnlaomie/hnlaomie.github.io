@@ -21,11 +21,24 @@ hdfs dfs -get [-ignorecrc] [-crc] <src> <localdst>
 
 # 删除目录
 hdfs dfs -rmr [-skipTrash] URI [URI ...]
+
+# 查看hadoop磁盘使用
+hdfs dfsadmin -report
+
+# 查看yarn的资源使用
+yarn node -list
+
+# 查看mr进程
+mapred job -list
 ```
 
 hadoop无法停止
 =========================
 当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止
+
+hadoop的reduce任务不能启动
+=============================
+当磁盘剩余空间小于10%时，reduce任务无法启动
 
 hadoop升级
 =========================
@@ -36,6 +49,12 @@ hadoop-daemon.sh start namenode -upgrade
 * <http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html>
 * <http://wiki.apache.org/hadoop/Hadoop_Upgrade>
 * <http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/>
+
+升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode
+```
+hdfs dfsadmin -finalizeUpgrade
+```
+* <http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space>
 
 查看逻辑cpu个数
 ====================
