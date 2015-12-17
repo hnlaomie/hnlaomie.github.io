@@ -52,11 +52,22 @@ hdfs dfs -get <span class="o">[</span>-ignorecrc<span class="o">]</span> <span c
 
 <span class="c"># 删除目录</span>
 hdfs dfs -rmr <span class="o">[</span>-skipTrash<span class="o">]</span> URI <span class="o">[</span>URI ...<span class="o">]</span>
+
+<span class="c"># 查看hadoop磁盘使用</span>
+hdfs dfsadmin -report
+
+<span class="c"># 查看yarn的资源使用</span>
+yarn node -list
+
+<span class="c"># 查看mr进程</span>
+mapred job -list
 </pre></div>
 
 
 <h1>hadoop无法停止</h1>
 <p>当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止</p>
+<h1>hadoop的reduce任务不能启动</h1>
+<p>当磁盘剩余空间小于10%时，reduce任务无法启动</p>
 <h1>hadoop升级</h1>
 <p>namenode升级</p>
 <div class="highlight"><pre>hadoop-daemon.sh start namenode -upgrade
@@ -67,6 +78,14 @@ hdfs dfs -rmr <span class="o">[</span>-skipTrash<span class="o">]</span> URI <sp
 <li><a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html">http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html</a></li>
 <li><a href="http://wiki.apache.org/hadoop/Hadoop_Upgrade">http://wiki.apache.org/hadoop/Hadoop_Upgrade</a></li>
 <li><a href="http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/">http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/</a></li>
+</ul>
+<p>升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode</p>
+<div class="highlight"><pre>hdfs dfsadmin -finalizeUpgrade
+</pre></div>
+
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space">http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space</a></li>
 </ul>
 <h1>查看逻辑cpu个数</h1>
 <div class="highlight"><pre>grep &quot;^processor&quot; /proc/cpuinfo | wc -l

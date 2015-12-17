@@ -72,6 +72,33 @@ pip3.4 install scipy
 <p>安装</p>
 <div class="highlight"><pre># yum clean all
 # yum install subversion
+</pre></div>
+
+
+<h1>安装mysql5.7</h1>
+<div class="highlight"><pre>wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+yum localinstall mysql57-community-release-el6-7.noarch.rpm
+yum repolist enabled <span class="p">|</span> grep <span class="s2">&quot;mysql.*-community.*&quot;</span>
+yum install mysql-community-server
+mkdir -p /data/mysql/data
+mkdir -p /data/mysql/share
+mysql_install_db --datadir<span class="o">=</span>/data/mysql/data --lc-messages-dir<span class="o">=</span>/data/mysql/share
+</pre></div>
+
+
+<p>/etc/my.cnf做如下修改</p>
+<div class="highlight"><pre><span class="k">[mysqld]</span>
+<span class="c1">#datadir=/var/lib/mysql</span>
+<span class="na">datadir</span><span class="o">=</span><span class="s">/data/mysql/data</span>
+</pre></div>
+
+
+<p>设置密码</p>
+<div class="highlight"><pre>chown -R mysql.mysql /data/mysql
+service mysqld start
+cat /root/.mysql_secret
+# 输入cat显示的密码
+mysqladmin -u root -h localhost password &#39;123456&#39; -p
 </pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">

@@ -151,6 +151,7 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 </pre></div>
 
 
+<p>jdbc连接时，用户用hadoop相关用户，否则有安全方面的异常</p>
 <h1>hive1.1的jline问题</h1>
 <p>删除$HADOOP_HOME/share/hadoop/yarn/lib/jline-0.9.94.jar</p>
 <h1>mysql日志写入问题</h1>
@@ -195,6 +196,13 @@ select
     ) as int
   ) latency 
 from (select txt, cast(st as double) s, cast(et as double) e from ts) q;
+</pre></div>
+
+
+<h1>hive删除表</h1>
+<div class="highlight"><pre>truncate table table_name;
+truncate table table_name partition (dt = &#39;2015-12-02&#39;);
+alter table table_name drop if exists partition (dt = &#39;2015-12-02&#39;);
 </pre></div>
     </div><!-- /.entry-content -->
 
