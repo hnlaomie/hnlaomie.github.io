@@ -130,4 +130,10 @@ svn resolved [本地目录全路径]
 svn cat http://文件全路径
 ```
 
+忽略文件
+======================
+```
+svn propedit svn:ignore .
+```
+
 
