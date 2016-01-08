@@ -188,3 +188,13 @@ truncate table table_name;
 truncate table table_name partition (dt = '2015-12-02');
 alter table table_name drop if exists partition (dt = '2015-12-02');
 ```
+
+变更机器名
+======================
+因为hive的metadata中包括机器名，当机器名变更后，需要改metadata里的机器名。可用以下命令查找并修改机器名
+```
+# 查找表的hdfs路径（包括机器名）
+hive> describe formatted [tablename];
+# 修改表的hdfs路径
+hive> alter table [tablename] set location "hdfs://[newhostname]:8020/user/hive/warehouse/[tablename]"; 
+```

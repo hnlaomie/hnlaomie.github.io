@@ -1,5 +1,5 @@
 Title: zookeeper installation
-Date: 2014-07-13 13:50
+Date: 2015-07-13 13:50
 Category: database
 Tags: 201507, zookeeper, hbase, hadoop 
 Author: laomie

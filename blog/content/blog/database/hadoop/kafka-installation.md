@@ -15,7 +15,7 @@ gradle releaseTarGzAll
 
 安装
 =========================
-config/server.properties设置zookeeper
+[安装zookeeper](http://hnlaomie.github.io/posts/2015/07/zookeeper-installation/)，然后修改"config/server.properties"设置zookeeper
 ```
 zookeeper.connect=localhost:2181
 ```
@@ -43,6 +43,7 @@ kafka和spark整合
 cd $SPARK_HOME
 bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5
 bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1
+bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test
 ```
 
 idea开发环境设置
@@ -52,8 +53,19 @@ kafka, spark streaming相关例子，只需启动kafka，然后在运行环境�
 VM options: -Dspark.master=local[2]
 Environment variables: MASTER=localh[2]
 ```
-注：scala2.10使用jkd7，gradle需做以下设置兼容jdk7
+scala2.10使用jkd7，gradle需做以下设置兼容jdk7
 ```
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
+```
+
+删除主题内容
+=================================
+设置server.properties
+```
+delete.topic.enable=true
+```
+用以下命令删除内容
+```bash
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic test
 ```
