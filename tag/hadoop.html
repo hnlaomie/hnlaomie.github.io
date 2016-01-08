@@ -80,6 +80,17 @@ Environment variables: MASTER=localh[2]
 <p>scala2.10使用jkd7，gradle需做以下设置兼容jdk7</p>
 <div class="highlight"><pre>sourceCompatibility = &quot;1.7&quot;
 targetCompatibility = &quot;1.7&quot;
+</pre></div>
+
+
+<h1>删除主题内容</h1>
+<p>设置server.properties</p>
+<div class="highlight"><pre>delete.topic.enable=true
+</pre></div>
+
+
+<p>用以下命令删除内容</p>
+<div class="highlight"><pre>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
