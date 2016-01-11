@@ -1,4 +1,4 @@
-Title: hbase installation
+Title: cassandra installation
 Date: 2016-01-11 10:50
 Category: database
 Tags: 201601, cassandra
