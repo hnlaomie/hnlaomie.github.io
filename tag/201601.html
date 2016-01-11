@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - 201601</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2016/01/cassandra-installation/">cassandra installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-01-11T10:50:00+08:00">
+                Published: 2016-01-11(一)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/cassandra.html">cassandra</a> </p>
+</footer><!-- /.post-info --><h1>集群说明</h1>
+<p>node0 192.168.11.82 (seed1)
+node1 192.168.11.81
+node2 192.168.11.83</p>
+<h1>设置".bashrc"（所有节点）</h1>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">CASSANDRA_HOME</span><span class="o">=</span><span class="s1">&#39;/data/apache/cassandra&#39;</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$CASSANDRA_HOME</span>/bin
+</pre></div>
+
+
+<h1>建目录（所有节点）</h1>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p /data/hadoop/cassandra/data
+<span class="nv">$ </span>mkdir -p /data/hadoop/cassandra/commitlog
+</pre></div>
+
+
+<h1>设置"conf/cassandra.yaml"</h1>
+<p>192.168.11.82</p>
+<div class="highlight"><pre>cluster_name: <span class="s1">&#39;CassandraCluster&#39;</span>
+- seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
+listen_address: 192.168.11.82
+rpc_address: 192.168.11.82
+
+commitlog_directory: /data/hadoop/cassandra/commitlog
+data_file_directories: 
+- /data/hadoop/cassandra/data
+</pre></div>
+
+
+<p>192.168.11.81</p>
+<div class="highlight"><pre>cluster_name: <span class="s1">&#39;CassandraCluster&#39;</span>
+- seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
+listen_address: 192.168.11.81
+rpc_address: 192.168.11.81
+
+commitlog_directory: /data/hadoop/cassandra/commitlog
+data_file_directories: 
+- /data/hadoop/cassandra/data
+</pre></div>
+
+
+<p>192.168.11.83</p>
+<div class="highlight"><pre>cluster_name: <span class="s1">&#39;CassandraCluster&#39;</span>
+- seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
+listen_address: 192.168.11.83
+rpc_address: 192.168.11.83
+
+commitlog_directory: /data/hadoop/cassandra/commitlog
+data_file_directories: 
+- /data/hadoop/cassandra/data
+</pre></div>
+
+
+<h1>启动cassandra（所有节点）</h1>
+<div class="highlight"><pre><span class="nv">$ </span>cassandra -f
+</pre></div>
+
+
+<h1>cassandra的命令和sql语句</h1>
+<div class="highlight"><pre><span class="nv">$ </span>cqlsh 192.168.11.82 9042
+<span class="nv">$ </span>nodetool status
+cqlsh:&gt; CREATE KEYSPACE <span class="nb">test </span>WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span> : <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
+cqlsh:&gt; use <span class="nb">test</span><span class="p">;</span>
+cqlsh:&gt; CREATE TABLE users <span class="o">(</span>user_id int PRIMARY KEY, fname text, lname text<span class="o">)</span><span class="p">;</span>
+cqlsh:&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1, <span class="s1">&#39;john&#39;</span>, <span class="s1">&#39;smith&#39;</span><span class="o">)</span> using TTL 60<span class="p">;</span>
+cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
+</pre></div>
+
+
+<h1>references</h1>
+<ul>
+<li><a href="https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html">https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html</a></li>
+<li><a href="http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster">http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster</a></li>
+<li><a href="http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack">http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2016/01/spark-tips/" rel="bookmark"
+                           title="Permalink to spark tips">spark tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-01-09T16:30:00+08:00">
+                Published: 2016-01-09(六)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/spark.html">spark</a> </p>
+</footer><!-- /.post-info -->                <p>spark使用指南</p>
+                <a class="readmore" href="/posts/2016/01/spark-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

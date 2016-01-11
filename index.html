@@ -22,7 +22,127 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/12/kafka-installation/">kafka installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2016/01/cassandra-installation/">cassandra installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-01-11T10:50:00+08:00">
+                Published: 2016-01-11(一)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/cassandra.html">cassandra</a> </p>
+</footer><!-- /.post-info --><h1>集群说明</h1>
+<p>node0 192.168.11.82 (seed1)
+node1 192.168.11.81
+node2 192.168.11.83</p>
+<h1>设置".bashrc"（所有节点）</h1>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">CASSANDRA_HOME</span><span class="o">=</span><span class="s1">&#39;/data/apache/cassandra&#39;</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$CASSANDRA_HOME</span>/bin
+</pre></div>
+
+
+<h1>建目录（所有节点）</h1>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p /data/hadoop/cassandra/data
+<span class="nv">$ </span>mkdir -p /data/hadoop/cassandra/commitlog
+</pre></div>
+
+
+<h1>设置"conf/cassandra.yaml"</h1>
+<p>192.168.11.82</p>
+<div class="highlight"><pre>cluster_name: <span class="s1">&#39;CassandraCluster&#39;</span>
+- seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
+listen_address: 192.168.11.82
+rpc_address: 192.168.11.82
+
+commitlog_directory: /data/hadoop/cassandra/commitlog
+data_file_directories: 
+- /data/hadoop/cassandra/data
+</pre></div>
+
+
+<p>192.168.11.81</p>
+<div class="highlight"><pre>cluster_name: <span class="s1">&#39;CassandraCluster&#39;</span>
+- seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
+listen_address: 192.168.11.81
+rpc_address: 192.168.11.81
+
+commitlog_directory: /data/hadoop/cassandra/commitlog
+data_file_directories: 
+- /data/hadoop/cassandra/data
+</pre></div>
+
+
+<p>192.168.11.83</p>
+<div class="highlight"><pre>cluster_name: <span class="s1">&#39;CassandraCluster&#39;</span>
+- seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
+listen_address: 192.168.11.83
+rpc_address: 192.168.11.83
+
+commitlog_directory: /data/hadoop/cassandra/commitlog
+data_file_directories: 
+- /data/hadoop/cassandra/data
+</pre></div>
+
+
+<h1>启动cassandra（所有节点）</h1>
+<div class="highlight"><pre><span class="nv">$ </span>cassandra -f
+</pre></div>
+
+
+<h1>cassandra的命令和sql语句</h1>
+<div class="highlight"><pre><span class="nv">$ </span>cqlsh 192.168.11.82 9042
+<span class="nv">$ </span>nodetool status
+cqlsh:&gt; CREATE KEYSPACE <span class="nb">test </span>WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span> : <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
+cqlsh:&gt; use <span class="nb">test</span><span class="p">;</span>
+cqlsh:&gt; CREATE TABLE users <span class="o">(</span>user_id int PRIMARY KEY, fname text, lname text<span class="o">)</span><span class="p">;</span>
+cqlsh:&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1, <span class="s1">&#39;john&#39;</span>, <span class="s1">&#39;smith&#39;</span><span class="o">)</span> using TTL 60<span class="p">;</span>
+cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
+</pre></div>
+
+
+<h1>references</h1>
+<ul>
+<li><a href="https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html">https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html</a></li>
+<li><a href="http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster">http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster</a></li>
+<li><a href="http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack">http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2016/01/spark-tips/" rel="bookmark"
+                           title="Permalink to spark tips">spark tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-01-09T16:30:00+08:00">
+                Published: 2016-01-09(六)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/spark.html">spark</a> </p>
+</footer><!-- /.post-info -->                <p>spark使用指南</p>
+                <a class="readmore" href="/posts/2016/01/spark-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/12/kafka-installation/" rel="bookmark"
+                           title="Permalink to kafka installation">kafka installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-12-18T09:50:00+08:00">
                 Published: 2015-12-18(五)
@@ -33,70 +153,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info --><h1>代码编译</h1>
-<div class="highlight"><pre>gradle
-gradle releaseTarGzAll
-</pre></div>
-
-
-<p>安装包在./core/build/distributions/</p>
-<h1>安装</h1>
-<p><a href="http://hnlaomie.github.io/posts/2015/07/zookeeper-installation/">安装zookeeper</a>，然后修改"config/server.properties"设置zookeeper</p>
-<div class="highlight"><pre>zookeeper.connect=localhost:2181
-</pre></div>
-
-
-<h1>快速指南</h1>
-<div class="highlight"><pre># 启动
-bin/zookeeper-server-start.sh config/zookeeper.properties &amp;
-# 停止
-bin/zookeeper-server-stop.sh config/zookeeper.properties
-# 新建主题
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-# 显示主题
-bin/kafka-topics.sh --list --zookeeper localhost:2181
-# 发送消息
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
-# 接收消息
-bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
-</pre></div>
-
-
-<h1>kafka和spark整合</h1>
-<div class="highlight"><pre><span class="x">cd </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x"></span>
-<span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5</span>
-<span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1</span>
-<span class="x">bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test</span>
-</pre></div>
-
-
-<h1>idea开发环境设置</h1>
-<p>kafka, spark streaming相关例子，只需启动kafka，然后在运行环境里做如下设置</p>
-<div class="highlight"><pre>VM options: -Dspark.master=local[2]
-Environment variables: MASTER=localh[2]
-</pre></div>
-
-
-<p>scala2.10使用jkd7，gradle需做以下设置兼容jdk7</p>
-<div class="highlight"><pre>sourceCompatibility = &quot;1.7&quot;
-targetCompatibility = &quot;1.7&quot;
-</pre></div>
-
-
-<h1>删除主题内容</h1>
-<p>设置server.properties</p>
-<div class="highlight"><pre>delete.topic.enable=true
-</pre></div>
-
-
-<p>用以下命令删除内容</p>
-<div class="highlight"><pre>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>kafka安装</p>
+                <a class="readmore" href="/posts/2015/12/kafka-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -249,50 +309,6 @@ targetCompatibility = &quot;1.7&quot;
 <p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/centos.html">centos</a> </p>
 </footer><!-- /.post-info -->                <p>centos技巧</p>
                 <a class="readmore" href="/posts/2015/03/centos-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2015/03/php-installation/" rel="bookmark"
-                           title="Permalink to php installation">php installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-03-03T10:30:00+08:00">
-                Published: 2015-03-03(二)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/programming.html">programming</a>.</p>
-<p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/php.html">php</a> <a href="/tag/nginx.html">nginx</a> </p>
-</footer><!-- /.post-info -->                <p>php安装</p>
-                <a class="readmore" href="/posts/2015/03/php-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2015/02/idea-tips/" rel="bookmark"
-                           title="Permalink to idea tips">idea tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-02-02T10:30:00+08:00">
-                Published: 2015-02-02(一)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/idea.html">idea</a> </p>
-</footer><!-- /.post-info -->                <p>intellij idea 技巧</p>
-                <a class="readmore" href="/posts/2015/02/idea-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
