@@ -79,6 +79,29 @@ cqlsh:> INSERT INTO users (user_id, fname, lname) VALUES (1, 'john', 'smith') us
 cqlsh:> CREATE INDEX ON users (lname);
 ```
 
+cql超时问题
+===============================
+默认查询超10秒就超时，可将超时设置大些，在"~/.cassandra/cqlshrc"加以下内容
+```
+[connection]
+client_timeout = 180
+# client_timeout = None
+```
+
+批处理出错问题
+=====================
+报"Failed managing commit log segments. Commit disk failure policy is stop"，可修改以下参数
+```
+batch_size_warn_threshold_in_kb: 5
+batch_size_fail_threshold_in_kb: 50
+commit_failure_policy: ignore
+```
+
+trace查询相关
+=====================
+1\. 用"nodetool setlogginglevel"设置日志级别，然后在"system_traces.events"和"system_traces.sessions"看日志记录
+2\. 也可在cqlsh中用"tracing (on | off)"在查询中显示trace信息
+
 references
 =========================
 * <https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html>

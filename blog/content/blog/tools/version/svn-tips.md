@@ -136,4 +136,15 @@ svn cat http://文件全路径
 svn propedit svn:ignore .
 ```
 
+查看删除的文件
+====================
+```
+svn log -r2080:HEAD -v | grep "^   D"
+svn log -v . | awk '/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION": "$0; }'
+```
 
+签出指定时间之前的版本
+=========================
+```
+svn checkout --revision {2016-02-23} http://文件全路径
+```

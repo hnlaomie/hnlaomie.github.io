@@ -389,6 +389,7 @@ hadoop dfsadmin -safemode enter
 hadoop fsck / -files -blocks -locations | grep -v -E '^.' > /data/backup/hadoop.bak
 hadoop dfsadmin -safemode leave
 mr-jobhistory-daemon.sh stop historyserver
+cp -r /data/hadoop/hdfs/namenode/ /data/backup
 
 # 停机并复制配置文件到新版hadoop
 stop-all.sh
@@ -404,8 +405,11 @@ start-dfs.sh -upgrade
 start-yarn.sh
 mr-jobhistory-daemon.sh start historyserver
 
+# 验证hadoop
+hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.3.jar pi 4 100
+
 # 确认没问题后，最终完成升级
-hadoop dfsadmin -finalizeUpgrade
+hdfs dfsadmin -finalizeUpgrade
 ```
 
 references

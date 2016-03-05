@@ -42,12 +42,30 @@ hadoop的reduce任务不能启动
 
 hadoop升级
 =========================
+备份
+```
+# 进入安全模式
+hdfs dfsadmin -safemode enter
+# fsck检查
+hdfs fsck / -files -blocks -locations |grep -v -E '^.' > /home/hadoop/dfs-v-old-fs
+# 离开安全模式
+hdfs dfsadmin -safemode leave
+# 关闭history-server
+mr-jobhistory-daemon.sh stop historyserver
+# 关闭集群
+$HADOOP_HOME/sbin/stop-all.sh
+# 备份namenode信息（fs.default.name）
+cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup
+```
 namenode升级
 ```
-hadoop-daemon.sh start namenode -upgrade
+start-dfs.sh –upgrade
+# hadoop-daemon.sh start namenode -upgrade
 ```
 * <http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html>
+* <https://www.zybuluo.com/layor/note/162019>
 * <http://wiki.apache.org/hadoop/Hadoop_Upgrade>
+* <http://www.cnblogs.com/JavaSmart/p/4567173.html>
 * <http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/>
 
 升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode
