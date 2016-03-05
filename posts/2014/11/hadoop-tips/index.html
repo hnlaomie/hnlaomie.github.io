@@ -69,14 +69,33 @@ mapred job -list
 <h1>hadoop的reduce任务不能启动</h1>
 <p>当磁盘剩余空间小于10%时，reduce任务无法启动</p>
 <h1>hadoop升级</h1>
+<p>备份</p>
+<div class="highlight"><pre><span class="err">#</span><span class="x"> 进入安全模式</span>
+<span class="x">hdfs dfsadmin -safemode enter</span>
+<span class="err">#</span><span class="x"> fsck检查</span>
+<span class="x">hdfs fsck / -files -blocks -locations |grep -v -E &#39;^.&#39; &gt; /home/hadoop/dfs-v-old-fs</span>
+<span class="err">#</span><span class="x"> 离开安全模式</span>
+<span class="x">hdfs dfsadmin -safemode leave</span>
+<span class="err">#</span><span class="x"> 关闭history-server</span>
+<span class="x">mr-jobhistory-daemon.sh stop historyserver</span>
+<span class="err">#</span><span class="x"> 关闭集群</span>
+<span class="p">$</span><span class="nv">HADOOP_HOME</span><span class="x">/sbin/stop-all.sh</span>
+<span class="err">#</span><span class="x"> 备份namenode信息（fs.default.name）</span>
+<span class="x">cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup</span>
+</pre></div>
+
+
 <p>namenode升级</p>
-<div class="highlight"><pre>hadoop-daemon.sh start namenode -upgrade
+<div class="highlight"><pre>start-dfs.sh –upgrade
+# hadoop-daemon.sh start namenode -upgrade
 </pre></div>
 
 
 <ul>
 <li><a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html">http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html</a></li>
+<li><a href="https://www.zybuluo.com/layor/note/162019">https://www.zybuluo.com/layor/note/162019</a></li>
 <li><a href="http://wiki.apache.org/hadoop/Hadoop_Upgrade">http://wiki.apache.org/hadoop/Hadoop_Upgrade</a></li>
+<li><a href="http://www.cnblogs.com/JavaSmart/p/4567173.html">http://www.cnblogs.com/JavaSmart/p/4567173.html</a></li>
 <li><a href="http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/">http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/</a></li>
 </ul>
 <p>升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode</p>

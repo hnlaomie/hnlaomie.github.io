@@ -148,6 +148,17 @@ svn add --non-recursive 目录名
 <h1>忽略文件</h1>
 <div class="highlight"><pre>svn propedit svn:ignore .
 </pre></div>
+
+
+<h1>查看删除的文件</h1>
+<div class="highlight"><pre>svn log -r2080:HEAD -v | grep &quot;^   D&quot;
+svn log -v . | awk &#39;/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION&quot;: &quot;$0; }&#39;
+</pre></div>
+
+
+<h1>签出指定时间之前的版本</h1>
+<div class="highlight"><pre>svn checkout --revision {2016-02-23} http://文件全路径
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
