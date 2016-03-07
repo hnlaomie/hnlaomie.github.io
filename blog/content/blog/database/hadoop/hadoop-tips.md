@@ -32,9 +32,24 @@ yarn node -list
 mapred job -list
 ```
 
-hadoop无法停止
+hadoop(spark)无法停止
 =========================
 当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止
+
+在"hadoop-env.sh"做如下设置
+```
+export HADOOP_PID_DIR=/data/hadoop/hdfs/pids
+```
+
+在"yarn-env.sh"做如下设置
+```
+export YARN_PID_DIR=/data/hadoop/hdfs/pids
+```
+
+spark类似，需要在"spark-env.sh"做如下设置
+```
+export SPARK_PID_DIR=/data/hadoop/spark/pids
+```
 
 hadoop的reduce任务不能启动
 =============================

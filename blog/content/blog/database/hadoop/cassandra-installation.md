@@ -8,7 +8,9 @@ Summary: cassandra安装
 集群说明
 =================
 node0 192.168.11.82 (seed1)
+
 node1 192.168.11.81
+
 node2 192.168.11.83
 
 设置".bashrc"（所有节点）
@@ -100,6 +102,7 @@ commit_failure_policy: ignore
 trace查询相关
 =====================
 1\. 用"nodetool setlogginglevel"设置日志级别，然后在"system_traces.events"和"system_traces.sessions"看日志记录
+
 2\. 也可在cqlsh中用"tracing (on | off)"在查询中显示trace信息
 
 references
