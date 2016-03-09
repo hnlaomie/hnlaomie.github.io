@@ -86,8 +86,8 @@ cql超时问题
 默认查询超10秒就超时，可将超时设置大些，在"~/.cassandra/cqlshrc"加以下内容
 ```
 [connection]
-client_timeout = 180
-# client_timeout = None
+request_timeout = 180
+# request_timeout = None
 ```
 
 批处理出错问题
@@ -110,3 +110,7 @@ references
 * <https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html>
 * <http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster>
 * <http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack>
+
+links
+=========================
+* <http://blog.threatstack.com/scaling-cassandra-lessons-learned>
