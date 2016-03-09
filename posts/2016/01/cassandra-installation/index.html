@@ -110,8 +110,8 @@ cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)<
 <h1>cql超时问题</h1>
 <p>默认查询超10秒就超时，可将超时设置大些，在"~/.cassandra/cqlshrc"加以下内容</p>
 <div class="highlight"><pre><span class="k">[connection]</span>
-<span class="na">client_timeout</span> <span class="o">=</span> <span class="s">180</span>
-<span class="c1"># client_timeout = None</span>
+<span class="na">request_timeout</span> <span class="o">=</span> <span class="s">180</span>
+<span class="c1"># request_timeout = None</span>
 </pre></div>
 
 
@@ -131,6 +131,10 @@ cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)<
 <li><a href="https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html">https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html</a></li>
 <li><a href="http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster">http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster</a></li>
 <li><a href="http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack">http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack</a></li>
+</ul>
+<h1>links</h1>
+<ul>
+<li><a href="http://blog.threatstack.com/scaling-cassandra-lessons-learned">http://blog.threatstack.com/scaling-cassandra-lessons-learned</a></li>
 </ul>
     </div><!-- /.entry-content -->
 
