@@ -20,6 +20,11 @@ gradle releaseTarGzAll
 zookeeper.connect=localhost:2181
 ```
 
+在"bin/kafka-run-class.sh"中修改日志路径（否则日志将写到安装路径的"logs"目录）
+```
+LOG_DIR="/data/hadoop/kafka/log4j/logs"
+```
+
 快速指南
 =======================
 ```

@@ -198,3 +198,15 @@ hive> describe formatted [tablename];
 # 修改表的hdfs路径
 hive> alter table [tablename] set location "hdfs://[newhostname]:8020/user/hive/warehouse/[tablename]"; 
 ```
+
+建外部表
+=====================
+将spark的dataframe保存orc文件
+```
+df.write.mode(SaveMode.Overwrite).format("orc").save("/user/laomie/country")
+```
+hive用外部表关联orc文件
+```
+CREATE EXTERNAL TABLE country_temp (country_id int, country string, last_update timestamp)
+STORED AS ORC LOCATION "/user/laomie/country";
+```

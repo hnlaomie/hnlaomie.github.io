@@ -17,6 +17,8 @@ node2 192.168.11.83
 ===========================
 ```bash
 export CASSANDRA_HOME='/data/apache/cassandra'
+# 系统日志路径
+export CASSANDRA_LOG_DIR='/data/hadoop/cassandra/logs'
 export PATH=$PATH:$CASSANDRA_HOME/bin
 ```
 
@@ -25,42 +27,32 @@ export PATH=$PATH:$CASSANDRA_HOME/bin
 ```bash
 $ mkdir -p /data/hadoop/cassandra/data
 $ mkdir -p /data/hadoop/cassandra/commitlog
+$ mkdir -p /data/hadoop/cassandra/logs
+$ mkdir -p /data/hadoop/cassandra/saved_caches
 ```
 
 设置"conf/cassandra.yaml"
 ===============================
-192.168.11.82
 ```bash
 cluster_name: 'CassandraCluster'
+
 - seeds: "192.168.11.82"
+
+# 各节点的ip
 listen_address: 192.168.11.82
+
+# 各节点的ip
 rpc_address: 192.168.11.82
 
 commitlog_directory: /data/hadoop/cassandra/commitlog
-data_file_directories: 
-- /data/hadoop/cassandra/data
-```
-192.168.11.81
-```bash
-cluster_name: 'CassandraCluster'
-- seeds: "192.168.11.82"
-listen_address: 192.168.11.81
-rpc_address: 192.168.11.81
 
-commitlog_directory: /data/hadoop/cassandra/commitlog
 data_file_directories: 
 - /data/hadoop/cassandra/data
-```
-192.168.11.83
-```bash
-cluster_name: 'CassandraCluster'
-- seeds: "192.168.11.82"
-listen_address: 192.168.11.83
-rpc_address: 192.168.11.83
 
-commitlog_directory: /data/hadoop/cassandra/commitlog
-data_file_directories: 
-- /data/hadoop/cassandra/data
+saved_caches_directory: /data/hadoop/cassandra/saved_caches
+
+# 多数据中心则使用
+# endpoint_snitch: GossipingPropertyFileSnitch
 ```
 
 启动cassandra（所有节点）
@@ -74,7 +66,8 @@ cassandra的命令和sql语句
 ```
 $ cqlsh 192.168.11.82 9042
 $ nodetool status
-cqlsh:> CREATE KEYSPACE test WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+cqlsh:> CREATE KEYSPACE test1 WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+cqlsh:> CREATE KEYSPACE test2 WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'dc1' : 3, 'dc2' : 3};
 cqlsh:> use test;
 cqlsh:> CREATE TABLE users (user_id int PRIMARY KEY, fname text, lname text);
 cqlsh:> INSERT INTO users (user_id, fname, lname) VALUES (1, 'john', 'smith') using TTL 60;
@@ -109,6 +102,7 @@ references
 =========================
 * <https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html>
 * <http://arturmkrtchyan.com/how-to-setup-multi-node-cassandra-2-cluster>
+* <https://netangels.net/knowledge-base/cassandra-multi-datacenter-setup/>
 * <http://www.planetcassandra.org/blog/installing-the-cassandra-spark-oss-stack>
 
 links
