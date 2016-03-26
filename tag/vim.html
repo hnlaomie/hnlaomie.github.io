@@ -64,6 +64,11 @@ ctrl + ww    nerdtree和vim间切换
 <span class="nf">%s</span><span class="o">/</span><span class="err">\</span><span class="n">r</span><span class="o">/</span>
 <span class="cp"># 替换制表符为&quot;,&quot;</span>
 <span class="nf">%s</span><span class="o">/</span><span class="err">\</span><span class="n">t</span><span class="o">/</span><span class="p">,</span><span class="o">/</span><span class="n">g</span>
+<span class="cp"># 多空行替换为一空行</span>
+<span class="o">:</span><span class="nf">%s</span><span class="o">/^</span><span class="err">\</span><span class="n">n</span><span class="err">$</span><span class="c1">//g</span>
+<span class="o">:</span><span class="n">g</span><span class="o">/^</span><span class="err">\</span><span class="n">s</span><span class="o">*</span><span class="err">$\</span><span class="n">n</span><span class="err">\</span><span class="n">s</span><span class="o">*</span><span class="err">$</span><span class="o">/</span><span class="n">d</span>
+<span class="cp"># 删除重复行</span>
+<span class="o">:</span><span class="nf">%s</span><span class="o">/^</span><span class="err">\</span><span class="p">(.</span><span class="o">*</span><span class="err">\</span><span class="p">)</span><span class="err">\</span><span class="n">n</span><span class="err">\</span><span class="mi">1</span><span class="err">$</span><span class="o">/</span><span class="err">\</span><span class="mi">1</span><span class="o">/</span><span class="n">g</span>
 </pre></div>
 
 

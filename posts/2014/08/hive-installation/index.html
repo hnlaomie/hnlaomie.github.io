@@ -213,6 +213,18 @@ alter table table_name drop if exists partition (dt = &#39;2015-12-02&#39;);
 <span class="err">#</span> <span class="nt">修改表的hdfs路径</span>
 <span class="nt">hive</span><span class="o">&gt;</span> <span class="nt">alter</span> <span class="nt">table</span> <span class="cp">[</span><span class="nx">tablename</span><span class="cp">]</span> <span class="nt">set</span> <span class="nt">location</span> <span class="s2">&quot;hdfs://</span><span class="cp">[</span><span class="nx">newhostname</span><span class="cp">]</span><span class="s2">:8020/user/hive/warehouse/</span><span class="cp">[</span><span class="nx">tablename</span><span class="cp">]</span><span class="s2">&quot;</span><span class="o">;</span> 
 </pre></div>
+
+
+<h1>建外部表</h1>
+<p>将spark的dataframe保存orc文件</p>
+<div class="highlight"><pre>df.write.mode(SaveMode.Overwrite).format(&quot;orc&quot;).save(&quot;/user/laomie/country&quot;)
+</pre></div>
+
+
+<p>hive用外部表关联orc文件</p>
+<div class="highlight"><pre>CREATE EXTERNAL TABLE country_temp (country_id int, country string, last_update timestamp)
+STORED AS ORC LOCATION &quot;/user/laomie/country&quot;;
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
