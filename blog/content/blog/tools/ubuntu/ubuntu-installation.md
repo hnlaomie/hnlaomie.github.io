@@ -20,9 +20,9 @@ $ sudo add-apt-repository ppa:webupd8team/java
 $ sudo add-apt-repository ppa:otto-kesselgulasch/gimp
 $ sudo add-apt-repository ppa:nginx/stable
 $ sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
-$ sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+$ sudo apt-get --yes install subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
 $ sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
-$ sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromium-browser
+$ sudo apt-get install vlc browser-plugin-vlc gnome-mplayer bleachbit ubuntu-restricted-extras gnome-tweak-tool unity-tweak-tool gimp chromium-browser
 ```
 
 grub启动
@@ -111,3 +111,15 @@ dpkg -i *.deb
 ```
 相关链接
 <http://www.ubuntukylin.com/applications/showimg.php?lang=cn&id=23>
+
+取消游客登录
+======================
+Create a directory ‘lightdm.conf.d’ under ‘/etc/loghtdm’
+create a file ‘51-no-guest.conf’ under  the directory ‘/etc/lightdm/lightdm.conf.d’
+```
+[SeatDefaults]
+allow-guest=false
+```
+```
+sudo systemctl restart lightdm.service
+```

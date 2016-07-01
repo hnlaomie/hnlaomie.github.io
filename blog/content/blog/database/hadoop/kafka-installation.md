@@ -74,3 +74,7 @@ delete.topic.enable=true
 ```bash
 bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic test
 ```
+
+参考
+===============================
+* <http://blog.jobbole.com/99195/>

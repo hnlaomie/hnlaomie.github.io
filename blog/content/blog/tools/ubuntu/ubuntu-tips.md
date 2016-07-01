@@ -52,3 +52,17 @@ ibus-googlepinyin托板单词数
 ```
 self.__lookup_table.set_page_size(9)
 ```
+
+16.04 ssh 问题
+=========================
+sign_and_send_pubkey: signing failed: agent refused operation
+```
+sudo apt-get autoremove gnome-keyring
+ssh-add -D
+```
+
+vcd dat to mpeg
+=========================
+```
+sudo apt-get install handbrake
+```

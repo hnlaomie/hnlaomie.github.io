@@ -127,86 +127,28 @@ $ netstat -anp | grep 10000
 ```
 jdbc连接时，用户用hadoop相关用户，否则有安全方面的异常
 
-hive1.1的jline问题
-=======================
-删除$HADOOP_HOME/share/hadoop/yarn/lib/jline-0.9.94.jar
-
-mysql日志写入问题
-=============================
-ubuntu在/etc/mysql/my.cnf加入以下内容
+hivemall安装
+==========================
+1. 编译代码
 ```bash
-[mysqld]                                                                                                                
-# for hive                                                                                                              
-binlog_format=mixed 
+mvn clean install -DskipTests=true
 ```
+2. 到"https://github.com/myui/hivemall/releases"下载以下软件
+hivemall-core-0.4.2-rc.2-with-dependencies.jar
+define-all.hive
 
-hive导出csv，默认用"\t"分隔数据
-=====================
-```bash
-INSERT OVERWRITE LOCAL DIRECTORY '/home/laomie/init.csv' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select * from android_init
+3. 将软件放在"/data/apache/hivemall/"目录，并用以下命令将jar上传hdfs
+hdfs dfs -put /data/apache/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar /hive/hivemall/
+(注：hdfs没有hivemall目录则先建目录）
 
-hive --database game -e 'select * from android_init' | sed 's/[[:space:]]\+/,/g' > /home/laomie/init.csv
-```
+4. 建hivemall库
+进入hive后，执行以下hive命令
+CREATE DATABASE IF NOT EXISTS hivemall;
 
-hive导出表结构
-=====================
-```bash
-hive --database game -e 'show create table android_init' > android_init.sql
-```
+5. hivemall的配置
+在 "~/.hiverc" 增加以下内容
+use hivemall;
+set hivevar:hivemall_jar=hdfs:///hive/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar;
+source /data/apache/hivemall/define-all.hive;
 
-hive的slf4j
-====================
-```
-rm -fr $HADOOP_HOME/share/hadoop/common/lib/slf4j*
-mv $HBASE_HOME/lib/slf4j* $HADOOP_HOME/share/hadoop/common/lib
-jar -xvf $SPARK_HOME/lib/spark-assembly*.jar
-# delete slf4j path and zip the directory
-jar -cvf $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0.jar $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0/
-```
 
-hive的timestamp时间差
-=========================
-```
-CREATE TABLE ts (txt string, st Timestamp, et Timestamp) 
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ',';
-
-select 
-  txt, 
-  cast(
-    round(
-      cast((e-s) as double) * 1000
-    ) as int
-  ) latency 
-from (select txt, cast(st as double) s, cast(et as double) e from ts) q;
-```
-
-hive删除表
-===========================
-```
-truncate table table_name;
-truncate table table_name partition (dt = '2015-12-02');
-alter table table_name drop if exists partition (dt = '2015-12-02');
-```
-
-变更机器名
-======================
-因为hive的metadata中包括机器名，当机器名变更后，需要改metadata里的机器名。可用以下命令查找并修改机器名
-```
-# 查找表的hdfs路径（包括机器名）
-hive> describe formatted [tablename];
-# 修改表的hdfs路径
-hive> alter table [tablename] set location "hdfs://[newhostname]:8020/user/hive/warehouse/[tablename]"; 
-```
-
-建外部表
-=====================
-将spark的dataframe保存orc文件
-```
-df.write.mode(SaveMode.Overwrite).format("orc").save("/user/laomie/country")
-```
-hive用外部表关联orc文件
-```
-CREATE EXTERNAL TABLE country_temp (country_id int, country string, last_update timestamp)
-STORED AS ORC LOCATION "/user/laomie/country";
-```
