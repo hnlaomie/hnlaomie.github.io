@@ -39,14 +39,14 @@
 <p>In <a href="/category/programming.html">programming</a>.</p>
 <p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/php.html">php</a> <a href="/tag/nginx.html">nginx</a> </p>
 </footer><!-- /.post-info -->      <h2>php安装</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install php5-fpm php5-gd php5-mcrypt php5-mysql php5-readline php-gettext
+<div class="highlight"><pre><span></span>$ sudo apt-get install php5-fpm php5-gd php5-mcrypt php5-mysql php5-readline php-gettext
 </pre></div>
 
 
 <h2>nginx安装</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:nginx/stable
-<span class="nv">$ </span>sudo apt-get update
-<span class="nv">$ </span>sudo apt-get install nginx
+<div class="highlight"><pre><span></span>$ sudo add-apt-repository ppa:nginx/stable
+$ sudo apt-get update
+$ sudo apt-get install nginx
 </pre></div>
 
 
@@ -54,7 +54,7 @@
 <p>修改/etc/php5/fpm/php.ini，将"cgi.fix_pathinfo=1"改为"cgi.fix_pathinfo=0"</p>
 <p>修改/etc/php5/fpm/pool.d/www.conf，将"listen = 127.0.0.1:9000"改为"listen = /var/run/php5-fpm.sock"</p>
 <p>修改/etc/nginx/sites-available/default</p>
-<div class="highlight"><pre>[...]
+<div class="highlight"><pre><span></span>[...]
 server {
     listen   80;
 

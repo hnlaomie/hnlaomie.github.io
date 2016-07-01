@@ -40,13 +40,13 @@
 <p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hbase.html">hbase</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->      <h1>单结点(standalone mode)安装</h1>
 <p>设置环境变量</p>
-<div class="highlight"><pre><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
+<div class="highlight"><pre><span></span><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
 <span class="x">export </span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/bin</span>
 </pre></div>
 
 
 <p>设置配置文件（用默认的修改）</p>
-<div class="highlight"><pre>tickTime=2000
+<div class="highlight"><pre><span></span>tickTime=2000
 initLimit=10
 syncLimit=5
 dataDir=/data/hadoop/zookeeper
@@ -56,13 +56,13 @@ clientPort=2181
 
 <h1>多结点(multinode cluster)安装</h1>
 <p>设置环境变量</p>
-<div class="highlight"><pre><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
+<div class="highlight"><pre><span></span><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
 <span class="x">export </span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/bin</span>
 </pre></div>
 
 
 <p>设置配置文件zoo.cfg（用默认的修改）</p>
-<div class="highlight"><pre>tickTime=2000
+<div class="highlight"><pre><span></span>tickTime=2000
 initLimit=10
 syncLimit=5
 dataDir=/data/hadoop/zookeeper
@@ -75,12 +75,12 @@ server.3=noee2:2888:3888
 
 <p>注：分别各结点上安装</p>
 <p>设置日志路径zookeeper-env.sh</p>
-<div class="highlight"><pre><span class="x">export ZOO_LOG_DIR=</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/logs</span>
+<div class="highlight"><pre><span></span><span class="x">export ZOO_LOG_DIR=</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/logs</span>
 </pre></div>
 
 
 <p>设置myid</p>
-<div class="highlight"><pre>echo 1 &gt; /data/hadoop/zookeeper/myid
+<div class="highlight"><pre><span></span>echo 1 &gt; /data/hadoop/zookeeper/myid
 </pre></div>
 
 

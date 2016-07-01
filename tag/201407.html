@@ -37,7 +37,7 @@
 <p>安装jdk和openssh并将hadoop解压到相关路径，此处为"/home/hduser/tools/hadoop"</p>
 <h2>设置用户和组</h2>
 <p>增加"hadoop"组和"hduser“用户</p>
-<div class="highlight"><pre>sudo groupadd hadoop
+<div class="highlight"><pre><span></span>sudo groupadd hadoop
 sudo adduser --ingroup hadoop hduser
 <span class="o">(</span>archlinux: sudo seradd -m -g hadoop -s /bin/bash hduser<span class="o">)</span>
 sudo passwd hduser
@@ -45,7 +45,7 @@ sudo passwd hduser
 
 
 <h2>ssh设置</h2>
-<div class="highlight"><pre>su - hduser
+<div class="highlight"><pre><span></span>su - hduser
 ssh-keygen -t rsa -P <span class="s2">&quot;&quot;</span>
 cat <span class="nv">$HOME</span>/.ssh/id_rsa.pub &gt;&gt; <span class="nv">$HOME</span>/.ssh/authorized_keys
 </pre></div>
@@ -53,7 +53,7 @@ cat <span class="nv">$HOME</span>/.ssh/id_rsa.pub &gt;&gt; <span class="nv">$HOM
 
 <h2>禁用ipv6</h2>
 <p>在"/etc/sysctl.conf"加入以下内容（注：archlinux为"/etc/sysctl.d/99-sysctl.conf"）</p>
-<div class="highlight"><pre>#disable ipv6
+<div class="highlight"><pre><span></span>#disable ipv6
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 net.ipv6.conf.lo.disable_ipv6 = 1
@@ -62,21 +62,21 @@ net.ipv6.conf.lo.disable_ipv6 = 1
 
 <h2>环境变量设置</h2>
 <p>在"hduser“用户路径下的".bashrc”里加入以下内容</p>
-<div class="highlight"><pre><span class="c"># Set Hadoop-related environment variables</span>
-<span class="nb">export </span><span class="nv">HADOOP_HOME</span><span class="o">=</span>/home/hduser/tools/hadoop
-<span class="c"># Native Path</span>
-<span class="nb">export </span><span class="nv">HADOOP_COMMON_LIB_NATIVE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>/lib/native
-<span class="nb">export </span><span class="nv">HADOOP_OPTS</span><span class="o">=</span><span class="s2">&quot;-Djava.library.path=</span><span class="nv">$HADOOP_HOME</span><span class="s2">/lib&quot;</span>
-<span class="nb">export </span><span class="nv">JAVA_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>/lib/native 
-<span class="c">#Java path</span>
-<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk7&#39;</span>
-<span class="c"># Add Hadoop bin/ directory to PATH</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin:<span class="nv">$JAVA_PATH</span>/bin:<span class="nv">$HADOOP_HOME</span>/sbin
+<div class="highlight"><pre><span></span><span class="c1"># Set Hadoop-related environment variables</span>
+<span class="nb">export</span> <span class="nv">HADOOP_HOME</span><span class="o">=</span>/home/hduser/tools/hadoop
+<span class="c1"># Native Path</span>
+<span class="nb">export</span> <span class="nv">HADOOP_COMMON_LIB_NATIVE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>/lib/native
+<span class="nb">export</span> <span class="nv">HADOOP_OPTS</span><span class="o">=</span><span class="s2">&quot;-Djava.library.path=</span><span class="nv">$HADOOP_HOME</span><span class="s2">/lib&quot;</span>
+<span class="nb">export</span> <span class="nv">JAVA_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">HADOOP_HOME</span><span class="si">}</span>/lib/native 
+<span class="c1">#Java path</span>
+<span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk7&#39;</span>
+<span class="c1"># Add Hadoop bin/ directory to PATH</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin:<span class="nv">$JAVA_PATH</span>/bin:<span class="nv">$HADOOP_HOME</span>/sbin
 </pre></div>
 
 
 <h2>建hadoop的数据目录和临时目录</h2>
-<div class="highlight"><pre><span class="nb">source</span> ~/.bashrc
+<div class="highlight"><pre><span></span><span class="nb">source</span> ~/.bashrc
 mkdir -p <span class="nv">$HADOOP_HOME</span>/yarn_data/hdfs/namenode
 mkdir -p <span class="nv">$HADOOP_HOME</span>/yarn_data/hdfs/datanode
 mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
@@ -85,17 +85,17 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 
 <h2>hadoop配置文件设置</h2>
 <p>1. 为"libexec/hadoop-config.sh"设置"JAVA_HOME"</p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk8&#39;</span>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk8&#39;</span>
 </pre></div>
 
 
 <p>2. 为"etc/hadoop/hadoop-env.sh"设置"JAVA_HOME"</p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk8&#39;</span>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s1">&#39;/home/hduser/tools/jdk8&#39;</span>
 </pre></div>
 
 
 <p>3. 设置"etc/hadoop/yarn-site.xml"</p>
-<div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>                                                                                                          
         <span class="nt">&lt;name&gt;</span>yarn.nodemanager.aux-services<span class="nt">&lt;/name&gt;</span>                                                                      
         <span class="nt">&lt;value&gt;</span>mapreduce_shuffle<span class="nt">&lt;/value&gt;</span>                                                                                
@@ -159,7 +159,7 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 
 
 <p>4. 设置"etc/hadoop/core-site.xml"</p>
-<div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>                                                                                                          
         <span class="nt">&lt;name&gt;</span>fs.defaultFS<span class="nt">&lt;/name&gt;</span>                                                                                    
         <span class="nt">&lt;value&gt;</span>hdfs://localhost:9000<span class="nt">&lt;/value&gt;</span>                                                                            
@@ -190,7 +190,7 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 
 
 <p>5. 设置"etc/hadoop/mapred-site.xml" （注：mapred-site.xml.template生成mapred-site.xml）</p>
-<div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
         <span class="nt">&lt;value&gt;</span>yarn<span class="nt">&lt;/value&gt;</span>
@@ -254,7 +254,7 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 
 
 <p>6. 设置"etc/hadoop/hdfs-site.xml"</p>
-<div class="highlight"><pre><span class="nt">&lt;configuration&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;configuration&gt;</span>
     <span class="nt">&lt;property&gt;</span>                                                                                                              
         <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>                                                                                        
         <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>                                                                                                    
@@ -306,12 +306,12 @@ mkdir -p <span class="nv">$HADOOP_HOME</span>/tmp
 
 
 <h2>hadoop名称节点格式化</h2>
-<div class="highlight"><pre>hdfs namenode -format
+<div class="highlight"><pre><span></span>hdfs namenode -format
 </pre></div>
 
 
 <h2>hadoop的启动，停止</h2>
-<div class="highlight"><pre><span class="c"># for master</span>
+<div class="highlight"><pre><span></span><span class="c1"># for master</span>
 start-all.sh
 start-dfs.sh
 start-yarn.sh
@@ -319,7 +319,7 @@ stop-all.sh
 stop-yarn.sh
 stop-dfs.sh
 
-<span class="c"># for master and slaves</span>
+<span class="c1"># for master and slaves</span>
 hadoop-daemon.sh start namenode<span class="p">|</span>secondarynamenode<span class="p">|</span>datanode
 hadoop-daemon.sh stop namenode<span class="p">|</span>secondarynamenode<span class="p">|</span>datanode
 </pre></div>
@@ -342,73 +342,73 @@ hadoop-daemon.sh stop namenode<span class="p">|</span>secondarynamenode<span cla
 </ul>
 <h2>多节点hadoop设置</h2>
 <p>在"/etc/hosts"设置主从节点机</p>
-<div class="highlight"><pre>192.168.1.12  laomie-pc
+<div class="highlight"><pre><span></span>192.168.1.12  laomie-pc
 192.168.1.11  slave01
 </pre></div>
 
 
 <p>主节点机"laomie-pc"ssh登录从节点机"slave01"的设置（注：所有从节点机都需设置）</p>
-<div class="highlight"><pre>ssh-copy-id -i /home/hduser/.ssh/id_rsa.pub hduser@slave01
+<div class="highlight"><pre><span></span>ssh-copy-id -i /home/hduser/.ssh/id_rsa.pub hduser@slave01
 </pre></div>
 
 
 <p>在主节点机的hadoop配置"$HADOOP_CONF_DIR/slaves"中添加从节点机</p>
-<div class="highlight"><pre>slave01
+<div class="highlight"><pre><span></span>slave01
 </pre></div>
 
 
 <h2>hadoop的代码编译 (archlinux)</h2>
 <p>安装下列依赖软件</p>
-<div class="highlight"><pre>sudo pacman -S cmake apache-ant base-devel protobuf maven
+<div class="highlight"><pre><span></span>sudo pacman -S cmake apache-ant base-devel protobuf maven
 ln -s /etc/profile.d/jre.sh /etc/profile.d/jdk.sh
 sudo yaourt -S findbugs
 </pre></div>
 
 
 <p>修改~/.bashrc</p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">FINDBUGS_HOME</span><span class="o">=</span>/opt/findbugs
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$FINDBUGS_HOME</span>/bin
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">FINDBUGS_HOME</span><span class="o">=</span>/opt/findbugs
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$FINDBUGS_HOME</span>/bin
 </pre></div>
 
 
 <p>编译hadoop</p>
-<div class="highlight"><pre>mvn package -Pdist,native,docs,src -DskipTests -Dtar
+<div class="highlight"><pre><span></span>mvn package -Pdist,native,docs,src -DskipTests -Dtar
 </pre></div>
 
 
 <h2>hadoop的代码编译 (ubuntu)</h2>
 <p>安装下列依赖软件</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
-<span class="nv">$ </span>sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+<div class="highlight"><pre><span></span>$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
 </pre></div>
 
 
 <p>安装protobuf2.5.0</p>
-<div class="highlight"><pre><span class="nv">$ </span>./configure
-<span class="nv">$ </span>make
-<span class="nv">$ </span>make check
-<span class="nv">$ </span>sudo make install
-<span class="nv">$ </span>sudo ldconfig
+<div class="highlight"><pre><span></span>$ ./configure
+$ make
+$ make check
+$ sudo make install
+$ sudo ldconfig
 </pre></div>
 
 
 <p>安装findbugs3.0.0
 * 解压并如上设置环境变量</p>
 <p>jdk8编译hadoop （注：不能编译doc）</p>
-<div class="highlight"><pre>mvn package -Pdist,native -DskipTests -Dtar -Dmaven.javadoc.skip<span class="o">=</span><span class="nb">true</span> 
+<div class="highlight"><pre><span></span>mvn package -Pdist,native -DskipTests -Dtar -Dmaven.javadoc.skip<span class="o">=</span><span class="nb">true</span> 
 </pre></div>
 
 
 <h2>hadoop的升级</h2>
-<div class="highlight"><pre><span class="c"># 备份namenode信息，即etc/hadoop/hdfs-site.xml下的dfs.namenode.name.dir所指向的文件夹</span>
-<span class="c"># 其它备份, 检查</span>
+<div class="highlight"><pre><span></span><span class="c1"># 备份namenode信息，即etc/hadoop/hdfs-site.xml下的dfs.namenode.name.dir所指向的文件夹</span>
+<span class="c1"># 其它备份, 检查</span>
 hadoop dfsadmin -safemode enter
 hadoop fsck / -files -blocks -locations <span class="p">|</span> grep -v -E <span class="s1">&#39;^.&#39;</span> &gt; /data/backup/hadoop.bak
 hadoop dfsadmin -safemode leave
 mr-jobhistory-daemon.sh stop historyserver
 cp -r /data/hadoop/hdfs/namenode/ /data/backup
 
-<span class="c"># 停机并复制配置文件到新版hadoop</span>
+<span class="c1"># 停机并复制配置文件到新版hadoop</span>
 stop-all.sh
 <span class="nb">cd</span> <span class="nv">$HADOOP_HOME</span>/etc/hadoop
 cp hdfs-site.xml mapred-site.xml yarn-site.xml core-site.xml hadoop-env.sh slaves <span class="nv">$NEW_HADOOP_HOME</span>/etc/hadoop/
@@ -417,15 +417,15 @@ mv <span class="nv">$HADOOP_HOME</span> <span class="nv">$OLD_HADOOP_HOME</span>
 mv <span class="nv">$NEW_HADOOP_HOME</span> <span class="nv">$HADOOP_HOME</span>
 scp -r <span class="nv">$HADOOP_HOME</span> hadoop@node1:/data/apache/
 
-<span class="c"># 升级</span>
+<span class="c1"># 升级</span>
 start-dfs.sh -upgrade
 start-yarn.sh
 mr-jobhistory-daemon.sh start historyserver
 
-<span class="c"># 验证hadoop</span>
+<span class="c1"># 验证hadoop</span>
 hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.3.jar pi <span class="m">4</span> 100
 
-<span class="c"># 确认没问题后，最终完成升级</span>
+<span class="c1"># 确认没问题后，最终完成升级</span>
 hdfs dfsadmin -finalizeUpgrade
 </pre></div>
 

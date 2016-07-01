@@ -39,37 +39,37 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/terminator.html">terminator</a> </p>
 </footer><!-- /.post-info -->      <h2>安装相关软件</h2>
-<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/ghuntley/terminator-solarized.git
-<span class="nv">$ </span>mkdir -p ~/.config/terminator/
-<span class="nv">$ </span>cp terminator-solarized/config ~/.config/terminator/
-<span class="nv">$ </span>git clone https://github.com/seebi/dircolors-solarized.git
-<span class="nv">$ </span>cp dircolors-solarized/dircolors.256dark ~/.dircolors
+<div class="highlight"><pre><span></span>$ git clone https://github.com/ghuntley/terminator-solarized.git
+$ mkdir -p ~/.config/terminator/
+$ cp terminator-solarized/config ~/.config/terminator/
+$ git clone https://github.com/seebi/dircolors-solarized.git
+$ cp dircolors-solarized/dircolors.256dark ~/.dircolors
 </pre></div>
 
 
 <h2>设置".bashrc"</h2>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color  
-<span class="c"># enable color support of ls and also add handy aliases</span>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>xterm-256color  
+<span class="c1"># enable color support of ls and also add handy aliases</span>
 <span class="k">if</span> <span class="o">[</span> -x /usr/bin/dircolors <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="nb">test</span> -r ~/.dircolors <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b ~/.dircolors<span class="k">)</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nb">alias </span><span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
-<span class="c">#alias dir=&#39;dir --color=auto&#39;</span>
-<span class="c">#alias vdir=&#39;vdir --color=auto&#39;</span>
+<span class="nb">alias</span> <span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
+<span class="c1">#alias dir=&#39;dir --color=auto&#39;</span>
+<span class="c1">#alias vdir=&#39;vdir --color=auto&#39;</span>
 
-<span class="nb">alias </span><span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
-<span class="nb">alias </span><span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
-<span class="nb">alias </span><span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
+<span class="nb">alias</span> <span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
+<span class="nb">alias</span> <span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
+<span class="nb">alias</span> <span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
 <span class="k">fi</span>
 
-<span class="c"># some more ls aliases</span>
-<span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -alF&#39;</span>
-<span class="nb">alias </span><span class="nv">la</span><span class="o">=</span><span class="s1">&#39;ls -A&#39;</span>
-<span class="nb">alias </span><span class="nv">l</span><span class="o">=</span><span class="s1">&#39;ls -CF&#39;</span>
+<span class="c1"># some more ls aliases</span>
+<span class="nb">alias</span> <span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -alF&#39;</span>
+<span class="nb">alias</span> <span class="nv">la</span><span class="o">=</span><span class="s1">&#39;ls -A&#39;</span>
+<span class="nb">alias</span> <span class="nv">l</span><span class="o">=</span><span class="s1">&#39;ls -CF&#39;</span>
 </pre></div>
 
 
 <h2>常用快捷键</h2>
-<div class="highlight"><pre>Shift-Pageup       Scroll back through the current terminal
+<div class="highlight"><pre><span></span>Shift-Pageup       Scroll back through the current terminal
 Shift-Pagedown     Scroll forward through the current terminal
 
 Ctrl-Shift-o       Split the screen horizontally

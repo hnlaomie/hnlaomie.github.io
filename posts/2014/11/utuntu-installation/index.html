@@ -39,96 +39,96 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/java.html">java</a> </p>
 </footer><!-- /.post-info -->      <h1>usb刻录</h1>
-<div class="highlight"><pre><span class="nv">$ </span>sudo dd <span class="nv">bs</span><span class="o">=</span>4M <span class="k">if</span><span class="o">=</span>/home/laomie/ubuntu-14.04.1-desktop-amd64.iso <span class="nv">of</span><span class="o">=</span>/dev/sdc <span class="o">&amp;&amp;</span> sync
+<div class="highlight"><pre><span></span>$ sudo dd <span class="nv">bs</span><span class="o">=</span>4M <span class="k">if</span><span class="o">=</span>/home/laomie/ubuntu-14.04.1-desktop-amd64.iso <span class="nv">of</span><span class="o">=</span>/dev/sdc <span class="o">&amp;&amp;</span> sync
 </pre></div>
 
 
 <h1>开发源和安装软件</h1>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:git-core/ppa
-<span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
-<span class="nv">$ </span>sudo add-apt-repository ppa:otto-kesselgulasch/gimp
-<span class="nv">$ </span>sudo add-apt-repository ppa:nginx/stable
-<span class="nv">$ </span>sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
-<span class="nv">$ </span>sudo apt-get --yes install openjdk-7-jdk subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
-<span class="nv">$ </span>sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
-<span class="nv">$ </span>sudo apt-get install vlc smpalyer ubuntu-restricted-extras exaile gimp chromium-browser
+<div class="highlight"><pre><span></span>$ sudo add-apt-repository ppa:git-core/ppa
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+$ sudo add-apt-repository ppa:nginx/stable
+$ sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
+$ sudo apt-get --yes install subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
+$ sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
+$ sudo apt-get install vlc browser-plugin-vlc gnome-mplayer bleachbit ubuntu-restricted-extras gnome-tweak-tool unity-tweak-tool gimp chromium-browser
 </pre></div>
 
 
 <h1>grub启动</h1>
-<div class="highlight"><pre><span class="nv">$ </span>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
-<span class="nv">$ </span>sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg<span class="o">)</span>
+<div class="highlight"><pre><span></span>$ sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
+$ sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/grub.cfg<span class="o">)</span>
 </pre></div>
 
 
 <h1>设置dns</h1>
 <p>安装dnsmasq</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install dnsmasq
+<div class="highlight"><pre><span></span>$ sudo apt-get install dnsmasq
 </pre></div>
 
 
 <p>修改"/etc/dnsmasq.conf"</p>
-<div class="highlight"><pre>listen-address<span class="o">=</span>127.0.0.1
+<div class="highlight"><pre><span></span>listen-address<span class="o">=</span>127.0.0.1
 resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 </pre></div>
 
 
 <p>修改"/etc/NetworkManager/dnsmasq.d/cache"</p>
-<div class="highlight"><pre>cache-size<span class="o">=</span>1000
+<div class="highlight"><pre><span></span>cache-size<span class="o">=</span>1000
 </pre></div>
 
 
 <p>新增"/etc/resolv.dnsmasq.conf"</p>
-<div class="highlight"><pre><span class="c"># baidu dns</span>
+<div class="highlight"><pre><span></span><span class="c1"># baidu dns</span>
 180.76.76.76
-<span class="c"># OpenDNS</span>
+<span class="c1"># OpenDNS</span>
 208.67.222.222
 208.67.220.220
-<span class="c"># 阿里DNS</span>
+<span class="c1"># 阿里DNS</span>
 223.5.5.5
 223.6.6.6
-<span class="c"># 114DNS</span>
+<span class="c1"># 114DNS</span>
 114.114.114.114
 114.114.115.115
-<span class="c"># OneDNS 北方</span>
+<span class="c1"># OneDNS 北方</span>
 114.215.126.16
-<span class="c"># V2EX DNS</span>
+<span class="c1"># V2EX DNS</span>
 199.91.73.222
 178.79.131.110
-<span class="c"># Google DNS</span>
+<span class="c1"># Google DNS</span>
 8.8.8.8
 8.8.4.4
-<span class="c"># OpenerDNS</span>
+<span class="c1"># OpenerDNS</span>
 42.120.21.30
-<span class="c"># OneDNS 南方</span>
+<span class="c1"># OneDNS 南方</span>
 112.124.47.27
 </pre></div>
 
 
 <h1>安装docker</h1>
 <p>编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容</p>
-<div class="highlight"><pre>deb https://apt.dockerproject.org/repo ubuntu-trusty main
+<div class="highlight"><pre><span></span>deb https://apt.dockerproject.org/repo ubuntu-trusty main
 </pre></div>
 
 
 <p>导入key和安装</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-<span class="nv">$ </span>sudo apt-get install docker-engine
+<div class="highlight"><pre><span></span>$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+$ sudo apt-get install docker-engine
 </pre></div>
 
 
 <p>修改"/etc/default/ufw"</p>
-<div class="highlight"><pre><span class="nv">DEFAULT_FORWARD_POLICY</span><span class="o">=</span><span class="s2">&quot;ACCEPT&quot;</span>
+<div class="highlight"><pre><span></span><span class="nv">DEFAULT_FORWARD_POLICY</span><span class="o">=</span><span class="s2">&quot;ACCEPT&quot;</span>
 </pre></div>
 
 
 <p>它机访问docker容器</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo ufw allow 2375/tcp
+<div class="highlight"><pre><span></span>$ sudo ufw allow 2375/tcp
 </pre></div>
 
 
 <p>修改"/etc/default/docker"，设置容器的dns</p>
-<div class="highlight"><pre><span class="nv">DOCKER_OPTS</span><span class="o">=</span><span class="s2">&quot;--dns 208.67.222.222&quot;</span>
+<div class="highlight"><pre><span></span><span class="nv">DOCKER_OPTS</span><span class="o">=</span><span class="s2">&quot;--dns 208.67.222.222&quot;</span>
 </pre></div>
 
 
@@ -136,7 +136,7 @@ resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 <a href="https://blog.docker.com/2015/07/new-apt-and-yum-repos/">https://blog.docker.com/2015/07/new-apt-and-yum-repos/</a>
 <a href="http://get.docker.com/ubuntu">http://get.docker.com/ubuntu</a></p>
 <h1>安装qq</h1>
-<div class="highlight"><pre>sudo apt-get install libgtk2.0-0:i386
+<div class="highlight"><pre><span></span>sudo apt-get install libgtk2.0-0:i386
 sudo apt-get install lib32ncurses5
 sudo apt-get -f install
 dpkg -i *.deb
@@ -145,6 +145,16 @@ dpkg -i *.deb
 
 <p>相关链接
 <a href="http://www.ubuntukylin.com/applications/showimg.php?lang=cn&amp;id=23">http://www.ubuntukylin.com/applications/showimg.php?lang=cn&amp;id=23</a></p>
+<h1>取消游客登录</h1>
+<p>Create a directory ‘lightdm.conf.d’ under ‘/etc/loghtdm’
+create a file ‘51-no-guest.conf’ under  the directory ‘/etc/lightdm/lightdm.conf.d’</p>
+<div class="highlight"><pre><span></span><span class="k">[SeatDefaults]</span>
+<span class="na">allow-guest</span><span class="o">=</span><span class="s">false</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>sudo systemctl restart lightdm.service
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

@@ -35,7 +35,7 @@
 <p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/spark.html">spark</a> </p>
 </footer><!-- /.post-info --><h1>understanding closures</h1>
 <p>Don't do this</p>
-<div class="highlight"><pre><span class="c1">// this runs in the driver</span>
+<div class="highlight"><pre><span></span><span class="c1">// this runs in the driver</span>
 <span class="k">val</span> <span class="n">foo</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SomeExpensiveNotSerializableThing</span>
 <span class="n">someRdd</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span>
     <span class="c1">// this runs in the executor, so...</span>
@@ -46,7 +46,7 @@
 
 
 <p>Don't do this either</p>
-<div class="highlight"><pre><span class="n">someRdd</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span>
+<div class="highlight"><pre><span></span><span class="n">someRdd</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span>
     <span class="c1">// this runs in the executor, ok...</span>
     <span class="c1">// but gets constructed for every element in the RDD, so will be slow</span>
     <span class="k">val</span> <span class="n">foo</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SomeExpensiveNotSerializableThing</span>
@@ -56,7 +56,7 @@
 
 
 <p>Do this instead</p>
-<div class="highlight"><pre><span class="n">someRdd</span><span class="o">.</span><span class="n">mapPartitions</span> <span class="o">{</span> <span class="n">part</span> <span class="k">=&gt;</span>
+<div class="highlight"><pre><span></span><span class="n">someRdd</span><span class="o">.</span><span class="n">mapPartitions</span> <span class="o">{</span> <span class="n">part</span> <span class="k">=&gt;</span>
     <span class="c1">// this runs in the executor, constructed only once per group of elements</span>
     <span class="k">val</span> <span class="n">foo</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SomeExpensiveNotSerializableThing</span>
     <span class="n">part</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span>
@@ -68,20 +68,20 @@
 
 
 <p>If you encounter other closure-related issues, make sure that</p>
-<div class="highlight"><pre>all captured references are serializable
+<div class="highlight"><pre><span></span>all captured references are serializable
 all captured references are immutable
 all captured references are either local vals, or in a static object
 </pre></div>
 
 
 <p>As a specific example, don't extend App:</p>
-<div class="highlight"><pre>object MyApp extends App {
+<div class="highlight"><pre><span></span>object MyApp extends App {
   // start running
 </pre></div>
 
 
 <p>Use an explicit main method instead</p>
-<div class="highlight"><pre>object MyApp {
+<div class="highlight"><pre><span></span>object MyApp {
   def main(args: Array[String]) {
     // start running
 </pre></div>
@@ -115,7 +115,7 @@ all captured references are either local vals, or in a static object
 </ul>
 <h1>trigger fewer shuffles</h1>
 <p>If an rdd does not have a partitioner, and you do a transformation that requires it to be partitioned a certain way, it will trigger a shuffle. Cassandra RDDs do not have partitioners, and grouping operations on them (even when grouping on the rowkey) trigger a shuffle:</p>
-<div class="highlight"><pre><span class="n">scala</span><span class="o">&gt;</span> <span class="n">val</span> <span class="n">visits</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="n">cassandraTable</span><span class="p">[(</span><span class="n">String</span><span class="p">,</span> <span class="n">Long</span><span class="p">)](</span><span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;user_visits&quot;</span><span class="p">).</span>
+<div class="highlight"><pre><span></span><span class="n">scala</span><span class="o">&gt;</span> <span class="n">val</span> <span class="n">visits</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="n">cassandraTable</span><span class="p">[(</span><span class="n">String</span><span class="p">,</span> <span class="n">Long</span><span class="p">)](</span><span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;user_visits&quot;</span><span class="p">).</span>
 <span class="n">select</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;utc_millis&quot;</span><span class="p">)</span>
 <span class="n">scala</span><span class="o">&gt;</span> <span class="n">visits</span><span class="p">.</span><span class="n">partitioner</span>
 <span class="nl">res0</span><span class="p">:</span> <span class="n">Option</span><span class="p">[</span><span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">Partitioner</span><span class="p">]</span> <span class="o">=</span> <span class="n">None</span>
@@ -125,7 +125,7 @@ all captured references are either local vals, or in a static object
 
 
 <p>Some transformations lose the partitioner, so avoid them after a shuffle:</p>
-<div class="highlight"><pre><span class="n">scala</span><span class="o">&gt;</span> <span class="n">visits</span><span class="p">.</span><span class="n">groupByKey</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="p">).</span><span class="n">partitioner</span>
+<div class="highlight"><pre><span></span><span class="n">scala</span><span class="o">&gt;</span> <span class="n">visits</span><span class="p">.</span><span class="n">groupByKey</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="p">).</span><span class="n">partitioner</span>
 <span class="nl">res4</span><span class="p">:</span> <span class="n">Option</span><span class="p">[</span><span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">Partitioner</span><span class="p">]</span> <span class="o">=</span> <span class="n">None</span>
 <span class="n">scala</span><span class="o">&gt;</span> <span class="n">visits</span><span class="p">.</span><span class="n">groupByKey</span><span class="p">.</span><span class="n">mapValues</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="p">).</span><span class="n">partitioner</span>
 <span class="nl">res5</span><span class="p">:</span> <span class="n">Option</span><span class="p">[</span><span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">Partitioner</span><span class="p">]</span> <span class="o">=</span> <span class="n">Some</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">HashPartitioner</span><span class="mi">@1</span><span class="p">)</span>
@@ -133,7 +133,7 @@ all captured references are either local vals, or in a static object
 
 
 <p>Even though spark has no way of knowing it (yet), Cassandra RDDs are partitioned such that a given row of values for a rowkey will all be in the same partition, in order. </p>
-<div class="highlight"><pre>// So instead of doing
+<div class="highlight"><pre><span></span>// So instead of doing
 visits.reduceByKey { value =&gt;
     SomePerItemAggregationFunction(value)
 }

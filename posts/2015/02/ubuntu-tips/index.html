@@ -42,7 +42,7 @@
 <p>安装 gpointing-device-settings
 system settings -&gt; mouse &amp; touchpad</p>
 <h1>删除旧内核</h1>
-<div class="highlight"><pre>sudo aptitude purge ~ilinux-image-.*<span class="se">\(\!\(</span><span class="sb">`</span>uname -r<span class="sb">`</span><span class="se">\|</span>generic-.*<span class="se">\)\)</span>
+<div class="highlight"><pre><span></span>sudo aptitude purge ~ilinux-image-.*<span class="se">\(\!\(</span><span class="sb">`</span>uname -r<span class="sb">`</span><span class="se">\|</span>generic-.*<span class="se">\)\)</span>
 </pre></div>
 
 
@@ -50,14 +50,14 @@ system settings -&gt; mouse &amp; touchpad</p>
 <p>/usr/share/applications</p>
 <h1>取消ssh远程连接键盘失灵</h1>
 <p>在"~/.ssh/config"中加入以下内容</p>
-<div class="highlight"><pre>Host *
+<div class="highlight"><pre><span></span>Host *
 ServerAliveInterval 180
 </pre></div>
 
 
 <h1>远程桌面</h1>
 <p>安装teamviewer</p>
-<div class="highlight"><pre>sudo dpkg --add-architecture i386
+<div class="highlight"><pre><span></span>sudo dpkg --add-architecture i386
 sudo apt-get update
 sudo dpkg -i teamviewer_10.0.41499_i386.deb
 sudo apt-get install -f
@@ -65,7 +65,7 @@ sudo apt-get install -f
 
 
 <p>teamviewer启动，停止</p>
-<div class="highlight"><pre>sudo service teamviewerd stop<span class="p">|</span>start<span class="p">|</span>restart
+<div class="highlight"><pre><span></span>sudo service teamviewerd stop<span class="p">|</span>start<span class="p">|</span>restart
 sudo teamviewer -info
 sudo teamviewer --daemon stop<span class="p">|</span>start<span class="p">|</span>restart
 sudo teamviewer --passwd password
@@ -74,7 +74,19 @@ sudo teamviewer --passwd password
 
 <h1>ibus-googlepinyin托板单词数</h1>
 <p>修改 /usr/share/ibus-googlepinyin/engine.py</p>
-<div class="highlight"><pre>self.__lookup_table.set_page_size(9)
+<div class="highlight"><pre><span></span>self.__lookup_table.set_page_size(9)
+</pre></div>
+
+
+<h1>16.04 ssh 问题</h1>
+<p>sign_and_send_pubkey: signing failed: agent refused operation</p>
+<div class="highlight"><pre><span></span>sudo apt-get autoremove gnome-keyring
+ssh-add -D
+</pre></div>
+
+
+<h1>vcd dat to mpeg</h1>
+<div class="highlight"><pre><span></span>sudo apt-get install handbrake
 </pre></div>
     </div><!-- /.entry-content -->
 

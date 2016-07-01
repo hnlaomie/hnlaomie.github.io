@@ -40,42 +40,42 @@
 <p>tags: <a href="/tag/201510.html">201510</a> <a href="/tag/python.html">python</a> </p>
 </footer><!-- /.post-info -->      <h1>pyenv的安装</h1>
 <p>下载pyenv</p>
-<div class="highlight"><pre>git clone https://github.com/yyuu/pyenv.git ~/tools/pyenv
+<div class="highlight"><pre><span></span>git clone https://github.com/yyuu/pyenv.git ~/tools/pyenv
 </pre></div>
 
 
 <p>在".bashrc"或".bash_profile"设置环境变量</p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/pyenv&quot;</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/pyenv&quot;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>pyenv init -<span class="k">)</span><span class="s2">&quot;</span>
 </pre></div>
 
 
 <p>重启shell,让环境变量生效</p>
-<div class="highlight"><pre><span class="nb">exec</span> <span class="nv">$SHELL</span>
+<div class="highlight"><pre><span></span><span class="nb">exec</span> <span class="nv">$SHELL</span>
 </pre></div>
 
 
 <p>pyenv命令</p>
-<div class="highlight"><pre><span class="c"># 安装python</span>
+<div class="highlight"><pre><span></span><span class="c1"># 安装python</span>
 pyenv install 3.5.0
 
-<span class="c"># 卸载python</span>
+<span class="c1"># 卸载python</span>
 pyenv uninstall 3.5.0
 
-<span class="c"># 重安装python</span>
+<span class="c1"># 重安装python</span>
 pyenv rebash
 
-<span class="c"># python可用版本</span>
+<span class="c1"># python可用版本</span>
 pyenv versions
 
-<span class="c"># python指定版本</span>
-pyenv <span class="nb">local </span>3.5.0 system
+<span class="c1"># python指定版本</span>
+pyenv <span class="nb">local</span> 3.5.0 system
 </pre></div>
 
 
 <p>在"~/tools/pyenv/version"设置python版本</p>
-<div class="highlight"><pre>3.5.0
+<div class="highlight"><pre><span></span>3.5.0
 system
 2.7.10
 </pre></div>

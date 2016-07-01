@@ -43,25 +43,25 @@
 <p>feedgenerator, jinja2, pygments, docutils, pytz, blinker, unidecode, six,
 python-dateutil, markupsafe, markdown</p>
 <h2>安装</h2>
-<div class="highlight"><pre><span class="nv">$ </span>pip install -e git+https://github.com/getpelican/pelican.git#egg<span class="o">=</span>pelican
+<div class="highlight"><pre><span></span>$ pip install -e git+https://github.com/getpelican/pelican.git#egg<span class="o">=</span>pelican
 </pre></div>
 
 
 <h2>使用</h2>
-<div class="highlight"><pre><span class="nv">$ </span>pelican-quickstart
+<div class="highlight"><pre><span></span>$ pelican-quickstart
 
-<span class="nv">$ </span>fab build
-<span class="nv">$ </span>fab serve
+$ fab build
+$ fab serve
 
-<span class="nv">$ </span>pelican content
-<span class="nv">$ </span><span class="nb">cd </span>output
-<span class="nv">$ </span>sudo python -m http.server 80
+$ pelican content
+$ <span class="nb">cd</span> output
+$ sudo python -m http.server 80
 </pre></div>
 
 
 <h2>配置日期目录放博客</h2>
 <p>pelicanconf.py中设置做以下设置</p>
-<div class="highlight"><pre>ARTICLE_URL = &#39;posts/{date:%Y}/{date:%m}/{slug}/&#39;
+<div class="highlight"><pre><span></span>ARTICLE_URL = &#39;posts/{date:%Y}/{date:%m}/{slug}/&#39;
 ARTICLE_SAVE_AS = &#39;posts/{date:%Y}/{date:%m}/{slug}/index.html&#39;
 PAGE_URL = &#39;pages/{slug}/&#39;
 PAGE_SAVE_AS = &#39;pages/{slug}/index.html&#39;
@@ -72,46 +72,46 @@ TAG_SAVE_AS = &#39;tag/{slug}.html&#39;
 
 <h2>在github建个人博客</h2>
 <p>以"hnlaomie.github.io"建立repository，签出，进入并建立"blog"目录和如下设置".gitignore"</p>
-<div class="highlight"><pre>blog
+<div class="highlight"><pre><span></span>blog
 blog/*
 </pre></div>
 
 
 <p>master提交新加的"blog"目录</p>
-<div class="highlight"><pre><span class="nv">$ </span>git add .
-<span class="nv">$ </span>git commit -m <span class="s2">&quot;init empty blog&quot;</span>
+<div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;init empty blog&quot;</span>
 </pre></div>
 
 
 <p>将已有的博客复制到"blog"目录，并建立代码分支</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>blog
-<span class="nv">$ </span>git checkout -b <span class="nb">source</span>
-<span class="nv">$ </span>git add .
-<span class="nv">$ </span>git commit -m <span class="s2">&quot;add blog&quot;</span>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> blog
+$ git checkout -b <span class="nb">source</span>
+$ git add .
+$ git commit -m <span class="s2">&quot;add blog&quot;</span>
 </pre></div>
 
 
 <p>将博客发布到"master"</p>
-<div class="highlight"><pre><span class="nv">$ </span>pelican content
-<span class="nv">$ </span>ghp-import -b master output
-<span class="nv">$ </span>git checkout master
-<span class="nv">$ </span>git push --all
+<div class="highlight"><pre><span></span>$ pelican content
+$ ghp-import -b master output
+$ git checkout master
+$ git push --all
 </pre></div>
 
 
 <h2>删除google字体</h2>
 <p>到pelican包的安装目录下找"themes/notmyidea/static/css/main.css"，将以下行注释掉</p>
-<div class="highlight"><pre><span class="c">/* @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&amp;subset=latin); */</span>
+<div class="highlight"><pre><span></span><span class="c">/* @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&amp;subset=latin); */</span>
 </pre></div>
 
 
 <h1>github使用</h1>
 <h2>常用命令</h2>
-<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/hnlaomie/backup
-<span class="nv">$ </span><span class="nb">cd </span>backup
-<span class="nv">$ </span>git add .
-<span class="nv">$ </span>git commit -m <span class="s1">&#39;first commit&#39;</span>
-<span class="nv">$ </span>git push origin master
+<div class="highlight"><pre><span></span>$ git clone https://github.com/hnlaomie/backup
+$ <span class="nb">cd</span> backup
+$ git add .
+$ git commit -m <span class="s1">&#39;first commit&#39;</span>
+$ git push origin master
 </pre></div>
 
 

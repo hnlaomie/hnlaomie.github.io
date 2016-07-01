@@ -39,27 +39,27 @@
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->      <h1>hdfs dfs 常用命令</h1>
-<div class="highlight"><pre><span class="c"># 生成目录</span>
+<div class="highlight"><pre><span></span><span class="c1"># 生成目录</span>
 hdfs dfs -mkdir -p /user/laomie/temp
 
-<span class="c"># 上传文件</span>
+<span class="c1"># 上传文件</span>
 hdfs dfs -copyFromLocal <span class="o">[</span>-f<span class="o">]</span> &lt;localsrc&gt; URI
 hdfs dfs -put &lt;localsrc&gt; &lt;dst&gt;
 
-<span class="c"># 下载文件</span>
+<span class="c1"># 下载文件</span>
 hdfs dfs -copyToLocal <span class="o">[</span>-ignorecrc<span class="o">]</span> <span class="o">[</span>-crc<span class="o">]</span> URI &lt;localdst&gt;
 hdfs dfs -get <span class="o">[</span>-ignorecrc<span class="o">]</span> <span class="o">[</span>-crc<span class="o">]</span> &lt;src&gt; &lt;localdst&gt;
 
-<span class="c"># 删除目录</span>
+<span class="c1"># 删除目录</span>
 hdfs dfs -rmr <span class="o">[</span>-skipTrash<span class="o">]</span> URI <span class="o">[</span>URI ...<span class="o">]</span>
 
-<span class="c"># 查看hadoop磁盘使用</span>
+<span class="c1"># 查看hadoop磁盘使用</span>
 hdfs dfsadmin -report
 
-<span class="c"># 查看yarn的资源使用</span>
+<span class="c1"># 查看yarn的资源使用</span>
 yarn node -list
 
-<span class="c"># 查看mr进程</span>
+<span class="c1"># 查看mr进程</span>
 mapred job -list
 </pre></div>
 
@@ -67,17 +67,17 @@ mapred job -list
 <h1>hadoop(spark)无法停止</h1>
 <p>当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止</p>
 <p>在"hadoop-env.sh"做如下设置</p>
-<div class="highlight"><pre>export HADOOP_PID_DIR=/data/hadoop/hdfs/pids
+<div class="highlight"><pre><span></span>export HADOOP_PID_DIR=/data/hadoop/hdfs/pids
 </pre></div>
 
 
 <p>在"yarn-env.sh"做如下设置</p>
-<div class="highlight"><pre>export YARN_PID_DIR=/data/hadoop/hdfs/pids
+<div class="highlight"><pre><span></span>export YARN_PID_DIR=/data/hadoop/hdfs/pids
 </pre></div>
 
 
 <p>spark类似，需要在"spark-env.sh"做如下设置</p>
-<div class="highlight"><pre>export SPARK_PID_DIR=/data/hadoop/spark/pids
+<div class="highlight"><pre><span></span>export SPARK_PID_DIR=/data/hadoop/spark/pids
 </pre></div>
 
 
@@ -85,7 +85,7 @@ mapred job -list
 <p>当磁盘剩余空间小于10%时，reduce任务无法启动</p>
 <h1>hadoop升级</h1>
 <p>备份</p>
-<div class="highlight"><pre><span class="err">#</span><span class="x"> 进入安全模式</span>
+<div class="highlight"><pre><span></span><span class="err">#</span><span class="x"> 进入安全模式</span>
 <span class="x">hdfs dfsadmin -safemode enter</span>
 <span class="err">#</span><span class="x"> fsck检查</span>
 <span class="x">hdfs fsck / -files -blocks -locations |grep -v -E &#39;^.&#39; &gt; /home/hadoop/dfs-v-old-fs</span>
@@ -101,7 +101,7 @@ mapred job -list
 
 
 <p>namenode升级</p>
-<div class="highlight"><pre>start-dfs.sh –upgrade
+<div class="highlight"><pre><span></span>start-dfs.sh –upgrade
 # hadoop-daemon.sh start namenode -upgrade
 </pre></div>
 
@@ -114,7 +114,7 @@ mapred job -list
 <li><a href="http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/">http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/</a></li>
 </ul>
 <p>升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode</p>
-<div class="highlight"><pre>hdfs dfsadmin -finalizeUpgrade
+<div class="highlight"><pre><span></span>hdfs dfsadmin -finalizeUpgrade
 </pre></div>
 
 
@@ -122,7 +122,7 @@ mapred job -list
 <li><a href="http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space">http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space</a></li>
 </ul>
 <h1>查看逻辑cpu个数</h1>
-<div class="highlight"><pre>grep &quot;^processor&quot; /proc/cpuinfo | wc -l
+<div class="highlight"><pre><span></span>grep &quot;^processor&quot; /proc/cpuinfo | wc -l
 </pre></div>
     </div><!-- /.entry-content -->
 

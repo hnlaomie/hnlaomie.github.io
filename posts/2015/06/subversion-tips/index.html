@@ -39,12 +39,12 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
 </footer><!-- /.post-info -->      <h1>检出</h1>
-<div class="highlight"><pre>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
+<div class="highlight"><pre><span></span>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
 </pre></div>
 
 
 <h1>SVN回滚</h1>
-<div class="highlight"><pre># 正统方法一
+<div class="highlight"><pre><span></span># 正统方法一
 svn merge --dry-run -r73:68 http://my.repository.com/my/project/trunk
 svn merge -r73:68 http://my.repository.com/my/project/trunk
 svn commit -m &quot;Reverted to revision 68.&quot;
@@ -59,105 +59,105 @@ svn cat -r {rev} filename &gt; filename
 
 
 <h1>导出</h1>
-<div class="highlight"><pre>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
+<div class="highlight"><pre><span></span>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
 </pre></div>
 
 
 <h1>添加新文件</h1>
-<div class="highlight"><pre>svn add 文件名
+<div class="highlight"><pre><span></span>svn add 文件名
 </pre></div>
 
 
 <h1>提交</h1>
-<div class="highlight"><pre>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
+<div class="highlight"><pre><span></span>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
 </pre></div>
 
 
 <h1>更新文件</h1>
-<div class="highlight"><pre>svn update
+<div class="highlight"><pre><span></span>svn update
 #将版本库中的文件 Test.java还原到修正版本
 svn update -r 200 Test.java
 </pre></div>
 
 
 <h1>删除文件</h1>
-<div class="highlight"><pre>svn delete 文件名
+<div class="highlight"><pre><span></span>svn delete 文件名
 </pre></div>
 
 
 <h1>加锁/解锁</h1>
-<div class="highlight"><pre>svn lock -m “加锁备注信息文本“ [--force] 文件名 
+<div class="highlight"><pre><span></span>svn lock -m “加锁备注信息文本“ [--force] 文件名 
 svn unlock
 </pre></div>
 
 
 <h1>比较差异</h1>
-<div class="highlight"><pre>svn diff 文件名
+<div class="highlight"><pre><span></span>svn diff 文件名
 # 修正版本号200和修正版本号201比较差异
 svn diff -r 200:201 Test.java
 </pre></div>
 
 
 <h1>查看文件或者目录状态</h1>
-<div class="highlight"><pre># ?：不在svn的控制中；M：内容被修改；C：发生冲突
+<div class="highlight"><pre><span></span># ?：不在svn的控制中；M：内容被修改；C：发生冲突
 svn status [-v] [目录/文件]
 </pre></div>
 
 
 <h1>查看日志</h1>
-<div class="highlight"><pre>svn log 文件名
+<div class="highlight"><pre><span></span>svn log 文件名
 </pre></div>
 
 
 <h1>查看文件详细信息</h1>
-<div class="highlight"><pre>svn info 文件名
+<div class="highlight"><pre><span></span>svn info 文件名
 </pre></div>
 
 
 <h1>查看版本库下的文件和目录列表</h1>
-<div class="highlight"><pre>svn list svn:// 路径(目录或文件的全路径)
+<div class="highlight"><pre><span></span>svn list svn:// 路径(目录或文件的全路径)
 </pre></div>
 
 
 <h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre>svn mkdir 目录名
+<div class="highlight"><pre><span></span>svn mkdir 目录名
 </pre></div>
 
 
 <h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre>svn mkdir 目录名
+<div class="highlight"><pre><span></span>svn mkdir 目录名
 svn add --non-recursive 目录名
 </pre></div>
 
 
 <h1>恢复本地修改</h1>
-<div class="highlight"><pre>svn revert [--recursive] 文件名
+<div class="highlight"><pre><span></span>svn revert [--recursive] 文件名
 </pre></div>
 
 
 <h1>解决冲突</h1>
-<div class="highlight"><pre>svn resolved [本地目录全路径]
+<div class="highlight"><pre><span></span>svn resolved [本地目录全路径]
 </pre></div>
 
 
 <h1>不checkout而查看输出特定文件或URL的内容</h1>
-<div class="highlight"><pre>svn cat http://文件全路径
+<div class="highlight"><pre><span></span>svn cat http://文件全路径
 </pre></div>
 
 
 <h1>忽略文件</h1>
-<div class="highlight"><pre>svn propedit svn:ignore .
+<div class="highlight"><pre><span></span>svn propedit svn:ignore .
 </pre></div>
 
 
 <h1>查看删除的文件</h1>
-<div class="highlight"><pre>svn log -r2080:HEAD -v | grep &quot;^   D&quot;
+<div class="highlight"><pre><span></span>svn log -r2080:HEAD -v | grep &quot;^   D&quot;
 svn log -v . | awk &#39;/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION&quot;: &quot;$0; }&#39;
 </pre></div>
 
 
 <h1>签出指定时间之前的版本</h1>
-<div class="highlight"><pre>svn checkout --revision {2016-02-23} http://文件全路径
+<div class="highlight"><pre><span></span>svn checkout --revision {2016-02-23} http://文件全路径
 </pre></div>
     </div><!-- /.entry-content -->
 

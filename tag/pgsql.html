@@ -35,20 +35,20 @@
 <p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/pgsql.html">pgsql</a> </p>
 </footer><!-- /.post-info --><h2>postgresql修改密码</h2>
 <p>修改“/etc/postgresql/9.1/main/pg_hba.conf"</p>
-<div class="highlight"><pre><span class="nb">local   </span>all    all   md5
+<div class="highlight"><pre><span></span><span class="nb">local</span>   all    all   md5
 </pre></div>
 
 
 <p>修改密码</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo service postgresql restart
-<span class="nv">$ </span>sudo -u postgres psql
-<span class="nv">postgres</span><span class="o">=</span><span class="c"># \password postgres</span>
-<span class="nv">postgres</span><span class="o">=</span><span class="c"># \q</span>
+<div class="highlight"><pre><span></span>$ sudo service postgresql restart
+$ sudo -u postgres psql
+<span class="nv">postgres</span><span class="o">=</span><span class="c1"># \password postgres</span>
+<span class="nv">postgres</span><span class="o">=</span><span class="c1"># \q</span>
 </pre></div>
 
 
 <p>恢复“/etc/postgresql/9.1/main/pg_hba.conf"</p>
-<div class="highlight"><pre><span class="nb">local   </span>all    all   peer
+<div class="highlight"><pre><span></span><span class="nb">local</span>   all    all   peer
 </pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">

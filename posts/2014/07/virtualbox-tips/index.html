@@ -41,30 +41,30 @@
 </footer><!-- /.post-info -->      <h1>virtualbox Bridged Adapter</h1>
 <h2>linux 主机设置</h2>
 <p>建立虚拟网卡</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo ip tuntap add mode tap tap0
-<span class="nv">$ </span>sudo ip link <span class="nb">set </span>tap0 up
-<span class="nv">$ </span>sudo route add -host 192.168.1.26 dev tap0
-<span class="nv">$ </span>sudo route add -host 192.168.1.27 dev tap0
-<span class="nv">$ </span>sudo route add -host 192.168.1.28 dev tap0
+<div class="highlight"><pre><span></span>$ sudo ip tuntap add mode tap tap0
+$ sudo ip link <span class="nb">set</span> tap0 up
+$ sudo route add -host 192.168.1.26 dev tap0
+$ sudo route add -host 192.168.1.27 dev tap0
+$ sudo route add -host 192.168.1.28 dev tap0
 </pre></div>
 
 
 <p>查看网卡</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo ip addr show
+<div class="highlight"><pre><span></span>$ sudo ip addr show
 </pre></div>
 
 
 <p>删除虚拟网卡</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo ip tuntap delete mode tap tap0
+<div class="highlight"><pre><span></span>$ sudo ip tuntap delete mode tap tap0
 </pre></div>
 
 
 <p>设置脚本</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># tap-setup.sh</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># tap-setup.sh</span>
 tap_up<span class="o">(){</span>
     sudo ip tuntap add mode tap tap0
-    sudo ip link <span class="nb">set </span>tap0 up
+    sudo ip link <span class="nb">set</span> tap0 up
     sudo route add -host 192.168.1.21 dev tap0
     sudo route add -host 192.168.1.22 dev tap0
     sudo route add -host 192.168.1.23 dev tap0
@@ -73,12 +73,12 @@ tap_down<span class="o">(){</span>
     sudo route delete -host 192.168.1.21 dev tap0
     sudo route delete -host 192.168.1.22 dev tap0
     sudo route delete -host 192.168.1.23 dev tap0
-    sudo ip link <span class="nb">set </span>tap0 down
+    sudo ip link <span class="nb">set</span> tap0 down
     sudo ip tuntap delete mode tap tap0
 <span class="o">}</span>
 <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;This script must be run as root&quot;</span> 1&gt;<span class="p">&amp;</span>2
-    <span class="nb">exit </span>1
+    <span class="nb">exit</span> 1
 <span class="k">else</span>
     <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> in
     start<span class="o">)</span>
@@ -92,14 +92,14 @@ tap_down<span class="o">(){</span>
         <span class="p">;;</span>
     <span class="k">esac</span>
 <span class="k">fi</span>
-<span class="nb">exit </span>0
+<span class="nb">exit</span> 0
 </pre></div>
 
 
 <h2>ubuntu客户机设置</h2>
 <p>设置静态ip，对”/etc/network/interfaces“做如下修改</p>
-<div class="highlight"><pre>auto eth0
-<span class="c">#iface eth0 inet dhcp</span>
+<div class="highlight"><pre><span></span>auto eth0
+<span class="c1">#iface eth0 inet dhcp</span>
 iface eth0 inet static
 address 192.168.1.26
 netmask 255.255.255.0
@@ -108,7 +108,7 @@ gateway 192.168.1.1
 
 
 <p>设置dns，对“/etc/resolvconf/resolv.conf.d/base”增加如下内容</p>
-<div class="highlight"><pre>nameserver 221.129.243.198
+<div class="highlight"><pre><span></span>nameserver 221.129.243.198
 nameserver 106.187.34.91
 </pre></div>
 
@@ -121,13 +121,13 @@ nameserver 106.187.34.91
 </ul>
 <h1>virtualbox使用</h1>
 <h2>克隆虚拟机</h2>
-<div class="highlight"><pre><span class="nv">$ </span>VBoxManage clonehd /full-path/src.vdi /full-path/dst.vdi
+<div class="highlight"><pre><span></span>$ VBoxManage clonehd /full-path/src.vdi /full-path/dst.vdi
 </pre></div>
 
 
 <h2>linux客户机访问主机共享目录</h2>
 <p>设置共享目录"temp"，并在客户机mount共享目录</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo mount -t vboxsf temp /mnt/temp
+<div class="highlight"><pre><span></span>$ sudo mount -t vboxsf temp /mnt/temp
 </pre></div>
     </div><!-- /.entry-content -->
 

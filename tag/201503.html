@@ -34,7 +34,7 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/centos.html">centos</a> </p>
 </footer><!-- /.post-info --><h1>新增用户</h1>
-<div class="highlight"><pre>groupadd dev
+<div class="highlight"><pre><span></span>groupadd dev
 useradd -g dev laomie
 passwd laomie
 </pre></div>
@@ -43,7 +43,7 @@ passwd laomie
 <p>sudo权限设置，输入visudo，然后写入以下内容
   laomie ALL=(ALL)   ALL</p>
 <h1>安装python3</h1>
-<div class="highlight"><pre>yum groupinstall <span class="s2">&quot;Development tools&quot;</span>
+<div class="highlight"><pre><span></span>yum groupinstall <span class="s2">&quot;Development tools&quot;</span>
 yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 vim /etc/ld.so.conf  <span class="o">(</span>add <span class="s1">&#39;/usr/local/lib&#39;</span><span class="o">)</span>
 ./configure --prefix<span class="o">=</span>/usr/local --enable-shared
@@ -61,7 +61,7 @@ pip3.4 install scipy
 
 <h1>安装svn</h1>
 <p>编辑/etc/yum.repos.d/wandisco-svn.repo</p>
-<div class="highlight"><pre><span class="k">[WandiscoSVN]</span>
+<div class="highlight"><pre><span></span><span class="k">[WandiscoSVN]</span>
 <span class="na">name</span><span class="o">=</span><span class="s">Wandisco SVN Repo</span>
 <span class="na">baseurl</span><span class="o">=</span><span class="s">http://opensource.wandisco.com/centos/6/svn-1.8/RPMS/$basearch/</span>
 <span class="na">enabled</span><span class="o">=</span><span class="s">1</span>
@@ -70,13 +70,13 @@ pip3.4 install scipy
 
 
 <p>安装</p>
-<div class="highlight"><pre># yum clean all
+<div class="highlight"><pre><span></span># yum clean all
 # yum install subversion
 </pre></div>
 
 
 <h1>安装mysql5.7</h1>
-<div class="highlight"><pre>wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+<div class="highlight"><pre><span></span>wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
 yum localinstall mysql57-community-release-el6-7.noarch.rpm
 yum repolist enabled <span class="p">|</span> grep <span class="s2">&quot;mysql.*-community.*&quot;</span>
 yum install mysql-community-server
@@ -87,14 +87,14 @@ mysql_install_db --datadir<span class="o">=</span>/data/mysql/data --lc-messages
 
 
 <p>/etc/my.cnf做如下修改</p>
-<div class="highlight"><pre><span class="k">[mysqld]</span>
+<div class="highlight"><pre><span></span><span class="k">[mysqld]</span>
 <span class="c1">#datadir=/var/lib/mysql</span>
 <span class="na">datadir</span><span class="o">=</span><span class="s">/data/mysql/data</span>
 </pre></div>
 
 
 <p>设置密码</p>
-<div class="highlight"><pre>chown -R mysql.mysql /data/mysql
+<div class="highlight"><pre><span></span>chown -R mysql.mysql /data/mysql
 service mysqld start
 cat /root/.mysql_secret
 # 输入cat显示的密码

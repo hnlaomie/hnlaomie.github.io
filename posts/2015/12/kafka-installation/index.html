@@ -39,7 +39,7 @@
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->      <h1>代码编译</h1>
-<div class="highlight"><pre>gradle
+<div class="highlight"><pre><span></span>gradle
 gradle releaseTarGzAll
 </pre></div>
 
@@ -47,17 +47,17 @@ gradle releaseTarGzAll
 <p>安装包在./core/build/distributions/</p>
 <h1>安装</h1>
 <p><a href="http://hnlaomie.github.io/posts/2015/07/zookeeper-installation/">安装zookeeper</a>，然后修改"config/server.properties"设置zookeeper</p>
-<div class="highlight"><pre>zookeeper.connect=localhost:2181
+<div class="highlight"><pre><span></span>zookeeper.connect=localhost:2181
 </pre></div>
 
 
 <p>在"bin/kafka-run-class.sh"中修改日志路径（否则日志将写到安装路径的"logs"目录）</p>
-<div class="highlight"><pre>LOG_DIR=&quot;/data/hadoop/kafka/log4j/logs&quot;
+<div class="highlight"><pre><span></span>LOG_DIR=&quot;/data/hadoop/kafka/log4j/logs&quot;
 </pre></div>
 
 
 <h1>快速指南</h1>
-<div class="highlight"><pre># 启动
+<div class="highlight"><pre><span></span># 启动
 bin/zookeeper-server-start.sh config/zookeeper.properties &amp;
 # 停止
 bin/zookeeper-server-stop.sh config/zookeeper.properties
@@ -73,7 +73,7 @@ bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beg
 
 
 <h1>kafka和spark整合</h1>
-<div class="highlight"><pre><span class="x">cd </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x"></span>
+<div class="highlight"><pre><span></span><span class="x">cd </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x"></span>
 <span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5</span>
 <span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1</span>
 <span class="x">bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test</span>
@@ -82,26 +82,32 @@ bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beg
 
 <h1>idea开发环境设置</h1>
 <p>kafka, spark streaming相关例子，只需启动kafka，然后在运行环境里做如下设置</p>
-<div class="highlight"><pre>VM options: -Dspark.master=local[2]
+<div class="highlight"><pre><span></span>VM options: -Dspark.master=local[2]
 Environment variables: MASTER=localh[2]
 </pre></div>
 
 
 <p>scala2.10使用jkd7，gradle需做以下设置兼容jdk7</p>
-<div class="highlight"><pre>sourceCompatibility = &quot;1.7&quot;
+<div class="highlight"><pre><span></span>sourceCompatibility = &quot;1.7&quot;
 targetCompatibility = &quot;1.7&quot;
 </pre></div>
 
 
 <h1>删除主题内容</h1>
 <p>设置server.properties</p>
-<div class="highlight"><pre>delete.topic.enable=true
+<div class="highlight"><pre><span></span>delete.topic.enable=true
 </pre></div>
 
 
 <p>用以下命令删除内容</p>
-<div class="highlight"><pre>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
+<div class="highlight"><pre><span></span>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
 </pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="http://blog.jobbole.com/99195/">http://blog.jobbole.com/99195/</a></li>
+</ul>
     </div><!-- /.entry-content -->
 
   </article>

@@ -34,32 +34,32 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/docker.html">docker</a> </p>
 </footer><!-- /.post-info --><h2>image管理</h2>
-<div class="highlight"><pre><span class="c"># 列出所有image</span>
-<span class="nv">$ </span>sudo docker images
+<div class="highlight"><pre><span></span><span class="c1"># 列出所有image</span>
+$ sudo docker images
 
-<span class="c"># 删除image（注：需要先删除相关的container）</span>
-<span class="nv">$ </span>sudo docker rmi ubuntu:latest
-<span class="nv">$ </span>sudo docker rmi <span class="o">[</span>image id<span class="o">]</span>
+<span class="c1"># 删除image（注：需要先删除相关的container）</span>
+$ sudo docker rmi ubuntu:latest
+$ sudo docker rmi <span class="o">[</span>image id<span class="o">]</span>
 
-<span class="c"># 根据path下的Dockerfile创建image</span>
-<span class="nv">$ </span>sudo docker build -t ubuntu-java:latest /path
+<span class="c1"># 根据path下的Dockerfile创建image</span>
+$ sudo docker build -t ubuntu-java:latest /path
 
-<span class="c"># 更改某个image的tag</span>
-<span class="nv">$ </span>sudo docker tag ubuntu-java:latest
+<span class="c1"># 更改某个image的tag</span>
+$ sudo docker tag ubuntu-java:latest
 
-<span class="c"># 库中查找相关image</span>
-<span class="nv">$ </span>sudo docker search ubuntu:latest
+<span class="c1"># 库中查找相关image</span>
+$ sudo docker search ubuntu:latest
 
-<span class="c"># 从库中下载image</span>
-<span class="nv">$ </span>sudo docker pull ubuntu:latest
+<span class="c1"># 从库中下载image</span>
+$ sudo docker pull ubuntu:latest
 
-<span class="c"># 上传image到库</span>
-<span class="nv">$ </span>sudo docker push ubuntu:latest
+<span class="c1"># 上传image到库</span>
+$ sudo docker push ubuntu:latest
 </pre></div>
 
 
 <h2>container管理</h2>
-<div class="highlight"><pre>
+<div class="highlight"><pre><span></span>
 </pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
