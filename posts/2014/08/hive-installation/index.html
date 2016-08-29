@@ -167,23 +167,30 @@ hivemall-core-0.4.2-rc.2-with-dependencies.jar
 define-all.hive</p>
 </li>
 <li>
-<p>将软件放在"/data/apache/hivemall/"目录，并用以下命令将jar上传hdfs
-hdfs dfs -put /data/apache/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar /hive/hivemall/
-(注：hdfs没有hivemall目录则先建目录）</p>
-</li>
-<li>
-<p>建hivemall库
-进入hive后，执行以下hive命令
-CREATE DATABASE IF NOT EXISTS hivemall;</p>
-</li>
-<li>
-<p>hivemall的配置
-在 "~/.hiverc" 增加以下内容
-use hivemall;
-set hivevar:hivemall_jar=hdfs:///hive/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar;
-source /data/apache/hivemall/define-all.hive;</p>
+<p>将软件放在"/data/apache/hivemall/"目录，并用以下命令将jar上传hdfs</p>
 </li>
 </ol>
+<div class="highlight"><pre><span></span>hdfs dfs -put /data/apache/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar /hive/hivemall/
+(注：hdfs没有hivemall目录则先建目录）
+</pre></div>
+
+
+<ol>
+<li>建hivemall库
+进入hive后，执行以下hive命令</li>
+</ol>
+<div class="highlight"><pre><span></span>CREATE DATABASE IF NOT EXISTS hivemall;
+</pre></div>
+
+
+<ol>
+<li>hivemall的配置
+在 "~/.hiverc" 增加以下内容</li>
+</ol>
+<div class="highlight"><pre><span></span>use hivemall<span class="p">;</span>
+<span class="nb">set</span> hivevar:hivemall_jar<span class="o">=</span>hdfs:///hive/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar<span class="p">;</span>
+<span class="nb">source</span> /data/apache/hivemall/define-all.hive<span class="p">;</span>
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
