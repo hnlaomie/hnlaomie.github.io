@@ -78,7 +78,7 @@ cache-size=1000
 =============================
 编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容
 ```bash
-deb https://apt.dockerproject.org/repo ubuntu-trusty main
+deb https://apt.dockerproject.org/repo ubuntu-xenial main/binary-amd64
 ```
 导入key和安装
 ```bash
@@ -98,8 +98,34 @@ $ sudo ufw allow 2375/tcp
 DOCKER_OPTS="--dns 208.67.222.222"
 ```
 相关链接
+<https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04>
 <https://blog.docker.com/2015/07/new-apt-and-yum-repos/>
 <http://get.docker.com/ubuntu>
+
+安装R
+======================
+```bash
+sudo echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" | sudo tee -a /etc/apt/sources.list
+gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+gpg -a --export E084DAB9 | sudo apt-key add -
+sudo apt update
+sudo apt install r-base r-base-dev
+sudo apt install gdebi-core
+wget https://download1.rstudio.org/rstudio-0.99.903-amd64.deb
+sudo gdebi -n rstudio-0.99.903-amd64.deb
+```
+相关链接
+<https://www.datascienceriot.com/how-to-install-r-in-linux-ubuntu-16-04-xenial-xerus/kris/>
+
+安装mariadb
+========================
+```bash
+sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'
+sudo apt update
+sudo apt install mariadb-server
+```
 
 安装qq
 ==========================

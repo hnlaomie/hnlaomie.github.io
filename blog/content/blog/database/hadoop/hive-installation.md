@@ -133,22 +133,27 @@ hivemall安装
 ```bash
 mvn clean install -DskipTests=true
 ```
+
 2. 到"https://github.com/myui/hivemall/releases"下载以下软件
 hivemall-core-0.4.2-rc.2-with-dependencies.jar
 define-all.hive
 
 3. 将软件放在"/data/apache/hivemall/"目录，并用以下命令将jar上传hdfs
+```
 hdfs dfs -put /data/apache/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar /hive/hivemall/
 (注：hdfs没有hivemall目录则先建目录）
+```
 
 4. 建hivemall库
 进入hive后，执行以下hive命令
+```
 CREATE DATABASE IF NOT EXISTS hivemall;
+```
 
 5. hivemall的配置
 在 "~/.hiverc" 增加以下内容
+```bash
 use hivemall;
 set hivevar:hivemall_jar=hdfs:///hive/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar;
 source /data/apache/hivemall/define-all.hive;
-
-
+```

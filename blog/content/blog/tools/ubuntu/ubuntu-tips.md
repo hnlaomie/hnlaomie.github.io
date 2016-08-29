@@ -66,3 +66,9 @@ vcd dat to mpeg
 ```
 sudo apt-get install handbrake
 ```
+
+git ssl errors
+=========================
+```
+export GIT_SSL_NO_VERIFY=1
+```
