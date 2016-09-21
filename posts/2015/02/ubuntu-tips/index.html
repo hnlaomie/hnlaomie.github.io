@@ -41,11 +41,6 @@
 </footer><!-- /.post-info -->      <h1>禁用笔记本触摸板</h1>
 <p>安装 gpointing-device-settings
 system settings -&gt; mouse &amp; touchpad</p>
-<h1>删除旧内核</h1>
-<div class="highlight"><pre><span></span>sudo aptitude purge ~ilinux-image-.*<span class="se">\(\!\(</span><span class="sb">`</span>uname -r<span class="sb">`</span><span class="se">\|</span>generic-.*<span class="se">\)\)</span>
-</pre></div>
-
-
 <h1>启动菜单</h1>
 <p>/usr/share/applications</p>
 <h1>取消ssh远程连接键盘失灵</h1>
@@ -92,6 +87,14 @@ ssh-add -D
 
 <h1>git ssl errors</h1>
 <div class="highlight"><pre><span></span>export GIT_SSL_NO_VERIFY=1
+</pre></div>
+
+
+<h1>thinkpad E431 安装双系统</h1>
+<p>BIOS做以下设置</p>
+<div class="highlight"><pre><span></span>Security -&gt; Secure Boot -&gt; Disabled
+Startup -&gt; Boot -&gt; Network Boot -&gt; USB HDD
+Startup -&gt; Boot -&gt; UEFI/Legacy Boot -&gt; Both / Legacy First
 </pre></div>
     </div><!-- /.entry-content -->
 

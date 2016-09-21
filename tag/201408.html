@@ -35,18 +35,18 @@
 <p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/spark.html">spark</a> </p>
 </footer><!-- /.post-info --><h1>maven编译</h1>
 <div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MAVEN_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m&quot;</span>
-mvn -Pyarn -Phadoop-2.6 -Dhadoop.version<span class="o">=</span>2.6.2 -Phive -Phive-thriftserver -Dscala-2.11 -DskipTests clean package
+mvn -Pyarn -Phadoop-2.7 -Dhadoop.version<span class="o">=</span>2.7.3 -Phive -Phive-thriftserver -Psparkr -DskipTests clean package
 </pre></div>
 
 
 <h1>sbt编译</h1>
-<div class="highlight"><pre><span></span><span class="nv">SPARK_HADOOP_VERSION</span><span class="o">=</span>2.6.2 <span class="nv">SPARK_YARN</span><span class="o">=</span><span class="nb">true</span> <span class="nv">SPARK_HIVE</span><span class="o">=</span><span class="nb">true</span> sbt/sbt clean assembly
+<div class="highlight"><pre><span></span><span class="nv">SPARK_HADOOP_VERSION</span><span class="o">=</span>2.7.3 <span class="nv">SPARK_YARN</span><span class="o">=</span><span class="nb">true</span> <span class="nv">SPARK_HIVE</span><span class="o">=</span><span class="nb">true</span> sbt/sbt clean assembly
 </pre></div>
 
 
 <p>生成spark部署包</p>
 <div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MAVEN_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m&quot;</span>
-./make-distribution.sh --tgz --with-tachyon -Pyarn -Dyarn.version<span class="o">=</span>2.6.2 -Phadoop-2.6 -Dhadoop.version<span class="o">=</span>2.6.2 -Dscala-2.11 -Phive -Phive-thriftserver -DskipTests
+./dev/make-distribution.sh --tgz -Pyarn -Phadoop-2.7 -Dhadoop.version<span class="o">=</span>2.7.3 -Phive -Phive-thriftserver -Psparkr -DskipTests
 </pre></div>
 
 
