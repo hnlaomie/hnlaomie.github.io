@@ -10,12 +10,6 @@ Summary: ubuntu技巧
 安装 gpointing-device-settings
 system settings -> mouse & touchpad
 
-删除旧内核
-=================================
-```bash
-sudo aptitude purge ~ilinux-image-.*\(\!\(`uname -r`\|generic-.*\)\)
-```
-
 启动菜单
 =========================================
 /usr/share/applications
@@ -71,4 +65,13 @@ git ssl errors
 =========================
 ```
 export GIT_SSL_NO_VERIFY=1
+```
+
+thinkpad E431 安装双系统
+=====================================
+BIOS做以下设置
+```
+Security -> Secure Boot -> Disabled
+Startup -> Boot -> Network Boot -> USB HDD
+Startup -> Boot -> UEFI/Legacy Boot -> Both / Legacy First
 ```

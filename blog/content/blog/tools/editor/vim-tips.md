@@ -49,6 +49,14 @@ vim替换
 :%s/^\(.*\)\n\1$/\1/g
 ```
 
+vim8安装
+========================
+```
+sudo add-apt-repository ppa:jonathonf/vim
+# 删除
+sudo apt install ppa-purge && sudo ppa-purge ppa:jonathonf/vim
+```
+
 参考
 ==================
 [vim quick reference card]({filename}/docs/tools/editor/vimqrc.pdf)
