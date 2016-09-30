@@ -23,24 +23,27 @@ export PATH=$PATH:$HIVE_HOME/bin
 ===================================
 ```
 -- 匹配所有用"%"，例如"192.168.1.%"
-create user 'hadoop'@'localhost' identified by 'hadoop';
+create user 'hive'@'localhost' identified by 'hive';
 -- 修改用户密码
--- set password for 'hadoop'@'localhost' = password('hadoop');
-grant all privileges on *.* to 'hadoop'@'localhost' with grant option;
+-- set password for 'hive'@'localhost' = password('hive');
+grant all privileges on hive2.* to 'hive'@'localhost' with grant option;
 -- 删除用户权限
-revoke all privileges on *.* from 'hadoop'@'localhost';
-drop user 'hadoop'@'localhost';
+revoke all privileges on *.* from 'hive'@'localhost';
+drop user 'hive'@'localhost';
 flush privileges;
-create database hadoop2 default character set utf8 default collate utf8_general_ci;
-alter database hadoop2 character set latin1;
+create database hive2 default character set utf8 default collate utf8_general_ci;
+alter database hive2 character set latin1;
 ```
 
-复制mysql驱动，并建相关目录
+复制mysql驱动，并建相关目录，初始化metadata
 ================================
 ```bash
-mkdir -p $HIVE_HOME/warehouse
-mkdir -p $HIVE_HOME/auxlib
-cp mysql-connector-java-5.1.31.jar $HIVE_HOME/auxlib
+cp mysql-connector-java-5.1.38.jar $HIVE_HOME/lib
+hdfs dfs -mkdir /hive
+hdfs dfs -mkdir /hive/warehouse
+hdfs dfs -mkdir /hive/scratchdir
+hdfs dfs -chmod 777 /hive/scratchdir
+/hive/scratchdir
 ```
 
 新增"conf/hive-site.xml"文件
@@ -48,54 +51,88 @@ cp mysql-connector-java-5.1.31.jar $HIVE_HOME/auxlib
 ```xml
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-<configuration>
+<configuration>  
+  <property>  
+    <name>javax.jdo.option.ConnectionURL</name>  
+    <value>jdbc:mysql://localhost/hive2?createDatabaseIfNotExist=true&amp;autoReconnect=true&amp;useSSL=false</value>  
+  </property>    
+<property>  
+  <name>javax.jdo.option.ConnectionDriverName</name>  
+  <value>com.mysql.jdbc.Driver</value>  
+</property>  
 <property>
-    <name>hive.metastore.schema.verification</name>
-    <value>false</value>
+  <name>hive.metastore.warehouse.dir</name>
+  <value>hdfs://localhost:9000/hive/warehouse</value>
 </property>
 <property>
-    <name>javax.jdo.option.ConnectionURL</name>
-    <value>jdbc:mysql://localhost:3306/hadoop2?createDatabaseIfNotExist=true</value>
+  <name>hive.exec.scratchdir</name>
+  <value>hdfs://localhost:9000/hive/scratchdir</value>
 </property>
 <property>
-    <name>javax.jdo.option.ConnectionDriverName</name>
-    <value>com.mysql.jdbc.Driver</value>
-</property>
+  <name>hive.querylog.location</name>
+  <value>/home/laomie/hive/logs</value>
+</property>  
+<property>  
+  <name>javax.jdo.option.ConnectionDriverName</name>  
+  <value>com.mysql.jdbc.Driver</value>  
+</property>  
+<property>  
+  <name>javax.jdo.option.ConnectionUserName</name>  
+  <value>hive</value>  
+</property>  
+<property>  
+  <name>javax.jdo.option.ConnectionPassword</name>  
+  <value>hive</value>  
+</property> 
 <property>
-    <name>javax.jdo.option.ConnectionUserName</name>
-    <value>hadoop</value>
-</property>
-<property>
-    <name>javax.jdo.option.ConnectionPassword</name>
-    <value>hadoop</value>
-</property>
-<property>
-    <name>hive.metastore.warehouse.dir</name>
-    <value>file:/home/hduser1/tools/hive0.13/warehouse</value>
-</property>
-<property>
-    <name>hive.server2.thrift.port</name>
-    <value>10000</value>
-</property>
-<property>
-    <name>hive.server2.thrift.min.worker.threads</name>
-    <value>5</value>
-</property>
-<property>
-    <name>hive.server2.thrift.max.worker.threads</name>
-    <value>500</value>
-</property>
-<property>
-    <name>hive.aux.jars.path</name>
-    <value>file:/home/hduser/tools/hive0.13/auxlib</value>
-</property>
-
-<!--
-<property>
-    <name>hive.support.concurrency</name>
+    <name>hive.exec.parallel</name>
     <value>true</value>
 </property>
--->
+   <property>
+   <name>hive.start.cleanup.scratchdir</name>
+   <value>true</value>
+    </property>  
+ <property>
+   <name>hive.server2.thrift.port</name>
+   <value>10000</value>
+ </property>
+<property>
+  <name>hive.hwi.war.file</name>
+  <value>lib/hive-hwi-2.1.0.jar</value>
+  <description>This sets the path to the HWI war file, relative to ${HIVE_HOME}. </description>
+</property>
+<property>
+  <name>hive.fetch.task.conversion</name>
+  <value>more</value>
+</property>
+<property>
+  <name>hive.optimize.index.groupby</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.join.cache.size</name>
+  <value>250000</value>
+</property>
+<property>
+  <name>hive.mapjoin.bucket.cache.size</name>
+  <value>10000</value>
+</property>
+<property>
+ <name>hive.stats.autogather</name>
+ <value>false</value>
+</property>
+<property>
+ <name>hive.mapred.reduce.tasks.speculative.execution</name>
+ <value>false</value>
+</property>
+<property>
+ <name>hive.exec.parallel.thread.number</name>
+ <value>50</value>
+</property>
+<property>
+ <name>hive.optimize.index.groupby</name>
+ <value>true</value>
+</property>
 
 </configuration>
 

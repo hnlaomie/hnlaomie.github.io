@@ -78,7 +78,7 @@ cache-size=1000
 =============================
 编辑"/etc/apt/sources.list.d/docker.list"，增加以下内容
 ```bash
-deb https://apt.dockerproject.org/repo ubuntu-xenial main/binary-amd64
+deb https://apt.dockerproject.org/repo ubuntu-xenial main
 ```
 导入key和安装
 ```bash
@@ -97,10 +97,11 @@ $ sudo ufw allow 2375/tcp
 ```bash
 DOCKER_OPTS="--dns 208.67.222.222"
 ```
+
 相关链接
 <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04>
 <https://blog.docker.com/2015/07/new-apt-and-yum-repos/>
-<http://get.docker.com/ubuntu>
+<https://docs.docker.com/engine/installation/linux/ubuntulinux/>
 
 安装R
 ======================

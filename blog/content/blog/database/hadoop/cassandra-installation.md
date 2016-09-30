@@ -98,6 +98,31 @@ trace查询相关
 
 2\. 也可在cqlsh中用"tracing (on | off)"在查询中显示trace信息
 
+数据库升级
+=====================
+1\. 下载新版应用，差分更新以下配置文件
+    * cassandra-env.sh
+    * cassandra-rackdc.properties
+    * cassandra-topology.properties
+    * cassandra.yaml （主要更新ip和文件目录）
+    * logback.xml
+
+2\. 每个结点停止写操作
+```
+nodetool drain
+```
+
+3\. 每个结点停止老版的服务，启动新版的服务
+
+4\. 如果是大版本升级，则每个结点用以下命令升级sstable
+```
+nohup nodetool upgradesstables &
+```
+
+参考
+
+* <https://docs.datastax.com/en/upgrade/doc/upgrade/cassandra/upgrdCassandraDetails.html>
+
 references
 =========================
 * <https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html>
