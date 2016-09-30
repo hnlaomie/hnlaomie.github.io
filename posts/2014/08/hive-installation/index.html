@@ -52,77 +52,114 @@
 
 <h1>设置mysql，用于保存hive的元数据</h1>
 <div class="highlight"><pre><span></span>-- 匹配所有用&quot;%&quot;，例如&quot;192.168.1.%&quot;
-create user &#39;hadoop&#39;@&#39;localhost&#39; identified by &#39;hadoop&#39;;
+create user &#39;hive&#39;@&#39;localhost&#39; identified by &#39;hive&#39;;
 -- 修改用户密码
--- set password for &#39;hadoop&#39;@&#39;localhost&#39; = password(&#39;hadoop&#39;);
-grant all privileges on *.* to &#39;hadoop&#39;@&#39;localhost&#39; with grant option;
+-- set password for &#39;hive&#39;@&#39;localhost&#39; = password(&#39;hive&#39;);
+grant all privileges on hive2.* to &#39;hive&#39;@&#39;localhost&#39; with grant option;
 -- 删除用户权限
-revoke all privileges on *.* from &#39;hadoop&#39;@&#39;localhost&#39;;
-drop user &#39;hadoop&#39;@&#39;localhost&#39;;
+revoke all privileges on *.* from &#39;hive&#39;@&#39;localhost&#39;;
+drop user &#39;hive&#39;@&#39;localhost&#39;;
 flush privileges;
-create database hadoop2 default character set utf8 default collate utf8_general_ci;
-alter database hadoop2 character set latin1;
+create database hive2 default character set utf8 default collate utf8_general_ci;
+alter database hive2 character set latin1;
 </pre></div>
 
 
-<h1>复制mysql驱动，并建相关目录</h1>
-<div class="highlight"><pre><span></span>mkdir -p <span class="nv">$HIVE_HOME</span>/warehouse
-mkdir -p <span class="nv">$HIVE_HOME</span>/auxlib
-cp mysql-connector-java-5.1.31.jar <span class="nv">$HIVE_HOME</span>/auxlib
+<h1>复制mysql驱动，并建相关目录，初始化metadata</h1>
+<div class="highlight"><pre><span></span>cp mysql-connector-java-5.1.38.jar <span class="nv">$HIVE_HOME</span>/lib
+hdfs dfs -mkdir /hive
+hdfs dfs -mkdir /hive/warehouse
+hdfs dfs -mkdir /hive/scratchdir
+hdfs dfs -chmod <span class="m">777</span> /hive/scratchdir
+/hive/scratchdir
 </pre></div>
 
 
 <h1>新增"conf/hive-site.xml"文件</h1>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <span class="cp">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span>
-<span class="nt">&lt;configuration&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>  
+  <span class="nt">&lt;property&gt;</span>  
+    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionURL<span class="nt">&lt;/name&gt;</span>  
+    <span class="nt">&lt;value&gt;</span>jdbc:mysql://localhost/hive2?createDatabaseIfNotExist=true<span class="ni">&amp;amp;</span>autoReconnect=true<span class="ni">&amp;amp;</span>useSSL=false<span class="nt">&lt;/value&gt;</span>  
+  <span class="nt">&lt;/property&gt;</span>    
+<span class="nt">&lt;property&gt;</span>  
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionDriverName<span class="nt">&lt;/name&gt;</span>  
+  <span class="nt">&lt;value&gt;</span>com.mysql.jdbc.Driver<span class="nt">&lt;/value&gt;</span>  
+<span class="nt">&lt;/property&gt;</span>  
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hive.metastore.schema.verification<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.metastore.warehouse.dir<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>hdfs://localhost:9000/hive/warehouse<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionURL<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>jdbc:mysql://localhost:3306/hadoop2?createDatabaseIfNotExist=true<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.exec.scratchdir<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>hdfs://localhost:9000/hive/scratchdir<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionDriverName<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>com.mysql.jdbc.Driver<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.querylog.location<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>/home/laomie/hive/logs<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>  
+<span class="nt">&lt;property&gt;</span>  
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionDriverName<span class="nt">&lt;/name&gt;</span>  
+  <span class="nt">&lt;value&gt;</span>com.mysql.jdbc.Driver<span class="nt">&lt;/value&gt;</span>  
+<span class="nt">&lt;/property&gt;</span>  
+<span class="nt">&lt;property&gt;</span>  
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionUserName<span class="nt">&lt;/name&gt;</span>  
+  <span class="nt">&lt;value&gt;</span>hive<span class="nt">&lt;/value&gt;</span>  
+<span class="nt">&lt;/property&gt;</span>  
+<span class="nt">&lt;property&gt;</span>  
+  <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionPassword<span class="nt">&lt;/name&gt;</span>  
+  <span class="nt">&lt;value&gt;</span>hive<span class="nt">&lt;/value&gt;</span>  
+<span class="nt">&lt;/property&gt;</span> 
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.exec.parallel<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+   <span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>hive.start.cleanup.scratchdir<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>  
+ <span class="nt">&lt;property&gt;</span>
+   <span class="nt">&lt;name&gt;</span>hive.server2.thrift.port<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;value&gt;</span>10000<span class="nt">&lt;/value&gt;</span>
+ <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.hwi.war.file<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>lib/hive-hwi-2.1.0.jar<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;description&gt;</span>This sets the path to the HWI war file, relative to ${HIVE_HOME}. <span class="nt">&lt;/description&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionUserName<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>hadoop<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.fetch.task.conversion<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>more<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionPassword<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>hadoop<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.optimize.index.groupby<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hive.metastore.warehouse.dir<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>file:/home/hduser1/tools/hive0.13/warehouse<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.join.cache.size<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>250000<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hive.server2.thrift.port<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>10000<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.mapjoin.bucket.cache.size<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>10000<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hive.server2.thrift.min.worker.threads<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>5<span class="nt">&lt;/value&gt;</span>
+ <span class="nt">&lt;name&gt;</span>hive.stats.autogather<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hive.server2.thrift.max.worker.threads<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>500<span class="nt">&lt;/value&gt;</span>
+ <span class="nt">&lt;name&gt;</span>hive.mapred.reduce.tasks.speculative.execution<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hive.aux.jars.path<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>file:/home/hduser/tools/hive0.13/auxlib<span class="nt">&lt;/value&gt;</span>
+ <span class="nt">&lt;name&gt;</span>hive.exec.parallel.thread.number<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;value&gt;</span>50<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
-
-<span class="c">&lt;!--</span>
-<span class="c">&lt;property&gt;</span>
-<span class="c">    &lt;name&gt;hive.support.concurrency&lt;/name&gt;</span>
-<span class="c">    &lt;value&gt;true&lt;/value&gt;</span>
-<span class="c">&lt;/property&gt;</span>
-<span class="c">--&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+ <span class="nt">&lt;name&gt;</span>hive.optimize.index.groupby<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
 
 <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>

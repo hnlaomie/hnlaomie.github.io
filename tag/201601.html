@@ -112,6 +112,28 @@ cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)<
 <h1>trace查询相关</h1>
 <p>1. 用"nodetool setlogginglevel"设置日志级别，然后在"system_traces.events"和"system_traces.sessions"看日志记录</p>
 <p>2. 也可在cqlsh中用"tracing (on | off)"在查询中显示trace信息</p>
+<h1>数据库升级</h1>
+<p>1. 下载新版应用，差分更新以下配置文件
+    * cassandra-env.sh
+    * cassandra-rackdc.properties
+    * cassandra-topology.properties
+    * cassandra.yaml （主要更新ip和文件目录）
+    * logback.xml</p>
+<p>2. 每个结点停止写操作</p>
+<div class="highlight"><pre><span></span>nodetool drain
+</pre></div>
+
+
+<p>3. 每个结点停止老版的服务，启动新版的服务</p>
+<p>4. 如果是大版本升级，则每个结点用以下命令升级sstable</p>
+<div class="highlight"><pre><span></span>nohup nodetool upgradesstables &amp;
+</pre></div>
+
+
+<p>参考</p>
+<ul>
+<li><a href="https://docs.datastax.com/en/upgrade/doc/upgrade/cassandra/upgrdCassandraDetails.html">https://docs.datastax.com/en/upgrade/doc/upgrade/cassandra/upgrdCassandraDetails.html</a></li>
+</ul>
 <h1>references</h1>
 <ul>
 <li><a href="https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html">https://docs.datastax.com/en/cassandra/2.0/cassandra/initialize/initializeSingleDS.html</a></li>
