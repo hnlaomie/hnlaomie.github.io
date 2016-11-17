@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>laomie's blog - Authors</title>
+        <title>gradle tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -15,19 +15,59 @@
                 <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
                     <li><a href="/category/database.html">database</a></li>
-                    <li><a href="/category/programming.html">programming</a></li>
+                    <li class="active"><a href="/category/programming.html">programming</a></li>
                     <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-
 <section id="content" class="body">
-    <h1>Authors on laomie's blog</h1>
-    <ul>
-        <li><a href="/author/hnlaomie.html">hnlaomie</a> (3)</li>
-        <li><a href="/author/laomie.html">laomie</a> (34)</li>
-    </ul>
-</section>
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/12/gradle-tips/" rel="bookmark"
+           title="Permalink to gradle tips">gradle tips</a></h1>
+    </header>
 
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-12-18T15:10:00+08:00">
+                Published: 2014-12-18(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/gradle.html">gradle</a> </p>
+</footer><!-- /.post-info -->      <h1>gradle对junit的支持</h1>
+<p>在build.gradle增加以下内容</p>
+<div class="highlight"><pre><span></span><span class="nb">test</span> <span class="o">{</span>
+    testLogging <span class="o">{</span>
+        events <span class="s1">&#39;started&#39;</span>, <span class="s1">&#39;passed&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<h1>运行单个测试</h1>
+<div class="highlight"><pre><span></span>gradle -Dtest.single<span class="o">=</span>SampleTest :project1:test
+</pre></div>
+
+
+<h1>jvm options</h1>
+<p>gradle.properties内的org.gradle.jvmargs加入以下内容</p>
+<div class="highlight"><pre><span></span>-DconfigPath=/home/laomie/projects/working/biconfig
+</pre></div>
+
+
+<p>build.gradle内加入以下内容</p>
+<div class="highlight"><pre><span></span>test {
+    systemProperties = System.properties
+}
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

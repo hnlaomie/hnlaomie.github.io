@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>ubuntu tips</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li class="active"><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2015/02/ubuntu-tips/" rel="bookmark"
+           title="Permalink to ubuntu tips">ubuntu tips</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-02-02T10:30:00+08:00">
+                Published: 2015-02-02(一)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
+</footer><!-- /.post-info -->      <h1>禁用笔记本触摸板</h1>
+<p>安装 gpointing-device-settings
+system settings -&gt; mouse &amp; touchpad</p>
+<h1>启动菜单</h1>
+<p>/usr/share/applications</p>
+<h1>取消ssh远程连接键盘失灵</h1>
+<p>在"~/.ssh/config"中加入以下内容</p>
+<div class="highlight"><pre><span></span>Host *
+ServerAliveInterval 180
+</pre></div>
+
+
+<h1>远程桌面</h1>
+<p>安装teamviewer</p>
+<div class="highlight"><pre><span></span>sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo dpkg -i teamviewer_10.0.41499_i386.deb
+sudo apt-get install -f
+</pre></div>
+
+
+<p>teamviewer启动，停止</p>
+<div class="highlight"><pre><span></span>sudo service teamviewerd stop<span class="p">|</span>start<span class="p">|</span>restart
+sudo teamviewer -info
+sudo teamviewer --daemon stop<span class="p">|</span>start<span class="p">|</span>restart
+sudo teamviewer --passwd password
+</pre></div>
+
+
+<h1>ibus-googlepinyin托板单词数</h1>
+<p>修改 /usr/share/ibus-googlepinyin/engine.py</p>
+<div class="highlight"><pre><span></span>self.__lookup_table.set_page_size(9)
+</pre></div>
+
+
+<h1>16.04 ssh 问题</h1>
+<p>sign_and_send_pubkey: signing failed: agent refused operation</p>
+<div class="highlight"><pre><span></span>sudo apt-get autoremove gnome-keyring
+ssh-add -D
+</pre></div>
+
+
+<h1>vcd dat to mpeg</h1>
+<div class="highlight"><pre><span></span>sudo apt-get install handbrake
+</pre></div>
+
+
+<h1>git ssl errors</h1>
+<div class="highlight"><pre><span></span>export GIT_SSL_NO_VERIFY=1
+</pre></div>
+
+
+<h1>thinkpad E431 安装双系统</h1>
+<p>BIOS做以下设置</p>
+<div class="highlight"><pre><span></span>Security -&gt; Secure Boot -&gt; Disabled
+Startup -&gt; Boot -&gt; Network Boot -&gt; USB HDD
+Startup -&gt; Boot -&gt; UEFI/Legacy Boot -&gt; Both / Legacy First
+</pre></div>
+
+
+<h1>chrome安装xx-net代理插件</h1>
+<ol>
+<li>
+<p>从＂工具-&gt;扩展程序＂打开扩展插件，将"XX-Net/SwitchyOmege/SwitchyOmega.crx"拖入</p>
+</li>
+<li>
+<p>点击＂添加扩展程序＂，＂跳过教程＂安装插件</p>
+</li>
+<li>
+<p>在插件界面的＂导入/导出 -&gt; 从备份文件恢复＂导入"XX-Net/SwitchyOmege/OmegaOptions.bak"文件</p>
+</li>
+<li>
+<p>在插件界面的＂XX-Net自动切换＂点击＂立即更新情景模式＂</p>
+</li>
+<li>
+<p>菜单-设置-下翻点击“显示高级设置”-点击“管理证书”，＂授权中心-&gt;导入＂，选择＂XX-Net/data/gae_proxy/CA.crt＂</p>
+</li>
+</ol>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

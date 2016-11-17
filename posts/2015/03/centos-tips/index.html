@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>centos tips</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li class="active"><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2015/03/centos-tips/" rel="bookmark"
+           title="Permalink to centos tips">centos tips</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-03-24T16:30:00+08:00">
+                Published: 2015-03-24(二)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201503.html">201503</a> <a href="/tag/centos.html">centos</a> </p>
+</footer><!-- /.post-info -->      <h1>新增用户</h1>
+<div class="highlight"><pre><span></span>groupadd dev
+useradd -g dev laomie
+passwd laomie
+</pre></div>
+
+
+<p>sudo权限设置，输入visudo，然后写入以下内容
+  laomie ALL=(ALL)   ALL</p>
+<h1>安装python3</h1>
+<div class="highlight"><pre><span></span>yum groupinstall <span class="s2">&quot;Development tools&quot;</span>
+yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
+vim /etc/ld.so.conf  <span class="o">(</span>add <span class="s1">&#39;/usr/local/lib&#39;</span><span class="o">)</span>
+./configure --prefix<span class="o">=</span>/usr/local --enable-shared
+make
+make altinstall
+ln -s /usr/local/bin/python3.4 /usr/bin/python3
+vim /usr/bin/yum  <span class="o">(</span>change to <span class="s1">&#39;#!/usr/bin/python2.6&#39;</span><span class="o">)</span>
+ldconfig
+
+yum install lapack lapack-devel blas blas-devel
+pip3.4 install numpy
+pip3.4 install scipy
+</pre></div>
+
+
+<h1>安装svn</h1>
+<p>编辑/etc/yum.repos.d/wandisco-svn.repo</p>
+<div class="highlight"><pre><span></span><span class="k">[WandiscoSVN]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">Wandisco SVN Repo</span>
+<span class="na">baseurl</span><span class="o">=</span><span class="s">http://opensource.wandisco.com/centos/6/svn-1.8/RPMS/$basearch/</span>
+<span class="na">enabled</span><span class="o">=</span><span class="s">1</span>
+<span class="na">gpgcheck</span><span class="o">=</span><span class="s">0</span>
+</pre></div>
+
+
+<p>安装</p>
+<div class="highlight"><pre><span></span># yum clean all
+# yum install subversion
+</pre></div>
+
+
+<h1>安装mysql5.7</h1>
+<div class="highlight"><pre><span></span>wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+yum localinstall mysql57-community-release-el6-7.noarch.rpm
+yum repolist enabled <span class="p">|</span> grep <span class="s2">&quot;mysql.*-community.*&quot;</span>
+yum install mysql-community-server
+mkdir -p /data/mysql/data
+mkdir -p /data/mysql/share
+mysql_install_db --datadir<span class="o">=</span>/data/mysql/data --lc-messages-dir<span class="o">=</span>/data/mysql/share
+</pre></div>
+
+
+<p>/etc/my.cnf做如下修改</p>
+<div class="highlight"><pre><span></span><span class="k">[mysqld]</span>
+<span class="c1">#datadir=/var/lib/mysql</span>
+<span class="na">datadir</span><span class="o">=</span><span class="s">/data/mysql/data</span>
+</pre></div>
+
+
+<p>设置密码</p>
+<div class="highlight"><pre><span></span>chown -R mysql.mysql /data/mysql
+service mysqld start
+cat /root/.mysql_secret
+# 输入cat显示的密码
+mysqladmin -u root -h localhost password &#39;123456&#39; -p
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

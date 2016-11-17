@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - mariadb</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2014/07/mariadb-tips/">mariadb tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-07-12T10:30:00+08:00">
+                Published: 2014-07-12(六)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/mysql.html">mysql</a> <a href="/tag/mariadb.html">mariadb</a> </p>
+</footer><!-- /.post-info --><h1>mariadb设置root密码</h1>
+<div class="highlight"><pre><span></span>mysqladmin -u root password <span class="s2">&quot;passwd&quot;</span>
+</pre></div>
+
+
+<h1>数据库导入导出</h1>
+<div class="highlight"><pre><span></span>-- 导出整个库
+mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test</span>
+-- 导出表
+mysqldump -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test</span> table1 table2
+-- 导出表结构
+mysqldump -d -uroot -ppassword -P3306 -h127.0.0.1 --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>test.sql <span class="nb">test</span> table1
+-- 导入数据
+mysql -uroot -ppassword -P3306 -h127.0.0.1 <span class="nb">test</span> &lt; test.sql
+-- 导入csv数据
+mysql -uroot -p123456 -Dsampledata -e <span class="s2">&quot;load data local infile &#39;date.txt&#39; into table time_day columns terminated by &#39;,&#39; lines terminated by &#39;\n&#39;&quot;</span>
+</pre></div>
+
+
+<h1>字符集设置为utf-8</h1>
+<p>/etc/my.cnf做如下修改</p>
+<div class="highlight"><pre><span></span><span class="k">[client]</span>
+<span class="na">default-character-set</span><span class="o">=</span><span class="s">utf8</span>
+
+<span class="k">[mysqld]</span>
+<span class="na">character-set-server</span><span class="o">=</span><span class="s">utf8</span>
+<span class="na">collation-server</span><span class="o">=</span><span class="s">utf8_general_ci</span>
+</pre></div>
+
+
+<h1>移动存放数据目录</h1>
+<div class="highlight"><pre><span></span>sudo /etc/init.d/mysqld stop
+<span class="nb">cd</span> /var/lib
+sudo tar -zcvf mysql.tar.gz mysql
+sudo mkdir -p /data/mysql
+sudo chown -R mysql.mysql /data/mysql
+sudo su mysql
+<span class="nb">cd</span> /data/mysql
+cp /var/lib/mysql.tar.gz .
+tar -zxvf mysql.tar.gz
+mv mysql data
+<span class="nb">exit</span>
+</pre></div>
+
+
+<p>/etc/my.cnf做如下修改</p>
+<div class="highlight"><pre><span></span><span class="k">[mysqld]</span>
+<span class="c1">#datadir=/var/lib/mysql</span>
+<span class="na">datadir</span><span class="o">=</span><span class="s">/data/mysql/data</span>
+</pre></div>
+
+
+<h1>centos下安装mysql5.6</h1>
+<p>到"http://dev.mysql.com/downloads/repo/yum/"下载rpm包</p>
+<div class="highlight"><pre><span></span>$ sudo rpm -Uvh platform-and-version-specific-package-name.rpm
+$ sudo yum install mysql-community-server
+$ sudo mysqld_safe --skip-grant-tables &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+$ mysql -u root mysql
+mysql&gt; update user <span class="nb">set</span> <span class="nv">password</span> <span class="o">=</span> Password<span class="o">(</span><span class="s1">&#39;your_password&#39;</span><span class="o">)</span> where <span class="nv">user</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
+mysql&gt; flush privileges<span class="p">;</span>
+mysql&gt; exit<span class="p">;</span>
+</pre></div>
+
+
+<p>参考：<a href="http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/">http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/</a></p>
+<h1>修改表</h1>
+<div class="highlight"><pre><span></span>alter table t1 rename t2;
+alter table t add col1 int;
+alter table t drop column col1;
+alter table t modify column col1 varchar(50) after col2;
+alter table t change col1 col2 int;
+alter table t change col1 col1 bigint not null;
+alter table t add index idx_name (col1, col2);
+alter table t drop index idx_name;
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

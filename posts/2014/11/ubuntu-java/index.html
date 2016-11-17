@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>ubuntu java</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li class="active"><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/11/ubuntu-java/" rel="bookmark"
+           title="Permalink to ubuntu java">ubuntu java</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-18T21:30:00+08:00">
+                Published: 2014-11-18(二)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/java.html">java</a> <a href="/tag/maven.html">maven</a> <a href="/tag/gradle.html">gradle</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
+</footer><!-- /.post-info -->      <h2>解压安装jdk8，maven3，gradle</h2>
+<p>jdk-8u25-linux-x64.tar.gz
+apache-maven-3.2.3-bin.tar.gz
+gradle-2.2-all.zip</p>
+<h2>设置环境变量</h2>
+<p>修改"~/.bashrc"</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/local/tools/jdk8
+<span class="nb">export</span> <span class="nv">CLASSPATH</span><span class="o">=</span>/usr/local/tools/jdk8/lib
+<span class="nb">export</span> <span class="nv">MAVEN_HOME</span><span class="o">=</span>/usr/local/tools/maven3
+<span class="nb">export</span> <span class="nv">GRADLE_HOME</span><span class="o">=</span>/usr/local/tools/gradle
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$GRADLE_HOME</span>/bin:<span class="nv">$MAVEN_HOME</span>/bin
+</pre></div>
+
+
+<h2>系统设置jdk</h2>
+<div class="highlight"><pre><span></span>$ sudo update-alternatives --install /usr/bin/java java /usr/local/tools/jdk8/bin/java 300
+$ sudo update-alternatives --install /usr/bin/javac javac /usr/local/tools/jdk8/bin/javac 300
+$ sudo update-alternatives --config java
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

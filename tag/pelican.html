@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - pelican</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2014/07/pelican-installation/">pelican installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-07-11T14:30:00+08:00">
+                Published: 2014-07-11(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201407.html">201407</a> <a href="/tag/pelican.html">pelican</a> <a href="/tag/python.html">python</a> <a href="/tag/git.html">git</a> </p>
+</footer><!-- /.post-info --><h1>pelican的安装</h1>
+<h2>依赖包</h2>
+<p>feedgenerator, jinja2, pygments, docutils, pytz, blinker, unidecode, six,
+python-dateutil, markupsafe, markdown</p>
+<h2>安装</h2>
+<div class="highlight"><pre><span></span>$ pip install -e git+https://github.com/getpelican/pelican.git#egg<span class="o">=</span>pelican
+</pre></div>
+
+
+<h2>使用</h2>
+<div class="highlight"><pre><span></span>$ pelican-quickstart
+
+$ fab build
+$ fab serve
+
+$ pelican content
+$ <span class="nb">cd</span> output
+$ sudo python -m http.server 80
+</pre></div>
+
+
+<h2>配置日期目录放博客</h2>
+<p>pelicanconf.py中设置做以下设置</p>
+<div class="highlight"><pre><span></span>ARTICLE_URL = &#39;posts/{date:%Y}/{date:%m}/{slug}/&#39;
+ARTICLE_SAVE_AS = &#39;posts/{date:%Y}/{date:%m}/{slug}/index.html&#39;
+PAGE_URL = &#39;pages/{slug}/&#39;
+PAGE_SAVE_AS = &#39;pages/{slug}/index.html&#39;
+TAG_URL = &#39;tag/{slug}.html&#39;
+TAG_SAVE_AS = &#39;tag/{slug}.html&#39;
+</pre></div>
+
+
+<h2>在github建个人博客</h2>
+<p>以"hnlaomie.github.io"建立repository，签出，进入并建立"blog"目录和如下设置".gitignore"</p>
+<div class="highlight"><pre><span></span>blog
+blog/*
+</pre></div>
+
+
+<p>master提交新加的"blog"目录</p>
+<div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;init empty blog&quot;</span>
+</pre></div>
+
+
+<p>将已有的博客复制到"blog"目录，并建立代码分支</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> blog
+$ git checkout -b <span class="nb">source</span>
+$ git add .
+$ git commit -m <span class="s2">&quot;add blog&quot;</span>
+</pre></div>
+
+
+<p>将博客发布到"master"</p>
+<div class="highlight"><pre><span></span>$ pelican content
+$ ghp-import -b master output
+$ git checkout master
+$ git push --all
+</pre></div>
+
+
+<h2>删除google字体</h2>
+<p>到pelican包的安装目录下找"themes/notmyidea/static/css/main.css"，将以下行注释掉</p>
+<div class="highlight"><pre><span></span><span class="c">/* @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&amp;subset=latin); */</span>
+</pre></div>
+
+
+<h1>github使用</h1>
+<h2>常用命令</h2>
+<div class="highlight"><pre><span></span>$ git clone https://github.com/hnlaomie/backup
+$ <span class="nb">cd</span> backup
+$ git add .
+$ git commit -m <span class="s1">&#39;first commit&#39;</span>
+$ git push origin master
+</pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="http://ntanjerome.org/blog/how-to-setup-github-user-page-with-pelican/">http://ntanjerome.org/blog/how-to-setup-github-user-page-with-pelican/</a></li>
+<li><a href="http://blogs.skicelab.com/maurizio/unicode-common-pitfalls.html">http://blogs.skicelab.com/maurizio/unicode-common-pitfalls.html</a></li>
+<li><a href="http://ntanjerome.org/blog/how-to-setup-github-user-page-with-pelican/">http://ntanjerome.org/blog/how-to-setup-github-user-page-with-pelican/</a></li>
+<li><a href="http://moparx.com/2014/04/adding-search-capabilities-within-your-pelican-powered-site-using-tipue-search/">http://moparx.com/2014/04/adding-search-capabilities-within-your-pelican-powered-site-using-tipue-search/</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

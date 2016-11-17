@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - 201411</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2014/11/hbase-installation/">hbase installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-11-30T22:50:00+08:00">
+                Published: 2014-11-30(日)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hbase.html">hbase</a> </p>
+</footer><!-- /.post-info --><h1>建目录</h1>
+<div class="highlight"><pre><span></span>$ hdfs dfs -mkdir -p /hbase
+$ mkdir -p <span class="nv">$HBASE_HOME</span>/zookeeper
+</pre></div>
+
+
+<h1>设置".bashrc"</h1>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">HBASE_HOME</span><span class="o">=</span><span class="s1">&#39;/usr/local/tools/hbase&#39;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HBASE_HOME</span>/bin
+</pre></div>
+
+
+<h1>设置"conf/hbase-env.sh"</h1>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-oracle
+<span class="nb">export</span> <span class="nv">HBASE_MANAGES_ZK</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<h1>设置"conf/hbase-site.xml" (for pseudo-distributed)</h1>
+<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.rootdir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hdfs://master:9000/hbase<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.tmp.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/usr/local/data/tools/hbase/tmp<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.cluster.distributed<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>master<span class="nt">&lt;/value&gt;</span>  
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.dataDir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/usr/local/data/tools/hbase/zookeeper<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.zookeeper.property.clientPort<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>2181<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<h1>复制hadoop的jar</h1>
+<p>（注：自编译的hbase不需要）</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> <span class="nv">$HBASE_HOME</span>/lib
+$ rm -fr slf4j*.jar
+$ rm -fr hadoop*.jar
+$ cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/common/hadoop*.jar .
+$ cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/hdfs/hadoop*.jar .
+$ cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/mapreduce/hadoop*.jar .
+$ cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/tools/lib/hadoop*.jar .
+$ cp <span class="nv">$HADOOP_HOME</span>/share/hadoop/yarn/hadoop*.jar .
+</pre></div>
+
+
+<h1>修改"/etc/hosts"</h1>
+<p>将"127.0.1.1"改为"127.0.0.1"或删除，"master"指向具体的ip</p>
+<h1>启动，停止hbase</h1>
+<div class="highlight"><pre><span></span>$ start-hbase.sh
+$ stop-hbase.sh
+</pre></div>
+
+
+<h1>hbase简单操作</h1>
+<div class="highlight"><pre><span></span>$ hbase shell
+
+<span class="c1"># create a table</span>
+hbase&gt; create <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;cf&#39;</span>
+
+<span class="c1"># list information about your table</span>
+hbase&gt; list <span class="s1">&#39;test&#39;</span>
+
+<span class="c1"># put data into your table</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>, <span class="s1">&#39;cf:a&#39;</span>, <span class="s1">&#39;value1&#39;</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row2&#39;</span>, <span class="s1">&#39;cf:b&#39;</span>, <span class="s1">&#39;value2&#39;</span>
+hbase&gt; put <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row3&#39;</span>, <span class="s1">&#39;cf:c&#39;</span>, <span class="s1">&#39;value3&#39;</span>
+
+<span class="c1"># scan the table for all data at once</span>
+hbase&gt; scan <span class="s1">&#39;test&#39;</span>
+
+<span class="c1"># get a single row of data</span>
+hbase&gt; get <span class="s1">&#39;test&#39;</span>, <span class="s1">&#39;row1&#39;</span>
+
+<span class="c1"># disable, enable table</span>
+hbase&gt; disable <span class="s1">&#39;test&#39;</span>
+hbase&gt; <span class="nb">enable</span> <span class="s1">&#39;test&#39;</span>
+
+<span class="c1"># drop the table</span>
+hbase&gt; drop <span class="s1">&#39;test&#39;</span>
+
+<span class="c1"># exit the hbase shell</span>
+hbase&gt; quit
+</pre></div>
+
+
+<h1>编译源码</h1>
+<div class="highlight"><pre><span></span>mvn clean install assembly:single -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.5.2
+</pre></div>
+
+
+<h1>安装phoenix</h1>
+<p>编译</p>
+<div class="highlight"><pre><span></span>mvn package -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.5.2
+</pre></div>
+
+
+<p>解压安装 phoenix-assembly/target/phoenix-4.3.1.tar.gz，并将phoenix-4.3.1-server.jar复制到hbase的lib目录</p>
+<h1>references</h1>
+<ul>
+<li><a href="https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/">https://archanaschangale.wordpress.com/2013/08/31/installing-pseudo-distributed-hbase-on-ubuntu/</a></li>
+<li><a href="http://hbase.apache.org/book/quickstart.html">http://hbase.apache.org/book/quickstart.html</a></li>
+<li><a href="http://www.cnblogs.com/junrong624/p/3564699.html">http://www.cnblogs.com/junrong624/p/3564699.html</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/11/terminator-installation/" rel="bookmark"
+                           title="Permalink to terminator installation">terminator installation</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-26T23:10:00+08:00">
+                Published: 2014-11-26(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/terminator.html">terminator</a> </p>
+</footer><!-- /.post-info -->                <p>terminator安装</p>
+                <a class="readmore" href="/posts/2014/11/terminator-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/11/utuntu-installation/" rel="bookmark"
+                           title="Permalink to utuntu installation">utuntu installation</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-23T22:30:00+08:00">
+                Published: 2014-11-23(日)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/java.html">java</a> </p>
+</footer><!-- /.post-info -->                <p>ubuntu安装</p>
+                <a class="readmore" href="/posts/2014/11/utuntu-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/11/docker-introduction/" rel="bookmark"
+                           title="Permalink to docker introduction">docker introduction</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-21T14:30:00+08:00">
+                Published: 2014-11-21(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/docker.html">docker</a> </p>
+</footer><!-- /.post-info -->                <p>docker的使用</p>
+                <a class="readmore" href="/posts/2014/11/docker-introduction/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/11/ubuntu-java/" rel="bookmark"
+                           title="Permalink to ubuntu java">ubuntu java</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-18T21:30:00+08:00">
+                Published: 2014-11-18(二)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/java.html">java</a> <a href="/tag/maven.html">maven</a> <a href="/tag/gradle.html">gradle</a> <a href="/tag/ubuntu.html">ubuntu</a> </p>
+</footer><!-- /.post-info -->                <p>ubuntu下java环境</p>
+                <a class="readmore" href="/posts/2014/11/ubuntu-java/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/11/vagrant-tips/" rel="bookmark"
+                           title="Permalink to vagrant tips">vagrant tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-10T21:30:00+08:00">
+                Published: 2014-11-10(一)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/vagrant.html">vagrant</a> </p>
+</footer><!-- /.post-info -->                <p>vagrant使用技巧</p>
+                <a class="readmore" href="/posts/2014/11/vagrant-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2014/11/hadoop-tips/" rel="bookmark"
+                           title="Permalink to hadoop tips">hadoop tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-08T13:30:00+08:00">
+                Published: 2014-11-08(六)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hadoop.html">hadoop</a> </p>
+</footer><!-- /.post-info -->                <p>hadoop使用指南</p>
+                <a class="readmore" href="/posts/2014/11/hadoop-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

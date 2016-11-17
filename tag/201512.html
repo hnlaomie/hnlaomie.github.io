@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - 201512</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2015/12/kafka-installation/">kafka installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-12-18T09:50:00+08:00">
+                Published: 2015-12-18(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/hnlaomie.html">hnlaomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hadoop.html">hadoop</a> </p>
+</footer><!-- /.post-info --><h1>代码编译</h1>
+<div class="highlight"><pre><span></span>gradle
+gradle releaseTarGzAll
+</pre></div>
+
+
+<p>安装包在./core/build/distributions/</p>
+<h1>安装</h1>
+<p><a href="http://hnlaomie.github.io/posts/2015/07/zookeeper-installation/">安装zookeeper</a>，然后修改"config/server.properties"设置zookeeper</p>
+<div class="highlight"><pre><span></span>zookeeper.connect=localhost:2181
+</pre></div>
+
+
+<p>在"bin/kafka-run-class.sh"中修改日志路径（否则日志将写到安装路径的"logs"目录）</p>
+<div class="highlight"><pre><span></span>LOG_DIR=&quot;/data/hadoop/kafka/log4j/logs&quot;
+</pre></div>
+
+
+<h1>快速指南</h1>
+<div class="highlight"><pre><span></span># 启动
+bin/kafka-server-start.sh config/server.properties &amp;
+# 停止
+bin/kafka-server-stop.sh config/server.properties
+# 新建主题
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+# 显示主题
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+# 发送消息
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+# 接收消息
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+</pre></div>
+
+
+<h1>kafka和spark整合</h1>
+<div class="highlight"><pre><span></span><span class="x">cd </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x"></span>
+<span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5</span>
+<span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1</span>
+<span class="x">bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test</span>
+</pre></div>
+
+
+<h1>idea开发环境设置</h1>
+<p>kafka, spark streaming相关例子，只需启动kafka，然后在运行环境里做如下设置</p>
+<div class="highlight"><pre><span></span>VM options: -Dspark.master=local[2]
+Environment variables: MASTER=localh[2]
+</pre></div>
+
+
+<p>scala2.10使用jkd7，gradle需做以下设置兼容jdk7</p>
+<div class="highlight"><pre><span></span>sourceCompatibility = &quot;1.7&quot;
+targetCompatibility = &quot;1.7&quot;
+</pre></div>
+
+
+<h1>删除主题内容</h1>
+<p>设置server.properties</p>
+<div class="highlight"><pre><span></span>delete.topic.enable=true
+</pre></div>
+
+
+<p>用以下命令删除内容</p>
+<div class="highlight"><pre><span></span>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
+</pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="http://blog.jobbole.com/99195/">http://blog.jobbole.com/99195/</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/12/hadoop-links/" rel="bookmark"
+                           title="Permalink to hadoop links">hadoop links</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-12-16T11:30:00+08:00">
+                Published: 2015-12-16(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/hnlaomie.html">hnlaomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/hadoop.html">hadoop</a> </p>
+</footer><!-- /.post-info -->                <p>hadoop资源链接</p>
+                <a class="readmore" href="/posts/2015/12/hadoop-links/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

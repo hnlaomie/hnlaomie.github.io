@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>spark installation</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/08/spark-installation/" rel="bookmark"
+           title="Permalink to spark installation">spark installation</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-08-27T17:00:00+08:00">
+                Published: 2014-08-27(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/spark.html">spark</a> </p>
+</footer><!-- /.post-info -->      <h1>maven编译</h1>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MAVEN_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m&quot;</span>
+mvn -Pyarn -Phadoop-2.7 -Dhadoop.version<span class="o">=</span>2.7.3 -Phive -Phive-thriftserver -Psparkr -DskipTests clean package
+</pre></div>
+
+
+<h1>sbt编译</h1>
+<div class="highlight"><pre><span></span><span class="nv">SPARK_HADOOP_VERSION</span><span class="o">=</span>2.7.3 <span class="nv">SPARK_YARN</span><span class="o">=</span><span class="nb">true</span> <span class="nv">SPARK_HIVE</span><span class="o">=</span><span class="nb">true</span> sbt/sbt clean assembly
+</pre></div>
+
+
+<p>生成spark部署包</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MAVEN_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m&quot;</span>
+./dev/make-distribution.sh --tgz -Pyarn -Phadoop-2.7 -Dhadoop.version<span class="o">=</span>2.7.3 -Phive -Phive-thriftserver -Psparkr -DskipTests
+</pre></div>
+
+
+<h1>intellij调试spark代码</h1>
+<p>安装jdk8，scala2.11，sbt0.13并在"~/.bashrc"设置相关环境变量</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SCALA_HOME</span><span class="o">=</span>/home/laomie/tools/scala-2.11
+<span class="nb">export</span> <span class="nv">SBT_HOME</span><span class="o">=</span>/home/laomie/tools/sbt
+<span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-oracle
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$SCALA_HOME</span>/bin:<span class="nv">$SBT_HOME</span>/bin
+</pre></div>
+
+
+<p>intellij安装"scala"插件</p>
+<p>下载spark代码</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/apache/spark.git
+</pre></div>
+
+
+<p>在intellij导入spark代码
+  选择File-&gt;Import Project, 在弹出的窗口中指定spark源码目录
+  选择项目类型为sbt project，然后点击next
+  在新弹出的窗口中先选中"Use auto-import",然后点击Finish</p>
+<p>依赖项设置
+  选择File-&gt;Project Structure-&gt;Modules 
+  streaming-twitter, streaming-kafka, streaming-flume, streaming-mqtt, streaming-zeromq等项目的"Dependencies"
+  的"Library..."加入"SBT: org.apache.spark:spark-core_2.10:1.0.0"</p>
+<p>flume-sink代码生成
+  到external/flume-sink执行以下代码
+  mvn generate-sources</p>
+<p>vm设置
+  -Dspark.master=local[4]
+  -Dspark.master=spark://inspiron1520:7077</p>
+<p>环境变量
+  MASTER=local[4]
+  MASTER=spark://inspiron1520:7077</p>
+<h1>spark on local</h1>
+<div class="highlight"><pre><span></span>run-example SparkPi 10
+</pre></div>
+
+
+<h1>spark on yarn</h1>
+<div class="highlight"><pre><span></span>./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster --num-executors <span class="m">5</span> --driver-memory 2g --executor-memory 1g --executor-cores <span class="m">3</span> --queue thequeue lib/spark-examples*.jar 20
+
+./bin/spark-shell --master yarn-client
+</pre></div>
+
+
+<h1>spark-env.sh设置</h1>
+<div class="highlight"><pre><span></span><span class="x">export JAVA_HOME=/usr/local/devtools/jdk</span>
+<span class="x">export SCALA_HOME=/usr/share/scala</span>
+<span class="x">export SPARK_HOME=/data/apache/spark</span>
+<span class="x">export SPARK_PID_DIR=/data/hadoop/spark/pids</span>
+
+<span class="x">export SPARK_LOCAL_IP=192.168.11.82</span>
+<span class="x">export SPARK_PUBLIC_DNS=test-master</span>
+<span class="x">export SPARK_CLASSPATH=</span><span class="p">$</span><span class="nv">SPARK_CLASSPATH</span><span class="x">:</span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x">/lib/mysql-connector-java-5.1.35.jar</span>
+<span class="x">export SPARK_LOCAL_DIRS=/data/hadoop/spark/data</span>
+
+<span class="x">export HADOOP_CONF_DIR=/data/apache/hadoop/etc/hadoop</span>
+
+<span class="x">export SPARK_MASTER_IP=test-master</span>
+<span class="x">export SPARK_WORKER_CORES=2</span>
+<span class="x">export SPARK_WORKER_INSTANCES=6</span>
+<span class="x">export SPARK_WORKER_DIR=/data/hadoop/spark/worker</span>
+</pre></div>
+
+
+<h1>问题一览</h1>
+<p>单机运行spark-shell出现ERROR Remoting: Remoting error:，在"conf/spark-env.sh"增加以下环境变量</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>localhost
+<span class="nb">export</span> <span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>localhost
+</pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="http://mmicky.blog.163.com/blog/static/1502901542014312101657612/">http://mmicky.blog.163.com/blog/static/1502901542014312101657612/</a></li>
+<li><a href="http://www.cnblogs.com/hseagle/p/3732492.html">http://www.cnblogs.com/hseagle/p/3732492.html</a></li>
+<li><a href="http://parambirs.wordpress.com/2014/05/20/running-spark-1-0-0-snapshot-on-hadoopyarn-2-4-0/">http://parambirs.wordpress.com/2014/05/20/running-spark-1-0-0-snapshot-on-hadoopyarn-2-4-0/</a></li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

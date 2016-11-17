@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>hadoop tips</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2014/11/hadoop-tips/" rel="bookmark"
+           title="Permalink to hadoop tips">hadoop tips</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-08T13:30:00+08:00">
+                Published: 2014-11-08(六)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/hadoop.html">hadoop</a> </p>
+</footer><!-- /.post-info -->      <h1>hdfs dfs 常用命令</h1>
+<div class="highlight"><pre><span></span><span class="c1"># 生成目录</span>
+hdfs dfs -mkdir -p /user/laomie/temp
+
+<span class="c1"># 上传文件</span>
+hdfs dfs -copyFromLocal <span class="o">[</span>-f<span class="o">]</span> &lt;localsrc&gt; URI
+hdfs dfs -put &lt;localsrc&gt; &lt;dst&gt;
+
+<span class="c1"># 下载文件</span>
+hdfs dfs -copyToLocal <span class="o">[</span>-ignorecrc<span class="o">]</span> <span class="o">[</span>-crc<span class="o">]</span> URI &lt;localdst&gt;
+hdfs dfs -get <span class="o">[</span>-ignorecrc<span class="o">]</span> <span class="o">[</span>-crc<span class="o">]</span> &lt;src&gt; &lt;localdst&gt;
+
+<span class="c1"># 删除目录</span>
+hdfs dfs -rmr <span class="o">[</span>-skipTrash<span class="o">]</span> URI <span class="o">[</span>URI ...<span class="o">]</span>
+
+<span class="c1"># 查看hadoop磁盘使用</span>
+hdfs dfsadmin -report
+
+<span class="c1"># 查看yarn的资源使用</span>
+yarn node -list
+
+<span class="c1"># 查看mr进程</span>
+mapred job -list
+</pre></div>
+
+
+<h1>hadoop(spark)无法停止</h1>
+<p>当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止</p>
+<p>在"hadoop-env.sh"做如下设置</p>
+<div class="highlight"><pre><span></span>export HADOOP_PID_DIR=/data/hadoop/hdfs/pids
+</pre></div>
+
+
+<p>在"yarn-env.sh"做如下设置</p>
+<div class="highlight"><pre><span></span>export YARN_PID_DIR=/data/hadoop/hdfs/pids
+</pre></div>
+
+
+<p>spark类似，需要在"spark-env.sh"做如下设置</p>
+<div class="highlight"><pre><span></span>export SPARK_PID_DIR=/data/hadoop/spark/pids
+</pre></div>
+
+
+<h1>hadoop的reduce任务不能启动</h1>
+<p>当磁盘剩余空间小于10%时，reduce任务无法启动</p>
+<h1>hadoop升级</h1>
+<p>备份</p>
+<div class="highlight"><pre><span></span><span class="err">#</span><span class="x"> 进入安全模式</span>
+<span class="x">hdfs dfsadmin -safemode enter</span>
+<span class="err">#</span><span class="x"> fsck检查</span>
+<span class="x">hdfs fsck / -files -blocks -locations |grep -v -E &#39;^.&#39; &gt; /home/hadoop/dfs-v-old-fs</span>
+<span class="err">#</span><span class="x"> 离开安全模式</span>
+<span class="x">hdfs dfsadmin -safemode leave</span>
+<span class="err">#</span><span class="x"> 关闭history-server</span>
+<span class="x">mr-jobhistory-daemon.sh stop historyserver</span>
+<span class="err">#</span><span class="x"> 关闭集群</span>
+<span class="p">$</span><span class="nv">HADOOP_HOME</span><span class="x">/sbin/stop-all.sh</span>
+<span class="err">#</span><span class="x"> 备份namenode信息（fs.default.name）</span>
+<span class="x">cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup</span>
+</pre></div>
+
+
+<p>namenode升级</p>
+<div class="highlight"><pre><span></span>start-dfs.sh –upgrade
+# hadoop-daemon.sh start namenode -upgrade
+</pre></div>
+
+
+<ul>
+<li><a href="http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html">http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-hdfs/HdfsRollingUpgrade.html</a></li>
+<li><a href="https://www.zybuluo.com/layor/note/162019">https://www.zybuluo.com/layor/note/162019</a></li>
+<li><a href="http://wiki.apache.org/hadoop/Hadoop_Upgrade">http://wiki.apache.org/hadoop/Hadoop_Upgrade</a></li>
+<li><a href="http://www.cnblogs.com/JavaSmart/p/4567173.html">http://www.cnblogs.com/JavaSmart/p/4567173.html</a></li>
+<li><a href="http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/">http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/</a></li>
+</ul>
+<p>升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode</p>
+<div class="highlight"><pre><span></span>hdfs dfsadmin -finalizeUpgrade
+</pre></div>
+
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space">http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space</a></li>
+</ul>
+<h1>查看逻辑cpu个数</h1>
+<div class="highlight"><pre><span></span>grep &quot;^processor&quot; /proc/cpuinfo | wc -l
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

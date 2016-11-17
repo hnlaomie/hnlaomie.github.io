@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - docker</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2014/11/docker-introduction/">docker introduction</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-11-21T14:30:00+08:00">
+                Published: 2014-11-21(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/docker.html">docker</a> </p>
+</footer><!-- /.post-info --><h2>image</h2>
+<p>镜像（image）类似虚拟机镜像，是面向Docker引擎的只读模板，包含文件系统．运行容器前需本地存在对应的镜像，
+没有则从仓库下载．</p>
+<div class="highlight"><pre><span></span><span class="c1"># 列出所有image</span>
+$ docker images
+
+<span class="c1"># 库中查找相关image</span>
+$ docker search ubuntu:latest
+
+<span class="c1"># 从库中下载image</span>
+$ docker pull ubuntu:latest
+
+<span class="c1"># 上传image到库</span>
+$ docker push ubuntu:latest
+
+<span class="c1"># 删除image（注：需要先删除相关的container）</span>
+$ docker rmi ubuntu:latest
+$ docker rmi <span class="o">[</span>image id<span class="o">]</span>
+
+<span class="c1"># 根据path下的Dockerfile创建image</span>
+$ docker build -t ubuntu-java:latest /path
+
+<span class="c1"># 基于已有容器创建</span>
+$ docker commit -m <span class="s2">&quot;Added a new file&quot;</span> -a <span class="s2">&quot;laomie&quot;</span> CONTAINER_ID test:latest
+
+<span class="c1"># 保存，载入镜像</span>
+$ docker save -o ubuntu_latest.tar ubuntu:latest
+$ docker load &lt; ubuntu_latest.tar
+
+<span class="c1"># 更改某个image的tag</span>
+$ docker tag ubuntu-java:latest
+
+<span class="c1"># 上传镜像</span>
+$ docker tag test:latest hnlaomie/test:latest
+$ docker push hnlaomie/test:latest
+</pre></div>
+
+
+<h2>container</h2>
+<p>Container（容器）类似一个轻量级沙箱，Docker利用容器来运行和隔离应用．
+容器是从镜像创建的应用运行实例，可以将其启动，开始，停止，删除，而这些容器都相互隔离，互不可见．
+镜像自身是只读的，容器从镜像启动的时候，Docker会在镜像的最上层创建一个可写层，镜像本身将保持不变．</p>
+<div class="highlight"><pre><span></span><span class="c1"># 创建容器（创建后为停止状态）</span>
+docker create -it ubuntu:latest
+<span class="c1"># 启动容器</span>
+docker start -at CONTAINER_ID
+<span class="c1"># 创建并启动容器</span>
+docker run -it ubuntu:latest /bin/bash
+<span class="c1"># 停止容器</span>
+docker stop CONTAINER_ID
+
+<span class="c1"># 查看容器</span>
+docker ps -a
+
+<span class="c1"># 进入运行的容器</span>
+docker <span class="nb">exec</span> -ti CONTAINER_ID /bin/bash
+
+<span class="c1"># 删除容器</span>
+docker rm CONTAINER_ID
+
+<span class="c1"># 导入导出容器</span>
+docker <span class="nb">export</span> CONTAINER_ID &gt; test.tar
+cat test.tar <span class="p">|</span> docker import - hnlaomie/ubuntu:test
+</pre></div>
+
+
+<h2>repository</h2>
+<p>Repository（仓库）是Docker集中存放镜像文件的场所，官方公共仓库为https://hub.docker.com</p>
+<div class="highlight"><pre><span></span><span class="c1"># 镜像查询</span>
+docker search
+<span class="c1"># 镜像下载</span>
+docker pull ubuntu:latest
+<span class="c1"># 创建私有仓库</span>
+docker run -d -p 5000:5000 -v /data/docker/registry:/tmp/registry registry
+<span class="c1"># 上传镜像</span>
+docker tag ubuntu:latest 192.168.1.20:5000/test
+docker push 192.168.1.20:5000/test
+</pre></div>
+
+
+<h2>volumn</h2>
+<p>Data Volumns（数据卷）是一个可供容器使用的特殊目录，可在容器间共享和重用，对它的修改会立马生效，
+对它的更新不会影响镜像，它会一直存在，直到没有容器使用，类似mount文件．</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
