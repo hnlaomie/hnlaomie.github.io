@@ -75,3 +75,15 @@ Security -> Secure Boot -> Disabled
 Startup -> Boot -> Network Boot -> USB HDD
 Startup -> Boot -> UEFI/Legacy Boot -> Both / Legacy First
 ```
+
+chrome安装xx-net代理插件
+============================================
+1. 从＂工具->扩展程序＂打开扩展插件，将"XX-Net/SwitchyOmege/SwitchyOmega.crx"拖入
+
+2. 点击＂添加扩展程序＂，＂跳过教程＂安装插件
+
+3. 在插件界面的＂导入/导出 -> 从备份文件恢复＂导入"XX-Net/SwitchyOmege/OmegaOptions.bak"文件
+
+4. 在插件界面的＂XX-Net自动切换＂点击＂立即更新情景模式＂
+
+5. 菜单-设置-下翻点击“显示高级设置”-点击“管理证书”，＂授权中心->导入＂，选择＂XX-Net/data/gae_proxy/CA.crt＂

@@ -29,9 +29,9 @@ LOG_DIR="/data/hadoop/kafka/log4j/logs"
 =======================
 ```
 # 启动
-bin/zookeeper-server-start.sh config/zookeeper.properties &
+bin/kafka-server-start.sh config/server.properties &
 # 停止
-bin/zookeeper-server-stop.sh config/zookeeper.properties
+bin/kafka-server-stop.sh config/server.properties
 # 新建主题
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 # 显示主题

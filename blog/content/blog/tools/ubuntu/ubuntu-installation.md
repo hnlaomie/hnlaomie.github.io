@@ -85,23 +85,45 @@ deb https://apt.dockerproject.org/repo ubuntu-xenial main
 $ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 $ sudo apt-get install docker-engine
 ```
+
 修改"/etc/default/ufw"
 ```bash
 DEFAULT_FORWARD_POLICY="ACCEPT"
 ```
+
 它机访问docker容器
 ```bash
 $ sudo ufw allow 2375/tcp
 ```
-修改"/etc/default/docker"，设置容器的dns
+
+修改"/etc/default/docker"，设置容器的dns，
 ```bash
 DOCKER_OPTS="--dns 208.67.222.222"
+```
+
+设置镜像和容器的存放路径
+* 修改启动的配置文件"/lib/systemd/system/docker.service"
+```
+ExecStart=/usr/bin/docker daemon -g /usr/local/data/tools/docker -H fd://
+```
+重启服务并验证"Docker Root Dir"
+```bash
+systemctl stop docker
+ps aux | grep -i docker | grep -v grep
+# docker停不了可能需要运行以下命令再停
+systemctl daemon-reload
+# 同步docker到新的目录
+rsync -aqxP /var/lib/docker/ /usr/local/data/tools/docker
+systemctl start docker
+# 验证路径是否已是新路径
+docker info
 ```
 
 相关链接
 <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04>
 <https://blog.docker.com/2015/07/new-apt-and-yum-repos/>
 <https://docs.docker.com/engine/installation/linux/ubuntulinux/>
+<https://linuxconfig.org/how-to-move-docker-s-default-var-lib-docker-to-another-directory-on-ubuntu-debian-linux>
 
 安装R
 ======================

@@ -101,11 +101,12 @@ trace查询相关
 数据库升级
 =====================
 1\. 下载新版应用，差分更新以下配置文件
-    * cassandra-env.sh
-    * cassandra-rackdc.properties
-    * cassandra-topology.properties
-    * cassandra.yaml （主要更新ip和文件目录）
-    * logback.xml
+
+* cassandra-env.sh
+* cassandra-rackdc.properties
+* cassandra-topology.properties
+* cassandra.yaml （主要更新ip和文件目录）
+* logback.xml
 
 2\. 每个结点停止写操作
 ```
