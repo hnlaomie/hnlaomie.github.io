@@ -22,7 +22,123 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2016/11/python-tips/">python tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2016/11/postgresql-installation/">postgresql installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-11-24T10:10:00+08:00">
+                Published: 2016-11-24(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201611.html">201611</a> <a href="/tag/pgsql.html">pgsql</a> </p>
+</footer><!-- /.post-info --><h1>centos 6.5上安装postgresql 9.5</h1>
+<p>/etc/yum.repos.d/CentOS-Base.repo的[base] and [updates] 部分加入以下内容</p>
+<div class="highlight"><pre><span></span>exclude=postgresql*
+</pre></div>
+
+
+<p>安装postgresql</p>
+<div class="highlight"><pre><span></span><span class="c1"># 下载并安装</span>
+wget https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-6-x86_64/pgdg-centos95-9.5-3.noarch.rpm
+yum install pgdg-centos95-9.5-3.noarch.rpm
+yum install postgresql95-server
+<span class="c1"># 修改默认路径</span>
+mkdir -p /data/pgsql/data
+chown -R postgres.postgres /data/pgsql
+vim /etc/sysconfig/pgsql/postgresql-9.5
+<span class="c1">###############</span>
+<span class="nv">PGDATA</span><span class="o">=</span>/data/pgsql/data
+<span class="nv">PGLOG</span><span class="o">=</span>/data/pgsql/pgstartup.log
+<span class="c1">###############</span>
+<span class="c1"># 初始化数据库</span>
+service postgresql-9.5 initdb
+<span class="c1"># 启动</span>
+chkconfig postgresql-9.5 on
+service postgresql-9.5 start
+<span class="c1"># 验证默认路径</span>
+sudo -u postgres psql
+SHOW data_directory<span class="p">;</span>
+</pre></div>
+
+
+<p>卸载老版postgresql</p>
+<div class="highlight"><pre><span></span><span class="x">yum erase postgresql-libs*</span>
+<span class="x">vim /etc/profile.d/pgsql.sh</span>
+<span class="cp">##</span><span class="c">###########</span><span class="x"></span>
+<span class="x">export PGSQL_HOME=/usr/pgsql-9.5</span>
+<span class="x">export PATH=</span><span class="p">$</span><span class="nv">PGSQL_HOME</span><span class="x">/bin:</span><span class="p">$</span><span class="nv">PATH</span><span class="x"></span>
+<span class="cp">##</span><span class="c">###########</span><span class="x"></span>
+</pre></div>
+
+
+<p>安装后切换到postgres用户就能直接使用psql，因为pg_hba.conf有以下默认配置</p>
+<div class="highlight"><pre><span></span>local   all              all                                     peer
+</pre></div>
+
+
+<p>可用以下命令设置密码</p>
+<div class="highlight"><pre><span></span><span class="c1"># 设置postgres的密码</span>
+sudo su - postgres
+psql
+<span class="se">\p</span>assword postgres
+<span class="se">\q</span>
+</pre></div>
+
+
+<p>设置远程登录</p>
+<div class="highlight"><pre><span></span>vim /data/pgsql/data/postgresql.conf
+#########
+listen_addresses = &#39;*&#39;
+#########
+vim /data/pgsql/data/pg_hba.conf
+#########
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+host    all             all             192.168.11.1/24         md5 
+#########
+</pre></div>
+
+
+<p>参考文档：</p>
+<p><a href="https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL">https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL</a>
+<a href="https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04">https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04</a></p>
+<div class="highlight"><pre><span></span>postgresql建用户建库
+====================
+用以下命令建库和建用户，并把库权限给用户
+</pre></div>
+
+
+<p>create role bidev login password 'bidev';
+create database dw_yingguang with owner = bidev;</p>
+<p>create database adwo;
+\c adwo;
+create role bidev login password 'bidev';
+create schema dw_yingguang authorization bidev;
+create schema bisystem;
+grant all on schema bisystem to bidev;</p>
+<p>set search_path to dw_yingguang;</p>
+<p>-- list schema
+\dn</p>
+<p>-- list table
+\dt</p>
+<p>```</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2016/11/python-tips/" rel="bookmark"
+                           title="Permalink to python tips">python tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-11-09T10:30:00+08:00">
                 Published: 2016-11-09(三)
@@ -33,15 +149,10 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>.</p>
 <p>tags: <a href="/tag/201611.html">201611</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>pyspider的安装</h1>
-<div class="highlight"><pre><span></span>sudo apt install libcurl4-gnutls-dev libghc-gnutls-dev
-pip install pyspider
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>python tips</p>
+                <a class="readmore" href="/posts/2016/11/python-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -216,28 +327,6 @@ pip install pyspider
 <p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
 </footer><!-- /.post-info -->                <p>subversion技巧</p>
                 <a class="readmore" href="/posts/2015/06/subversion-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2015/05/log4j-tips/" rel="bookmark"
-                           title="Permalink to log4j tips">log4j tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-05-12T19:30:00+08:00">
-                Published: 2015-05-12(二)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201505.html">201505</a> <a href="/tag/java.html">java</a> <a href="/tag/log4j.html">log4j</a> </p>
-</footer><!-- /.post-info -->                <p>log4j2使用说明</p>
-                <a class="readmore" href="/posts/2015/05/log4j-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>laomie's blog - pgsql</title>
+        <title>postgresql installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,15 +14,20 @@
         <header id="banner" class="body">
                 <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
-                    <li><a href="/category/database.html">database</a></li>
+                    <li class="active"><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
                     <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2016/11/postgresql-installation/" rel="bookmark"
+           title="Permalink to postgresql installation">postgresql installation</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/posts/2016/11/postgresql-installation/">postgresql installation</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-11-24T10:10:00+08:00">
                 Published: 2016-11-24(四)
@@ -33,7 +38,7 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201611.html">201611</a> <a href="/tag/pgsql.html">pgsql</a> </p>
-</footer><!-- /.post-info --><h1>centos 6.5上安装postgresql 9.5</h1>
+</footer><!-- /.post-info -->      <h1>centos 6.5上安装postgresql 9.5</h1>
 <p>/etc/yum.repos.d/CentOS-Base.repo的[base] and [updates] 部分加入以下内容</p>
 <div class="highlight"><pre><span></span>exclude=postgresql*
 </pre></div>
@@ -125,36 +130,11 @@ grant all on schema bisystem to bidev;</p>
 \dn</p>
 <p>-- list table
 \dt</p>
-<p>```</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>```</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/12/postgresql-tips/" rel="bookmark"
-                           title="Permalink to postgresql tips">postgresql tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-12-22T15:10:00+08:00">
-                Published: 2014-12-22(一)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/pgsql.html">pgsql</a> </p>
-</footer><!-- /.post-info -->                <p>postgresql tips</p>
-                <a class="readmore" href="/posts/2014/12/postgresql-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
