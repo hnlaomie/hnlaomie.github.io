@@ -6,7 +6,7 @@ Author: laomie
 Summary: docker的使用
 
 image
----------------------------------
+====================
 镜像（image）类似虚拟机镜像，是面向Docker引擎的只读模板，包含文件系统．运行容器前需本地存在对应的镜像，
 没有则从仓库下载．
 
@@ -46,7 +46,7 @@ $ docker push hnlaomie/test:latest
 ```
 
 container
-------------------------
+================
 Container（容器）类似一个轻量级沙箱，Docker利用容器来运行和隔离应用．
 容器是从镜像创建的应用运行实例，可以将其启动，开始，停止，删除，而这些容器都相互隔离，互不可见．
 镜像自身是只读的，容器从镜像启动的时候，Docker会在镜像的最上层创建一个可写层，镜像本身将保持不变．
@@ -54,7 +54,7 @@ Container（容器）类似一个轻量级沙箱，Docker利用容器来运行�
 # 创建容器（创建后为停止状态）
 docker create -it ubuntu:latest
 # 启动容器
-docker start -at CONTAINER_ID
+docker start -ai CONTAINER_ID
 # 创建并启动容器
 docker run -it ubuntu:latest /bin/bash
 # 停止容器
@@ -75,7 +75,7 @@ cat test.tar | docker import - hnlaomie/ubuntu:test
 ```
 
 repository
--------------------------
+=======================
 Repository（仓库）是Docker集中存放镜像文件的场所，官方公共仓库为https://hub.docker.com
 ```bash
 # 镜像查询
@@ -89,9 +89,27 @@ docker tag ubuntu:latest 192.168.1.20:5000/test
 docker push 192.168.1.20:5000/test
 ```
 
-volumn
--------------------
-Data Volumns（数据卷）是一个可供容器使用的特殊目录，可在容器间共享和重用，对它的修改会立马生效，
+volume
+===================
+Data Volumes（数据卷）是一个可供容器使用的特殊目录，可在容器间共享和重用，对它的修改会立马生效，
 对它的更新不会影响镜像，它会一直存在，直到没有容器使用，类似mount文件．
+```bash
+# 创建volume，默认放在主机的"docker目录/volumes"下
+$ docker volume create --name vol_simple
+# 查看，明细，删除分别用以下命令
+$ docker volume [ls | inspect | rm]
+# 容器挂载数据卷到"/data"目录
+$ docker run -d -v vol_simple:/data ubuntu:latest /bin/bash
+# 共享volume
+$ docker run -rm -it --name vol_use --volumes-from vol_simple ubuntu:latest /bin/bash
+# 容器挂载主机目录
+$ docker run -v /host/dir:/container/dir:rw ubuntu:latest /bin/bash
 
+# 备份和恢复
+docker run --rm --volumes-from vol_simple -v $(pwd):/backup ubuntu:latest tar cvf /backup/data.tar /data
+docker run -it --name vol_bak -v /data ubuntu:latest /bin/bash
+docker run --rm --volumes-from vol_bak -v $(pwd):/backup ubuntu:latest tar xvf /backup/data.tar -C /
+```
 
+network
+====================

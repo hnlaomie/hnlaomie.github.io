@@ -34,6 +34,11 @@ pip3.4 install numpy
 pip3.4 install scipy
 ```
 
+运行yum报"/usr/lib64/python2.6/site-packages/pycurl.so"错误
+```
+export LD_LIBRARY_PATH=/usr/lib64:$LD_LIBRARY_PATH
+```
+
 安装svn
 =========================
 编辑/etc/yum.repos.d/wandisco-svn.repo

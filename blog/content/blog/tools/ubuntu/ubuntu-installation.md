@@ -119,6 +119,11 @@ systemctl start docker
 docker info
 ```
 
+ubuntu image需要安装软件列表
+```
+apt install vim net-tools inetutils-ping
+```
+
 相关链接
 <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04>
 <https://blog.docker.com/2015/07/new-apt-and-yum-repos/>
