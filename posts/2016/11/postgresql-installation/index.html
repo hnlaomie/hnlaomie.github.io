@@ -111,26 +111,26 @@ host    all             all             192.168.11.1/24         md5
 <p>参考文档：</p>
 <p><a href="https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL">https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL</a>
 <a href="https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04">https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04</a></p>
-<div class="highlight"><pre><span></span>postgresql建用户建库
-====================
-用以下命令建库和建用户，并把库权限给用户
-</pre></div>
+<h1>postgresql建用户建库</h1>
+<p>用以下命令建库和建用户，并把库权限给用户</p>
+<div class="highlight"><pre><span></span>create role bidev login password &#39;bidev&#39;;
+create database dw_yingguang with owner = bidev;
 
-
-<p>create role bidev login password 'bidev';
-create database dw_yingguang with owner = bidev;</p>
-<p>create database adwo;
+create database adwo;
 \c adwo;
-create role bidev login password 'bidev';
+create role bidev login password &#39;bidev&#39;;
 create schema dw_yingguang authorization bidev;
 create schema bisystem;
-grant all on schema bisystem to bidev;</p>
-<p>set search_path to dw_yingguang;</p>
-<p>-- list schema
-\dn</p>
-<p>-- list table
-\dt</p>
-<p>```</p>
+grant all on schema bisystem to bidev;
+
+set search_path to dw_yingguang;
+
+-- list schema
+\dn
+
+-- list table
+\dt
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>laomie's blog - hive</title>
+        <title>tez installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,15 +14,20 @@
         <header id="banner" class="body">
                 <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
-                    <li><a href="/category/database.html">database</a></li>
+                    <li class="active"><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
                     <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2016/12/tez-installation/" rel="bookmark"
+           title="Permalink to tez installation">tez installation</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/posts/2016/12/tez-installation/">tez installation</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-12-01T09:50:00+08:00">
                 Published: 2016-12-01(四)
@@ -33,7 +38,7 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201612.html">201612</a> <a href="/tag/tez.html">tez</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info --><h1>代码编译</h1>
+</footer><!-- /.post-info -->      <h1>代码编译</h1>
 <p>修改代码里最顶层的"pom.xml"，将hadoop版本改为和运行的一致，注掉node.js相关代码</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;hadoop.version&gt;</span>2.7.3<span class="nt">&lt;/hadoop.version&gt;</span>
 
@@ -148,58 +153,11 @@ spark-submit --files <span class="si">${</span><span class="nv">files</span><spa
 <h1>参考</h1>
 <ul>
 <li><a href="http://tez.apache.org/install.html">http://tez.apache.org/install.html</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</ul>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2016/07/hive-tips/" rel="bookmark"
-                           title="Permalink to hive tips">hive tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-07-01T13:00:00+08:00">
-                Published: 2016-07-01(五)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201607.html">201607</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info -->                <p>hive使用指南</p>
-                <a class="readmore" href="/posts/2016/07/hive-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/08/hive-installation/" rel="bookmark"
-                           title="Permalink to hive installation">hive installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-04T21:00:00+08:00">
-                Published: 2014-08-04(一)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info -->                <p>hive安装</p>
-                <a class="readmore" href="/posts/2014/08/hive-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
