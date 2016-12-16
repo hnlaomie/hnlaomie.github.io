@@ -113,3 +113,7 @@ docker run --rm --volumes-from vol_bak -v $(pwd):/backup ubuntu:latest tar xvf /
 
 network
 ====================
+安装工具
+```
+apt install net-tools
+```

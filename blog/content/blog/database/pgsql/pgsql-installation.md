@@ -78,7 +78,6 @@ host    all             all             192.168.11.1/24         md5
 
 <https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL>
 <https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04>
-```
 
 postgresql建用户建库
 ====================
@@ -103,4 +102,3 @@ set search_path to dw_yingguang;
 \dt
 
 ```
-
