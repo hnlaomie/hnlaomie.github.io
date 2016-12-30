@@ -108,23 +108,20 @@ host    all             all             192.168.11.1/24         md5
 <a href="https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04">https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04</a></p>
 <h1>postgresql建用户建库</h1>
 <p>用以下命令建库和建用户，并把库权限给用户</p>
-<div class="highlight"><pre><span></span>create role bidev login password &#39;bidev&#39;;
-create database dw_yingguang with owner = bidev;
-
-create database adwo;
+<div class="highlight"><pre><span></span>create database adwo;
 \c adwo;
-create role bidev login password &#39;bidev&#39;;
-create schema dw_yingguang authorization bidev;
-create schema bisystem;
-grant all on schema bisystem to bidev;
+create role dw_yingguang login password &#39;bidev&#39;;
+create schema dw_yingguang authorization dw_yingguang;
 
+create schema dw_dsp;
+create role dw_dsp login password &#39;bidev&#39;;
+grant all on schema dw_dsp to dw_dsp;
+
+-- 设置schema查询
 set search_path to dw_yingguang;
 
--- list schema
-\dn
-
--- list table
-\dt
+-- psql登录
+PGPASSWORD=bidev psql -h 192.168.11.83 -U dw_yingguang adwo
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
@@ -337,7 +334,7 @@ set search_path to dw_yingguang;
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
-                        <h2>blogroll</h2>
+                        <h2>links</h2>
                         <ul>
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>

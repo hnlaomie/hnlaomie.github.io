@@ -189,6 +189,34 @@ $ netstat -anp <span class="p">|</span> grep 10000
 
 
 <p>jdbc连接时，用户用hadoop相关用户，否则有安全方面的异常</p>
+<h1>hive升级（1.2.1 to 2.1.1）</h1>
+<p>升级hive代码</p>
+<div class="highlight"><pre><span></span><span class="nv">old_ver</span><span class="o">=</span>1.2.1
+<span class="nv">new_ver</span><span class="o">=</span>2.1.1
+tar -zxvf apache-hive-<span class="si">${</span><span class="nv">new_ver</span><span class="si">}</span>-bin.tgz
+mv hive hive-<span class="si">${</span><span class="nv">old_ver</span><span class="si">}</span>
+mv apache-hive-<span class="si">${</span><span class="nv">new_ver</span><span class="si">}</span>-bin hive
+cp hive-<span class="si">${</span><span class="nv">old_ver</span><span class="si">}</span>/conf/hive-env.sh hive/conf/
+cp hive-<span class="si">${</span><span class="nv">old_ver</span><span class="si">}</span>/conf/hive-site.xml hive/conf/
+cp hive-<span class="si">${</span><span class="nv">old_ver</span><span class="si">}</span>/conf/hive-log4j.properties hive/conf/
+cp hive-<span class="si">${</span><span class="nv">old_ver</span><span class="si">}</span>/lib/mysql-connector-java-5.1.39.jar spark/jars/
+</pre></div>
+
+
+<p>备份原先版本的hive库</p>
+<div class="highlight"><pre><span></span>mysqldump -uhive -phive --default-character-set<span class="o">=</span>utf8 --result-file<span class="o">=</span>hive2.sql hive2
+</pre></div>
+
+
+<p>升级hive库</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">HIVE_HOME</span><span class="si">}</span>/scripts/metastore/upgrade/mysql
+mysql -uhive -phive hive2 &lt; hive-schema-2.0.0.mysql.sql
+mysql -uhive -phive hive2 &lt; upgrade-1.2.0-to-2.0.0.mysql.sql
+mysql -uhive -phive hive2 &lt; hive-schema-2.1.0.mysql.sql
+mysql -uhive -phive hive2 &lt; upgrade-2.0.0-to-2.1.0.mysql.sql
+</pre></div>
+
+
 <h1>hivemall安装</h1>
 <ol>
 <li>编译代码</li>
@@ -228,13 +256,27 @@ define-all.hive</p>
 <span class="nb">set</span> hivevar:hivemall_jar<span class="o">=</span>hdfs:///hive/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar<span class="p">;</span>
 <span class="nb">source</span> /data/apache/hivemall/define-all.hive<span class="p">;</span>
 </pre></div>
+
+
+<h1>问题一览</h1>
+<p>hive2.1.0，在运行spark，导致修改hive的metastore的版本为1.2.0，再次运行hive，报以下错误</p>
+<div class="highlight"><pre><span></span>MetaException(message:Hive Schema version 2.1.0 does not match metastore&#39;s schema version 1.2.0 Metastore is not upgraded or corrupt)
+</pre></div>
+
+
+<p>解决办法，可将元数据表"VERSION"，里的"1.2.0"改回"2.1.0"．或"hive-site.xml"做如下设置</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hive.metastore.schema.verification<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
 </section>
         <section id="extras" class="body">
                 <div class="blogroll">
-                        <h2>blogroll</h2>
+                        <h2>links</h2>
                         <ul>
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>

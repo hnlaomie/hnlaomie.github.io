@@ -38,8 +38,8 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/pgsql.html">pgsql</a> </p>
-</footer><!-- /.post-info -->      <h2>postgresql修改密码</h2>
-<p>修改“/etc/postgresql/9.1/main/pg_hba.conf"</p>
+</footer><!-- /.post-info -->      <h1>postgresql修改密码</h1>
+<p>修改“/etc/postgresql/9.6/main/pg_hba.conf"</p>
 <div class="highlight"><pre><span></span><span class="nb">local</span>   all    all   md5
 </pre></div>
 
@@ -52,8 +52,26 @@ $ sudo -u postgres psql
 </pre></div>
 
 
-<p>恢复“/etc/postgresql/9.1/main/pg_hba.conf"</p>
+<p>恢复“/etc/postgresql/9.6/main/pg_hba.conf"</p>
 <div class="highlight"><pre><span></span><span class="nb">local</span>   all    all   peer
+</pre></div>
+
+
+<h1>psql常用命令</h1>
+<div class="highlight"><pre><span></span>-- load data from csv
+\copy {table_name} (column1, column2, ... ) from &#39;/path/data.csv&#39; with delimiter &#39;,&#39;
+
+-- data to csv
+\copy <span class="cp">${</span><span class="n">table_name</span><span class="cp">}</span> to &#39;<span class="cp">${</span><span class="n">temp_path</span><span class="cp">}</span>/<span class="cp">${</span><span class="n">table_name</span><span class="cp">}</span>.csv&#39; delimiter &#39;,&#39;
+
+-- list schema
+\dn
+
+-- list table
+\dt
+
+-- description table
+\d table_name
 </pre></div>
     </div><!-- /.entry-content -->
 
@@ -61,7 +79,7 @@ $ sudo -u postgres psql
 </section>
         <section id="extras" class="body">
                 <div class="blogroll">
-                        <h2>blogroll</h2>
+                        <h2>links</h2>
                         <ul>
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>
