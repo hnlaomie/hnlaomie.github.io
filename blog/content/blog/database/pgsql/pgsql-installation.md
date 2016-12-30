@@ -83,22 +83,18 @@ postgresql建用户建库
 ====================
 用以下命令建库和建用户，并把库权限给用户
 ```
-create role bidev login password 'bidev';
-create database dw_yingguang with owner = bidev;
-
 create database adwo;
 \c adwo;
-create role bidev login password 'bidev';
-create schema dw_yingguang authorization bidev;
-create schema bisystem;
-grant all on schema bisystem to bidev;
+create role dw_yingguang login password 'bidev';
+create schema dw_yingguang authorization dw_yingguang;
 
+create schema dw_dsp;
+create role dw_dsp login password 'bidev';
+grant all on schema dw_dsp to dw_dsp;
+
+-- 设置schema查询
 set search_path to dw_yingguang;
 
--- list schema
-\dn
-
--- list table
-\dt
-
+-- psql登录
+PGPASSWORD=bidev psql -h 192.168.11.83 -U dw_yingguang adwo
 ```

@@ -164,6 +164,33 @@ $ netstat -anp | grep 10000
 ```
 jdbc连接时，用户用hadoop相关用户，否则有安全方面的异常
 
+hive升级（1.2.1 to 2.1.1）
+=================
+升级hive代码
+```bash
+old_ver=1.2.1
+new_ver=2.1.1
+tar -zxvf apache-hive-${new_ver}-bin.tgz
+mv hive hive-${old_ver}
+mv apache-hive-${new_ver}-bin hive
+cp hive-${old_ver}/conf/hive-env.sh hive/conf/
+cp hive-${old_ver}/conf/hive-site.xml hive/conf/
+cp hive-${old_ver}/conf/hive-log4j.properties hive/conf/
+cp hive-${old_ver}/lib/mysql-connector-java-5.1.39.jar spark/jars/
+```
+备份原先版本的hive库
+```bash
+mysqldump -uhive -phive --default-character-set=utf8 --result-file=hive2.sql hive2
+```
+升级hive库
+```bash
+cd ${HIVE_HOME}/scripts/metastore/upgrade/mysql
+mysql -uhive -phive hive2 < hive-schema-2.0.0.mysql.sql
+mysql -uhive -phive hive2 < upgrade-1.2.0-to-2.0.0.mysql.sql
+mysql -uhive -phive hive2 < hive-schema-2.1.0.mysql.sql
+mysql -uhive -phive hive2 < upgrade-2.0.0-to-2.1.0.mysql.sql
+```
+
 hivemall安装
 ==========================
 1. 编译代码
@@ -193,4 +220,18 @@ CREATE DATABASE IF NOT EXISTS hivemall;
 use hivemall;
 set hivevar:hivemall_jar=hdfs:///hive/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar;
 source /data/apache/hivemall/define-all.hive;
+```
+
+问题一览
+================
+hive2.1.0，在运行spark，导致修改hive的metastore的版本为1.2.0，再次运行hive，报以下错误
+```
+MetaException(message:Hive Schema version 2.1.0 does not match metastore's schema version 1.2.0 Metastore is not upgraded or corrupt)
+```
+解决办法，可将元数据表"VERSION"，里的"1.2.0"改回"2.1.0"．或"hive-site.xml"做如下设置
+```xml
+<property>
+    <name>hive.metastore.schema.verification</name>
+    <value>false</value>
+</property>
 ```
