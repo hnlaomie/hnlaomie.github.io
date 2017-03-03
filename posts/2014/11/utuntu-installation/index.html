@@ -49,6 +49,7 @@ $ sudo add-apt-repository ppa:webupd8team/java
 $ sudo add-apt-repository ppa:otto-kesselgulasch/gimp
 $ sudo add-apt-repository ppa:nginx/stable
 $ sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
+$ sudo add-apt-repository ppa:kelleyk/emacs
 $ sudo apt-get --yes install subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
 $ sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
 $ sudo apt-get install vlc browser-plugin-vlc gnome-mplayer bleachbit ubuntu-restricted-extras gnome-tweak-tool unity-tweak-tool gimp chromium-browser
@@ -203,6 +204,14 @@ create a file ‘51-no-guest.conf’ under  the directory ‘/etc/lightdm/lightd
 
 
 <div class="highlight"><pre><span></span>sudo systemctl restart lightdm.service
+</pre></div>
+
+
+<h1>安装texlive</h1>
+<div class="highlight"><pre><span></span>sudo add-apt-repository ppa:jonathonf/texlive
+sudo apt update <span class="o">&amp;&amp;</span> sudo apt install texlive-full
+sudo apt update <span class="o">&amp;&amp;</span> sudo apt install texworks
+sudo apt install ppa-purge <span class="o">&amp;&amp;</span> sudo ppa-purge ppa:jonathonf/texlive
 </pre></div>
     </div><!-- /.entry-content -->
 

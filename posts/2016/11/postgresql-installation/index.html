@@ -49,6 +49,7 @@
 wget https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-6-x86_64/pgdg-centos95-9.5-3.noarch.rpm
 yum install pgdg-centos95-9.5-3.noarch.rpm
 yum install postgresql95-server
+<span class="c1"># yum install postgresql95-client postgresql95-devel</span>
 <span class="c1"># 修改默认路径</span>
 mkdir -p /data/pgsql/data
 chown -R postgres.postgres /data/pgsql
@@ -111,6 +112,21 @@ host    all             all             192.168.11.1/24         md5
 <p>参考文档：</p>
 <p><a href="https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL">https://wiki.postgresql.org/wiki/YUM_Installation#Install_PostgreSQL</a>
 <a href="https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04">https://www.digitalocean.com/community/tutorials/how-to-move-a-postgresql-data-directory-to-a-new-location-on-ubuntu-16-04</a></p>
+<h1>ubuntu 16.04 上安装postgresql 9.6</h1>
+<p>vim /etc/apt/sources.list.d/pgdg.list</p>
+<div class="highlight"><pre><span></span><span class="k">deb</span> <span class="s">http://apt.postgresql.org/pub/repos/apt/</span> <span class="kp">xenial-pgdg</span> <span class="kp">main</span>
+</pre></div>
+
+
+<p>安装pgsql，配置文件默认路径为"/etc/postgresql/9.6/main"</p>
+<div class="highlight"><pre><span></span>sudo apt install wget ca-certificates
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt update
+sudo apt install postgresql-9.6
+sudo service postgresql start
+</pre></div>
+
+
 <h1>postgresql建用户建库</h1>
 <p>用以下命令建库和建用户，并把库权限给用户</p>
 <div class="highlight"><pre><span></span>create database adwo;

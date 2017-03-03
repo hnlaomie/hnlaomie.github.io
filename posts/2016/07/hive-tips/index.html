@@ -124,6 +124,12 @@ STORED AS ORC LOCATION &quot;/user/laomie/country&quot;;
 ALTER TABLE {table_name} PARTITION COLUMN ({column_name} {column_type});
 MSCK REPAIR TABLE &lt;tablename&gt;;
 </pre></div>
+
+
+<h1>Hive在spark2.1启动时无法访问../lib/spark-assembly-*.jar</h1>
+<p>编辑$HIVE_HOME/bin/hive</p>
+<div class="highlight"><pre><span></span>sparkAssemblyPath=`ls <span class="cp">${</span><span class="n">SPARK_HOME</span><span class="cp">}</span>/jars/spark-*.jar`
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

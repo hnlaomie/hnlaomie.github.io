@@ -116,6 +116,47 @@ Startup -&gt; Boot -&gt; UEFI/Legacy Boot -&gt; Both / Legacy First
 <p>菜单-设置-下翻点击“显示高级设置”-点击“管理证书”，＂授权中心-&gt;导入＂，选择＂XX-Net/data/gae_proxy/CA.crt＂</p>
 </li>
 </ol>
+<h1>下载youtube</h1>
+<p>安装youtube-dl</p>
+<div class="highlight"><pre><span></span>pip install youtube-dl
+</pre></div>
+
+
+<p>下载</p>
+<div class="highlight"><pre><span></span># 查看媒体输出格式
+youtube-dl --proxy http://127.0.0.1:8087 --no-check-certificate -F https://www.youtube.com/watch?v=R92Gr-c0Vfo&amp;index=2&amp;list=PLuJmmKtsV1dNE5y1gu1xpbIl3M2b7AW4D
+# 从url列表文件下载
+youtube-dl -f 22 --proxy http://127.0.0.1:8087 --no-check-certificate --batch-file=&#39;pg2016.txt&#39;
+</pre></div>
+
+
+<h1>lubuntu的fcitx输入法黑屏</h1>
+<div class="highlight"><pre><span></span>sudo apt install qtdeclarative5-qtquick2-plugin
+</pre></div>
+
+
+<h1>视频转换</h1>
+<div class="highlight"><pre><span></span>HandBrakeCLI -Z &quot;High Profile&quot; -i a_movie.iso -o a_movie.mp4
+</pre></div>
+
+
+<h1>查看，关闭端口</h1>
+<div class="highlight"><pre><span></span>netstat -tln | grep 7077
+lsof -i :7077
+kill -9 进程id
+kill -9 $(netstat -tlnp|grep 7077|awk &#39;{print $7}&#39;|awk -F &#39;/&#39; &#39;{print $1}&#39;)
+</pre></div>
+
+
+<h1>编译emacs</h1>
+<div class="highlight"><pre><span></span>sudo apt install build-essential checkinstall
+sudo apt-get install texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev libxpm-dev automake autoconf -y
+sudo apt-get build-dep emacs24
+./configure
+make
+sudo checkinstall
+sudo dpkg -r emacs-25
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

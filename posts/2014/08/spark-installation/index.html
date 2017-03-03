@@ -126,6 +126,17 @@ mvn -Pyarn -Phadoop-2.7 -Dhadoop.version<span class="o">=</span>2.7.3 -Phive -Ph
 </pre></div>
 
 
+<p>add jars in conf/spark-defaults.conf</p>
+<div class="highlight"><pre><span></span>spark.driver.extraClassPath /fullpath/firs.jar:/fullpath/second.jar
+spark.executor.extraClassPath /fullpath/firs.jar:/fullpath/second.jar
+</pre></div>
+
+
+<p>add jars with spark-submit</p>
+<div class="highlight"><pre><span></span>./bin/spark-submit --class &quot;SparkTest&quot; --master local[*] --jars /fullpath/first.jar,/fullpath/second.jar /fullpath/your-program.jar
+</pre></div>
+
+
 <h1>参考</h1>
 <ul>
 <li><a href="http://mmicky.blog.163.com/blog/static/1502901542014312101657612/">http://mmicky.blog.163.com/blog/static/1502901542014312101657612/</a></li>
