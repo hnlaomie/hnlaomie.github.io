@@ -86,3 +86,10 @@ alter table t change col1 col1 bigint not null;
 alter table t add index idx_name (col1, col2);
 alter table t drop index idx_name;
 ```
+
+不能初始化"tc log"导致服务不启动
+=============
+删除"/var/lib/mysql/tc.log"，然后重启服务
+```
+sudo service mysql start
+```

@@ -20,6 +20,7 @@ $ sudo add-apt-repository ppa:webupd8team/java
 $ sudo add-apt-repository ppa:otto-kesselgulasch/gimp
 $ sudo add-apt-repository ppa:nginx/stable
 $ sudo add-apt-repository ppa:libreoffice/libreoffice-5-0
+$ sudo add-apt-repository ppa:kelleyk/emacs
 $ sudo apt-get --yes install subversion pkg-config libssl-dev git ant maven cmake build-essential zlib1g-dev lib32z1-dev libsnappy-dev oracle-java8-installer
 $ sudo apt-get install ibus-anthy ibus-googlepinyin ibus-sunpinyin synaptic aptitude vim-gtk filezilla openssh-server mariadb-server
 $ sudo apt-get install vlc browser-plugin-vlc gnome-mplayer bleachbit ubuntu-restricted-extras gnome-tweak-tool unity-tweak-tool gimp chromium-browser
@@ -176,4 +177,13 @@ allow-guest=false
 ```
 ```
 sudo systemctl restart lightdm.service
+```
+
+安装texlive
+======================
+```bash
+sudo add-apt-repository ppa:jonathonf/texlive
+sudo apt update && sudo apt install texlive-full
+sudo apt update && sudo apt install texworks
+sudo apt install ppa-purge && sudo ppa-purge ppa:jonathonf/texlive
 ```

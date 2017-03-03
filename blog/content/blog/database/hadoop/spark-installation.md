@@ -105,6 +105,15 @@ export SPARK_WORKER_DIR=/data/hadoop/spark/worker
 export SPARK_MASTER_IP=localhost
 export SPARK_LOCAL_IP=localhost
 ```
+add jars in conf/spark-defaults.conf
+```
+spark.driver.extraClassPath /fullpath/firs.jar:/fullpath/second.jar
+spark.executor.extraClassPath /fullpath/firs.jar:/fullpath/second.jar
+```
+add jars with spark-submit
+```
+./bin/spark-submit --class "SparkTest" --master local[*] --jars /fullpath/first.jar,/fullpath/second.jar /fullpath/your-program.jar
+```
 
 参考
 ===============

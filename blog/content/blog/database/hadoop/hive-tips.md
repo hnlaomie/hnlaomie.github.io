@@ -103,3 +103,10 @@ ALTER TABLE table_name CHANGE old_col_name new_col_name new_data_type
 ALTER TABLE {table_name} PARTITION COLUMN ({column_name} {column_type});
 MSCK REPAIR TABLE <tablename>;
 ```
+
+Hive在spark2.1启动时无法访问../lib/spark-assembly-*.jar
+=================
+编辑$HIVE_HOME/bin/hive
+```
+sparkAssemblyPath=`ls ${SPARK_HOME}/jars/spark-*.jar`
+```

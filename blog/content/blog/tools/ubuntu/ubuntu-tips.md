@@ -87,3 +87,50 @@ chrome安装xx-net代理插件
 4. 在插件界面的＂XX-Net自动切换＂点击＂立即更新情景模式＂
 
 5. 菜单-设置-下翻点击“显示高级设置”-点击“管理证书”，＂授权中心->导入＂，选择＂XX-Net/data/gae_proxy/CA.crt＂
+
+下载youtube
+=========================
+安装youtube-dl
+```
+pip install youtube-dl
+```
+下载
+```
+# 查看媒体输出格式
+youtube-dl --proxy http://127.0.0.1:8087 --no-check-certificate -F https://www.youtube.com/watch?v=R92Gr-c0Vfo&index=2&list=PLuJmmKtsV1dNE5y1gu1xpbIl3M2b7AW4D
+# 从url列表文件下载
+youtube-dl -f 22 --proxy http://127.0.0.1:8087 --no-check-certificate --batch-file='pg2016.txt'
+```
+
+lubuntu的fcitx输入法黑屏
+=========================
+```
+sudo apt install qtdeclarative5-qtquick2-plugin
+```
+
+视频转换
+==================
+```
+HandBrakeCLI -Z "High Profile" -i a_movie.iso -o a_movie.mp4
+```
+
+查看，关闭端口
+==========
+```
+netstat -tln | grep 7077
+lsof -i :7077
+kill -9 进程id
+kill -9 $(netstat -tlnp|grep 7077|awk '{print $7}'|awk -F '/' '{print $1}')
+```
+
+编译emacs
+=============
+```
+sudo apt install build-essential checkinstall
+sudo apt-get install texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev libxpm-dev automake autoconf -y
+sudo apt-get build-dep emacs24
+./configure
+make
+sudo checkinstall
+sudo dpkg -r emacs-25
+```
