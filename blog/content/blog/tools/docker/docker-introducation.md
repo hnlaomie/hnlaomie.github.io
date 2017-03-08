@@ -117,3 +117,21 @@ network
 ```
 apt install net-tools
 ```
+
+move docker's default /var/lib/docker to another directory
+===========
+modify /etc/docker/daemon.json as bellow
+```
+{
+"graph": "/usr/local/data/docker"
+}
+```
+restart docker service and copy files to new directory
+```
+sudo systemctl stop docker
+sudo systemctl daemon-reload
+sudo mkdir /usr/local/data/docker
+sudo rsync -aqxP /var/lib/docker/ /user/local/data/docker
+sudo systemctl start docker
+```
+[How to move docker's default /var/lib/docker to another directory on Ubuntu/Debian Linux](https://linuxconfig.org/how-to-move-docker-s-default-var-lib-docker-to-another-directory-on-ubuntu-debian-linux)
