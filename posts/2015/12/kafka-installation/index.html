@@ -73,10 +73,10 @@ bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beg
 
 
 <h1>kafka和spark整合</h1>
-<div class="highlight"><pre><span></span><span class="x">cd </span><span class="p">$</span><span class="nv">SPARK_HOME</span><span class="x"></span>
-<span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5</span>
-<span class="x">bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1</span>
-<span class="x">bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test</span>
+<div class="highlight"><pre><span></span>cd $SPARK_HOME
+bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5
+bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1
+bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test
 </pre></div>
 
 

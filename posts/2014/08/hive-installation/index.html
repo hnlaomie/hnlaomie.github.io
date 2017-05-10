@@ -184,15 +184,15 @@ load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite i
 
 <h1>hive启动</h1>
 <div class="highlight"><pre><span></span>$ hive --service hiveserver2
-$ netstat -anp <span class="p">|</span> grep 10000
+$ netstat -anp <span class="p">|</span> grep <span class="m">10000</span>
 </pre></div>
 
 
 <p>jdbc连接时，用户用hadoop相关用户，否则有安全方面的异常</p>
 <h1>hive升级（1.2.1 to 2.1.1）</h1>
 <p>升级hive代码</p>
-<div class="highlight"><pre><span></span><span class="nv">old_ver</span><span class="o">=</span>1.2.1
-<span class="nv">new_ver</span><span class="o">=</span>2.1.1
+<div class="highlight"><pre><span></span><span class="nv">old_ver</span><span class="o">=</span><span class="m">1</span>.2.1
+<span class="nv">new_ver</span><span class="o">=</span><span class="m">2</span>.1.1
 tar -zxvf apache-hive-<span class="si">${</span><span class="nv">new_ver</span><span class="si">}</span>-bin.tgz
 mv hive hive-<span class="si">${</span><span class="nv">old_ver</span><span class="si">}</span>
 mv apache-hive-<span class="si">${</span><span class="nv">new_ver</span><span class="si">}</span>-bin hive

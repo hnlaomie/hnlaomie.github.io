@@ -64,10 +64,10 @@ $ mkdir -p /data/hadoop/cassandra/saved_caches
 - seeds: <span class="s2">&quot;192.168.11.82&quot;</span>
 
 <span class="c1"># 各节点的ip</span>
-listen_address: 192.168.11.82
+listen_address: <span class="m">192</span>.168.11.82
 
 <span class="c1"># 各节点的ip</span>
-rpc_address: 192.168.11.82
+rpc_address: <span class="m">192</span>.168.11.82
 
 commitlog_directory: /data/hadoop/cassandra/commitlog
 
@@ -87,13 +87,13 @@ saved_caches_directory: /data/hadoop/cassandra/saved_caches
 
 
 <h1>cassandra的命令和sql语句</h1>
-<div class="highlight"><pre><span></span>$ cqlsh 192.168.11.82 9042
+<div class="highlight"><pre><span></span>$ cqlsh <span class="m">192</span>.168.11.82 <span class="m">9042</span>
 $ nodetool status
 cqlsh:&gt; CREATE KEYSPACE test1 WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span> : <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
-cqlsh:&gt; CREATE KEYSPACE test2 WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;NetworkTopologyStrategy&#39;</span>, <span class="s1">&#39;dc1&#39;</span> : 3, <span class="s1">&#39;dc2&#39;</span> : 3<span class="o">}</span><span class="p">;</span>
+cqlsh:&gt; CREATE KEYSPACE test2 WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;NetworkTopologyStrategy&#39;</span>, <span class="s1">&#39;dc1&#39;</span> : <span class="m">3</span>, <span class="s1">&#39;dc2&#39;</span> : <span class="m">3</span><span class="o">}</span><span class="p">;</span>
 cqlsh:&gt; use test<span class="p">;</span>
 cqlsh:&gt; CREATE TABLE users <span class="o">(</span>user_id int PRIMARY KEY, fname text, lname text<span class="o">)</span><span class="p">;</span>
-cqlsh:&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1, <span class="s1">&#39;john&#39;</span>, <span class="s1">&#39;smith&#39;</span><span class="o">)</span> using TTL 60<span class="p">;</span>
+cqlsh:&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span><span class="m">1</span>, <span class="s1">&#39;john&#39;</span>, <span class="s1">&#39;smith&#39;</span><span class="o">)</span> using TTL <span class="m">60</span><span class="p">;</span>
 cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
 </pre></div>
 

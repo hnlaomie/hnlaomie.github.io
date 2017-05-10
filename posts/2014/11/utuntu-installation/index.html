@@ -69,40 +69,40 @@ $ sudo update-grub            （注：redhat用  grub2-mkconfig -o /boot/grub2/
 
 
 <p>修改"/etc/dnsmasq.conf"</p>
-<div class="highlight"><pre><span></span>listen-address<span class="o">=</span>127.0.0.1
+<div class="highlight"><pre><span></span>listen-address<span class="o">=</span><span class="m">127</span>.0.0.1
 resolv-file<span class="o">=</span>/etc/resolv.dnsmasq.conf
 </pre></div>
 
 
 <p>修改"/etc/NetworkManager/dnsmasq.d/cache"</p>
-<div class="highlight"><pre><span></span>cache-size<span class="o">=</span>1000
+<div class="highlight"><pre><span></span>cache-size<span class="o">=</span><span class="m">1000</span>
 </pre></div>
 
 
 <p>新增"/etc/resolv.dnsmasq.conf"</p>
 <div class="highlight"><pre><span></span><span class="c1"># baidu dns</span>
-180.76.76.76
+<span class="m">180</span>.76.76.76
 <span class="c1"># OpenDNS</span>
-208.67.222.222
-208.67.220.220
+<span class="m">208</span>.67.222.222
+<span class="m">208</span>.67.220.220
 <span class="c1"># 阿里DNS</span>
-223.5.5.5
-223.6.6.6
+<span class="m">223</span>.5.5.5
+<span class="m">223</span>.6.6.6
 <span class="c1"># 114DNS</span>
-114.114.114.114
-114.114.115.115
+<span class="m">114</span>.114.114.114
+<span class="m">114</span>.114.115.115
 <span class="c1"># OneDNS 北方</span>
-114.215.126.16
+<span class="m">114</span>.215.126.16
 <span class="c1"># V2EX DNS</span>
-199.91.73.222
-178.79.131.110
+<span class="m">199</span>.91.73.222
+<span class="m">178</span>.79.131.110
 <span class="c1"># Google DNS</span>
-8.8.8.8
-8.8.4.4
+<span class="m">8</span>.8.8.8
+<span class="m">8</span>.8.4.4
 <span class="c1"># OpenerDNS</span>
-42.120.21.30
+<span class="m">42</span>.120.21.30
 <span class="c1"># OneDNS 南方</span>
-112.124.47.27
+<span class="m">112</span>.124.47.27
 </pre></div>
 
 
@@ -124,7 +124,7 @@ $ sudo apt-get install docker-engine
 
 
 <p>它机访问docker容器</p>
-<div class="highlight"><pre><span></span>$ sudo ufw allow 2375/tcp
+<div class="highlight"><pre><span></span>$ sudo ufw allow <span class="m">2375</span>/tcp
 </pre></div>
 
 

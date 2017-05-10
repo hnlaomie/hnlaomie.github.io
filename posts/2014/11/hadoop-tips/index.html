@@ -85,18 +85,18 @@ mapred job -list
 <p>当磁盘剩余空间小于10%时，reduce任务无法启动</p>
 <h1>hadoop升级</h1>
 <p>备份</p>
-<div class="highlight"><pre><span></span><span class="err">#</span><span class="x"> 进入安全模式</span>
-<span class="x">hdfs dfsadmin -safemode enter</span>
-<span class="err">#</span><span class="x"> fsck检查</span>
-<span class="x">hdfs fsck / -files -blocks -locations |grep -v -E &#39;^.&#39; &gt; /home/hadoop/dfs-v-old-fs</span>
-<span class="err">#</span><span class="x"> 离开安全模式</span>
-<span class="x">hdfs dfsadmin -safemode leave</span>
-<span class="err">#</span><span class="x"> 关闭history-server</span>
-<span class="x">mr-jobhistory-daemon.sh stop historyserver</span>
-<span class="err">#</span><span class="x"> 关闭集群</span>
-<span class="p">$</span><span class="nv">HADOOP_HOME</span><span class="x">/sbin/stop-all.sh</span>
-<span class="err">#</span><span class="x"> 备份namenode信息（fs.default.name）</span>
-<span class="x">cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup</span>
+<div class="highlight"><pre><span></span># 进入安全模式
+hdfs dfsadmin -safemode enter
+# fsck检查
+hdfs fsck / -files -blocks -locations |grep -v -E &#39;^.&#39; &gt; /home/hadoop/dfs-v-old-fs
+# 离开安全模式
+hdfs dfsadmin -safemode leave
+# 关闭history-server
+mr-jobhistory-daemon.sh stop historyserver
+# 关闭集群
+$HADOOP_HOME/sbin/stop-all.sh
+# 备份namenode信息（fs.default.name）
+cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup
 </pre></div>
 
 

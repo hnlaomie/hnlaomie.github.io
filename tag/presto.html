@@ -85,16 +85,16 @@ cassandra.native-protocol-port=9042
 
 
 <h1>快速指南</h1>
-<div class="highlight"><pre><span></span><span class="err">#</span><span class="x"> 启动</span>
-<span class="p">$</span><span class="nv">PRESTO_HOME</span><span class="x">/bin/launcher run</span>
-<span class="err">#</span><span class="x"> 后台进程启动</span>
-<span class="p">$</span><span class="nv">PRESTO_HOME</span><span class="x">/bin/launcher start</span>
-<span class="err">#</span><span class="x"> 停止</span>
-<span class="p">$</span><span class="nv">PRESTO_HOME</span><span class="x">/bin/launcher stop</span>
-<span class="err">#</span><span class="x"> 访问cassandra数据库</span>
-<span class="p">$</span><span class="nv">PRESTO_HOME</span><span class="x">/bin/presto --server localhost:8090 --catalog cassandra --schema dmp</span>
-<span class="err">#</span><span class="x"> 输出csv</span>
-<span class="p">$</span><span class="nv">PRESTO_HOME</span><span class="x">/bin/presto --server localhost:8090 --catalog cassandra --schema dmp --execute &quot;select * from user_tags limit 20&quot; --output-format CSV &gt; user_tags.csv</span>
+<div class="highlight"><pre><span></span># 启动
+$PRESTO_HOME/bin/launcher run
+# 后台进程启动
+$PRESTO_HOME/bin/launcher start
+# 停止
+$PRESTO_HOME/bin/launcher stop
+# 访问cassandra数据库
+$PRESTO_HOME/bin/presto --server localhost:8090 --catalog cassandra --schema dmp
+# 输出csv
+$PRESTO_HOME/bin/presto --server localhost:8090 --catalog cassandra --schema dmp --execute &quot;select * from user_tags limit 20&quot; --output-format CSV &gt; user_tags.csv
 </pre></div>
 
 

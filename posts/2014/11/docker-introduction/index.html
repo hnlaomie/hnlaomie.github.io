@@ -111,10 +111,10 @@ docker search
 <span class="c1"># 镜像下载</span>
 docker pull ubuntu:latest
 <span class="c1"># 创建私有仓库</span>
-docker run -d -p 5000:5000 -v /data/docker/registry:/tmp/registry registry
+docker run -d -p <span class="m">5000</span>:5000 -v /data/docker/registry:/tmp/registry registry
 <span class="c1"># 上传镜像</span>
-docker tag ubuntu:latest 192.168.1.20:5000/test
-docker push 192.168.1.20:5000/test
+docker tag ubuntu:latest <span class="m">192</span>.168.1.20:5000/test
+docker push <span class="m">192</span>.168.1.20:5000/test
 </pre></div>
 
 

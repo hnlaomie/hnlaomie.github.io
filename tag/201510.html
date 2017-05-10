@@ -53,10 +53,11 @@
 
 <p>pyenv命令</p>
 <div class="highlight"><pre><span></span><span class="c1"># 安装python</span>
-pyenv install 3.5.0
+<span class="nb">export</span> <span class="nv">PYTHON_CONFIGURE_OPTS</span><span class="o">=</span><span class="s2">&quot;--enable-shared&quot;</span>
+pyenv install <span class="m">3</span>.5.3
 
 <span class="c1"># 卸载python</span>
-pyenv uninstall 3.5.0
+pyenv uninstall <span class="m">3</span>.5.3
 
 <span class="c1"># 重安装python</span>
 pyenv rebash
@@ -65,14 +66,31 @@ pyenv rebash
 pyenv versions
 
 <span class="c1"># python指定版本</span>
-pyenv <span class="nb">local</span> 3.5.0 system
+pyenv <span class="nb">local</span> <span class="m">3</span>.5.3 system
 </pre></div>
 
 
 <p>在"~/tools/pyenv/version"设置python版本</p>
-<div class="highlight"><pre><span></span>3.5.0
+<div class="highlight"><pre><span></span><span class="m">3</span>.5.3
 system
-2.7.10
+<span class="m">2</span>.7.12
+</pre></div>
+
+
+<p>安装常用包</p>
+<div class="highlight"><pre><span></span><span class="c1"># pelican</span>
+pip install pelican
+pip install ghp-import
+pip install Markdown
+
+<span class="c1"># docker</span>
+pip install docker-compose
+
+<span class="c1"># neovim</span>
+pip install neovim
+pip install jedi
+
+pip install beautifulsoup4
 </pre></div>
 
 

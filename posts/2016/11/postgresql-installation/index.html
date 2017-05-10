@@ -70,12 +70,12 @@ SHOW data_directory<span class="p">;</span>
 
 
 <p>卸载老版postgresql</p>
-<div class="highlight"><pre><span></span><span class="x">yum erase postgresql-libs*</span>
-<span class="x">vim /etc/profile.d/pgsql.sh</span>
-<span class="cp">##</span><span class="c">###########</span><span class="x"></span>
-<span class="x">export PGSQL_HOME=/usr/pgsql-9.5</span>
-<span class="x">export PATH=</span><span class="p">$</span><span class="nv">PGSQL_HOME</span><span class="x">/bin:</span><span class="p">$</span><span class="nv">PATH</span><span class="x"></span>
-<span class="cp">##</span><span class="c">###########</span><span class="x"></span>
+<div class="highlight"><pre><span></span>yum erase postgresql-libs*
+vim /etc/profile.d/pgsql.sh
+#############
+export PGSQL_HOME=/usr/pgsql-9.5
+export PATH=$PGSQL_HOME/bin:$PATH
+#############
 </pre></div>
 
 

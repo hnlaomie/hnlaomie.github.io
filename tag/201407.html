@@ -423,7 +423,7 @@ start-yarn.sh
 mr-jobhistory-daemon.sh start historyserver
 
 <span class="c1"># 验证hadoop</span>
-hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.3.jar pi <span class="m">4</span> 100
+hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.3.jar pi <span class="m">4</span> <span class="m">100</span>
 
 <span class="c1"># 确认没问题后，最终完成升级</span>
 hdfs dfsadmin -finalizeUpgrade

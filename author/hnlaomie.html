@@ -64,8 +64,8 @@ tar -xvzf tez-dist/target/tez-0.8.4-minimal.tar.gz -C /data/apache/tez
 
 <h1>环境变量设置（所有结点）</h1>
 <p>~/.bashrc设置"TEZ_HOME"和"TEZ_CONF_DIR"</p>
-<div class="highlight"><pre><span></span><span class="x">export TEZ_HOME=/data/apache/tez</span>
-<span class="x">export TEZ_CONF_DIR=</span><span class="p">$</span><span class="nv">TEZ_HOME</span><span class="x">/conf</span>
+<div class="highlight"><pre><span></span>export TEZ_HOME=/data/apache/tez
+export TEZ_CONF_DIR=$TEZ_HOME/conf
 </pre></div>
 
 
@@ -123,8 +123,8 @@ tar -xvzf tez-dist/target/tez-0.8.4-minimal.tar.gz -C /data/apache/tez
 <p>将$TEZ_HOME/conf/tez-site.xml复制到所有结点的"$HADOOP_HOME/etc/hadoop"目录</p>
 <h1>tez测试</h1>
 <p>运行测试例子</p>
-<div class="highlight"><pre><span></span><span class="x">hadoop jar </span><span class="p">$</span><span class="nv">TEZ_HOME</span><span class="x">/tez-examples.jar orderedwordcount &lt;input&gt; &lt;output&gt;</span>
-<span class="x">hadoop jar </span><span class="p">$</span><span class="nv">TEZ_HOME</span><span class="x">/tez-tests.jar testorderedwordcount &lt;input1&gt; &lt;output1&gt; &lt;input2&gt; &lt;output2&gt; ...</span>
+<div class="highlight"><pre><span></span>hadoop jar $TEZ_HOME/tez-examples.jar orderedwordcount &lt;input&gt; &lt;output&gt;
+hadoop jar $TEZ_HOME/tez-tests.jar testorderedwordcount &lt;input1&gt; &lt;output1&gt; &lt;input2&gt; &lt;output2&gt; ...
 </pre></div>
 
 

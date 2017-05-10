@@ -40,8 +40,8 @@
 <p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hbase.html">hbase</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->      <h1>单结点(standalone mode)安装</h1>
 <p>设置环境变量</p>
-<div class="highlight"><pre><span></span><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
-<span class="x">export </span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/bin</span>
+<div class="highlight"><pre><span></span>export ZK_HOME=/data/apache/zookeeper
+export $PATH:$ZK_HOME/bin
 </pre></div>
 
 
@@ -56,8 +56,8 @@ clientPort=2181
 
 <h1>多结点(multinode cluster)安装</h1>
 <p>设置环境变量</p>
-<div class="highlight"><pre><span></span><span class="x">export ZK_HOME=/data/apache/zookeeper</span>
-<span class="x">export </span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/bin</span>
+<div class="highlight"><pre><span></span>export ZK_HOME=/data/apache/zookeeper
+export $PATH:$ZK_HOME/bin
 </pre></div>
 
 
@@ -75,7 +75,7 @@ server.3=noee2:2888:3888
 
 <p>注：分别各结点上安装</p>
 <p>设置日志路径zookeeper-env.sh</p>
-<div class="highlight"><pre><span></span><span class="x">export ZOO_LOG_DIR=</span><span class="p">$</span><span class="nv">ZK_HOME</span><span class="x">/logs</span>
+<div class="highlight"><pre><span></span>export ZOO_LOG_DIR=$ZK_HOME/logs
 </pre></div>
 
 
