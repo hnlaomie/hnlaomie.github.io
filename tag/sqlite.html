@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - sqlite</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2017/06/sqlite-tips/">sqlite tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-06-30T14:30:00+08:00">
+                Published: 2017-06-30(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
+</footer><!-- /.post-info --><h1>sqlite 数据类型</h1>
+<div class="highlight"><pre><span></span>INTEGER (INT, TINYINT, BIGINT)
+TEXT (VARCHAR, TEXT, CLOB)
+BLOB (BLOB)
+REAL (FLOAT, DOUBLE)
+NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
+</pre></div>
+
+
+<h1>常用操作</h1>
+<div class="highlight"><pre><span></span><span class="c1">-- upsert</span>
+<span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
+<span class="k">INSERT</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
+
+<span class="k">REPLACE</span> <span class="k">INTO</span>
+
+<span class="c1">-- rename table</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">foo</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">bar</span>
+
+<span class="c1">-- 查看表</span>
+<span class="p">.</span><span class="k">schema</span> <span class="n">tbl1</span>
+</pre></div>
+
+
+<h1>数据导入导出</h1>
+<p>控制台方式</p>
+<div class="highlight"><pre><span></span><span class="o">--</span> <span class="err">导出</span><span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">headers</span> <span class="n">on</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">mode</span> <span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">tbl1</span><span class="p">;</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">stdout</span>
+
+<span class="o">--</span> <span class="err">导入</span><span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">separator</span> <span class="err">“</span>\<span class="n">t</span><span class="err">”</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="kn">import</span> <span class="nn">imei.csv</span> <span class="nn">tac_info</span>
+</pre></div>
+
+
+<p>命令行方式</p>
+<div class="highlight"><pre><span></span>sqlite3 -header -csv /path/file.db &quot;select * from tbl1;&quot; &gt; data.csv
+sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

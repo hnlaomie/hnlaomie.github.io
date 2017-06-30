@@ -22,7 +22,83 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2016/11/python-tips/">python tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2017/06/python-crawler/">python crawler</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-06-14T14:30:00+08:00">
+                Published: 2017-06-14(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/python.html">python</a> <a href="/tag/crawler.html">crawler</a> </p>
+</footer><!-- /.post-info --><h1>依赖包安装</h1>
+<div class="highlight"><pre><span></span>pip install selenium beautifulsoup4 requests lxml gevenp install selenium beautifulsoup4 requests lxml gevent
+</pre></div>
+
+
+<p>下载<a href="http://phantomjs.org/download.html">phantomjs</a>并安装</p>
+<p>下载<a href="https://github.com/mozilla/geckodriver/releases">geckodriver</a>并安装</p>
+<p>下载<a href="http://chromedriver.storage.googleapis.com/index.html">chromedriver</a>并安装</p>
+<h1>phantomjs使用</h1>
+<div class="highlight"><pre><span></span><span class="n">proxy</span> <span class="o">=</span> <span class="s1">&#39;--proxy=&#39;</span> <span class="o">+</span> <span class="n">ip</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">port</span>
+<span class="n">dcap</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">DesiredCapabilities</span><span class="o">.</span><span class="n">PHANTOMJS</span><span class="p">)</span>
+<span class="n">dcap</span><span class="p">[</span><span class="s2">&quot;phantomjs.page.settings.userAgent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">Windows</span> <span class="n">NT</span> <span class="mf">10.0</span><span class="p">;</span> <span class="n">WOW64</span><span class="p">;</span> <span class="n">rv</span><span class="p">:</span><span class="mf">45.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">45.0</span><span class="s1">&#39;</span>
+<span class="c1">#dcap[&quot;phantomjs.page.settings.resourceTimeout&quot;] = (&quot;2000&quot;)</span>
+<span class="n">service_args</span> <span class="o">=</span> <span class="p">[</span><span class="n">proxy</span><span class="p">]</span>
+<span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">PhantomJS</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/data/apache/tools/phantomjs/bin/phantomjs&#39;</span><span class="p">,</span> <span class="n">service_args</span><span class="o">=</span><span class="n">service_args</span><span class="p">,</span> <span class="n">desired_capabilities</span><span class="o">=</span><span class="n">dcap</span><span class="p">)</span>
+<span class="n">browser</span><span class="o">.</span><span class="n">set_page_load_timeout</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://icanhazip.com/&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h1>firefox使用</h1>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span>
+
+<span class="n">fp</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
+<span class="c1"># Direct = 0, Manual = 1, PAC = 2, AUTODETECT = 4, SYSTEM = 5</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">&quot;network.proxy.type&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">&quot;network.proxy.http&quot;</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">&quot;network.proxy.http_port&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">&quot;general.useragent.override&quot;</span><span class="p">,</span> <span class="s2">&quot;whater_useragent&quot;</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">update_preferences</span><span class="p">()</span>
+<span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/home/laomie/tools/geckodriver&#39;</span><span class="p">,</span> <span class="n">firefox_profile</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+<span class="n">browser</span><span class="o">.</span><span class="n">set_page_load_timeout</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://icanhazip.com/&#39;</span><span class="p">)</span>
+
+<span class="c1"># 如需等待页面载入相应的元素，可用以下类似代码</span>
+<span class="n">WebDriverWait</span><span class="p">(</span><span class="n">browser</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+    <span class="n">expected_conditions</span><span class="o">.</span><span class="n">text_to_be_present_in_element</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;查询结果&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<h1>chrome使用</h1>
+<h1>参考</h1>
+<ul>
+<li><a href="http://cuiqingcai.com/2599.html">http://cuiqingcai.com/2599.html</a></li>
+<li><a href="http://www.jianshu.com/p/2631bf34328e">http://www.jianshu.com/p/2631bf34328e</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2016/11/python-tips/" rel="bookmark"
+                           title="Permalink to python tips">python tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-11-09T10:30:00+08:00">
                 Published: 2016-11-09(三)
@@ -33,15 +109,10 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>.</p>
 <p>tags: <a href="/tag/201611.html">201611</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>pyspider的安装</h1>
-<div class="highlight"><pre><span></span>sudo apt install libcurl4-gnutls-dev libghc-gnutls-dev
-pip install pyspider
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>python tips</p>
+                <a class="readmore" href="/posts/2016/11/python-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

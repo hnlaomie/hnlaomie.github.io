@@ -22,7 +22,73 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2016/12/tez-installation/">tez installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2017/06/sqlite-tips/">sqlite tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-06-30T14:30:00+08:00">
+                Published: 2017-06-30(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
+</footer><!-- /.post-info --><h1>sqlite 数据类型</h1>
+<div class="highlight"><pre><span></span>INTEGER (INT, TINYINT, BIGINT)
+TEXT (VARCHAR, TEXT, CLOB)
+BLOB (BLOB)
+REAL (FLOAT, DOUBLE)
+NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
+</pre></div>
+
+
+<h1>常用操作</h1>
+<div class="highlight"><pre><span></span><span class="c1">-- upsert</span>
+<span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
+<span class="k">INSERT</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
+
+<span class="k">REPLACE</span> <span class="k">INTO</span>
+
+<span class="c1">-- rename table</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">foo</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">bar</span>
+
+<span class="c1">-- 查看表</span>
+<span class="p">.</span><span class="k">schema</span> <span class="n">tbl1</span>
+</pre></div>
+
+
+<h1>数据导入导出</h1>
+<p>控制台方式</p>
+<div class="highlight"><pre><span></span><span class="o">--</span> <span class="err">导出</span><span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">headers</span> <span class="n">on</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">mode</span> <span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">tbl1</span><span class="p">;</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">stdout</span>
+
+<span class="o">--</span> <span class="err">导入</span><span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">separator</span> <span class="err">“</span>\<span class="n">t</span><span class="err">”</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="kn">import</span> <span class="nn">imei.csv</span> <span class="nn">tac_info</span>
+</pre></div>
+
+
+<p>命令行方式</p>
+<div class="highlight"><pre><span></span>sqlite3 -header -csv /path/file.db &quot;select * from tbl1;&quot; &gt; data.csv
+sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2016/12/tez-installation/" rel="bookmark"
+                           title="Permalink to tez installation">tez installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-12-01T09:50:00+08:00">
                 Published: 2016-12-01(四)
@@ -33,127 +99,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201612.html">201612</a> <a href="/tag/tez.html">tez</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
-</footer><!-- /.post-info --><h1>代码编译</h1>
-<p>修改代码里最顶层的"pom.xml"，将hadoop版本改为和运行的一致，注掉node.js相关代码</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;hadoop.version&gt;</span>2.7.3<span class="nt">&lt;/hadoop.version&gt;</span>
-
-<span class="c">&lt;!--</span>
-<span class="c">    &lt;module&gt;tez-ui&lt;/module&gt;</span>
-<span class="c">    &lt;module&gt;tez-ui2&lt;/module&gt;</span>
-<span class="c">--&gt;</span>
-</pre></div>
-
-
-<p>编译代码（需要预先编译Protocol Buffers 2.5.0）</p>
-<div class="highlight"><pre><span></span>mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true
-</pre></div>
-
-
-<h1>安装</h1>
-<p>在hdfs建目录，并将tez复制到新建的目录</p>
-<div class="highlight"><pre><span></span>hdfs dfs -mkdir /apps/tez
-hdfs dfs -copyFromLocal tez-dist/target/tez-0.8.4.tar.gz /apps/tez/
-</pre></div>
-
-
-<p>所有结点本地安装tez</p>
-<div class="highlight"><pre><span></span>mkdir -p /data/apache/tez
-tar -xvzf tez-dist/target/tez-0.8.4-minimal.tar.gz -C /data/apache/tez
-</pre></div>
-
-
-<h1>环境变量设置（所有结点）</h1>
-<p>~/.bashrc设置"TEZ_HOME"和"TEZ_CONF_DIR"</p>
-<div class="highlight"><pre><span></span>export TEZ_HOME=/data/apache/tez
-export TEZ_CONF_DIR=$TEZ_HOME/conf
-</pre></div>
-
-
-<p>$HADOOP_HOME/etc/hadoop/hadoop-env.sh设置"HADOOP_CLASSPATH"</p>
-<div class="highlight"><pre><span></span>export HADOOP_CLASSPATH=<span class="cp">${</span><span class="n">TEZ_CONF_DIR</span><span class="cp">}</span>:<span class="cp">${</span><span class="n">TEZ_HOME</span><span class="cp">}</span>/*:<span class="cp">${</span><span class="n">TEZ_HOME</span><span class="cp">}</span>/lib/*
-</pre></div>
-
-
-<h1>hadoop, tez, hive配置</h1>
-<p>$HADOOP_HOME/etc/hadoop/mapred-site.xml设置"mapreduce.framework.name"</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
-    <span class="c">&lt;!--&lt;value&gt;yarn&lt;/value&gt;--&gt;</span>
-    <span class="nt">&lt;value&gt;</span>yarn-tez<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-</pre></div>
-
-
-<p>$HIVE_HOME/conf/hive-site.xml增加以下设置</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>
-   <span class="nt">&lt;name&gt;</span>hive.execution.engine<span class="nt">&lt;/name&gt;</span>
-   <span class="nt">&lt;value&gt;</span>tez<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-   <span class="nt">&lt;name&gt;</span>hive.prewarm.enabled<span class="nt">&lt;/name&gt;</span>
-   <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;property&gt;</span>
-    <span class="nt">&lt;name&gt;</span>hadoop.embedded.local.mode<span class="nt">&lt;/name&gt;</span>
-    <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-</pre></div>
-
-
-<p>$TEZ_HOME/conf/tez-site.xml设置</p>
-<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="cp">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span>
-<span class="nt">&lt;configuration&gt;</span>
-    <span class="nt">&lt;property&gt;</span>
-        <span class="nt">&lt;name&gt;</span>tez.version<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;value&gt;</span>tez-0.8.4<span class="nt">&lt;/value&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-    <span class="nt">&lt;property&gt;</span>
-        <span class="nt">&lt;name&gt;</span>tez.use.cluster.hadoop-libs<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-    <span class="nt">&lt;property&gt;</span>
-        <span class="nt">&lt;name&gt;</span>tez.lib.uris<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;value&gt;</span>${fs.defaultFS}/apps/tez/${tez.version}.tar.gz<span class="nt">&lt;/value&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;/configuration&gt;</span>
-</pre></div>
-
-
-<p>将$TEZ_HOME/conf/tez-site.xml复制到所有结点的"$HADOOP_HOME/etc/hadoop"目录</p>
-<h1>tez测试</h1>
-<p>运行测试例子</p>
-<div class="highlight"><pre><span></span>hadoop jar $TEZ_HOME/tez-examples.jar orderedwordcount &lt;input&gt; &lt;output&gt;
-hadoop jar $TEZ_HOME/tez-tests.jar testorderedwordcount &lt;input1&gt; &lt;output1&gt; &lt;input2&gt; &lt;output2&gt; ...
-</pre></div>
-
-
-<h1>问题一览</h1>
-<ol>
-<li>spark用yarn跑时，找不着tez，可将$SPARK_HOME/conf/hive-site.xml的tez改为mr方式</li>
-</ol>
-<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>
-   <span class="nt">&lt;name&gt;</span>hive.execution.engine<span class="nt">&lt;/name&gt;</span>
-   <span class="nt">&lt;value&gt;</span>mr<span class="nt">&lt;/value&gt;</span>
-<span class="nt">&lt;/property&gt;</span>
-</pre></div>
-
-
-<p>脚本中用以下方式运行spark-submit</p>
-<div class="highlight"><pre><span></span><span class="nv">files</span><span class="o">=</span><span class="s2">&quot;/data/apache/spark/conf/hive-site.xml&quot;</span>
-spark-submit --files <span class="si">${</span><span class="nv">files</span><span class="si">}</span>
-</pre></div>
-
-
-<h1>参考</h1>
-<ul>
-<li><a href="http://tez.apache.org/install.html">http://tez.apache.org/install.html</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>tez安装</p>
+                <a class="readmore" href="/posts/2016/12/tez-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -328,28 +277,6 @@ spark-submit --files <span class="si">${</span><span class="nv">files</span><spa
 <p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
 </footer><!-- /.post-info -->                <p>hbase使用指南</p>
                 <a class="readmore" href="/posts/2015/07/hbase-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2015/07/zookeeper-installation/" rel="bookmark"
-                           title="Permalink to zookeeper installation">zookeeper installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-07-13T13:50:00+08:00">
-                Published: 2015-07-13(一)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hbase.html">hbase</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info -->                <p>zookeeper安装</p>
-                <a class="readmore" href="/posts/2015/07/zookeeper-installation/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

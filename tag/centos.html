@@ -104,6 +104,22 @@ service mysqld start
 cat /root/.mysql_secret
 # 输入cat显示的密码
 mysqladmin -u root -h localhost password &#39;123456&#39; -p
+</pre></div>
+
+
+<h1>升级curl</h1>
+<p>vim /etc/yum.repos.d/city-fan.repo</p>
+<div class="highlight"><pre><span></span><span class="k">[CityFan]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">City Fan Repo</span>
+<span class="na">baseurl</span><span class="o">=</span><span class="s">http://www.city-fan.org/ftp/contrib/yum-repo/rhel$releasever/$basearch/</span>
+<span class="na">enabled</span><span class="o">=</span><span class="s">1</span>
+<span class="na">gpgcheck</span><span class="o">=</span><span class="s">0</span>
+</pre></div>
+
+
+<p>执行以下命令升级curl</p>
+<div class="highlight"><pre><span></span>yum install epel-release -y
+yum update curl.x86_64
 </pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">

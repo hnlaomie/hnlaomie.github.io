@@ -42,6 +42,18 @@
 <div class="highlight"><pre><span></span>sudo apt install libcurl4-gnutls-dev libghc-gnutls-dev
 pip install pyspider
 </pre></div>
+
+
+<h1>jupyter启动</h1>
+<div class="highlight"><pre><span></span># 生成配置文件
+jupyter notebook --generate-config
+
+# 在~/.jupyter/jupyter_notebook_config.py追加
+c.NotebookApp.ip = &#39;192.168.1.20&#39;
+
+# 启动
+jupyter notebook --no-browser
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
