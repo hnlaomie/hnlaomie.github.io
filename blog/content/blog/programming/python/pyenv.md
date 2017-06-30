@@ -29,10 +29,11 @@ exec $SHELL
 pyenv命令
 ```bash
 # 安装python
-pyenv install 3.5.0
+export PYTHON_CONFIGURE_OPTS="--enable-shared"
+pyenv install 3.5.3
 
 # 卸载python
-pyenv uninstall 3.5.0
+pyenv uninstall 3.5.3
 
 # 重安装python
 pyenv rebash
@@ -41,14 +42,41 @@ pyenv rebash
 pyenv versions
 
 # python指定版本
-pyenv local 3.5.0 system
+pyenv local 3.5.3 system
 ```
 
 在"~/tools/pyenv/version"设置python版本
 ```bash
-3.5.0
+3.5.3
 system
-2.7.10
+2.7.12
+```
+
+安装常用包
+```bash
+# pelican
+pip install pelican
+pip install ghp-import
+pip install Markdown
+
+# docker
+pip install docker-compose
+
+# neovim
+pip install neovim
+pip install jedi
+
+# data science
+pip install numpy
+pip install scipy
+pip install pandas
+pip install matplotlib
+pip install scikit-learn
+pip install ipython
+pip install jupyter
+
+pip install beautifulsoup4
+
 ```
 
 参考
