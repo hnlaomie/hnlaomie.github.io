@@ -22,7 +22,80 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2017/06/sqlite-tips/">sqlite tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2017/07/drawio-tips/">draw.io tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-07-26T15:30:00+08:00">
+                Published: 2017-07-26(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/drawio.html">draw.io</a> </p>
+</footer><!-- /.post-info --><h1>下载相关代码</h1>
+<p>从"https://github.com/fjudith/docker-draw.io"下载"Dockerfile"，并生成以下"docker-compose.yml"文件</p>
+<div class="highlight"><pre><span></span>version: &#39;3&#39;
+
+services:
+
+  host:
+    image: hnlaomie/draw.io
+    hostname: draw_host
+    networks:
+      dev-net:
+        ipv4_address: 172.19.0.10
+    ports:
+      - 8002:8080
+
+networks:
+  dev-net:
+    external: true
+</pre></div>
+
+
+<h1>安装，启动</h1>
+<div class="highlight"><pre><span></span>docker build -t hnlaomie/draw.io:latest ./
+docker-compose up
+</pre></div>
+
+
+<p>通过链接"http://localhost:8002/?offline=1&amp;https=0"打开"draw.io"</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2017/07/wordpress-tips/" rel="bookmark"
+                           title="Permalink to wordpress tips">wordpress tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-07-12T14:30:00+08:00">
+                Published: 2017-07-12(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/wordpress.html">wordpress</a> </p>
+</footer><!-- /.post-info -->                <p>wordpress技巧</p>
+                <a class="readmore" href="/posts/2017/07/wordpress-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2017/06/sqlite-tips/" rel="bookmark"
+                           title="Permalink to sqlite tips">sqlite tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-06-30T14:30:00+08:00">
                 Published: 2017-06-30(五)
@@ -33,54 +106,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
-</footer><!-- /.post-info --><h1>sqlite 数据类型</h1>
-<div class="highlight"><pre><span></span>INTEGER (INT, TINYINT, BIGINT)
-TEXT (VARCHAR, TEXT, CLOB)
-BLOB (BLOB)
-REAL (FLOAT, DOUBLE)
-NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
-</pre></div>
-
-
-<h1>常用操作</h1>
-<div class="highlight"><pre><span></span><span class="c1">-- upsert</span>
-<span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
-<span class="k">INSERT</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
-
-<span class="k">REPLACE</span> <span class="k">INTO</span>
-
-<span class="c1">-- rename table</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">foo</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">bar</span>
-
-<span class="c1">-- 查看表</span>
-<span class="p">.</span><span class="k">schema</span> <span class="n">tbl1</span>
-</pre></div>
-
-
-<h1>数据导入导出</h1>
-<p>控制台方式</p>
-<div class="highlight"><pre><span></span><span class="o">--</span> <span class="err">导出</span><span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">headers</span> <span class="n">on</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">mode</span> <span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">tbl1</span><span class="p">;</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">stdout</span>
-
-<span class="o">--</span> <span class="err">导入</span><span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">separator</span> <span class="err">“</span>\<span class="n">t</span><span class="err">”</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="kn">import</span> <span class="nn">imei.csv</span> <span class="nn">tac_info</span>
-</pre></div>
-
-
-<p>命令行方式</p>
-<div class="highlight"><pre><span></span>sqlite3 -header -csv /path/file.db &quot;select * from tbl1;&quot; &gt; data.csv
-sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>sqlite 常见问题的解决办法</p>
+                <a class="readmore" href="/posts/2017/06/sqlite-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -233,50 +262,6 @@ sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
 <p>tags: <a href="/tag/201607.html">201607</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
 </footer><!-- /.post-info -->                <p>hive使用指南</p>
                 <a class="readmore" href="/posts/2016/07/hive-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2016/01/cassandra-installation/" rel="bookmark"
-                           title="Permalink to cassandra installation">cassandra installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-01-11T10:50:00+08:00">
-                Published: 2016-01-11(一)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/cassandra.html">cassandra</a> </p>
-</footer><!-- /.post-info -->                <p>cassandra安装</p>
-                <a class="readmore" href="/posts/2016/01/cassandra-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2016/01/spark-tips/" rel="bookmark"
-                           title="Permalink to spark tips">spark tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-01-09T16:30:00+08:00">
-                Published: 2016-01-09(六)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/spark.html">spark</a> </p>
-</footer><!-- /.post-info -->                <p>spark使用指南</p>
-                <a class="readmore" href="/posts/2016/01/spark-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

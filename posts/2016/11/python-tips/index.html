@@ -54,6 +54,16 @@ c.NotebookApp.ip = &#39;192.168.1.20&#39;
 # 启动
 jupyter notebook --no-browser
 </pre></div>
+
+
+<h1>python调用父目录模块</h1>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">abspath</span> 
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))))</span>
+</pre></div>
+
+
+<p>或者将项目路径加到"$PYTHONPATH"</p>
     </div><!-- /.entry-content -->
 
   </article>

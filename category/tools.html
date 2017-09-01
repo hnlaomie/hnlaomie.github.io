@@ -22,7 +22,80 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/06/subversion-tips/">subversion tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2017/07/drawio-tips/">draw.io tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-07-26T15:30:00+08:00">
+                Published: 2017-07-26(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/drawio.html">draw.io</a> </p>
+</footer><!-- /.post-info --><h1>下载相关代码</h1>
+<p>从"https://github.com/fjudith/docker-draw.io"下载"Dockerfile"，并生成以下"docker-compose.yml"文件</p>
+<div class="highlight"><pre><span></span>version: &#39;3&#39;
+
+services:
+
+  host:
+    image: hnlaomie/draw.io
+    hostname: draw_host
+    networks:
+      dev-net:
+        ipv4_address: 172.19.0.10
+    ports:
+      - 8002:8080
+
+networks:
+  dev-net:
+    external: true
+</pre></div>
+
+
+<h1>安装，启动</h1>
+<div class="highlight"><pre><span></span>docker build -t hnlaomie/draw.io:latest ./
+docker-compose up
+</pre></div>
+
+
+<p>通过链接"http://localhost:8002/?offline=1&amp;https=0"打开"draw.io"</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2017/07/wordpress-tips/" rel="bookmark"
+                           title="Permalink to wordpress tips">wordpress tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-07-12T14:30:00+08:00">
+                Published: 2017-07-12(三)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/wordpress.html">wordpress</a> </p>
+</footer><!-- /.post-info -->                <p>wordpress技巧</p>
+                <a class="readmore" href="/posts/2017/07/wordpress-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/06/subversion-tips/" rel="bookmark"
+                           title="Permalink to subversion tips">subversion tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-06-19T14:30:00+08:00">
                 Published: 2015-06-19(五)
@@ -33,132 +106,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
-</footer><!-- /.post-info --><h1>检出</h1>
-<div class="highlight"><pre><span></span>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
-</pre></div>
-
-
-<h1>SVN回滚</h1>
-<div class="highlight"><pre><span></span># 正统方法一
-svn merge --dry-run -r73:68 http://my.repository.com/my/project/trunk
-svn merge -r73:68 http://my.repository.com/my/project/trunk
-svn commit -m &quot;Reverted to revision 68.&quot;
-
-# 正统方法二
-svn merge -c -{rev} http://svn.example.com/repos/calc/trunk
-svn commit -m &#39;undo&#39;
-
-# 直观方法
-svn cat -r {rev} filename &gt; filename
-</pre></div>
-
-
-<h1>导出</h1>
-<div class="highlight"><pre><span></span>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
-</pre></div>
-
-
-<h1>添加新文件</h1>
-<div class="highlight"><pre><span></span>svn add 文件名
-</pre></div>
-
-
-<h1>提交</h1>
-<div class="highlight"><pre><span></span>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
-</pre></div>
-
-
-<h1>更新文件</h1>
-<div class="highlight"><pre><span></span>svn update
-#将版本库中的文件 Test.java还原到修正版本
-svn update -r 200 Test.java
-</pre></div>
-
-
-<h1>删除文件</h1>
-<div class="highlight"><pre><span></span>svn delete 文件名
-</pre></div>
-
-
-<h1>加锁/解锁</h1>
-<div class="highlight"><pre><span></span>svn lock -m “加锁备注信息文本“ [--force] 文件名 
-svn unlock
-</pre></div>
-
-
-<h1>比较差异</h1>
-<div class="highlight"><pre><span></span>svn diff 文件名
-# 修正版本号200和修正版本号201比较差异
-svn diff -r 200:201 Test.java
-</pre></div>
-
-
-<h1>查看文件或者目录状态</h1>
-<div class="highlight"><pre><span></span># ?：不在svn的控制中；M：内容被修改；C：发生冲突
-svn status [-v] [目录/文件]
-</pre></div>
-
-
-<h1>查看日志</h1>
-<div class="highlight"><pre><span></span>svn log 文件名
-</pre></div>
-
-
-<h1>查看文件详细信息</h1>
-<div class="highlight"><pre><span></span>svn info 文件名
-</pre></div>
-
-
-<h1>查看版本库下的文件和目录列表</h1>
-<div class="highlight"><pre><span></span>svn list svn:// 路径(目录或文件的全路径)
-</pre></div>
-
-
-<h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre><span></span>svn mkdir 目录名
-</pre></div>
-
-
-<h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre><span></span>svn mkdir 目录名
-svn add --non-recursive 目录名
-</pre></div>
-
-
-<h1>恢复本地修改</h1>
-<div class="highlight"><pre><span></span>svn revert [--recursive] 文件名
-</pre></div>
-
-
-<h1>解决冲突</h1>
-<div class="highlight"><pre><span></span>svn resolved [本地目录全路径]
-</pre></div>
-
-
-<h1>不checkout而查看输出特定文件或URL的内容</h1>
-<div class="highlight"><pre><span></span>svn cat http://文件全路径
-</pre></div>
-
-
-<h1>忽略文件</h1>
-<div class="highlight"><pre><span></span>svn propedit svn:ignore .
-</pre></div>
-
-
-<h1>查看删除的文件</h1>
-<div class="highlight"><pre><span></span>svn log -r2080:HEAD -v | grep &quot;^   D&quot;
-svn log -v . | awk &#39;/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION&quot;: &quot;$0; }&#39;
-</pre></div>
-
-
-<h1>签出指定时间之前的版本</h1>
-<div class="highlight"><pre><span></span>svn checkout --revision {2016-02-23} http://文件全路径
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>subversion技巧</p>
+                <a class="readmore" href="/posts/2015/06/subversion-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -311,50 +262,6 @@ svn log -v . | awk &#39;/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION&qu
 <p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/terminator.html">terminator</a> </p>
 </footer><!-- /.post-info -->                <p>terminator安装</p>
                 <a class="readmore" href="/posts/2014/11/terminator-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/11/utuntu-installation/" rel="bookmark"
-                           title="Permalink to utuntu installation">utuntu installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-23T22:30:00+08:00">
-                Published: 2014-11-23(日)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/java.html">java</a> </p>
-</footer><!-- /.post-info -->                <p>ubuntu安装</p>
-                <a class="readmore" href="/posts/2014/11/utuntu-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/11/docker-introduction/" rel="bookmark"
-                           title="Permalink to docker introduction">docker introduction</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-21T14:30:00+08:00">
-                Published: 2014-11-21(五)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/docker.html">docker</a> </p>
-</footer><!-- /.post-info -->                <p>docker的使用</p>
-                <a class="readmore" href="/posts/2014/11/docker-introduction/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
