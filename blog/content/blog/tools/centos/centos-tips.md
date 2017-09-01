@@ -98,3 +98,16 @@ gpgcheck=0
 yum install epel-release -y
 yum update curl.x86_64
 ```
+
+升级gcc
+======================
+```
+wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+yum install devtoolset-2-gcc devtoolset-2-binutils
+yum install devtoolset-2-gcc-gfortran
+yum install devtoolset-2-gcc-c++
+
+export CC=/opt/rh/devtoolset-2/root/usr/bin/gcc
+export CPP=/opt/rh/devtoolset-2/root/usr/bin/cpp
+export CXX=/opt/rh/devtoolset-2/root/usr/bin/c++
+```

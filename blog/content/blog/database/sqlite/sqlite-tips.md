@@ -44,7 +44,7 @@ sqlite> select * from tbl1;
 sqlite> .output stdout
 
 -- 导入csv
-sqlite> .separator “\t”
+sqlite> .separator ,
 sqlite> .import imei.csv tac_info
 
 ```

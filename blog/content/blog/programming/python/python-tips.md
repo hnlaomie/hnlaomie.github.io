@@ -24,3 +24,12 @@ c.NotebookApp.ip = '192.168.1.20'
 # 启动
 jupyter notebook --no-browser
 ```
+
+python调用父目录模块
+========================
+```
+import sys
+from os.path import dirname, abspath 
+sys.path.append(dirname(dirname(abspath(__file__))))
+```
+或者将项目路径加到"$PYTHONPATH"

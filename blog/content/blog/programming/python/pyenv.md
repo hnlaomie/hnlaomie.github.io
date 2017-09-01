@@ -79,6 +79,14 @@ pip install beautifulsoup4
 
 ```
 
+使用国内mirrors
+=====================
+在"~/.pip/pip.conf"增加mirror
+```
+[global]
+index-url = https://pypi.doubanio.com/simple
+```
+
 参考
 ==================
 * <https://github.com/yyuu/pyenv>
