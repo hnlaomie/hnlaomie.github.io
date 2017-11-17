@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>wordpress tips</title>
+        <title>r reference</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -15,37 +15,46 @@
                 <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
                     <li><a href="/category/database.html">database</a></li>
-                    <li><a href="/category/programming.html">programming</a></li>
-                    <li class="active"><a href="/category/tools.html">tools</a></li>
+                    <li class="active"><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/posts/2017/07/wordpress-tips/" rel="bookmark"
-           title="Permalink to wordpress tips">wordpress tips</a></h1>
+        <a href="/posts/2017/11/r-reference/" rel="bookmark"
+           title="Permalink to r reference">r reference</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2017-07-12T14:30:00+08:00">
-                Published: 2017-07-12(三)
+        <abbr class="published" title="2017-11-12T06:30:00+08:00">
+                Published: 2017-11-12(日)
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/laomie.html">laomie</a>
         </address>
-<p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/wordpress.html">wordpress</a> </p>
-</footer><!-- /.post-info -->      <h1>google字体加载慢</h1>
-<p>查找出google字体加载代码，修改加载链接</p>
-<div class="highlight"><pre><span></span>grep -rnw &#39;wp_html&#39; -e &#39;googleapis&#39;
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201711.html">201711</a> <a href="/tag/r.html">r</a> </p>
+</footer><!-- /.post-info -->      <h1>r的安装</h1>
+<div class="highlight"><pre><span></span>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 
-# 替换找到的链接
-https://fonts.googleapis.com -&gt; https://fonts.cat.net
-https://ajax.googleapis.com -&gt; https://ajax.cat.net
+<span class="c1"># 在/etc/apt/sources.list.d/cran.list文件增加以下内容</span>
+deb https://mirrors.tuna.tsinghua.edu.cn/CRAN/bin/linux/ubuntu xenial/
+
+sudo apt update 
+sudo apt install r-base r-base-dev
 </pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="https://cran.r-project.org/bin/linux/ubuntu/">https://cran.r-project.org/bin/linux/ubuntu/</a></li>
+<li><a href="https://cran.r-project.org/mirrors.html">https://cran.r-project.org/mirrors.html</a></li>
+<li><a href="http://sites.psu.edu/theubunturblog/installing-r-in-ubuntu/">http://sites.psu.edu/theubunturblog/installing-r-in-ubuntu/</a></li>
+</ul>
     </div><!-- /.entry-content -->
 
   </article>

@@ -22,7 +22,53 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2017/07/drawio-tips/">draw.io tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2017/09/tex-tips/">tex tips</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-09-21T22:30:00+08:00">
+                Published: 2017-09-21(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201709.html">201709</a> <a href="/tag/tex.html">tex</a> </p>
+</footer><!-- /.post-info --><h1>texlive安装</h1>
+<p>将texlive装到"/usr/local/data/tools"目录</p>
+<div class="highlight"><pre><span></span># 下载安装
+wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive.iso 
+sudo apt install libdigest-perl-md5-perl perl-tk
+sudo mount -o loop texlive.iso /mnt
+/mnt/install-tl --gui
+sudo umount /mnt
+
+# 设置环境变量
+export TeXLiveMANPATH=/urs/local/data/tools/texlive/2017/texmf-dist/doc/man
+export TeXLiveINFOPATH=/usr/local/data/tools/texlive/2017/texmf-dist/doc/info
+export TeXLivePATH=/usr/local/data/tools/texlive/2017/bin/x86_64-linux
+export PATH=$PATH:$TeXLivePATH
+
+# 更新字体
+sudo fc-cache -fsv
+</pre></div>
+
+
+<h1>参考</h1>
+<p><a href="http://www.latexstudio.net/archives/9788">Ubuntu 安装新版本TeXLive并更新</a>
+<a href="http://user.ecc.u-tokyo.ac.jp/users/user-15826/wiki/?TeX/Install">TeXシステムのインストール</a></p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2017/07/drawio-tips/" rel="bookmark"
+                           title="Permalink to draw.io tips">draw.io tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-07-26T15:30:00+08:00">
                 Published: 2017-07-26(三)
@@ -33,39 +79,10 @@
         </address>
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/drawio.html">draw.io</a> </p>
-</footer><!-- /.post-info --><h1>下载相关代码</h1>
-<p>从"https://github.com/fjudith/docker-draw.io"下载"Dockerfile"，并生成以下"docker-compose.yml"文件</p>
-<div class="highlight"><pre><span></span>version: &#39;3&#39;
-
-services:
-
-  host:
-    image: hnlaomie/draw.io
-    hostname: draw_host
-    networks:
-      dev-net:
-        ipv4_address: 172.19.0.10
-    ports:
-      - 8002:8080
-
-networks:
-  dev-net:
-    external: true
-</pre></div>
-
-
-<h1>安装，启动</h1>
-<div class="highlight"><pre><span></span>docker build -t hnlaomie/draw.io:latest ./
-docker-compose up
-</pre></div>
-
-
-<p>通过链接"http://localhost:8002/?offline=1&amp;https=0"打开"draw.io"</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>draw.io技巧</p>
+                <a class="readmore" href="/posts/2017/07/drawio-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -240,28 +257,6 @@ docker-compose up
 <p>tags: <a href="/tag/201412.html">201412</a> <a href="/tag/shell.html">shell</a> </p>
 </footer><!-- /.post-info -->                <p>shell tips</p>
                 <a class="readmore" href="/posts/2014/12/shell-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2014/11/terminator-installation/" rel="bookmark"
-                           title="Permalink to terminator installation">terminator installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-26T23:10:00+08:00">
-                Published: 2014-11-26(三)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201411.html">201411</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/terminator.html">terminator</a> </p>
-</footer><!-- /.post-info -->                <p>terminator安装</p>
-                <a class="readmore" href="/posts/2014/11/terminator-installation/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

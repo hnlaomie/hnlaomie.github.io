@@ -44,15 +44,24 @@ pip install pyspider
 </pre></div>
 
 
-<h1>jupyter启动</h1>
+<h1>jupyter安装</h1>
+<p>安装python时，需要先安装sqlite相关包</p>
+<div class="highlight"><pre><span></span>apt install libsqlite3-dev
+</pre></div>
+
+
+<p>jupyter相关配置</p>
 <div class="highlight"><pre><span></span># 生成配置文件
 jupyter notebook --generate-config
 
 # 在~/.jupyter/jupyter_notebook_config.py追加
-c.NotebookApp.ip = &#39;192.168.1.20&#39;
+c.NotebookApp.ip = &#39;*&#39;
+c.NotebookApp.notebook_dir = &#39;/data/jupyter/notebook&#39;
+c.NotebookApp.open_browser = False
+c.NotebookApp.port = 10002
 
 # 启动
-jupyter notebook --no-browser
+jupyter notebook
 </pre></div>
 
 

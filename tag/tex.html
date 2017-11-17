@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>wordpress tips</title>
+        <title>laomie's blog - tex</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -16,40 +16,47 @@
                 <nav><ul>
                     <li><a href="/category/database.html">database</a></li>
                     <li><a href="/category/programming.html">programming</a></li>
-                    <li class="active"><a href="/category/tools.html">tools</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="/posts/2017/07/wordpress-tips/" rel="bookmark"
-           title="Permalink to wordpress tips">wordpress tips</a></h1>
-    </header>
 
-    <div class="entry-content">
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2017/09/tex-tips/">tex tips</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2017-07-12T14:30:00+08:00">
-                Published: 2017-07-12(三)
+        <abbr class="published" title="2017-09-21T22:30:00+08:00">
+                Published: 2017-09-21(四)
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/laomie.html">laomie</a>
         </address>
 <p>In <a href="/category/tools.html">tools</a>.</p>
-<p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/wordpress.html">wordpress</a> </p>
-</footer><!-- /.post-info -->      <h1>google字体加载慢</h1>
-<p>查找出google字体加载代码，修改加载链接</p>
-<div class="highlight"><pre><span></span>grep -rnw &#39;wp_html&#39; -e &#39;googleapis&#39;
+<p>tags: <a href="/tag/201709.html">201709</a> <a href="/tag/tex.html">tex</a> </p>
+</footer><!-- /.post-info --><h1>texlive安装</h1>
+<p>将texlive装到"/usr/local/data/tools"目录</p>
+<div class="highlight"><pre><span></span># 下载安装
+wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive.iso 
+sudo apt install libdigest-perl-md5-perl perl-tk
+sudo mount -o loop texlive.iso /mnt
+/mnt/install-tl --gui
+sudo umount /mnt
 
-# 替换找到的链接
-https://fonts.googleapis.com -&gt; https://fonts.cat.net
-https://ajax.googleapis.com -&gt; https://ajax.cat.net
+# 设置环境变量
+export TeXLiveMANPATH=/urs/local/data/tools/texlive/2017/texmf-dist/doc/man
+export TeXLiveINFOPATH=/usr/local/data/tools/texlive/2017/texmf-dist/doc/info
+export TeXLivePATH=/usr/local/data/tools/texlive/2017/bin/x86_64-linux
+export PATH=$PATH:$TeXLivePATH
+
+# 更新字体
+sudo fc-cache -fsv
 </pre></div>
-    </div><!-- /.entry-content -->
 
-  </article>
-</section>
+
+<h1>参考</h1>
+<p><a href="http://www.latexstudio.net/archives/9788">Ubuntu 安装新版本TeXLive并更新</a>
+<a href="http://user.ecc.u-tokyo.ac.jp/users/user-15826/wiki/?TeX/Install">TeXシステムのインストール</a></p>                </article>
+            </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

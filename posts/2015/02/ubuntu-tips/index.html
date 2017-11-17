@@ -157,6 +157,26 @@ make
 sudo checkinstall
 sudo dpkg -r emacs-25
 </pre></div>
+
+
+<h1>查看磁盘uuid</h1>
+<div class="highlight"><pre><span></span>sudo blkid
+# ls -al /dev/disk/by-uuid
+</pre></div>
+
+
+<h1>增加sudo权限用户</h1>
+<div class="highlight"><pre><span></span>adduser laomie
+usermod -aG sudo laomie
+# su - root
+</pre></div>
+
+
+<h1>使用ufw</h1>
+<div class="highlight"><pre><span></span>ufw default deny 
+ufw allow 22
+ufw enable
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
