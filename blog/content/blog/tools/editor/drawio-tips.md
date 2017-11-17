@@ -33,4 +33,4 @@ networks:
 docker build -t hnlaomie/draw.io:latest ./
 docker-compose up
 ```
-通过链接"http://localhost:8002/?offline=1&https=0"打开"draw.io"
+通过链接"http://localhost:8002/draw/?offline=1&https=0"打开"draw.io"

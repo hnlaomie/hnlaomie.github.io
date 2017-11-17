@@ -12,5 +12,6 @@ google字体加载慢
 grep -rnw 'wp_html' -e 'googleapis'
 
 # 替换找到的链接
-https://fonts.googleapis.com -> https://fonts.proxy.ustclug.org
+https://fonts.googleapis.com -> https://fonts.cat.net
+https://ajax.googleapis.com -> https://ajax.cat.net
 ```
