@@ -54,3 +54,13 @@ sqlite3 -header -csv /path/file.db "select * from tbl1;" > data.csv
 sqlite3 -header -csv /path/file.db < query.sql > data.csv
 ```
 
+数据转化
+============================
+```
+-- time format 
+datetime('now', 'localtime')
+-- format now strftime('%Y-%m-%d %H:%M:%S', ...)
+cast(strftime('%Y%m%d','now') as integer);
+cast(strftime('%H','now') as integer);
+```
+

@@ -54,3 +54,21 @@ echo 1 > /data/hadoop/zookeeper/myid
 ```
 注：分别在各结点上安装，node1为２，node2为３
 
+软件升级
+=========================
+分别在follower, leader上停服务并更新
+```
+zkServer.sh stop
+./zk-upgrade.sh
+zkServer.sh start
+```
+zk-upgrade.sh代码如下
+```
+zk_old_ver=3.4.10
+zk_new_ver=3.4.11
+tar -zxvf zookeeper-${zk_new_ver}.tar.gz
+mv zookeeper zookeeper-${zk_old_ver}
+mv zookeeper-${zk_new_ver} zookeeper
+cp zookeeper-${zk_old_ver}/conf/zoo.cfg zookeeper/conf/
+cp zookeeper-${zk_old_ver}/conf/zookeeper-env.sh zookeeper/conf/
+```

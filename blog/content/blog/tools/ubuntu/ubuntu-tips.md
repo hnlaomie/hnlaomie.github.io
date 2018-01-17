@@ -157,3 +157,18 @@ ufw default deny
 ufw allow 22
 ufw enable
 ```
+
+修改locale
+=========================
+```
+# vim /etc/default/locale
+LANG="zh_CN.UTF-8"
+LANGUAGE="zh_CN:zh:en_US:en"
+
+# vim /var/lib/locales/supported.d/zh-hans
+zh_CN.UTF-8 UTF-8
+zh_SG.UTF-8 UTF-8
+
+# run command
+sudo locale-gen
+```

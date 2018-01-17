@@ -73,6 +73,9 @@ delete.topic.enable=true
 用以下命令删除内容
 ```bash
 bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic test
+# 从zookeeper删除
+bin/zkCli.sh # and delete the topics using 
+rmr /brokers/topics/<<topic>> and rmr /admin/delete_topics/<<topic>>
 ```
 
 参考

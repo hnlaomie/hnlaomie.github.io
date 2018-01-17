@@ -61,6 +61,14 @@ chrome使用
 ====================
 
 
+其它说明
+====================
+ubuntu下报如下错误"phantomjs unexpectedly exited. Status code was: 127"，需安装以下依赖包
+```
+sudo apt install libfontconfig
+```
+
+
 参考
 ==================
 * <http://cuiqingcai.com/2599.html>
