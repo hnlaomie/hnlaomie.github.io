@@ -46,6 +46,41 @@
 https://fonts.googleapis.com -&gt; https://fonts.cat.net
 https://ajax.googleapis.com -&gt; https://ajax.cat.net
 </pre></div>
+
+
+<h1>twenty seventeen theme</h1>
+<p>参考<a href="https://wordpress.org/support/topic/changing-default-content-width-in-twenty-seventeen/">Changing default content width in Twenty Seventeen</a>，用以下css修改theme的宽</p>
+<div class="highlight"><pre><span></span><span class="na">.wrap</span> <span class="err">{</span>
+<span class="nl">max-width:</span> <span class="err">80%</span><span class="c">;</span>
+<span class="err">}</span>
+
+<span class="err">@</span><span class="nf">media</span> <span class="no">screen</span> <span class="no">and</span> <span class="p">(</span><span class="no">min-width</span><span class="p">:</span> <span class="mi">48</span><span class="no">em</span><span class="p">)</span> <span class="err">{</span>
+<span class="na">.wrap</span> <span class="err">{</span>
+<span class="nl">max-width:</span> <span class="err">80%</span><span class="c">;</span>
+<span class="err">}</span>
+<span class="err">}</span>
+
+<span class="nl">.page.page-one-column:</span><span class="nf">not</span><span class="p">(.</span><span class="no">twentyseventeen-front-page</span><span class="p">)</span> <span class="c">#primary {</span>
+<span class="no">max-width</span><span class="p">:</span> <span class="mi">80</span><span class="err">%</span><span class="c">;</span>
+<span class="err">}</span>
+
+<span class="err">@</span><span class="nf">media</span> <span class="no">screen</span> <span class="no">and</span> <span class="p">(</span><span class="no">min-width</span><span class="p">:</span> <span class="mi">30</span><span class="no">em</span><span class="p">)</span> <span class="err">{</span>
+<span class="na">.page-one-column</span> <span class="no">.panel-content</span> <span class="no">.wrap</span>
+<span class="err">{</span>
+<span class="nl">max-width:</span> <span class="err">80%</span><span class="c">;</span>
+<span class="err">}</span>
+<span class="err">}</span>
+
+<span class="na">.has-sidebar</span> <span class="c">#secondary {</span>
+<span class="no">width</span><span class="p">:</span> <span class="mi">26</span><span class="err">%</span> <span class="p">!</span><span class="no">important</span><span class="c">;</span>
+<span class="err">}</span>
+
+<span class="na">.site-info</span> <span class="err">{</span> <span class="no">display</span><span class="p">:</span> <span class="no">none</span><span class="c">; }</span>
+</pre></div>
+
+
+<h1>wordpress插件</h1>
+<p>1. codecolorer </p>
     </div><!-- /.entry-content -->
 
   </article>

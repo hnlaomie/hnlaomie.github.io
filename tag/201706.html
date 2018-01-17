@@ -75,6 +75,15 @@ NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
 <p>命令行方式</p>
 <div class="highlight"><pre><span></span>sqlite3 -header -csv /path/file.db &quot;select * from tbl1;&quot; &gt; data.csv
 sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
+</pre></div>
+
+
+<h1>数据转化</h1>
+<div class="highlight"><pre><span></span>-- time format 
+datetime(&#39;now&#39;, &#39;localtime&#39;)
+-- format now strftime(&#39;%Y-%m-%d %H:%M:%S&#39;, ...)
+cast(strftime(&#39;%Y%m%d&#39;,&#39;now&#39;) as integer);
+cast(strftime(&#39;%H&#39;,&#39;now&#39;) as integer);
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">

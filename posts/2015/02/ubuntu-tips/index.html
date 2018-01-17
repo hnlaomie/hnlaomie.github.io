@@ -177,6 +177,20 @@ usermod -aG sudo laomie
 ufw allow 22
 ufw enable
 </pre></div>
+
+
+<h1>修改locale</h1>
+<div class="highlight"><pre><span></span># vim /etc/default/locale
+LANG=&quot;zh_CN.UTF-8&quot;
+LANGUAGE=&quot;zh_CN:zh:en_US:en&quot;
+
+# vim /var/lib/locales/supported.d/zh-hans
+zh_CN.UTF-8 UTF-8
+zh_SG.UTF-8 UTF-8
+
+# run command
+sudo locale-gen
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
