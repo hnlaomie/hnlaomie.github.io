@@ -78,6 +78,26 @@ bin/zkCli.sh # and delete the topics using
 rmr /brokers/topics/<<topic>> and rmr /admin/delete_topics/<<topic>>
 ```
 
+跨集群复制
+=======================
+低版本集群数据复制到高版本集群，低版本应用能读写高版本集群，反之不行
+
+消费低版本集群的配置"consumer.properties"
+```
+zookeeper.connect=node3:2181,node6:2181,node7:2181
+group.id=onlineKafka
+auto.offset.reset=smallest
+partition.assignment.strategy=roundrobin
+```
+往高版本集群产生数据的配置"producer.properties"
+```
+bootstrap.servers=192.168.11.81:9092,192.168.11.82:9092,192.168.11.83:9092
+```
+复制主题内容的命令
+```
+$KAFKA_HOME/bin/kafka-mirror-maker.sh --consumer.config consumer.properties --producer.config producer.properties --num.streams=2 --whitelist "test"
+```
+
 参考
 ===============================
 * <http://blog.jobbole.com/99195/>

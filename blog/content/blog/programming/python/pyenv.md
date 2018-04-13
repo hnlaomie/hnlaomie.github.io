@@ -16,6 +16,7 @@ git clone https://github.com/yyuu/pyenv.git ~/tools/pyenv
 
 在".bashrc"或".bash_profile"设置环境变量
 ```bash
+apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
 export PYENV_ROOT="$HOME/tools/pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -86,6 +87,24 @@ pip install beautifulsoup4
 [global]
 index-url = https://pypi.doubanio.com/simple
 ```
+常见国内镜像源 
+* <http://pypi.douban.com/simple/> 豆瓣 
+* <http://mirrors.aliyun.com/pypi/simple/> 阿里 
+* <http://pypi.hustunique.com/simple/> 华中理工大学 
+* <http://pypi.sdutlinux.org/simple/> 山东理工大学 
+* <http://pypi.mirrors.ustc.edu.cn/simple/> 中国科学技术大学 
+
+python本地镜像安装
+==========================
+下载"Python-3.6.5.tgz"到本地目录，到目录下如下操作
+<code>
+# 启动http服务
+python3 -m http.server
+# 设置本地镜像
+export PYTHON_BUILD_MIRROR_URL="http://127.0.0.1:8000/"
+# pyenv安装python时找不到本地文件，需要将"Python-3.6.5.tgz"重命名为"http.server"输出的请求64位字符
+pyenv install 3.6.5
+</code>
 
 参考
 ==================

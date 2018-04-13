@@ -94,3 +94,20 @@ hdfs dfsadmin -finalizeUpgrade
 ```
 grep "^processor" /proc/cpuinfo | wc -l
 ```
+
+datanode增加磁盘
+======================
+修改"hdfs-site.xml"
+```
+<property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/data/hadoop/dfs/data,/data1/hadoop/dfs/data</value>
+</property>
+```
+用以下命令重启datanode
+```bash
+yarn-daemon.sh stop nodemanager
+hadoop-daemon.sh stop datanode
+hadoop-daemon.sh start datanode
+yarn-daemon.sh start nodemanager
+```

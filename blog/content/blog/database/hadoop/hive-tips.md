@@ -110,3 +110,26 @@ Hive在spark2.1启动时无法访问../lib/spark-assembly-*.jar
 ```
 sparkAssemblyPath=`ls ${SPARK_HOME}/jars/spark-*.jar`
 ```
+
+Hive连接远程metastore
+=================
+node2结点编辑$HIVE_HOME/conf/hive-site.xml
+```
+    <property>
+       <name>hive.metastore.uris</name>
+       <value>thrift://node1:9083</value>
+    </property>
+```
+node1结点启动服务
+```
+hive --service metastore
+```
+
+hive删除空分区
+===================
+需要将分区列转为字符型才能删除
+```
+ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour STRING);
+ALTER TABLE ssp_log_data DROP PARTITION (log_hour='__HIVE_DEFAULT_PARTITION__');
+ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour INT);
+```

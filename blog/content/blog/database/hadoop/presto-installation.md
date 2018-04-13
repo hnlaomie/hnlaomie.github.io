@@ -77,6 +77,18 @@ $PRESTO_HOME/bin/presto --server localhost:8090 --catalog cassandra --schema dmp
 start_rpc: true
 ```
 
+连接远程hive
+===========================
+远程hive(192.168.11.61)启动metastore服务
+```
+hive --service metastore
+```
+在presto的catalog目录放连接文件hive_online.properties
+```
+connector.name=hive-hadoop2
+hive.metastore.uri=thrift://192.168.11.61:9083
+```
+
 参考
 ===============================
 * <https://prestodb.io/docs/current/>

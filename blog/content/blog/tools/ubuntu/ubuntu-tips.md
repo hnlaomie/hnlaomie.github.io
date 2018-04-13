@@ -172,3 +172,13 @@ zh_SG.UTF-8 UTF-8
 # run command
 sudo locale-gen
 ```
+
+安装代理
+===========================
+```
+sudo apt install miredo
+# 启动后重启服务
+sudo service miredo restart
+# firefox导入证书
+高级,证书,查看证书,证书机构,导入
+```
