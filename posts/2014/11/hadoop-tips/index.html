@@ -124,6 +124,23 @@ cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup
 <h1>查看逻辑cpu个数</h1>
 <div class="highlight"><pre><span></span>grep &quot;^processor&quot; /proc/cpuinfo | wc -l
 </pre></div>
+
+
+<h1>datanode增加磁盘</h1>
+<p>修改"hdfs-site.xml"</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.datanode.data.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/data/hadoop/dfs/data,/data1/hadoop/dfs/data<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<p>用以下命令重启datanode</p>
+<div class="highlight"><pre><span></span>yarn-daemon.sh stop nodemanager
+hadoop-daemon.sh stop datanode
+hadoop-daemon.sh start datanode
+yarn-daemon.sh start nodemanager
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

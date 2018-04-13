@@ -102,6 +102,26 @@ rmr /brokers/topics/<span class="s">&lt;&lt;topic&gt;&gt; and rmr /admin/delete_
 </pre></div>
 
 
+<h1>跨集群复制</h1>
+<p>低版本集群数据复制到高版本集群，低版本应用能读写高版本集群，反之不行</p>
+<p>消费低版本集群的配置"consumer.properties"</p>
+<div class="highlight"><pre><span></span>zookeeper.connect=node3:2181,node6:2181,node7:2181
+group.id=onlineKafka
+auto.offset.reset=smallest
+partition.assignment.strategy=roundrobin
+</pre></div>
+
+
+<p>往高版本集群产生数据的配置"producer.properties"</p>
+<div class="highlight"><pre><span></span>bootstrap.servers=192.168.11.81:9092,192.168.11.82:9092,192.168.11.83:9092
+</pre></div>
+
+
+<p>复制主题内容的命令</p>
+<div class="highlight"><pre><span></span>$KAFKA_HOME/bin/kafka-mirror-maker.sh --consumer.config consumer.properties --producer.config producer.properties --num.streams=2 --whitelist &quot;test&quot;
+</pre></div>
+
+
 <h1>参考</h1>
 <ul>
 <li><a href="http://blog.jobbole.com/99195/">http://blog.jobbole.com/99195/</a></li>

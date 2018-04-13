@@ -130,6 +130,28 @@ MSCK REPAIR TABLE &lt;tablename&gt;;
 <p>编辑$HIVE_HOME/bin/hive</p>
 <div class="highlight"><pre><span></span>sparkAssemblyPath=`ls <span class="cp">${</span><span class="n">SPARK_HOME</span><span class="cp">}</span>/jars/spark-*.jar`
 </pre></div>
+
+
+<h1>Hive连接远程metastore</h1>
+<p>node2结点编辑$HIVE_HOME/conf/hive-site.xml</p>
+<div class="highlight"><pre><span></span>    <span class="nt">&lt;property&gt;</span>
+       <span class="nt">&lt;name&gt;</span>hive.metastore.uris<span class="nt">&lt;/name&gt;</span>
+       <span class="nt">&lt;value&gt;</span>thrift://node1:9083<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<p>node1结点启动服务</p>
+<div class="highlight"><pre><span></span>hive --service metastore
+</pre></div>
+
+
+<h1>hive删除空分区</h1>
+<p>需要将分区列转为字符型才能删除</p>
+<div class="highlight"><pre><span></span>ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour STRING);
+ALTER TABLE ssp_log_data DROP PARTITION (log_hour=&#39;__HIVE_DEFAULT_PARTITION__&#39;);
+ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour INT);
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

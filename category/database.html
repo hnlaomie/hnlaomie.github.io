@@ -22,7 +22,151 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2017/06/sqlite-tips/">sqlite tips</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2018/04/redis-installation/">redis installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-04-13T14:30:00+08:00">
+                Published: 2018-04-13(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/redis.html">redis</a> </p>
+</footer><!-- /.post-info --><h1>安装redis</h1>
+<p>下载并编译redis，编译完成后会在src目录下生成Redis服务端程序redis-server和客户端程序redis-cli</p>
+<div class="highlight"><pre><span></span>wget http://download.redis.io/releases/redis-4.0.9.tar.gz
+tar zxvf redis-4.0.9.tar.gz
+cd redis-4.0.9
+make
+</pre></div>
+
+
+<h1>安装ruby</h1>
+<p>通过"rbenv"安装ruby和相关依赖包</p>
+<div class="highlight"><pre><span></span>gem install redis
+</pre></div>
+
+
+<h1>设置redis和ruby</h1>
+<p>将ruby和redis加入系统路径</p>
+<div class="highlight"><pre><span></span># rbenv
+export RBENV_ROOT=&quot;/data/apache/tools/rbenv&quot;
+export PATH=&quot;$RBENV_ROOT/bin:$RBENV_ROOT/plugins/ruby-build/bin:$PATH&quot;
+eval &quot;$(rbenv init -)&quot;
+
+# redis
+export REDIS_HOME=&quot;/data/apache/tools/redis-4.0.9/src&quot;
+export PATH=&quot;$REDIS_HOME:$PATH&quot;
+</pre></div>
+
+
+<h1>集群说明</h1>
+<p>在"192.168.11.61"和"192.168.11.62"两台机的三个端口"6386,6387,6388"启动redis</p>
+<h1>redis配置</h1>
+<p>在集群机器建不同端口的redis配置文件</p>
+<div class="highlight"><pre><span></span>mkdir -p /data/hadoop/redis/config/6386
+mkdir -p /data/hadoop/redis/config/6387
+mkdir -p /data/hadoop/redis/config/6388
+</pre></div>
+
+
+<p>配置文件"redis-6386.conf"内容如下</p>
+<div class="highlight"><pre><span></span># redis后台运行
+daemonize yes
+
+port 6386
+pidfile  /var/run/redis_6386.pid
+
+# 开启集群
+cluster-enabled yes
+# 集群的配置文件首次启动自动生成
+cluster-config-file nodes-6386.conf
+# 请求超时，默认15秒
+cluster-node-timeout 15000
+
+# aof日志开启  有需要就开启，它会每次写操作都记录一条日志
+appendonly yes
+# 可以指定日志的目录
+logfile &quot;/data/hadoop/redis/data/6386/redis-6386.log&quot;
+
+# 关闭保护模式
+protected-mode no
+</pre></div>
+
+
+<h1>redis启动</h1>
+<p>到每个配置文件目录下启动redis</p>
+<div class="highlight"><pre><span></span>cd /data/hadoop/redis/config/6386
+redis-server redis-6386.conf
+</pre></div>
+
+
+<h1>redis集群启动，利用redis-trib创建cluster的操作，只需要一次即可，假设系统关机，把所有6个节点全关闭后，下次重启后，即自动进入cluster模式，不用再次redis-trib.rb create。</h1>
+<div class="highlight"><pre><span></span>redis-trib.rb create --replicas 1 192.168.11.61:6386 192.168.11.61:6387 192.168.11.61:6388 192.168.11.62:6386 192.168.11.62:6387 192.168.11.62:6388
+</pre></div>
+
+
+<h1>redis验证</h1>
+<p>查看进程，端口，集群</p>
+<div class="highlight"><pre><span></span>ps aux | grep redis
+ps -ef | grep 6386
+redis-trib.rb check 192.168.11.61:6386
+</pre></div>
+
+
+<h1>集群扩容，删除</h1>
+<div class="highlight"><pre><span></span># 增加主节点
+redis-trib.rb add-node [host]:[port]
+# 为新增主节点分配slots
+redis-trib.rb reshard [host]:[port]
+# 增加从节点
+redis-trib.rb add-node --slave --master-id $[nodeid] 192.168.210.128:7007 192.168.210.128:7000
+# 删除节点
+redis-trib.rb reshard 192.168.210.128:7002
+edis-trib del-node 192.168.210.128:7002  <span class="cp">${</span><span class="n">node</span><span class="o">-</span><span class="nb">id</span><span class="cp">}</span>
+</pre></div>
+
+
+<h1>参考</h1>
+<p>http://www.cnblogs.com/wlandwl/p/rediscluster.html
+http://blog.csdn.net/huwh_/article/details/79242625
+https://redis.io/topics/cluster-tutorial</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2018/04/redis-tips/" rel="bookmark"
+                           title="Permalink to redis tips">redis tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-04-12T14:30:00+08:00">
+                Published: 2018-04-12(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/redis.html">redis</a> </p>
+</footer><!-- /.post-info -->                <p>redis 常见问题的解决办法</p>
+                <a class="readmore" href="/posts/2018/04/redis-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2017/06/sqlite-tips/" rel="bookmark"
+                           title="Permalink to sqlite tips">sqlite tips</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-06-30T14:30:00+08:00">
                 Published: 2017-06-30(五)
@@ -33,63 +177,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
-</footer><!-- /.post-info --><h1>sqlite 数据类型</h1>
-<div class="highlight"><pre><span></span>INTEGER (INT, TINYINT, BIGINT)
-TEXT (VARCHAR, TEXT, CLOB)
-BLOB (BLOB)
-REAL (FLOAT, DOUBLE)
-NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
-</pre></div>
-
-
-<h1>常用操作</h1>
-<div class="highlight"><pre><span></span><span class="c1">-- upsert</span>
-<span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
-<span class="k">INSERT</span> <span class="k">OR</span> <span class="k">IGNORE</span> <span class="err">…</span>
-
-<span class="k">REPLACE</span> <span class="k">INTO</span>
-
-<span class="c1">-- rename table</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">foo</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">bar</span>
-
-<span class="c1">-- 查看表</span>
-<span class="p">.</span><span class="k">schema</span> <span class="n">tbl1</span>
-</pre></div>
-
-
-<h1>数据导入导出</h1>
-<p>控制台方式</p>
-<div class="highlight"><pre><span></span><span class="o">--</span> <span class="err">导出</span><span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">headers</span> <span class="n">on</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">mode</span> <span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">tbl1</span><span class="p">;</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">output</span> <span class="n">stdout</span>
-
-<span class="o">--</span> <span class="err">导入</span><span class="n">csv</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">separator</span> <span class="p">,</span>
-<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="kn">import</span> <span class="nn">imei.csv</span> <span class="nn">tac_info</span>
-</pre></div>
-
-
-<p>命令行方式</p>
-<div class="highlight"><pre><span></span>sqlite3 -header -csv /path/file.db &quot;select * from tbl1;&quot; &gt; data.csv
-sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
-</pre></div>
-
-
-<h1>数据转化</h1>
-<div class="highlight"><pre><span></span>-- time format 
-datetime(&#39;now&#39;, &#39;localtime&#39;)
--- format now strftime(&#39;%Y-%m-%d %H:%M:%S&#39;, ...)
-cast(strftime(&#39;%Y%m%d&#39;,&#39;now&#39;) as integer);
-cast(strftime(&#39;%H&#39;,&#39;now&#39;) as integer);
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>sqlite 常见问题的解决办法</p>
+                <a class="readmore" href="/posts/2017/06/sqlite-tips/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -242,50 +333,6 @@ cast(strftime(&#39;%H&#39;,&#39;now&#39;) as integer);
 <p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->                <p>kafka安装</p>
                 <a class="readmore" href="/posts/2015/12/kafka-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2015/12/hadoop-links/" rel="bookmark"
-                           title="Permalink to hadoop links">hadoop links</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-12-16T11:30:00+08:00">
-                Published: 2015-12-16(三)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/hnlaomie.html">hnlaomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info -->                <p>hadoop资源链接</p>
-                <a class="readmore" href="/posts/2015/12/hadoop-links/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2015/07/hbase-tips/" rel="bookmark"
-                           title="Permalink to hbase tips">hbase tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-07-14T10:50:00+08:00">
-                Published: 2015-07-14(二)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
-</footer><!-- /.post-info -->                <p>hbase使用指南</p>
-                <a class="readmore" href="/posts/2015/07/hbase-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - ruby</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2018/04/rbenv-installation/">rbenv installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-04-12T21:30:00+08:00">
+                Published: 2018-04-12(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/ruby.html">ruby</a> </p>
+</footer><!-- /.post-info --><h1>rbenv的安装</h1>
+<p>下载rbenv</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/rbenv/rbenv.git ~/tools/rbenv
+git clone https://github.com/rbenv/ruby-build.git ~/tools/rbenv/plugins/ruby-build
+</pre></div>
+
+
+<p>在".bashrc"或".bash_profile"设置环境变量</p>
+<div class="highlight"><pre><span></span>apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
+<span class="nb">export</span> <span class="nv">RBENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/rbenv&quot;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$RBENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$RBENV_ROOT</span><span class="s2">/plugins/ruby-build/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>rbenv init -<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+
+
+<p>重启shell,让环境变量生效</p>
+<div class="highlight"><pre><span></span><span class="nb">exec</span> <span class="nv">$SHELL</span>
+</pre></div>
+
+
+<p>rbenv命令</p>
+<div class="highlight"><pre><span></span><span class="c1"># 查看可安装版本</span>
+rbenv install -l
+<span class="c1"># 安装ruby</span>
+rbenv install <span class="m">2</span>.5.1
+<span class="c1"># 卸载ruby</span>
+rbenv uninstall <span class="m">2</span>.5.1
+
+<span class="c1"># ruby可用版本</span>
+rbenv versions
+
+<span class="c1"># ruby指定版本</span>
+rbenv <span class="nb">local</span> <span class="m">2</span>.5.1 system
+
+<span class="c1"># 安装ruby gems</span>
+gem install bundler
+</pre></div>
+
+
+<p>在"~/tools/rbenv/version"设置ruby版本</p>
+<div class="highlight"><pre><span></span><span class="m">2</span>.5.1
+system
+</pre></div>
+
+
+<p>安装常用包</p>
+<div class="highlight"><pre><span></span><span class="c1"># redis</span>
+gem install redis
+</pre></div>
+
+
+<h1>ruby本地镜像安装</h1>
+<p>下载"ruby-2.5.1.tar.bz2"到本地目录，到目录下如下操作
+<code></p>
+<h1>启动http服务</h1>
+<p>python3 -m http.server</p>
+<h1>设置本地镜像</h1>
+<p>export RUBY_BUILD_MIRROR_URL="http://127.0.0.1:8000/"</p>
+<h1>rbenv安装python时找不到本地文件，需要将"ruby-2.5.1.tar.bz2"重命名为"http.server"输出的请求64位字符</h1>
+<p>rbenv install 2.5.1
+</code></p>
+<h1>参考</h1>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

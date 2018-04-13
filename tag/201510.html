@@ -40,7 +40,8 @@
 
 
 <p>在".bashrc"或".bash_profile"设置环境变量</p>
-<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/pyenv&quot;</span>
+<div class="highlight"><pre><span></span>apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
+<span class="nb">export</span> <span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/pyenv&quot;</span>
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>pyenv init -<span class="k">)</span><span class="s2">&quot;</span>
 </pre></div>
@@ -110,6 +111,22 @@ pip install beautifulsoup4
 </pre></div>
 
 
+<p>常见国内镜像源 
+<em> <a href="http://pypi.douban.com/simple/">http://pypi.douban.com/simple/</a> 豆瓣 
+</em> <a href="http://mirrors.aliyun.com/pypi/simple/">http://mirrors.aliyun.com/pypi/simple/</a> 阿里 
+<em> <a href="http://pypi.hustunique.com/simple/">http://pypi.hustunique.com/simple/</a> 华中理工大学 
+</em> <a href="http://pypi.sdutlinux.org/simple/">http://pypi.sdutlinux.org/simple/</a> 山东理工大学 
+* <a href="http://pypi.mirrors.ustc.edu.cn/simple/">http://pypi.mirrors.ustc.edu.cn/simple/</a> 中国科学技术大学 </p>
+<h1>python本地镜像安装</h1>
+<p>下载"Python-3.6.5.tgz"到本地目录，到目录下如下操作
+<code></p>
+<h1>启动http服务</h1>
+<p>python3 -m http.server</p>
+<h1>设置本地镜像</h1>
+<p>export PYTHON_BUILD_MIRROR_URL="http://127.0.0.1:8000/"</p>
+<h1>pyenv安装python时找不到本地文件，需要将"Python-3.6.5.tgz"重命名为"http.server"输出的请求64位字符</h1>
+<p>pyenv install 3.6.5
+</code></p>
 <h1>参考</h1>
 <ul>
 <li><a href="https://github.com/yyuu/pyenv">https://github.com/yyuu/pyenv</a></li>
