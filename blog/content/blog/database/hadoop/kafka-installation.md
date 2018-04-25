@@ -33,13 +33,17 @@ bin/kafka-server-start.sh config/server.properties &
 # 停止
 bin/kafka-server-stop.sh config/server.properties
 # 新建主题
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+kafka-topics.sh --create --zookeeper 192.168.11.82:2181 --replication-factor 2 --partitions 18 --topic test
 # 显示主题
-bin/kafka-topics.sh --list --zookeeper localhost:2181
+kafka-topics.sh --list --zookeeper 192.168.11.82:2181
+# 查看主题
+kafka-topics.sh --describe --zookeeper 192.168.11.82:2181 --topic test 
+# 修改数据保存时间
+kafka-configs.sh --zookeeper 192.168.11.82:2181 --alter --entity-type topics --entity-name test --add-config retention.ms=86400000
 # 发送消息
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+kafka-console-producer.sh --broker-list 192.168.11.82:9092 --topic test
 # 接收消息
-bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+kafka-console-consumer.sh --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
 ```
 
 kafka和spark整合
@@ -77,6 +81,16 @@ bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic test
 bin/zkCli.sh # and delete the topics using 
 rmr /brokers/topics/<<topic>> and rmr /admin/delete_topics/<<topic>>
 ```
+
+新版本"kafka-console-consumer.sh"不能用"--bootstrap-server"
+==========================================================
+需要删除zookeeper上老版本的"/brokers"目录，然后让新版本重建目录
+
+1. Delete all topics and stop kafka brokers
+
+2. Connect to zookeeper cluster and remove "/brokers" z node
+
+3. Restart kafka brokers
 
 跨集群复制
 =======================

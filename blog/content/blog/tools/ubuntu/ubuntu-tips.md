@@ -88,6 +88,8 @@ chrome安装xx-net代理插件
 
 5. 菜单-设置-下翻点击“显示高级设置”-点击“管理证书”，＂授权中心->导入＂，选择＂XX-Net/data/gae_proxy/CA.crt＂
 
+6. 上网失效时可导入新的hosts，并删除"data/gae_proxy/good_ip.txt"，以便重新检索有用的ip
+
 下载youtube
 =========================
 安装youtube-dl

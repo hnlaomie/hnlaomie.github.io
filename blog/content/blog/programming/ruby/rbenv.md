@@ -5,7 +5,6 @@ Tags: 201804, ruby
 Author: laomie
 Summary: rbenv的安装
 
-
 rbenv的安装
 ================
 
@@ -62,14 +61,14 @@ gem install redis
 ruby本地镜像安装
 ==========================
 下载"ruby-2.5.1.tar.bz2"到本地目录，到目录下如下操作
-<code>
+```
 # 启动http服务
 python3 -m http.server
 # 设置本地镜像
 export RUBY_BUILD_MIRROR_URL="http://127.0.0.1:8000/"
 # rbenv安装python时找不到本地文件，需要将"ruby-2.5.1.tar.bz2"重命名为"http.server"输出的请求64位字符
 rbenv install 2.5.1
-</code>
+```
 
 参考
 ==================
