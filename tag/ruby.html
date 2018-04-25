@@ -85,15 +85,16 @@ gem install redis
 
 
 <h1>ruby本地镜像安装</h1>
-<p>下载"ruby-2.5.1.tar.bz2"到本地目录，到目录下如下操作
-<code></p>
-<h1>启动http服务</h1>
-<p>python3 -m http.server</p>
-<h1>设置本地镜像</h1>
-<p>export RUBY_BUILD_MIRROR_URL="http://127.0.0.1:8000/"</p>
-<h1>rbenv安装python时找不到本地文件，需要将"ruby-2.5.1.tar.bz2"重命名为"http.server"输出的请求64位字符</h1>
-<p>rbenv install 2.5.1
-</code></p>
+<p>下载"ruby-2.5.1.tar.bz2"到本地目录，到目录下如下操作</p>
+<div class="highlight"><pre><span></span># 启动http服务
+python3 -m http.server
+# 设置本地镜像
+export RUBY_BUILD_MIRROR_URL=&quot;http://127.0.0.1:8000/&quot;
+# rbenv安装python时找不到本地文件，需要将&quot;ruby-2.5.1.tar.bz2&quot;重命名为&quot;http.server&quot;输出的请求64位字符
+rbenv install 2.5.1
+</pre></div>
+
+
 <h1>参考</h1>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
