@@ -22,7 +22,122 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2018/04/redis-installation/">redis installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2018/05/nodejs-installation/">nodejs installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-05-04T12:30:00+08:00">
+                Published: 2018-05-04(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201805.html">201805</a> <a href="/tag/js.html">js</a> </p>
+</footer><!-- /.post-info --><h1>nodejs的安装</h1>
+<p>下载并安装nvm</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>
+git clone https://github.com/creationix/nvm.git <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
+git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
+chmod <span class="m">755</span> <span class="nv">$NVM_DIR</span>/nvm.sh
+<span class="nv">$NVM_DIR</span>/nvm.sh
+</pre></div>
+
+
+<p>nvm的更新</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
+git fetch --tags origin
+git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
+<span class="nv">$NVM_DIR</span>/nvm.sh
+</pre></div>
+
+
+<p>在".bashrc"或".bash_profile"设置环境变量</p>
+<div class="highlight"><pre><span></span>apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
+<span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>                                                                                                    
+<span class="c1"># This loads nvm                                                                                                                    </span>
+<span class="o">[</span> -s <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span>
+</pre></div>
+
+
+<p>重启shell,让环境变量生效</p>
+<div class="highlight"><pre><span></span><span class="nb">exec</span> <span class="nv">$SHELL</span>
+</pre></div>
+
+
+<p>nvm命令</p>
+<div class="highlight"><pre><span></span><span class="c1"># 查看所有长期支持版</span>
+nvm ls-remote --lts
+<span class="c1"># 查看最新长期支持版</span>
+nvm version-remote --lts
+<span class="c1"># 安装最新版或指定版本（可设置代理）</span>
+<span class="nb">export</span> <span class="nv">NVM_NODEJS_ORG_MIRROR</span><span class="o">=</span>https://nodejs.org/dist
+nvm install --lts
+nvm install --lts<span class="o">=</span>carbon
+<span class="c1"># 卸载最新版或指定版本</span>
+nvm uninstall --lts
+nvm uninstall --lts<span class="o">=</span>carbon
+<span class="c1"># 安装并迁移npm包</span>
+nvm install node --reinstall-packages-from<span class="o">=</span>node
+nvm install <span class="m">6</span> --reinstall-packages-from<span class="o">=</span><span class="m">5</span>
+<span class="c1"># 使用相关版本</span>
+nvm use --lts
+nvm use system
+<span class="c1"># 查看当前使用版本</span>
+nvm ls
+</pre></div>
+
+
+<p>设置使用版本</p>
+<div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;8.1&quot;</span> &gt; .nvmrc
+<span class="c1"># to default to the latest LTS version</span>
+<span class="nb">echo</span> <span class="s2">&quot;lts/*&quot;</span> &gt; .nvmrc
+<span class="c1"># to default to the latest version </span>
+<span class="nb">echo</span> <span class="s2">&quot;node&quot;</span> &gt; .nvmrc 
+</pre></div>
+
+
+<p>npm换源，编辑"~/.npmrc</p>
+<div class="highlight"><pre><span></span>registry =https://registry.npm.taobao.org
+</pre></div>
+
+
+<h1>参考</h1>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2018/04/python-concurrency/" rel="bookmark"
+                           title="Permalink to python concurrency">python concurrency</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-04-26T10:30:00+08:00">
+                Published: 2018-04-26(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/python.html">python</a> </p>
+</footer><!-- /.post-info -->                <p>python concurrency</p>
+                <a class="readmore" href="/posts/2018/04/python-concurrency/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2018/04/redis-installation/" rel="bookmark"
+                           title="Permalink to redis installation">redis installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-04-13T14:30:00+08:00">
                 Published: 2018-04-13(五)
@@ -33,110 +148,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/redis.html">redis</a> </p>
-</footer><!-- /.post-info --><h1>安装redis</h1>
-<p>下载并编译redis，编译完成后会在src目录下生成Redis服务端程序redis-server和客户端程序redis-cli</p>
-<div class="highlight"><pre><span></span>wget http://download.redis.io/releases/redis-4.0.9.tar.gz
-tar zxvf redis-4.0.9.tar.gz
-cd redis-4.0.9
-make
-</pre></div>
-
-
-<h1>安装ruby</h1>
-<p>通过"rbenv"安装ruby和相关依赖包</p>
-<div class="highlight"><pre><span></span>gem install redis
-</pre></div>
-
-
-<h1>设置redis和ruby</h1>
-<p>将ruby和redis加入系统路径</p>
-<div class="highlight"><pre><span></span># rbenv
-export RBENV_ROOT=&quot;/data/apache/tools/rbenv&quot;
-export PATH=&quot;$RBENV_ROOT/bin:$RBENV_ROOT/plugins/ruby-build/bin:$PATH&quot;
-eval &quot;$(rbenv init -)&quot;
-
-# redis
-export REDIS_HOME=&quot;/data/apache/tools/redis-4.0.9/src&quot;
-export PATH=&quot;$REDIS_HOME:$PATH&quot;
-</pre></div>
-
-
-<h1>集群说明</h1>
-<p>在"192.168.11.61"和"192.168.11.62"两台机的三个端口"6386,6387,6388"启动redis</p>
-<h1>redis配置</h1>
-<p>在集群机器建不同端口的redis配置文件</p>
-<div class="highlight"><pre><span></span>mkdir -p /data/hadoop/redis/config/6386
-mkdir -p /data/hadoop/redis/config/6387
-mkdir -p /data/hadoop/redis/config/6388
-</pre></div>
-
-
-<p>配置文件"redis-6386.conf"内容如下</p>
-<div class="highlight"><pre><span></span># redis后台运行
-daemonize yes
-
-port 6386
-pidfile  /var/run/redis_6386.pid
-
-# 开启集群
-cluster-enabled yes
-# 集群的配置文件首次启动自动生成
-cluster-config-file nodes-6386.conf
-# 请求超时，默认15秒
-cluster-node-timeout 15000
-
-# aof日志开启  有需要就开启，它会每次写操作都记录一条日志
-appendonly yes
-# 可以指定日志的目录
-logfile &quot;/data/hadoop/redis/data/6386/redis-6386.log&quot;
-
-# 关闭保护模式
-protected-mode no
-</pre></div>
-
-
-<h1>redis启动</h1>
-<p>到每个配置文件目录下启动redis</p>
-<div class="highlight"><pre><span></span>cd /data/hadoop/redis/config/6386
-redis-server redis-6386.conf
-</pre></div>
-
-
-<h1>redis集群启动，利用redis-trib创建cluster的操作，只需要一次即可，假设系统关机，把所有6个节点全关闭后，下次重启后，即自动进入cluster模式，不用再次redis-trib.rb create。</h1>
-<div class="highlight"><pre><span></span>redis-trib.rb create --replicas 1 192.168.11.61:6386 192.168.11.61:6387 192.168.11.61:6388 192.168.11.62:6386 192.168.11.62:6387 192.168.11.62:6388
-</pre></div>
-
-
-<h1>redis验证</h1>
-<p>查看进程，端口，集群</p>
-<div class="highlight"><pre><span></span>ps aux | grep redis
-ps -ef | grep 6386
-redis-trib.rb check 192.168.11.61:6386
-</pre></div>
-
-
-<h1>集群扩容，删除</h1>
-<div class="highlight"><pre><span></span># 增加主节点
-redis-trib.rb add-node [host]:[port]
-# 为新增主节点分配slots
-redis-trib.rb reshard [host]:[port]
-# 增加从节点
-redis-trib.rb add-node --slave --master-id $[nodeid] 192.168.210.128:7007 192.168.210.128:7000
-# 删除节点
-redis-trib.rb reshard 192.168.210.128:7002
-edis-trib del-node 192.168.210.128:7002  <span class="cp">${</span><span class="n">node</span><span class="o">-</span><span class="nb">id</span><span class="cp">}</span>
-</pre></div>
-
-
-<h1>参考</h1>
-<p>http://www.cnblogs.com/wlandwl/p/rediscluster.html
-http://blog.csdn.net/huwh_/article/details/79242625
-https://redis.io/topics/cluster-tutorial</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>redis 集群安装</p>
+                <a class="readmore" href="/posts/2018/04/redis-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -289,50 +304,6 @@ https://redis.io/topics/cluster-tutorial</p>                </article>
 <p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
 </footer><!-- /.post-info -->                <p>sqlite 常见问题的解决办法</p>
                 <a class="readmore" href="/posts/2017/06/sqlite-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2017/06/python-crawler/" rel="bookmark"
-                           title="Permalink to python crawler">python crawler</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-06-14T14:30:00+08:00">
-                Published: 2017-06-14(三)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/programming.html">programming</a>.</p>
-<p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/python.html">python</a> <a href="/tag/crawler.html">crawler</a> </p>
-</footer><!-- /.post-info -->                <p>python爬虫</p>
-                <a class="readmore" href="/posts/2017/06/python-crawler/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2016/11/postgresql-installation/" rel="bookmark"
-                           title="Permalink to postgresql installation">postgresql installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-11-24T10:10:00+08:00">
-                Published: 2016-11-24(四)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201611.html">201611</a> <a href="/tag/pgsql.html">pgsql</a> </p>
-</footer><!-- /.post-info -->                <p>postgresql installation</p>
-                <a class="readmore" href="/posts/2016/11/postgresql-installation/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

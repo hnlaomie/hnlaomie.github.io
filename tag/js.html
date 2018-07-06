@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - js</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2018/05/nodejs-installation/">nodejs installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-05-04T12:30:00+08:00">
+                Published: 2018-05-04(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/programming.html">programming</a>.</p>
+<p>tags: <a href="/tag/201805.html">201805</a> <a href="/tag/js.html">js</a> </p>
+</footer><!-- /.post-info --><h1>nodejs的安装</h1>
+<p>下载并安装nvm</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>
+git clone https://github.com/creationix/nvm.git <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
+git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
+chmod <span class="m">755</span> <span class="nv">$NVM_DIR</span>/nvm.sh
+<span class="nv">$NVM_DIR</span>/nvm.sh
+</pre></div>
+
+
+<p>nvm的更新</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
+git fetch --tags origin
+git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
+<span class="nv">$NVM_DIR</span>/nvm.sh
+</pre></div>
+
+
+<p>在".bashrc"或".bash_profile"设置环境变量</p>
+<div class="highlight"><pre><span></span>apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
+<span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>                                                                                                    
+<span class="c1"># This loads nvm                                                                                                                    </span>
+<span class="o">[</span> -s <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span>
+</pre></div>
+
+
+<p>重启shell,让环境变量生效</p>
+<div class="highlight"><pre><span></span><span class="nb">exec</span> <span class="nv">$SHELL</span>
+</pre></div>
+
+
+<p>nvm命令</p>
+<div class="highlight"><pre><span></span><span class="c1"># 查看所有长期支持版</span>
+nvm ls-remote --lts
+<span class="c1"># 查看最新长期支持版</span>
+nvm version-remote --lts
+<span class="c1"># 安装最新版或指定版本（可设置代理）</span>
+<span class="nb">export</span> <span class="nv">NVM_NODEJS_ORG_MIRROR</span><span class="o">=</span>https://nodejs.org/dist
+nvm install --lts
+nvm install --lts<span class="o">=</span>carbon
+<span class="c1"># 卸载最新版或指定版本</span>
+nvm uninstall --lts
+nvm uninstall --lts<span class="o">=</span>carbon
+<span class="c1"># 安装并迁移npm包</span>
+nvm install node --reinstall-packages-from<span class="o">=</span>node
+nvm install <span class="m">6</span> --reinstall-packages-from<span class="o">=</span><span class="m">5</span>
+<span class="c1"># 使用相关版本</span>
+nvm use --lts
+nvm use system
+<span class="c1"># 查看当前使用版本</span>
+nvm ls
+</pre></div>
+
+
+<p>设置使用版本</p>
+<div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;8.1&quot;</span> &gt; .nvmrc
+<span class="c1"># to default to the latest LTS version</span>
+<span class="nb">echo</span> <span class="s2">&quot;lts/*&quot;</span> &gt; .nvmrc
+<span class="c1"># to default to the latest version </span>
+<span class="nb">echo</span> <span class="s2">&quot;node&quot;</span> &gt; .nvmrc 
+</pre></div>
+
+
+<p>npm换源，编辑"~/.npmrc</p>
+<div class="highlight"><pre><span></span>registry =https://registry.npm.taobao.org
+</pre></div>
+
+
+<h1>参考</h1>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

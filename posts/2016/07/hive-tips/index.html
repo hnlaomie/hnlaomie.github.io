@@ -152,6 +152,42 @@ MSCK REPAIR TABLE &lt;tablename&gt;;
 ALTER TABLE ssp_log_data DROP PARTITION (log_hour=&#39;__HIVE_DEFAULT_PARTITION__&#39;);
 ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour INT);
 </pre></div>
+
+
+<h1>Hive&lt;找不到Spark-assemblyJar包&gt;</h1>
+<p>编辑"$HIVE_HOME/bin/hive</p>
+<div class="highlight"><pre><span></span>sparkAssemblyPath=`ls <span class="cp">${</span><span class="n">SPARK_HOME</span><span class="cp">}</span>/lib/spark-assembly-*.jar`
+改为
+sparkAssemblyPath=`ls <span class="cp">${</span><span class="n">SPARK_HOME</span><span class="cp">}</span>/jars/*.jar`
+</pre></div>
+
+
+<h1>hive on spark</h1>
+<p>hive链接spark相关jar</p>
+<div class="highlight"><pre><span></span>ln -sf /home/laomie/tools/spark/jars/scala-library-2.11.8.jar /home/laomie/tools/hive/lib/scala-library-2.11.8.jar
+ln -sf /home/laomie/tools/spark/jars/spark-core_2.11-2.2.2.jar /home/laomie/tools/hive/lib/spark-core_2.11-2.2.2.jar
+ln -sf /home/laomie/tools/spark/jars/spark-network-common_2.11-2.2.2.jar /home/laomie/tools/hive/lib/spark-network-common_2.11-2.2.2.jar
+</pre></div>
+
+
+<p>spark-defaults.conf复制到hive目录</p>
+<p>上传spark的jar到hdfs</p>
+<div class="highlight"><pre><span></span>hdfs dfs -mkdir /spark-jars
+hdfs dfs -put /home/laomie/tools/spark/jars/*.jar /spark-jars/
+</pre></div>
+
+
+<p>在hive的"hive-site.xml"增加下列内容</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;property&gt;</span>                                                                                                                        
+    <span class="nt">&lt;name&gt;</span>spark.yarn.jars<span class="nt">&lt;/name&gt;</span>                                                                                                    
+    <span class="nt">&lt;value&gt;</span>hdfs://localhost:9000/spark-jars/*<span class="nt">&lt;/value&gt;</span>                                                                               
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<p>hive on spark</p>
+<div class="highlight"><pre><span></span>set hive.execution.engine=spark;
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>

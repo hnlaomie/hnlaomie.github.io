@@ -2,7 +2,7 @@
 <html lang="cn">
 <head>
         <meta charset="utf-8" />
-        <title>laomie's blog - 201804</title>
+        <title>python concurrency</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -15,14 +15,19 @@
                 <h1><a href="/">laomie's blog </a></h1>
                 <nav><ul>
                     <li><a href="/category/database.html">database</a></li>
-                    <li><a href="/category/programming.html">programming</a></li>
+                    <li class="active"><a href="/category/programming.html">programming</a></li>
                     <li><a href="/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2018/04/python-concurrency/" rel="bookmark"
+           title="Permalink to python concurrency">python concurrency</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/posts/2018/04/python-concurrency/">python concurrency</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-04-26T10:30:00+08:00">
                 Published: 2018-04-26(四)
@@ -33,7 +38,7 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>.</p>
 <p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>python多线程多进程</h1>
+</footer><!-- /.post-info -->      <h1>python多线程多进程</h1>
 <p>因为GIL的原因，多线程只能并发的跑，不能并行，多进程可多核并行</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
 <span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
@@ -95,80 +100,11 @@
     <span class="c1"># allow to submit a list of tuples(multi variables)</span>
     <span class="c1">#p.starmap(...)</span>
     <span class="c1">#p.starmap_async(...)</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</pre></div>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2018/04/redis-installation/" rel="bookmark"
-                           title="Permalink to redis installation">redis installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-04-13T14:30:00+08:00">
-                Published: 2018-04-13(五)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/redis.html">redis</a> </p>
-</footer><!-- /.post-info -->                <p>redis 集群安装</p>
-                <a class="readmore" href="/posts/2018/04/redis-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2018/04/rbenv-installation/" rel="bookmark"
-                           title="Permalink to rbenv installation">rbenv installation</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-04-12T21:30:00+08:00">
-                Published: 2018-04-12(四)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/programming.html">programming</a>.</p>
-<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/ruby.html">ruby</a> </p>
-</footer><!-- /.post-info -->                <p>rbenv的安装</p>
-                <a class="readmore" href="/posts/2018/04/rbenv-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2018/04/redis-tips/" rel="bookmark"
-                           title="Permalink to redis tips">redis tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-04-12T14:30:00+08:00">
-                Published: 2018-04-12(四)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/redis.html">redis</a> </p>
-</footer><!-- /.post-info -->                <p>redis 常见问题的解决办法</p>
-                <a class="readmore" href="/posts/2018/04/redis-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

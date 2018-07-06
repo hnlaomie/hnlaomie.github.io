@@ -75,6 +75,11 @@ hdfs dfs -chmod <span class="m">777</span> /hive/scratchdir
 </pre></div>
 
 
+<p>初始化元数据</p>
+<div class="highlight"><pre><span></span>schematool -dbType mysql -initSchema
+</pre></div>
+
+
 <h1>新增"conf/hive-site.xml"文件</h1>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <span class="cp">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span>
@@ -214,6 +219,10 @@ mysql -uhive -phive hive2 &lt; hive-schema-2.0.0.mysql.sql
 mysql -uhive -phive hive2 &lt; upgrade-1.2.0-to-2.0.0.mysql.sql
 mysql -uhive -phive hive2 &lt; hive-schema-2.1.0.mysql.sql
 mysql -uhive -phive hive2 &lt; upgrade-2.0.0-to-2.1.0.mysql.sql
+
+<span class="c1"># 用schematool升级</span>
+schematool -dbType mysql -info
+schematool -dbType derby -upgradeSchemaFrom <span class="m">1</span>.2.0
 </pre></div>
 
 

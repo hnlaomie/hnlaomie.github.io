@@ -114,6 +114,13 @@ cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)<
 </pre></div>
 
 
+<h1>ThreadPriorityPolicy出错问题</h1>
+<p>报"Improperly specified VM option 'ThreadPriorityPolicy=42'", 修改"conf/jvm.options"</p>
+<div class="highlight"><pre><span></span># see http://tech.stolsvik.com/2010/01/linux-java-thread-priorities-workar                                                          
+#-XX:ThreadPriorityPolicy=42
+</pre></div>
+
+
 <h1>trace查询相关</h1>
 <p>1. 用"nodetool setlogginglevel"设置日志级别，然后在"system_traces.events"和"system_traces.sessions"看日志记录</p>
 <p>2. 也可在cqlsh中用"tracing (on | off)"在查询中显示trace信息</p>
