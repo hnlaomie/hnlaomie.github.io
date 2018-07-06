@@ -133,3 +133,42 @@ ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour STRING);
 ALTER TABLE ssp_log_data DROP PARTITION (log_hour='__HIVE_DEFAULT_PARTITION__');
 ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour INT);
 ```
+
+Hive<找不到Spark-assemblyJar包>
+=================
+编辑"$HIVE_HOME/bin/hive
+```
+sparkAssemblyPath=`ls ${SPARK_HOME}/lib/spark-assembly-*.jar`
+改为
+sparkAssemblyPath=`ls ${SPARK_HOME}/jars/*.jar`
+```
+
+hive on spark
+====================
+hive链接spark相关jar
+```
+ln -sf /home/laomie/tools/spark/jars/scala-library-2.11.8.jar /home/laomie/tools/hive/lib/scala-library-2.11.8.jar
+ln -sf /home/laomie/tools/spark/jars/spark-core_2.11-2.2.2.jar /home/laomie/tools/hive/lib/spark-core_2.11-2.2.2.jar
+ln -sf /home/laomie/tools/spark/jars/spark-network-common_2.11-2.2.2.jar /home/laomie/tools/hive/lib/spark-network-common_2.11-2.2.2.jar
+```
+
+spark-defaults.conf复制到hive目录
+
+上传spark的jar到hdfs
+```
+hdfs dfs -mkdir /spark-jars
+hdfs dfs -put /home/laomie/tools/spark/jars/*.jar /spark-jars/
+```
+
+在hive的"hive-site.xml"增加下列内容
+```
+<property>                                                                                                                        
+    <name>spark.yarn.jars</name>                                                                                                    
+    <value>hdfs://localhost:9000/spark-jars/*</value>                                                                               
+</property>
+```
+
+hive on spark
+```
+set hive.execution.engine=spark;
+```

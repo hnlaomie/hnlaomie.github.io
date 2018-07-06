@@ -44,6 +44,11 @@ kafka-configs.sh --zookeeper 192.168.11.82:2181 --alter --entity-type topics --e
 kafka-console-producer.sh --broker-list 192.168.11.82:9092 --topic test
 # 接收消息
 kafka-console-consumer.sh --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
+# consumer group
+kafka-run-class.sh kafka.admin.ConsumerGroupCommand --group onlineKafka --zookeeper node3:2181 --describe
+kafka-consumer-groups.sh --describe --zookeeper node3:2181 --group onlineKafka
+kafka-consumer-groups.sh --zookeeper node3:2181 --delete --group onlineKafka
+kafka-consumer-offset-checker.sh  --topic dsptest --zookeeper node3:2181 --group onlineKafka
 ```
 
 kafka和spark整合
@@ -92,6 +97,13 @@ rmr /brokers/topics/<<topic>> and rmr /admin/delete_topics/<<topic>>
 
 3. Restart kafka brokers
 
+复制错误处理
+======================
+报"Number of alive brokers '1' does not meet the required replication factor"，需要设置"server.properties"
+```
+offsets.topic.replication.factor=1
+```
+
 跨集群复制
 =======================
 低版本集群数据复制到高版本集群，低版本应用能读写高版本集群，反之不行
@@ -111,6 +123,28 @@ bootstrap.servers=192.168.11.81:9092,192.168.11.82:9092,192.168.11.83:9092
 ```
 $KAFKA_HOME/bin/kafka-mirror-maker.sh --consumer.config consumer.properties --producer.config producer.properties --num.streams=2 --whitelist "test"
 ```
+
+kafka升级
+========================
+kafka upgrade from 1.0.0 to 1.1.0
+
+1. add follow content to config/server.properties
+```
+# for upgrade
+inter.broker.protocol.version=1.0
+message.format.version=1.0
+```
+
+2. stop broker from 1 to n and upgrade
+
+3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 1.1.
+
+4. restart the brokers one by one for the new protocol version to take effect.
+
+5. Once the entire client is upgraded, bump the protocol version by editing message.format.version and setting it to 1.1.
+
+6. restart the brokers one by one.
+
 
 参考
 ===============================

@@ -92,6 +92,14 @@ batch_size_fail_threshold_in_kb: 50
 commit_failure_policy: ignore
 ```
 
+ThreadPriorityPolicy出错问题
+==============================
+报"Improperly specified VM option 'ThreadPriorityPolicy=42'", 修改"conf/jvm.options"
+```
+# see http://tech.stolsvik.com/2010/01/linux-java-thread-priorities-workar                                                          
+#-XX:ThreadPriorityPolicy=42
+```
+
 trace查询相关
 =====================
 1\. 用"nodetool setlogginglevel"设置日志级别，然后在"system_traces.events"和"system_traces.sessions"看日志记录

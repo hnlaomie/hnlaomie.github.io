@@ -46,6 +46,11 @@ hdfs dfs -chmod 777 /hive/scratchdir
 /hive/scratchdir
 ```
 
+初始化元数据
+```
+schematool -dbType mysql -initSchema
+```
+
 新增"conf/hive-site.xml"文件
 ================================
 ```xml
@@ -189,6 +194,10 @@ mysql -uhive -phive hive2 < hive-schema-2.0.0.mysql.sql
 mysql -uhive -phive hive2 < upgrade-1.2.0-to-2.0.0.mysql.sql
 mysql -uhive -phive hive2 < hive-schema-2.1.0.mysql.sql
 mysql -uhive -phive hive2 < upgrade-2.0.0-to-2.1.0.mysql.sql
+
+# 用schematool升级
+schematool -dbType mysql -info
+schematool -dbType derby -upgradeSchemaFrom 1.2.0
 ```
 
 hivemall安装
