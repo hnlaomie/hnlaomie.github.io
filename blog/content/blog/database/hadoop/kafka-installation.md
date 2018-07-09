@@ -29,9 +29,9 @@ LOG_DIR="/data/hadoop/kafka/log4j/logs"
 =======================
 ```
 # 启动
-bin/kafka-server-start.sh config/server.properties &
+kafka-server-start.sh config/server.properties &
 # 停止
-bin/kafka-server-stop.sh config/server.properties
+kafka-server-stop.sh config/server.properties
 # 新建主题
 kafka-topics.sh --create --zookeeper 192.168.11.82:2181 --replication-factor 2 --partitions 18 --topic test
 # 显示主题
@@ -44,11 +44,18 @@ kafka-configs.sh --zookeeper 192.168.11.82:2181 --alter --entity-type topics --e
 kafka-console-producer.sh --broker-list 192.168.11.82:9092 --topic test
 # 接收消息
 kafka-console-consumer.sh --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
+kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
 # consumer group
+kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --describe
+kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --delete
 kafka-run-class.sh kafka.admin.ConsumerGroupCommand --group onlineKafka --zookeeper node3:2181 --describe
-kafka-consumer-groups.sh --describe --zookeeper node3:2181 --group onlineKafka
-kafka-consumer-groups.sh --zookeeper node3:2181 --delete --group onlineKafka
-kafka-consumer-offset-checker.sh  --topic dsptest --zookeeper node3:2181 --group onlineKafka
+# 启动schema-registry,需要confluent
+schema-registry-start ./etc/schema-registry/schema-registry.properties
+# Start Connect in distributed mode. Run this command in its own terminal.
+$ connect-distributed ./etc/schema-registry/connect-avro-distributed.properties
+# start ksql
+$ ksql-server-start ./etc/ksql/ksql-server.properties
 ```
 
 kafka和spark整合
