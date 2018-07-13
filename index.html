@@ -22,7 +22,175 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2018/05/nodejs-installation/">nodejs installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2018/07/confluent-installation/">confluent installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-07-12T19:50:00+08:00">
+                Published: 2018-07-12(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/hnlaomie.html">hnlaomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201807.html">201807</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/confluent.html">confluent</a> </p>
+</footer><!-- /.post-info --><h1>环境变量,数据目录设置</h1>
+<div class="highlight"><pre><span></span>export CONFLUENT_CURRENT=/data/hadoop
+export CONFLUENT_HOME=/data/apache/confluent
+export PATH=$PATH:$CONFLUENT_HOME/bin
+</pre></div>
+
+
+<p>生效后用以下命令查看confluent数据目录,并生成kafka, zookeeper数据目录</p>
+<div class="highlight"><pre><span></span>confluent current
+# confluent.ljzXwHuB为以上命令生成的目录
+mkdir -p /data/hadoop/confluent.ljzXwHuB/zookeeper/data
+mkdir -p /data/hadoop/confluent.ljzXwHuB/kafka/data
+echo 1 &gt; /data/hadoop/confluent.ljzXwHuB/zookeeper/data/myid
+</pre></div>
+
+
+<h1>zookeeper配置</h1>
+<p>vim /data/apache/confluent/etc/kafka/zookeeper.properties</p>
+<div class="highlight"><pre><span></span># The number of milliseconds of each tick
+tickTime=2000
+# The number of ticks that the initial 
+# synchronization phase can take
+initLimit=10
+# The number of ticks that can pass between 
+# sending a request and getting an acknowledgement
+syncLimit=5
+
+dataDir=/data/hadoop/confluent.ljzXwHuB/zookeeper/data
+# the port at which the clients will connect
+clientPort=2181
+
+# the maximum number of client connections.
+# increase this if you need to handle more clients
+maxClientCnxns=60
+
+server.1=192.168.11.82:2888:3888
+server.2=192.168.11.81:2888:3888
+server.3=192.168.11.83:2888:3888
+
+autopurge.snapRetainCount=3
+autopurge.purgeInterval=24
+</pre></div>
+
+
+<h1>kafka配置</h1>
+<p>vim /data/apache/confluent/etc/kafka/server.properties</p>
+<div class="highlight"><pre><span></span>broker.id=1
+
+listeners=PLAINTEXT://192.168.11.82:9092
+
+log.dirs=/data/hadoop/confluent.ljzXwHuB/kafka/data
+
+num.partitions=12
+
+log.retention.bytes=-1
+log.cleanup.policy=delete
+
+zookeeper.connect=192.168.11.82:2181,192.168.11.81:2181,192.168.11.83:2181
+
+# delete topics
+delete.topic.enable=true
+</pre></div>
+
+
+<h1>查看zookeeper状态</h1>
+<p>利用nc命令查看</p>
+<div class="highlight"><pre><span></span># centos
+yum install nmap
+# debian
+apt-get install netcat
+# zookeeper leader or fellower
+echo stat | nc 192.168.1.20 2181 | grep Mode
+</pre></div>
+
+
+<h1>schema-registry配置</h1>
+<p>修改配置文件"schema-registry.properties",以下为常用命令</p>
+<div class="highlight"><pre><span></span># List all subjects
+curl -X GET http://localhost:8081/subjects
+
+# Deletes all schema versions registered under the subject &quot;Kafka-value&quot;
+curl -X DELETE http://localhost:8081/subjects/Kafka-value
+</pre></div>
+
+
+<h1>connect配置</h1>
+<p>修改配置文件"connect-avro-distributed.properties",以下为常用命令</p>
+<div class="highlight"><pre><span></span># start connect
+confluent start connect
+# list connectors
+confluent list connectors
+# load hdfs sink connect (place one config file in kafka-connect-hdfs)
+confluent load hdfs-sink -d etc/kafka-connect-hdfs/test-hdfs.properties
+# unload hdfs sink
+confluent unload hdfs-sink
+# connector&#39;s status
+confluent status connectors
+</pre></div>
+
+
+<p>test-hdfs.properties配置</p>
+<div class="highlight"><pre><span></span>name=hdfs-sink
+connector.class=io.confluent.connect.hdfs.HdfsSinkConnector
+tasks.max=1
+topics=test_hdfs
+hdfs.url=hdfs://localhost:9000
+flush.size=2
+partitioner.class=io.confluent.connect.hdfs.partitioner.FieldPartitioner
+partition.field.name=log_date,log_hour
+#format.class=io.confluent.connect.hdfs.parquet.ParquetFormat
+#hive.integration=true
+#hive.metastore.uris=thrift://localhost:9083
+#schema.compatibility=BACKWARD
+#hive.database=test
+</pre></div>
+
+
+<p>hive外部表</p>
+<div class="highlight"><pre><span></span>-- 生成的avro文件自带schema
+CREATE EXTERNAL TABLE `test_hdfs`(
+  `req_id` string,
+  `ip` string, 
+  `create_date` int
+)
+PARTITIONED BY (
+  `log_date` int,
+  `log_hour` int
+)
+ROW FORMAT SERDE &#39;org.apache.hadoop.hive.serde2.avro.AvroSerDe&#39;
+STORED AS AVRO
+LOCATION &#39;/topics/test_hdfs/&#39;
+
+-- 可采取一些两种方式添加分区,添加后才能查询
+msck repair table test_hdfs;
+alter table test_hdfs add partition (log_date=20180712, log_hour=1);
+</pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="https://docs.confluent.io/current/zookeeper/deployment.html#supported-version">https://docs.confluent.io/current/zookeeper/deployment.html#supported-version</a></li>
+<li><a href="https://github.com/confluentinc/kafka-connect-hdfs/blob/master/docs/configuration_options.rst">https://github.com/confluentinc/kafka-connect-hdfs/blob/master/docs/configuration_options.rst</a></li>
+<li><a href="https://engineering.pandora.com/creating-a-data-pipeline-with-the-kafka-connect-api-from-architecture-to-operations-56715080ac55">https://engineering.pandora.com/creating-a-data-pipeline-with-the-kafka-connect-api-from-architecture-to-operations-56715080ac55</a></li>
+<li><a href="https://resources.zaloni.com/blog/partitioning-in-hive">https://resources.zaloni.com/blog/partitioning-in-hive</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2018/05/nodejs-installation/" rel="bookmark"
+                           title="Permalink to nodejs installation">nodejs installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-05-04T12:30:00+08:00">
                 Published: 2018-05-04(五)
@@ -33,81 +201,10 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>.</p>
 <p>tags: <a href="/tag/201805.html">201805</a> <a href="/tag/js.html">js</a> </p>
-</footer><!-- /.post-info --><h1>nodejs的安装</h1>
-<p>下载并安装nvm</p>
-<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>
-git clone https://github.com/creationix/nvm.git <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
-<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
-git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
-chmod <span class="m">755</span> <span class="nv">$NVM_DIR</span>/nvm.sh
-<span class="nv">$NVM_DIR</span>/nvm.sh
-</pre></div>
-
-
-<p>nvm的更新</p>
-<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
-git fetch --tags origin
-git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
-<span class="nv">$NVM_DIR</span>/nvm.sh
-</pre></div>
-
-
-<p>在".bashrc"或".bash_profile"设置环境变量</p>
-<div class="highlight"><pre><span></span>apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
-<span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>                                                                                                    
-<span class="c1"># This loads nvm                                                                                                                    </span>
-<span class="o">[</span> -s <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span>
-</pre></div>
-
-
-<p>重启shell,让环境变量生效</p>
-<div class="highlight"><pre><span></span><span class="nb">exec</span> <span class="nv">$SHELL</span>
-</pre></div>
-
-
-<p>nvm命令</p>
-<div class="highlight"><pre><span></span><span class="c1"># 查看所有长期支持版</span>
-nvm ls-remote --lts
-<span class="c1"># 查看最新长期支持版</span>
-nvm version-remote --lts
-<span class="c1"># 安装最新版或指定版本（可设置代理）</span>
-<span class="nb">export</span> <span class="nv">NVM_NODEJS_ORG_MIRROR</span><span class="o">=</span>https://nodejs.org/dist
-nvm install --lts
-nvm install --lts<span class="o">=</span>carbon
-<span class="c1"># 卸载最新版或指定版本</span>
-nvm uninstall --lts
-nvm uninstall --lts<span class="o">=</span>carbon
-<span class="c1"># 安装并迁移npm包</span>
-nvm install node --reinstall-packages-from<span class="o">=</span>node
-nvm install <span class="m">6</span> --reinstall-packages-from<span class="o">=</span><span class="m">5</span>
-<span class="c1"># 使用相关版本</span>
-nvm use --lts
-nvm use system
-<span class="c1"># 查看当前使用版本</span>
-nvm ls
-</pre></div>
-
-
-<p>设置使用版本</p>
-<div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;8.1&quot;</span> &gt; .nvmrc
-<span class="c1"># to default to the latest LTS version</span>
-<span class="nb">echo</span> <span class="s2">&quot;lts/*&quot;</span> &gt; .nvmrc
-<span class="c1"># to default to the latest version </span>
-<span class="nb">echo</span> <span class="s2">&quot;node&quot;</span> &gt; .nvmrc 
-</pre></div>
-
-
-<p>npm换源，编辑"~/.npmrc</p>
-<div class="highlight"><pre><span></span>registry =https://registry.npm.taobao.org
-</pre></div>
-
-
-<h1>参考</h1>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>nodejs的安装</p>
+                <a class="readmore" href="/posts/2018/05/nodejs-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -284,31 +381,9 @@ nvm ls
                 <a class="readmore" href="/posts/2017/07/wordpress-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2017/06/sqlite-tips/" rel="bookmark"
-                           title="Permalink to sqlite tips">sqlite tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-06-30T14:30:00+08:00">
-                Published: 2017-06-30(五)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
-</footer><!-- /.post-info -->                <p>sqlite 常见问题的解决办法</p>
-                <a class="readmore" href="/posts/2017/06/sqlite-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
-    Page 1 / 5
+    Page 1 / 6
         <a href="/index2.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

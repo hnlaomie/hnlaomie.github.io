@@ -22,7 +22,175 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2015/12/kafka-installation/">kafka installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2018/07/confluent-installation/">confluent installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-07-12T19:50:00+08:00">
+                Published: 2018-07-12(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/hnlaomie.html">hnlaomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201807.html">201807</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/confluent.html">confluent</a> </p>
+</footer><!-- /.post-info --><h1>环境变量,数据目录设置</h1>
+<div class="highlight"><pre><span></span>export CONFLUENT_CURRENT=/data/hadoop
+export CONFLUENT_HOME=/data/apache/confluent
+export PATH=$PATH:$CONFLUENT_HOME/bin
+</pre></div>
+
+
+<p>生效后用以下命令查看confluent数据目录,并生成kafka, zookeeper数据目录</p>
+<div class="highlight"><pre><span></span>confluent current
+# confluent.ljzXwHuB为以上命令生成的目录
+mkdir -p /data/hadoop/confluent.ljzXwHuB/zookeeper/data
+mkdir -p /data/hadoop/confluent.ljzXwHuB/kafka/data
+echo 1 &gt; /data/hadoop/confluent.ljzXwHuB/zookeeper/data/myid
+</pre></div>
+
+
+<h1>zookeeper配置</h1>
+<p>vim /data/apache/confluent/etc/kafka/zookeeper.properties</p>
+<div class="highlight"><pre><span></span># The number of milliseconds of each tick
+tickTime=2000
+# The number of ticks that the initial 
+# synchronization phase can take
+initLimit=10
+# The number of ticks that can pass between 
+# sending a request and getting an acknowledgement
+syncLimit=5
+
+dataDir=/data/hadoop/confluent.ljzXwHuB/zookeeper/data
+# the port at which the clients will connect
+clientPort=2181
+
+# the maximum number of client connections.
+# increase this if you need to handle more clients
+maxClientCnxns=60
+
+server.1=192.168.11.82:2888:3888
+server.2=192.168.11.81:2888:3888
+server.3=192.168.11.83:2888:3888
+
+autopurge.snapRetainCount=3
+autopurge.purgeInterval=24
+</pre></div>
+
+
+<h1>kafka配置</h1>
+<p>vim /data/apache/confluent/etc/kafka/server.properties</p>
+<div class="highlight"><pre><span></span>broker.id=1
+
+listeners=PLAINTEXT://192.168.11.82:9092
+
+log.dirs=/data/hadoop/confluent.ljzXwHuB/kafka/data
+
+num.partitions=12
+
+log.retention.bytes=-1
+log.cleanup.policy=delete
+
+zookeeper.connect=192.168.11.82:2181,192.168.11.81:2181,192.168.11.83:2181
+
+# delete topics
+delete.topic.enable=true
+</pre></div>
+
+
+<h1>查看zookeeper状态</h1>
+<p>利用nc命令查看</p>
+<div class="highlight"><pre><span></span># centos
+yum install nmap
+# debian
+apt-get install netcat
+# zookeeper leader or fellower
+echo stat | nc 192.168.1.20 2181 | grep Mode
+</pre></div>
+
+
+<h1>schema-registry配置</h1>
+<p>修改配置文件"schema-registry.properties",以下为常用命令</p>
+<div class="highlight"><pre><span></span># List all subjects
+curl -X GET http://localhost:8081/subjects
+
+# Deletes all schema versions registered under the subject &quot;Kafka-value&quot;
+curl -X DELETE http://localhost:8081/subjects/Kafka-value
+</pre></div>
+
+
+<h1>connect配置</h1>
+<p>修改配置文件"connect-avro-distributed.properties",以下为常用命令</p>
+<div class="highlight"><pre><span></span># start connect
+confluent start connect
+# list connectors
+confluent list connectors
+# load hdfs sink connect (place one config file in kafka-connect-hdfs)
+confluent load hdfs-sink -d etc/kafka-connect-hdfs/test-hdfs.properties
+# unload hdfs sink
+confluent unload hdfs-sink
+# connector&#39;s status
+confluent status connectors
+</pre></div>
+
+
+<p>test-hdfs.properties配置</p>
+<div class="highlight"><pre><span></span>name=hdfs-sink
+connector.class=io.confluent.connect.hdfs.HdfsSinkConnector
+tasks.max=1
+topics=test_hdfs
+hdfs.url=hdfs://localhost:9000
+flush.size=2
+partitioner.class=io.confluent.connect.hdfs.partitioner.FieldPartitioner
+partition.field.name=log_date,log_hour
+#format.class=io.confluent.connect.hdfs.parquet.ParquetFormat
+#hive.integration=true
+#hive.metastore.uris=thrift://localhost:9083
+#schema.compatibility=BACKWARD
+#hive.database=test
+</pre></div>
+
+
+<p>hive外部表</p>
+<div class="highlight"><pre><span></span>-- 生成的avro文件自带schema
+CREATE EXTERNAL TABLE `test_hdfs`(
+  `req_id` string,
+  `ip` string, 
+  `create_date` int
+)
+PARTITIONED BY (
+  `log_date` int,
+  `log_hour` int
+)
+ROW FORMAT SERDE &#39;org.apache.hadoop.hive.serde2.avro.AvroSerDe&#39;
+STORED AS AVRO
+LOCATION &#39;/topics/test_hdfs/&#39;
+
+-- 可采取一些两种方式添加分区,添加后才能查询
+msck repair table test_hdfs;
+alter table test_hdfs add partition (log_date=20180712, log_hour=1);
+</pre></div>
+
+
+<h1>参考</h1>
+<ul>
+<li><a href="https://docs.confluent.io/current/zookeeper/deployment.html#supported-version">https://docs.confluent.io/current/zookeeper/deployment.html#supported-version</a></li>
+<li><a href="https://github.com/confluentinc/kafka-connect-hdfs/blob/master/docs/configuration_options.rst">https://github.com/confluentinc/kafka-connect-hdfs/blob/master/docs/configuration_options.rst</a></li>
+<li><a href="https://engineering.pandora.com/creating-a-data-pipeline-with-the-kafka-connect-api-from-architecture-to-operations-56715080ac55">https://engineering.pandora.com/creating-a-data-pipeline-with-the-kafka-connect-api-from-architecture-to-operations-56715080ac55</a></li>
+<li><a href="https://resources.zaloni.com/blog/partitioning-in-hive">https://resources.zaloni.com/blog/partitioning-in-hive</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2015/12/kafka-installation/" rel="bookmark"
+                           title="Permalink to kafka installation">kafka installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-12-18T09:50:00+08:00">
                 Published: 2015-12-18(五)
@@ -33,167 +201,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hadoop.html">hadoop</a> </p>
-</footer><!-- /.post-info --><h1>代码编译</h1>
-<div class="highlight"><pre><span></span>gradle
-gradle releaseTarGzAll
-</pre></div>
-
-
-<p>安装包在./core/build/distributions/</p>
-<h1>安装</h1>
-<p><a href="http://hnlaomie.github.io/posts/2015/07/zookeeper-installation/">安装zookeeper</a>，然后修改"config/server.properties"设置zookeeper</p>
-<div class="highlight"><pre><span></span>zookeeper.connect=localhost:2181
-</pre></div>
-
-
-<p>在"bin/kafka-run-class.sh"中修改日志路径（否则日志将写到安装路径的"logs"目录）</p>
-<div class="highlight"><pre><span></span>LOG_DIR=&quot;/data/hadoop/kafka/log4j/logs&quot;
-</pre></div>
-
-
-<h1>快速指南</h1>
-<div class="highlight"><pre><span></span># 启动
-kafka-server-start.sh config/server.properties &amp;
-# 停止
-kafka-server-stop.sh config/server.properties
-# 新建主题
-kafka-topics.sh --create --zookeeper 192.168.11.82:2181 --replication-factor 2 --partitions 18 --topic test
-# 显示主题
-kafka-topics.sh --list --zookeeper 192.168.11.82:2181
-# 查看主题
-kafka-topics.sh --describe --zookeeper 192.168.11.82:2181 --topic test 
-# 修改数据保存时间
-kafka-configs.sh --zookeeper 192.168.11.82:2181 --alter --entity-type topics --entity-name test --add-config retention.ms=86400000
-# 发送消息
-kafka-console-producer.sh --broker-list 192.168.11.82:9092 --topic test
-# 接收消息
-kafka-console-consumer.sh --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
-kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
-# consumer group
-kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
-kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --describe
-kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --delete
-kafka-run-class.sh kafka.admin.ConsumerGroupCommand --group onlineKafka --zookeeper node3:2181 --describe
-# 启动schema-registry,需要confluent
-schema-registry-start ./etc/schema-registry/schema-registry.properties
-# Start Connect in distributed mode. Run this command in its own terminal.
-$ connect-distributed ./etc/schema-registry/connect-avro-distributed.properties
-# start ksql
-$ ksql-server-start ./etc/ksql/ksql-server.properties
-</pre></div>
-
-
-<h1>kafka和spark整合</h1>
-<div class="highlight"><pre><span></span>cd $SPARK_HOME
-bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5
-bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1
-bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test
-</pre></div>
-
-
-<h1>idea开发环境设置</h1>
-<p>kafka, spark streaming相关例子，只需启动kafka，然后在运行环境里做如下设置</p>
-<div class="highlight"><pre><span></span>VM options: -Dspark.master=local[2]
-Environment variables: MASTER=localh[2]
-</pre></div>
-
-
-<p>scala2.10使用jkd7，gradle需做以下设置兼容jdk7</p>
-<div class="highlight"><pre><span></span>sourceCompatibility = &quot;1.7&quot;
-targetCompatibility = &quot;1.7&quot;
-</pre></div>
-
-
-<h1>删除主题内容</h1>
-<p>设置server.properties</p>
-<div class="highlight"><pre><span></span>delete.topic.enable=true
-</pre></div>
-
-
-<p>用以下命令删除内容</p>
-<div class="highlight"><pre><span></span>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
-<span class="c1"># 从zookeeper删除</span>
-bin/zkCli.sh <span class="c1"># and delete the topics using </span>
-rmr /brokers/topics/<span class="s">&lt;&lt;topic&gt;&gt; and rmr /admin/delete_topic</span>s/&lt;&lt;topic&gt;&gt;
-</pre></div>
-
-
-<h1>新版本"kafka-console-consumer.sh"不能用"--bootstrap-server"</h1>
-<p>需要删除zookeeper上老版本的"/brokers"目录，然后让新版本重建目录</p>
-<ol>
-<li>
-<p>Delete all topics and stop kafka brokers</p>
-</li>
-<li>
-<p>Connect to zookeeper cluster and remove "/brokers" z node</p>
-</li>
-<li>
-<p>Restart kafka brokers</p>
-</li>
-</ol>
-<h1>复制错误处理</h1>
-<p>报"Number of alive brokers '1' does not meet the required replication factor"，需要设置"server.properties"</p>
-<div class="highlight"><pre><span></span>offsets.topic.replication.factor=1
-</pre></div>
-
-
-<h1>跨集群复制</h1>
-<p>低版本集群数据复制到高版本集群，低版本应用能读写高版本集群，反之不行</p>
-<p>消费低版本集群的配置"consumer.properties"</p>
-<div class="highlight"><pre><span></span>zookeeper.connect=node3:2181,node6:2181,node7:2181
-group.id=onlineKafka
-auto.offset.reset=smallest
-partition.assignment.strategy=roundrobin
-</pre></div>
-
-
-<p>往高版本集群产生数据的配置"producer.properties"</p>
-<div class="highlight"><pre><span></span>bootstrap.servers=192.168.11.81:9092,192.168.11.82:9092,192.168.11.83:9092
-</pre></div>
-
-
-<p>复制主题内容的命令</p>
-<div class="highlight"><pre><span></span>$KAFKA_HOME/bin/kafka-mirror-maker.sh --consumer.config consumer.properties --producer.config producer.properties --num.streams=2 --whitelist &quot;test&quot;
-</pre></div>
-
-
-<h1>kafka升级</h1>
-<p>kafka upgrade from 1.0.0 to 1.1.0</p>
-<ol>
-<li>add follow content to config/server.properties</li>
-</ol>
-<div class="highlight"><pre><span></span># for upgrade
-inter.broker.protocol.version=1.0
-message.format.version=1.0
-</pre></div>
-
-
-<ol>
-<li>
-<p>stop broker from 1 to n and upgrade</p>
-</li>
-<li>
-<p>Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 1.1.</p>
-</li>
-<li>
-<p>restart the brokers one by one for the new protocol version to take effect.</p>
-</li>
-<li>
-<p>Once the entire client is upgraded, bump the protocol version by editing message.format.version and setting it to 1.1.</p>
-</li>
-<li>
-<p>restart the brokers one by one.</p>
-</li>
-</ol>
-<h1>参考</h1>
-<ul>
-<li><a href="http://blog.jobbole.com/99195/">http://blog.jobbole.com/99195/</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>kafka安装</p>
+                <a class="readmore" href="/posts/2015/12/kafka-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
