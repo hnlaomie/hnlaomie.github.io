@@ -29,7 +29,7 @@ LOG_DIR="/data/hadoop/kafka/log4j/logs"
 =======================
 ```
 # 启动
-kafka-server-start.sh config/server.properties &
+kafka-server-start.sh –daemon config/server.properties &
 # 停止
 kafka-server-stop.sh config/server.properties
 # 新建主题
@@ -45,6 +45,13 @@ kafka-console-producer.sh --broker-list 192.168.11.82:9092 --topic test
 # 接收消息
 kafka-console-consumer.sh --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
 kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
+# 删除消息(修改过期时间)
+kafka-topics --zookeeper localhost:2181 --alter --topic connect-test --config retention.ms=1000
+# 删除消息(各分区到指定offset数据, -1为所有)
+kafka-delete-records --bootstrap-server localhost:9092 --offset-json-file ./delete.json
+# delete.json格式如下
+{"partitions": [{"topic": “test", "partition": 0, "offset": -1}, ...], "version":1 }
+
 # consumer group
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --describe
