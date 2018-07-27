@@ -53,21 +53,21 @@ gradle releaseTarGzAll
 
 <h1>快速指南</h1>
 <div class="highlight"><pre><span></span># 启动
-kafka-server-start.sh –daemon config/server.properties &amp;
+kafka-server-start –daemon config/server.properties &amp;
 # 停止
-kafka-server-stop.sh config/server.properties
+kafka-server-stop config/server.properties
 # 新建主题
-kafka-topics.sh --create --zookeeper 192.168.11.82:2181 --replication-factor 2 --partitions 18 --topic test
+kafka-topics --create --zookeeper 192.168.11.82:2181 --replication-factor 2 --partitions 18 --topic test
 # 显示主题
-kafka-topics.sh --list --zookeeper 192.168.11.82:2181
+kafka-topics --list --zookeeper 192.168.11.82:2181
 # 查看主题
-kafka-topics.sh --describe --zookeeper 192.168.11.82:2181 --topic test 
+kafka-topics --describe --zookeeper 192.168.11.82:2181 --topic test 
 # 修改数据保存时间
-kafka-configs.sh --zookeeper 192.168.11.82:2181 --alter --entity-type topics --entity-name test --add-config retention.ms=86400000
+kafka-configs --zookeeper 192.168.11.82:2181 --alter --entity-type topics --entity-name test --add-config retention.ms=86400000
 # 发送消息
-kafka-console-producer.sh --broker-list 192.168.11.82:9092 --topic test
+kafka-console-producer --broker-list 192.168.11.82:9092 --topic test
 # 接收消息
-kafka-console-consumer.sh --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
+kafka-console-consumer --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
 kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
 # 删除消息(修改过期时间)
 kafka-topics --zookeeper localhost:2181 --alter --topic connect-test --config retention.ms=1000
@@ -76,11 +76,24 @@ kafka-delete-records --bootstrap-server localhost:9092 --offset-json-file ./dele
 # delete.json格式如下
 {&quot;partitions&quot;: [{&quot;topic&quot;: “test&quot;, &quot;partition&quot;: 0, &quot;offset&quot;: -1}, ...], &quot;version&quot;:1 }
 
+# 修改replication-factor
+kafka-topics --zookeeper 192.168.11.82:2181 --alter --topic dsp39 --config replication-factor=2
+# 修改partitions
+kafka-reassign-partitions.sh --zookeeper 192.168.11.82:2181 --reassignment-json-file rep.json --execute
+# rep.json格式如下
+{&quot;partitions&quot;: [{&quot;topic&quot;: “dsp39&quot;, &quot;partition&quot;: 0, &quot;replicas&quot;:[0,1]}, ...], &quot;version&quot;:1 }
+
 # consumer group
-kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
-kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --describe
-kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group groupid --delete
-kafka-run-class.sh kafka.admin.ConsumerGroupCommand --group onlineKafka --zookeeper node3:2181 --describe
+kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --list
+kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group groupid --describe
+kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group groupid --delete
+# 重置offset(不实际修改offset)
+kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group csv-group --topic dsps --reset-offsets --to-earliest
+# 重置offset(修改offset)
+kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group csv-group --topic dsps --reset-offsets --to-earliest --execute
+
+kafka-run-class kafka.admin.ConsumerGroupCommand --group onlineKafka --zookeeper node3:2181 --describe
+
 # 启动schema-registry,需要confluent
 schema-registry-start ./etc/schema-registry/schema-registry.properties
 # Start Connect in distributed mode. Run this command in its own terminal.
