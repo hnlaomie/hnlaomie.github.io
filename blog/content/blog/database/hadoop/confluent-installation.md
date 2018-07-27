@@ -140,8 +140,9 @@ PARTITIONED BY (
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
 STORED AS AVRO
 LOCATION '/topics/test_hdfs/'
+;
 
--- 可采取一些两种方式添加分区,添加后才能查询
+-- 可采取以下两种方式添加分区,添加后才能查询
 msck repair table test_hdfs;
 alter table test_hdfs add partition (log_date=20180712, log_hour=1);
 ```
