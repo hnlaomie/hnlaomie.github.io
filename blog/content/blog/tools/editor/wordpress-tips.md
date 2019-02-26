@@ -51,3 +51,10 @@ width: 26% !important;
 wordpress插件
 =========================
 1\. codecolorer 
+
+wordpress更换站点
+================================
+进入mysql,用以下类似命令更换ip或域名
+```
+update option_value = 'http://192.168.18.8:8000' where option_id = 1;
+```

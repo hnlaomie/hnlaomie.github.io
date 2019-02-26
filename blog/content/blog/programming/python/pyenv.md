@@ -20,6 +20,7 @@ apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev
 export PYENV_ROOT="$HOME/tools/pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+# eval "$(pyenv init - --no-rehash)"
 ```
 
 重启shell,让环境变量生效
