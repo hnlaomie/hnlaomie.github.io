@@ -68,7 +68,7 @@ kafka-configs --zookeeper 192.168.11.82:2181 --alter --entity-type topics --enti
 kafka-console-producer --broker-list 192.168.11.82:9092 --topic test
 # 接收消息
 kafka-console-consumer --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
-kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
+kafka-avro-console-consumer --bootstrap-server localhost:9092 --property schema.registry.url=http://localhost:8091 --topic test --from-beginning
 # 删除消息(修改过期时间)
 kafka-topics --zookeeper localhost:2181 --alter --topic connect-test --config retention.ms=1000
 # 删除消息(各分区到指定offset数据, -1为所有)
@@ -131,14 +131,14 @@ targetCompatibility = &quot;1.7&quot;
 
 
 <p>用以下命令删除内容</p>
-<div class="highlight"><pre><span></span>bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
+<div class="highlight"><pre><span></span>kafka-topics --zookeeper localhost:2181 --delete --topic <span class="nb">test</span>
 <span class="c1"># 从zookeeper删除</span>
-bin/zkCli.sh <span class="c1"># and delete the topics using </span>
+zookeeper-shell <span class="c1"># and delete the topics using </span>
 rmr /brokers/topics/<span class="s">&lt;&lt;topic&gt;&gt; and rmr /admin/delete_topic</span>s/&lt;&lt;topic&gt;&gt;
 </pre></div>
 
 
-<h1>新版本"kafka-console-consumer.sh"不能用"--bootstrap-server"</h1>
+<h1>新版本"kafka-console-consumer"不能用"--bootstrap-server"</h1>
 <p>需要删除zookeeper上老版本的"/brokers"目录，然后让新版本重建目录</p>
 <ol>
 <li>

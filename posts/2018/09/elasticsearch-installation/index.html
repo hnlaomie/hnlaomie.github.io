@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>ElasticSearch installation</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/posts/2018/09/elasticsearch-installation/" rel="bookmark"
+           title="Permalink to ElasticSearch installation">ElasticSearch installation</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-09-06T08:30:00+08:00">
+                Published: 2018-09-06(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201809.html">201809</a> <a href="/tag/es.html">es</a> </p>
+</footer><!-- /.post-info -->      <h1>系统设置</h1>
+<p>"max file descriptors"修改, 在"/etc/security/limits.conf"增加以下两行</p>
+<div class="highlight"><pre><span></span>*            hard   nofile          65536
+*            soft   nofile          65536
+</pre></div>
+
+
+<p>debian系统还需要修改"/etc/systemd/system.conf"和"/etc/systemd/user.conf"里的一行</p>
+<div class="highlight"><pre><span></span>DefaultLimitNOFILE=65535
+</pre></div>
+
+
+<p>"max virtual memory areas"修改, 在"/etc/sysctl.conf"增加以下一行</p>
+<div class="highlight"><pre><span></span>vm.max_map_count=262144
+</pre></div>
+
+
+<h1>单机安装ElasticSearch, Kibana</h1>
+<ol>
+<li>下载并解压elasticsearch,然后修改"config/elasticsearch.yml"</li>
+</ol>
+<div class="highlight"><pre><span></span>path.data: /home/laomie/tools/data/es/data
+path.logs: /home/laomie/tools/data/es/logs
+
+#allow origin for elasticsearch head
+http.cors.enabled: true                                                                                                 
+http.cors.allow-origin: &quot;*&quot;
+</pre></div>
+
+
+<ol>
+<li>下载并解压kibana,然后修改"config/kibana.yml"</li>
+</ol>
+<div class="highlight"><pre><span></span>kibana.index: &quot;/home/laomie/tools/data/es/kibana&quot;
+</pre></div>
+
+
+<ol>
+<li>安装 elasticsearch head (需要先用nvm装node)</li>
+</ol>
+<div class="highlight"><pre><span></span>git clone git://github.com/mobz/elasticsearch-head.git
+cd elasticsearch-head
+npm install
+npm run start
+# open http://localhost:9100/
+</pre></div>
+
+
+<h1>集群安装ElasticSearch, Kibana</h1>
+<h1>参考</h1>
+<p>https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#limits.conf
+https://unix.stackexchange.com/questions/385222/debian-9-1-system-is-ignoring-ulimit-for-maximum-open-files-for-rtorrent</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

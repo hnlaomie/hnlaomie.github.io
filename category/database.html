@@ -22,7 +22,82 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2018/07/confluent-installation/">confluent installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2018/09/elasticsearch-installation/">ElasticSearch installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-09-06T08:30:00+08:00">
+                Published: 2018-09-06(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201809.html">201809</a> <a href="/tag/es.html">es</a> </p>
+</footer><!-- /.post-info --><h1>系统设置</h1>
+<p>"max file descriptors"修改, 在"/etc/security/limits.conf"增加以下两行</p>
+<div class="highlight"><pre><span></span>*            hard   nofile          65536
+*            soft   nofile          65536
+</pre></div>
+
+
+<p>debian系统还需要修改"/etc/systemd/system.conf"和"/etc/systemd/user.conf"里的一行</p>
+<div class="highlight"><pre><span></span>DefaultLimitNOFILE=65535
+</pre></div>
+
+
+<p>"max virtual memory areas"修改, 在"/etc/sysctl.conf"增加以下一行</p>
+<div class="highlight"><pre><span></span>vm.max_map_count=262144
+</pre></div>
+
+
+<h1>单机安装ElasticSearch, Kibana</h1>
+<ol>
+<li>下载并解压elasticsearch,然后修改"config/elasticsearch.yml"</li>
+</ol>
+<div class="highlight"><pre><span></span>path.data: /home/laomie/tools/data/es/data
+path.logs: /home/laomie/tools/data/es/logs
+
+#allow origin for elasticsearch head
+http.cors.enabled: true                                                                                                 
+http.cors.allow-origin: &quot;*&quot;
+</pre></div>
+
+
+<ol>
+<li>下载并解压kibana,然后修改"config/kibana.yml"</li>
+</ol>
+<div class="highlight"><pre><span></span>kibana.index: &quot;/home/laomie/tools/data/es/kibana&quot;
+</pre></div>
+
+
+<ol>
+<li>安装 elasticsearch head (需要先用nvm装node)</li>
+</ol>
+<div class="highlight"><pre><span></span>git clone git://github.com/mobz/elasticsearch-head.git
+cd elasticsearch-head
+npm install
+npm run start
+# open http://localhost:9100/
+</pre></div>
+
+
+<h1>集群安装ElasticSearch, Kibana</h1>
+<h1>参考</h1>
+<p>https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#limits.conf
+https://unix.stackexchange.com/questions/385222/debian-9-1-system-is-ignoring-ulimit-for-maximum-open-files-for-rtorrent</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2018/07/confluent-installation/" rel="bookmark"
+                           title="Permalink to confluent installation">confluent installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-12T19:50:00+08:00">
                 Published: 2018-07-12(四)
@@ -33,157 +108,10 @@
         </address>
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201807.html">201807</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/confluent.html">confluent</a> </p>
-</footer><!-- /.post-info --><h1>环境变量,数据目录设置</h1>
-<div class="highlight"><pre><span></span>export CONFLUENT_CURRENT=/data/hadoop
-export CONFLUENT_HOME=/data/apache/confluent
-export PATH=$PATH:$CONFLUENT_HOME/bin
-</pre></div>
-
-
-<p>生效后用以下命令查看confluent数据目录,并生成kafka, zookeeper数据目录</p>
-<div class="highlight"><pre><span></span>confluent current
-# confluent.ljzXwHuB为以上命令生成的目录
-mkdir -p /data/hadoop/confluent.ljzXwHuB/zookeeper/data
-mkdir -p /data/hadoop/confluent.ljzXwHuB/kafka/data
-echo 1 &gt; /data/hadoop/confluent.ljzXwHuB/zookeeper/data/myid
-</pre></div>
-
-
-<h1>zookeeper配置</h1>
-<p>vim /data/apache/confluent/etc/kafka/zookeeper.properties</p>
-<div class="highlight"><pre><span></span># The number of milliseconds of each tick
-tickTime=2000
-# The number of ticks that the initial 
-# synchronization phase can take
-initLimit=10
-# The number of ticks that can pass between 
-# sending a request and getting an acknowledgement
-syncLimit=5
-
-dataDir=/data/hadoop/confluent.ljzXwHuB/zookeeper/data
-# the port at which the clients will connect
-clientPort=2181
-
-# the maximum number of client connections.
-# increase this if you need to handle more clients
-maxClientCnxns=60
-
-server.1=192.168.11.82:2888:3888
-server.2=192.168.11.81:2888:3888
-server.3=192.168.11.83:2888:3888
-
-autopurge.snapRetainCount=3
-autopurge.purgeInterval=24
-</pre></div>
-
-
-<h1>kafka配置</h1>
-<p>vim /data/apache/confluent/etc/kafka/server.properties</p>
-<div class="highlight"><pre><span></span>broker.id=1
-
-listeners=PLAINTEXT://192.168.11.82:9092
-
-log.dirs=/data/hadoop/confluent.ljzXwHuB/kafka/data
-
-num.partitions=12
-
-log.retention.bytes=-1
-log.cleanup.policy=delete
-
-zookeeper.connect=192.168.11.82:2181,192.168.11.81:2181,192.168.11.83:2181
-
-# delete topics
-delete.topic.enable=true
-</pre></div>
-
-
-<h1>查看zookeeper状态</h1>
-<p>利用nc命令查看</p>
-<div class="highlight"><pre><span></span># centos
-yum install nmap
-# debian
-apt-get install netcat
-# zookeeper leader or fellower
-echo stat | nc 192.168.1.20 2181 | grep Mode
-</pre></div>
-
-
-<h1>schema-registry配置</h1>
-<p>修改配置文件"schema-registry.properties",以下为常用命令</p>
-<div class="highlight"><pre><span></span># List all subjects
-curl -X GET http://localhost:8081/subjects
-
-# Deletes all schema versions registered under the subject &quot;Kafka-value&quot;
-curl -X DELETE http://localhost:8081/subjects/Kafka-value
-</pre></div>
-
-
-<h1>connect配置</h1>
-<p>修改配置文件"connect-avro-distributed.properties",以下为常用命令</p>
-<div class="highlight"><pre><span></span># start connect
-confluent start connect
-# list connectors
-confluent list connectors
-# load hdfs sink connect (place one config file in kafka-connect-hdfs)
-confluent load hdfs-sink -d etc/kafka-connect-hdfs/test-hdfs.properties
-# unload hdfs sink
-confluent unload hdfs-sink
-# connector&#39;s status
-confluent status connectors
-</pre></div>
-
-
-<p>test-hdfs.properties配置</p>
-<div class="highlight"><pre><span></span>name=hdfs-sink
-connector.class=io.confluent.connect.hdfs.HdfsSinkConnector
-tasks.max=1
-topics=test_hdfs
-hdfs.url=hdfs://localhost:9000
-flush.size=2
-partitioner.class=io.confluent.connect.hdfs.partitioner.FieldPartitioner
-partition.field.name=log_date,log_hour
-#format.class=io.confluent.connect.hdfs.parquet.ParquetFormat
-#hive.integration=true
-#hive.metastore.uris=thrift://localhost:9083
-#schema.compatibility=BACKWARD
-#hive.database=test
-</pre></div>
-
-
-<p>hive外部表</p>
-<div class="highlight"><pre><span></span>-- 生成的avro文件自带schema
-CREATE EXTERNAL TABLE `test_hdfs`(
-  `req_id` string,
-  `ip` string, 
-  `create_date` int
-)
-PARTITIONED BY (
-  `log_date` int,
-  `log_hour` int
-)
-ROW FORMAT SERDE &#39;org.apache.hadoop.hive.serde2.avro.AvroSerDe&#39;
-STORED AS AVRO
-LOCATION &#39;/topics/test_hdfs/&#39;
-;
-
--- 可采取以下两种方式添加分区,添加后才能查询
-msck repair table test_hdfs;
-alter table test_hdfs add partition (log_date=20180712, log_hour=1);
-</pre></div>
-
-
-<h1>参考</h1>
-<ul>
-<li><a href="https://docs.confluent.io/current/zookeeper/deployment.html#supported-version">https://docs.confluent.io/current/zookeeper/deployment.html#supported-version</a></li>
-<li><a href="https://github.com/confluentinc/kafka-connect-hdfs/blob/master/docs/configuration_options.rst">https://github.com/confluentinc/kafka-connect-hdfs/blob/master/docs/configuration_options.rst</a></li>
-<li><a href="https://engineering.pandora.com/creating-a-data-pipeline-with-the-kafka-connect-api-from-architecture-to-operations-56715080ac55">https://engineering.pandora.com/creating-a-data-pipeline-with-the-kafka-connect-api-from-architecture-to-operations-56715080ac55</a></li>
-<li><a href="https://resources.zaloni.com/blog/partitioning-in-hive">https://resources.zaloni.com/blog/partitioning-in-hive</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>confluent安装</p>
+                <a class="readmore" href="/posts/2018/07/confluent-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -358,28 +286,6 @@ alter table test_hdfs add partition (log_date=20180712, log_hour=1);
 <p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/cassandra.html">cassandra</a> </p>
 </footer><!-- /.post-info -->                <p>cassandra安装</p>
                 <a class="readmore" href="/posts/2016/01/cassandra-installation/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2016/01/spark-tips/" rel="bookmark"
-                           title="Permalink to spark tips">spark tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-01-09T16:30:00+08:00">
-                Published: 2016-01-09(六)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201601.html">201601</a> <a href="/tag/spark.html">spark</a> </p>
-</footer><!-- /.post-info -->                <p>spark使用指南</p>
-                <a class="readmore" href="/posts/2016/01/spark-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

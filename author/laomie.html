@@ -22,7 +22,82 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/posts/2018/05/nodejs-installation/">nodejs installation</a></h1>
+                    <h1 class="entry-title"><a href="/posts/2018/09/elasticsearch-installation/">ElasticSearch installation</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-09-06T08:30:00+08:00">
+                Published: 2018-09-06(四)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/database.html">database</a>.</p>
+<p>tags: <a href="/tag/201809.html">201809</a> <a href="/tag/es.html">es</a> </p>
+</footer><!-- /.post-info --><h1>系统设置</h1>
+<p>"max file descriptors"修改, 在"/etc/security/limits.conf"增加以下两行</p>
+<div class="highlight"><pre><span></span>*            hard   nofile          65536
+*            soft   nofile          65536
+</pre></div>
+
+
+<p>debian系统还需要修改"/etc/systemd/system.conf"和"/etc/systemd/user.conf"里的一行</p>
+<div class="highlight"><pre><span></span>DefaultLimitNOFILE=65535
+</pre></div>
+
+
+<p>"max virtual memory areas"修改, 在"/etc/sysctl.conf"增加以下一行</p>
+<div class="highlight"><pre><span></span>vm.max_map_count=262144
+</pre></div>
+
+
+<h1>单机安装ElasticSearch, Kibana</h1>
+<ol>
+<li>下载并解压elasticsearch,然后修改"config/elasticsearch.yml"</li>
+</ol>
+<div class="highlight"><pre><span></span>path.data: /home/laomie/tools/data/es/data
+path.logs: /home/laomie/tools/data/es/logs
+
+#allow origin for elasticsearch head
+http.cors.enabled: true                                                                                                 
+http.cors.allow-origin: &quot;*&quot;
+</pre></div>
+
+
+<ol>
+<li>下载并解压kibana,然后修改"config/kibana.yml"</li>
+</ol>
+<div class="highlight"><pre><span></span>kibana.index: &quot;/home/laomie/tools/data/es/kibana&quot;
+</pre></div>
+
+
+<ol>
+<li>安装 elasticsearch head (需要先用nvm装node)</li>
+</ol>
+<div class="highlight"><pre><span></span>git clone git://github.com/mobz/elasticsearch-head.git
+cd elasticsearch-head
+npm install
+npm run start
+# open http://localhost:9100/
+</pre></div>
+
+
+<h1>集群安装ElasticSearch, Kibana</h1>
+<h1>参考</h1>
+<p>https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#limits.conf
+https://unix.stackexchange.com/questions/385222/debian-9-1-system-is-ignoring-ulimit-for-maximum-open-files-for-rtorrent</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/posts/2018/05/nodejs-installation/" rel="bookmark"
+                           title="Permalink to nodejs installation">nodejs installation</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-05-04T12:30:00+08:00">
                 Published: 2018-05-04(五)
@@ -33,81 +108,10 @@
         </address>
 <p>In <a href="/category/programming.html">programming</a>.</p>
 <p>tags: <a href="/tag/201805.html">201805</a> <a href="/tag/js.html">js</a> </p>
-</footer><!-- /.post-info --><h1>nodejs的安装</h1>
-<p>下载并安装nvm</p>
-<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>
-git clone https://github.com/creationix/nvm.git <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
-<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
-git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
-chmod <span class="m">755</span> <span class="nv">$NVM_DIR</span>/nvm.sh
-<span class="nv">$NVM_DIR</span>/nvm.sh
-</pre></div>
-
-
-<p>nvm的更新</p>
-<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">&quot;</span>
-git fetch --tags origin
-git checkout <span class="sb">`</span>git describe --abbrev<span class="o">=</span><span class="m">0</span> --tags --match <span class="s2">&quot;v[0-9]*&quot;</span> <span class="k">$(</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="k">)</span><span class="sb">`</span>
-<span class="nv">$NVM_DIR</span>/nvm.sh
-</pre></div>
-
-
-<p>在".bashrc"或".bash_profile"设置环境变量</p>
-<div class="highlight"><pre><span></span>apt-get install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev
-<span class="nb">export</span> <span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/tools/nvm&quot;</span>                                                                                                    
-<span class="c1"># This loads nvm                                                                                                                    </span>
-<span class="o">[</span> -s <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span>
-</pre></div>
-
-
-<p>重启shell,让环境变量生效</p>
-<div class="highlight"><pre><span></span><span class="nb">exec</span> <span class="nv">$SHELL</span>
-</pre></div>
-
-
-<p>nvm命令</p>
-<div class="highlight"><pre><span></span><span class="c1"># 查看所有长期支持版</span>
-nvm ls-remote --lts
-<span class="c1"># 查看最新长期支持版</span>
-nvm version-remote --lts
-<span class="c1"># 安装最新版或指定版本（可设置代理）</span>
-<span class="nb">export</span> <span class="nv">NVM_NODEJS_ORG_MIRROR</span><span class="o">=</span>https://nodejs.org/dist
-nvm install --lts
-nvm install --lts<span class="o">=</span>carbon
-<span class="c1"># 卸载最新版或指定版本</span>
-nvm uninstall --lts
-nvm uninstall --lts<span class="o">=</span>carbon
-<span class="c1"># 安装并迁移npm包</span>
-nvm install node --reinstall-packages-from<span class="o">=</span>node
-nvm install <span class="m">6</span> --reinstall-packages-from<span class="o">=</span><span class="m">5</span>
-<span class="c1"># 使用相关版本</span>
-nvm use --lts
-nvm use system
-<span class="c1"># 查看当前使用版本</span>
-nvm ls
-</pre></div>
-
-
-<p>设置使用版本</p>
-<div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;8.1&quot;</span> &gt; .nvmrc
-<span class="c1"># to default to the latest LTS version</span>
-<span class="nb">echo</span> <span class="s2">&quot;lts/*&quot;</span> &gt; .nvmrc
-<span class="c1"># to default to the latest version </span>
-<span class="nb">echo</span> <span class="s2">&quot;node&quot;</span> &gt; .nvmrc 
-</pre></div>
-
-
-<p>npm换源，编辑"~/.npmrc</p>
-<div class="highlight"><pre><span></span>registry =https://registry.npm.taobao.org
-</pre></div>
-
-
-<h1>参考</h1>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>nodejs的安装</p>
+                <a class="readmore" href="/posts/2018/05/nodejs-installation/">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -282,28 +286,6 @@ nvm ls
 <p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/wordpress.html">wordpress</a> </p>
 </footer><!-- /.post-info -->                <p>wordpress技巧</p>
                 <a class="readmore" href="/posts/2017/07/wordpress-tips/">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/posts/2017/06/sqlite-tips/" rel="bookmark"
-                           title="Permalink to sqlite tips">sqlite tips</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-06-30T14:30:00+08:00">
-                Published: 2017-06-30(五)
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
-        </address>
-<p>In <a href="/category/database.html">database</a>.</p>
-<p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
-</footer><!-- /.post-info -->                <p>sqlite 常见问题的解决办法</p>
-                <a class="readmore" href="/posts/2017/06/sqlite-tips/">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
