@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - hnlaomie</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -34,141 +30,141 @@
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201807.html">201807</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/confluent.html">confluent</a> </p>
 </footer><!-- /.post-info --><h1>环境变量,数据目录设置</h1>
-<div class="highlight"><pre><span></span>export CONFLUENT_CURRENT=/data/hadoop
-export CONFLUENT_HOME=/data/apache/confluent
-export PATH=$PATH:$CONFLUENT_HOME/bin
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CONFLUENT_CURRENT</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span>
+<span class="n">export</span> <span class="n">CONFLUENT_HOME</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">confluent</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="err">$</span><span class="n">CONFLUENT_HOME</span><span class="o">/</span><span class="n">bin</span>
 </pre></div>
 
 
 <p>生效后用以下命令查看confluent数据目录,并生成kafka, zookeeper数据目录</p>
-<div class="highlight"><pre><span></span>confluent current
-# confluent.ljzXwHuB为以上命令生成的目录
-mkdir -p /data/hadoop/confluent.ljzXwHuB/zookeeper/data
-mkdir -p /data/hadoop/confluent.ljzXwHuB/kafka/data
-echo 1 &gt; /data/hadoop/confluent.ljzXwHuB/zookeeper/data/myid
+<div class="highlight"><pre><span></span><span class="n">confluent</span> <span class="k">current</span>
+<span class="o">#</span> <span class="n">confluent</span><span class="p">.</span><span class="n">ljzXwHuB为以上命令生成的目录</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">confluent</span><span class="p">.</span><span class="n">ljzXwHuB</span><span class="o">/</span><span class="n">zookeeper</span><span class="o">/</span><span class="k">data</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">confluent</span><span class="p">.</span><span class="n">ljzXwHuB</span><span class="o">/</span><span class="n">kafka</span><span class="o">/</span><span class="k">data</span>
+<span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">confluent</span><span class="p">.</span><span class="n">ljzXwHuB</span><span class="o">/</span><span class="n">zookeeper</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">myid</span>
 </pre></div>
 
 
 <h1>zookeeper配置</h1>
 <p>vim /data/apache/confluent/etc/kafka/zookeeper.properties</p>
-<div class="highlight"><pre><span></span># The number of milliseconds of each tick
-tickTime=2000
-# The number of ticks that the initial 
-# synchronization phase can take
-initLimit=10
-# The number of ticks that can pass between 
-# sending a request and getting an acknowledgement
-syncLimit=5
+<div class="highlight"><pre><span></span># <span class="nv">The</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">milliseconds</span> <span class="nv">of</span> <span class="nv">each</span> <span class="nv">tick</span>
+<span class="nv">tickTime</span><span class="o">=</span><span class="mi">2000</span>
+# <span class="nv">The</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">ticks</span> <span class="nv">that</span> <span class="nv">the</span> <span class="nv">initial</span> 
+# <span class="nv">synchronization</span> <span class="nv">phase</span> <span class="nv">can</span> <span class="nv">take</span>
+<span class="nv">initLimit</span><span class="o">=</span><span class="mi">10</span>
+# <span class="nv">The</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">ticks</span> <span class="nv">that</span> <span class="nv">can</span> <span class="nv">pass</span> <span class="nv">between</span> 
+# <span class="nv">sending</span> <span class="nv">a</span> <span class="nv">request</span> <span class="nv">and</span> <span class="nv">getting</span> <span class="nv">an</span> <span class="nv">acknowledgement</span>
+<span class="nv">syncLimit</span><span class="o">=</span><span class="mi">5</span>
 
-dataDir=/data/hadoop/confluent.ljzXwHuB/zookeeper/data
-# the port at which the clients will connect
-clientPort=2181
+<span class="nv">dataDir</span><span class="o">=/</span><span class="nv">data</span><span class="o">/</span><span class="nv">hadoop</span><span class="o">/</span><span class="nv">confluent</span>.<span class="nv">ljzXwHuB</span><span class="o">/</span><span class="nv">zookeeper</span><span class="o">/</span><span class="nv">data</span>
+# <span class="nv">the</span> <span class="nv">port</span> <span class="nv">at</span> <span class="nv">which</span> <span class="nv">the</span> <span class="nv">clients</span> <span class="nv">will</span> <span class="k">connect</span>
+<span class="nv">clientPort</span><span class="o">=</span><span class="mi">2181</span>
 
-# the maximum number of client connections.
-# increase this if you need to handle more clients
-maxClientCnxns=60
+# <span class="nv">the</span> <span class="nv">maximum</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">client</span> <span class="nv">connections</span>.
+# <span class="nv">increase</span> <span class="nv">this</span> <span class="k">if</span> <span class="nv">you</span> <span class="nv">need</span> <span class="nv">to</span> <span class="nv">handle</span> <span class="nv">more</span> <span class="nv">clients</span>
+<span class="nv">maxClientCnxns</span><span class="o">=</span><span class="mi">60</span>
 
-server.1=192.168.11.82:2888:3888
-server.2=192.168.11.81:2888:3888
-server.3=192.168.11.83:2888:3888
+<span class="nv">server</span>.<span class="mi">1</span><span class="o">=</span><span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2888</span>:<span class="mi">3888</span>
+<span class="nv">server</span>.<span class="mi">2</span><span class="o">=</span><span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">81</span>:<span class="mi">2888</span>:<span class="mi">3888</span>
+<span class="nv">server</span>.<span class="mi">3</span><span class="o">=</span><span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">83</span>:<span class="mi">2888</span>:<span class="mi">3888</span>
 
-autopurge.snapRetainCount=3
-autopurge.purgeInterval=24
+<span class="nv">autopurge</span>.<span class="nv">snapRetainCount</span><span class="o">=</span><span class="mi">3</span>
+<span class="nv">autopurge</span>.<span class="nv">purgeInterval</span><span class="o">=</span><span class="mi">24</span>
 </pre></div>
 
 
 <h1>kafka配置</h1>
 <p>vim /data/apache/confluent/etc/kafka/server.properties</p>
-<div class="highlight"><pre><span></span>broker.id=1
+<div class="highlight"><pre><span></span><span class="nv">broker</span>.<span class="nv">id</span><span class="o">=</span><span class="mi">1</span>
 
-listeners=PLAINTEXT://192.168.11.82:9092
+<span class="nv">listeners</span><span class="o">=</span><span class="nv">PLAINTEXT</span>:<span class="o">//</span><span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span>
 
-log.dirs=/data/hadoop/confluent.ljzXwHuB/kafka/data
+<span class="nv">log</span>.<span class="nv">dirs</span><span class="o">=/</span><span class="nv">data</span><span class="o">/</span><span class="nv">hadoop</span><span class="o">/</span><span class="nv">confluent</span>.<span class="nv">ljzXwHuB</span><span class="o">/</span><span class="nv">kafka</span><span class="o">/</span><span class="nv">data</span>
 
-num.partitions=12
+<span class="nv">num</span>.<span class="nv">partitions</span><span class="o">=</span><span class="mi">12</span>
 
-log.retention.bytes=-1
-log.cleanup.policy=delete
+<span class="nv">log</span>.<span class="nv">retention</span>.<span class="nv">bytes</span><span class="o">=-</span><span class="mi">1</span>
+<span class="nv">log</span>.<span class="nv">cleanup</span>.<span class="nv">policy</span><span class="o">=</span><span class="nv">delete</span>
 
-zookeeper.connect=192.168.11.82:2181,192.168.11.81:2181,192.168.11.83:2181
+<span class="nv">zookeeper</span>.<span class="k">connect</span><span class="o">=</span><span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span>,<span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">81</span>:<span class="mi">2181</span>,<span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">83</span>:<span class="mi">2181</span>
 
-# delete topics
-delete.topic.enable=true
+# <span class="nv">delete</span> <span class="nv">topics</span>
+<span class="nv">delete</span>.<span class="nv">topic</span>.<span class="nv">enable</span><span class="o">=</span><span class="nv">true</span>
 </pre></div>
 
 
 <h1>查看zookeeper状态</h1>
 <p>利用nc命令查看</p>
-<div class="highlight"><pre><span></span># centos
-yum install nmap
-# debian
-apt-get install netcat
-# zookeeper leader or fellower
-echo stat | nc 192.168.1.20 2181 | grep Mode
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">centos</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">nmap</span>
+<span class="o">#</span> <span class="n">debian</span>
+<span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">netcat</span>
+<span class="o">#</span> <span class="n">zookeeper</span> <span class="n">leader</span> <span class="k">or</span> <span class="n">fellower</span>
+<span class="n">echo</span> <span class="n">stat</span> <span class="o">|</span> <span class="n">nc</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">20</span> <span class="mi">2181</span> <span class="o">|</span> <span class="n">grep</span> <span class="k">Mode</span>
 </pre></div>
 
 
 <h1>schema-registry配置</h1>
 <p>修改配置文件"schema-registry.properties",以下为常用命令</p>
-<div class="highlight"><pre><span></span># List all subjects
-curl -X GET http://localhost:8081/subjects
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">List</span> <span class="k">all</span> <span class="n">subjects</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="k">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8081</span><span class="o">/</span><span class="n">subjects</span>
 
-# Deletes all schema versions registered under the subject &quot;Kafka-value&quot;
-curl -X DELETE http://localhost:8081/subjects/Kafka-value
+<span class="o">#</span> <span class="n">Deletes</span> <span class="k">all</span> <span class="k">schema</span> <span class="n">versions</span> <span class="n">registered</span> <span class="k">under</span> <span class="n">the</span> <span class="n">subject</span> <span class="ss">&quot;Kafka-value&quot;</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="k">DELETE</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8081</span><span class="o">/</span><span class="n">subjects</span><span class="o">/</span><span class="n">Kafka</span><span class="o">-</span><span class="n">value</span>
 </pre></div>
 
 
 <h1>connect配置</h1>
 <p>修改配置文件"connect-avro-distributed.properties",以下为常用命令</p>
-<div class="highlight"><pre><span></span># start connect
-confluent start connect
-# list connectors
-confluent list connectors
-# load hdfs sink connect (place one config file in kafka-connect-hdfs)
-confluent load hdfs-sink -d etc/kafka-connect-hdfs/test-hdfs.properties
-# unload hdfs sink
-confluent unload hdfs-sink
-# connector&#39;s status
-confluent status connectors
+<div class="highlight"><pre><span></span># <span class="nv">start</span> <span class="k">connect</span>
+<span class="nv">confluent</span> <span class="nv">start</span> <span class="k">connect</span>
+# <span class="nv">list</span> <span class="nv">connectors</span>
+<span class="nv">confluent</span> <span class="nv">list</span> <span class="nv">connectors</span>
+# <span class="nv">load</span> <span class="nv">hdfs</span> <span class="nv">sink</span> <span class="k">connect</span> <span class="ss">(</span><span class="nv">place</span> <span class="nv">one</span> <span class="nv">config</span> <span class="nv">file</span> <span class="nv">in</span> <span class="nv">kafka</span><span class="o">-</span><span class="k">connect</span><span class="o">-</span><span class="nv">hdfs</span><span class="ss">)</span>
+<span class="nv">confluent</span> <span class="nv">load</span> <span class="nv">hdfs</span><span class="o">-</span><span class="nv">sink</span> <span class="o">-</span><span class="nv">d</span> <span class="nv">etc</span><span class="o">/</span><span class="nv">kafka</span><span class="o">-</span><span class="k">connect</span><span class="o">-</span><span class="nv">hdfs</span><span class="o">/</span><span class="nv">test</span><span class="o">-</span><span class="nv">hdfs</span>.<span class="nv">properties</span>
+# <span class="nv">unload</span> <span class="nv">hdfs</span> <span class="nv">sink</span>
+<span class="nv">confluent</span> <span class="nv">unload</span> <span class="nv">hdfs</span><span class="o">-</span><span class="nv">sink</span>
+# <span class="nv">connector</span><span class="s1">&#39;</span><span class="s">s status</span>
+<span class="nv">confluent</span> <span class="nv">status</span> <span class="nv">connectors</span>
 </pre></div>
 
 
 <p>test-hdfs.properties配置</p>
-<div class="highlight"><pre><span></span>name=hdfs-sink
-connector.class=io.confluent.connect.hdfs.HdfsSinkConnector
-tasks.max=1
-topics=test_hdfs
-hdfs.url=hdfs://localhost:9000
-flush.size=2
-partitioner.class=io.confluent.connect.hdfs.partitioner.FieldPartitioner
-partition.field.name=log_date,log_hour
-#format.class=io.confluent.connect.hdfs.parquet.ParquetFormat
-#hive.integration=true
-#hive.metastore.uris=thrift://localhost:9083
-#schema.compatibility=BACKWARD
-#hive.database=test
+<div class="highlight"><pre><span></span><span class="nv">name</span><span class="o">=</span><span class="nv">hdfs</span><span class="o">-</span><span class="nv">sink</span>
+<span class="nv">connector</span>.<span class="nv">class</span><span class="o">=</span><span class="nv">io</span>.<span class="nv">confluent</span>.<span class="k">connect</span>.<span class="nv">hdfs</span>.<span class="nv">HdfsSinkConnector</span>
+<span class="nv">tasks</span>.<span class="nv">max</span><span class="o">=</span><span class="mi">1</span>
+<span class="nv">topics</span><span class="o">=</span><span class="nv">test_hdfs</span>
+<span class="nv">hdfs</span>.<span class="nv">url</span><span class="o">=</span><span class="nv">hdfs</span>:<span class="o">//</span><span class="nv">localhost</span>:<span class="mi">9000</span>
+<span class="nv">flush</span>.<span class="nv">size</span><span class="o">=</span><span class="mi">2</span>
+<span class="nv">partitioner</span>.<span class="nv">class</span><span class="o">=</span><span class="nv">io</span>.<span class="nv">confluent</span>.<span class="k">connect</span>.<span class="nv">hdfs</span>.<span class="nv">partitioner</span>.<span class="nv">FieldPartitioner</span>
+<span class="nv">partition</span>.<span class="nv">field</span>.<span class="nv">name</span><span class="o">=</span><span class="nv">log_date</span>,<span class="nv">log_hour</span>
+#<span class="nv">format</span>.<span class="nv">class</span><span class="o">=</span><span class="nv">io</span>.<span class="nv">confluent</span>.<span class="k">connect</span>.<span class="nv">hdfs</span>.<span class="nv">parquet</span>.<span class="nv">ParquetFormat</span>
+#<span class="nv">hive</span>.<span class="nv">integration</span><span class="o">=</span><span class="nv">true</span>
+#<span class="nv">hive</span>.<span class="nv">metastore</span>.<span class="nv">uris</span><span class="o">=</span><span class="nv">thrift</span>:<span class="o">//</span><span class="nv">localhost</span>:<span class="mi">9083</span>
+#<span class="nv">schema</span>.<span class="nv">compatibility</span><span class="o">=</span><span class="nv">BACKWARD</span>
+#<span class="nv">hive</span>.<span class="nv">database</span><span class="o">=</span><span class="nv">test</span>
 </pre></div>
 
 
 <p>hive外部表</p>
-<div class="highlight"><pre><span></span>-- 生成的avro文件自带schema
-CREATE EXTERNAL TABLE `test_hdfs`(
-  `req_id` string,
-  `ip` string, 
-  `create_date` int
-)
-PARTITIONED BY (
-  `log_date` int,
-  `log_hour` int
-)
-ROW FORMAT SERDE &#39;org.apache.hadoop.hive.serde2.avro.AvroSerDe&#39;
-STORED AS AVRO
-LOCATION &#39;/topics/test_hdfs/&#39;
-;
+<div class="highlight"><pre><span></span><span class="c1">-- 生成的avro文件自带schema</span>
+<span class="k">CREATE</span> <span class="n">EXTERNAL</span> <span class="k">TABLE</span> <span class="ss">`test_hdfs`</span><span class="p">(</span>
+  <span class="ss">`req_id`</span> <span class="n">string</span><span class="p">,</span>
+  <span class="ss">`ip`</span> <span class="n">string</span><span class="p">,</span> 
+  <span class="ss">`create_date`</span> <span class="kt">int</span>
+<span class="p">)</span>
+<span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span>
+  <span class="ss">`log_date`</span> <span class="kt">int</span><span class="p">,</span>
+  <span class="ss">`log_hour`</span> <span class="kt">int</span>
+<span class="p">)</span>
+<span class="n">ROW</span> <span class="n">FORMAT</span> <span class="n">SERDE</span> <span class="s1">&#39;org.apache.hadoop.hive.serde2.avro.AvroSerDe&#39;</span>
+<span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+<span class="n">LOCATION</span> <span class="s1">&#39;/topics/test_hdfs/&#39;</span>
+<span class="p">;</span>
 
--- 可采取以下两种方式添加分区,添加后才能查询
-msck repair table test_hdfs;
-alter table test_hdfs add partition (log_date=20180712, log_hour=1);
+<span class="c1">-- 可采取以下两种方式添加分区,添加后才能查询</span>
+<span class="n">msck</span> <span class="n">repair</span> <span class="k">table</span> <span class="n">test_hdfs</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">test_hdfs</span> <span class="k">add</span> <span class="nf">partition</span> <span class="p">(</span><span class="n">log_date</span><span class="o">=</span><span class="mi">20180712</span><span class="p">,</span> <span class="n">log_hour</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 
 

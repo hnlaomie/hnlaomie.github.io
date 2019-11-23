@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - docker</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -136,24 +132,24 @@ docker run --rm --volumes-from vol_bak -v <span class="k">$(</span><span class="
 
 <h1>network</h1>
 <p>安装工具</p>
-<div class="highlight"><pre><span></span>apt install net-tools
+<div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">install</span> <span class="n">net</span><span class="o">-</span><span class="n">tools</span>
 </pre></div>
 
 
 <h1>move docker's default /var/lib/docker to another directory</h1>
 <p>modify /etc/docker/daemon.json as bellow</p>
-<div class="highlight"><pre><span></span>{
-&quot;graph&quot;: &quot;/usr/local/data/docker&quot;
-}
+<div class="highlight"><pre><span></span><span class="err">{</span>
+<span class="ss">&quot;graph&quot;</span><span class="p">:</span> <span class="ss">&quot;/usr/local/data/docker&quot;</span>
+<span class="err">}</span>
 </pre></div>
 
 
 <p>restart docker service and copy files to new directory</p>
-<div class="highlight"><pre><span></span>sudo systemctl stop docker
-sudo systemctl daemon-reload
-sudo mkdir /usr/local/data/docker
-sudo rsync -aqxP /var/lib/docker/ /user/local/data/docker
-sudo systemctl start docker
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">docker</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">docker</span>
+<span class="n">sudo</span> <span class="n">rsync</span> <span class="o">-</span><span class="n">aqxP</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span> <span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">docker</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="k">start</span> <span class="n">docker</span>
 </pre></div>
 
 

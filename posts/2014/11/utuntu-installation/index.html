@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>utuntu installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -136,7 +132,7 @@ $ sudo apt-get install docker-engine
 
 <p>设置镜像和容器的存放路径
 * 修改启动的配置文件"/lib/systemd/system/docker.service"</p>
-<div class="highlight"><pre><span></span>ExecStart=/usr/bin/docker daemon -g /usr/local/data/tools/docker -H fd://
+<div class="highlight"><pre><span></span><span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">docker</span> <span class="n">daemon</span> <span class="o">-</span><span class="k">g</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">docker</span> <span class="o">-</span><span class="n">H</span> <span class="n">fd</span><span class="p">:</span><span class="o">//</span>
 </pre></div>
 
 
@@ -154,7 +150,7 @@ docker info
 
 
 <p>ubuntu image需要安装软件列表</p>
-<div class="highlight"><pre><span></span>apt install vim net-tools inetutils-ping
+<div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">install</span> <span class="n">vim</span> <span class="n">net</span><span class="o">-</span><span class="n">tools</span> <span class="n">inetutils</span><span class="o">-</span><span class="n">ping</span>
 </pre></div>
 
 
@@ -204,7 +200,7 @@ create a file ‘51-no-guest.conf’ under  the directory ‘/etc/lightdm/lightd
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>sudo systemctl restart lightdm.service
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="k">restart</span> <span class="n">lightdm</span><span class="p">.</span><span class="n">service</span>
 </pre></div>
 
 

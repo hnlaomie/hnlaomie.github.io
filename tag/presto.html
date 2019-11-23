@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - presto</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -38,63 +34,63 @@
 <p>下载(https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/0.152.3/presto-cli-0.152.3-executable.jar "presto-cli-0.152.3-executable.jar")，并将它重命名为"presto"，设置为可执行，放在"$PRESTO_HOME/bin"下，并把"$PRESTO_HOME/bin"加到环境变量"PATH"</p>
 <h1>配置</h1>
 <p>etc/node.properties</p>
-<div class="highlight"><pre><span></span>node.environment=production
-node.id=laomie-pc
-node.data-dir=/home/laomie/tools/data/presto
+<div class="highlight"><pre><span></span><span class="n">node</span><span class="p">.</span><span class="n">environment</span><span class="o">=</span><span class="n">production</span>
+<span class="n">node</span><span class="p">.</span><span class="n">id</span><span class="o">=</span><span class="n">laomie</span><span class="o">-</span><span class="n">pc</span>
+<span class="n">node</span><span class="p">.</span><span class="k">data</span><span class="o">-</span><span class="n">dir</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">presto</span>
 </pre></div>
 
 
 <p>etc/jvm.config</p>
-<div class="highlight"><pre><span></span>-server
--Xmx2G
--XX:+UseG1GC
--XX:G1HeapRegionSize=32M
--XX:+UseGCOverheadLimit
--XX:+ExplicitGCInvokesConcurrent
--XX:+HeapDumpOnOutOfMemoryError
--XX:OnOutOfMemoryError=kill -9 %p
+<div class="highlight"><pre><span></span><span class="o">-</span><span class="n">server</span>
+<span class="o">-</span><span class="n">Xmx2G</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="o">+</span><span class="n">UseG1GC</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="n">G1HeapRegionSize</span><span class="o">=</span><span class="mi">32</span><span class="n">M</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="o">+</span><span class="n">UseGCOverheadLimit</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="o">+</span><span class="n">ExplicitGCInvokesConcurrent</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="o">+</span><span class="n">HeapDumpOnOutOfMemoryError</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="n">OnOutOfMemoryError</span><span class="o">=</span><span class="n">kill</span> <span class="o">-</span><span class="mi">9</span> <span class="o">%</span><span class="n">p</span>
 </pre></div>
 
 
 <p>etc/config.properties</p>
-<div class="highlight"><pre><span></span>coordinator=true
-node-scheduler.include-coordinator=true
-http-server.http.port=8090
-query.max-memory=2GB
-query.max-memory-per-node=1GB
-discovery-server.enabled=true
-discovery.uri=http://localhost:8090
+<div class="highlight"><pre><span></span><span class="nv">coordinator</span><span class="o">=</span><span class="nv">true</span>
+<span class="nv">node</span><span class="o">-</span><span class="nv">scheduler</span>.<span class="k">include</span><span class="o">-</span><span class="nv">coordinator</span><span class="o">=</span><span class="nv">true</span>
+<span class="nv">http</span><span class="o">-</span><span class="nv">server</span>.<span class="nv">http</span>.<span class="nv">port</span><span class="o">=</span><span class="mi">8090</span>
+<span class="nv">query</span>.<span class="nv">max</span><span class="o">-</span><span class="nv">memory</span><span class="o">=</span><span class="mi">2</span><span class="nv">GB</span>
+<span class="nv">query</span>.<span class="nv">max</span><span class="o">-</span><span class="nv">memory</span><span class="o">-</span><span class="nv">per</span><span class="o">-</span><span class="nv">node</span><span class="o">=</span><span class="mi">1</span><span class="nv">GB</span>
+<span class="nv">discovery</span><span class="o">-</span><span class="nv">server</span>.<span class="nv">enabled</span><span class="o">=</span><span class="nv">true</span>
+<span class="nv">discovery</span>.<span class="nv">uri</span><span class="o">=</span><span class="nv">http</span>:<span class="o">//</span><span class="nv">localhost</span>:<span class="mi">8090</span>
 </pre></div>
 
 
 <p>etc/log.properties</p>
-<div class="highlight"><pre><span></span>com.facebook.presto=INFO
+<div class="highlight"><pre><span></span><span class="n">com</span><span class="p">.</span><span class="n">facebook</span><span class="p">.</span><span class="n">presto</span><span class="o">=</span><span class="n">INFO</span>
 </pre></div>
 
 
 <p>etc/catalog/jmx.properties</p>
-<div class="highlight"><pre><span></span>connector.name=jmx
+<div class="highlight"><pre><span></span><span class="n">connector</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">jmx</span>
 </pre></div>
 
 
 <p>etc/catalog/cassandra.properties</p>
-<div class="highlight"><pre><span></span>connector.name=cassandra
-cassandra.contact-points=laomie-pc
-cassandra.native-protocol-port=9042
+<div class="highlight"><pre><span></span><span class="n">connector</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">cassandra</span>
+<span class="n">cassandra</span><span class="p">.</span><span class="n">contact</span><span class="o">-</span><span class="n">points</span><span class="o">=</span><span class="n">laomie</span><span class="o">-</span><span class="n">pc</span>
+<span class="n">cassandra</span><span class="p">.</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">9042</span>
 </pre></div>
 
 
 <h1>快速指南</h1>
-<div class="highlight"><pre><span></span># 启动
-$PRESTO_HOME/bin/launcher run
-# 后台进程启动
-$PRESTO_HOME/bin/launcher start
-# 停止
-$PRESTO_HOME/bin/launcher stop
-# 访问cassandra数据库
-$PRESTO_HOME/bin/presto --server localhost:8090 --catalog cassandra --schema dmp
-# 输出csv
-$PRESTO_HOME/bin/presto --server localhost:8090 --catalog cassandra --schema dmp --execute &quot;select * from user_tags limit 20&quot; --output-format CSV &gt; user_tags.csv
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">启动</span>
+<span class="err">$</span><span class="n">PRESTO_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">launcher</span> <span class="n">run</span>
+<span class="o">#</span> <span class="err">后台进程启动</span>
+<span class="err">$</span><span class="n">PRESTO_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">launcher</span> <span class="k">start</span>
+<span class="o">#</span> <span class="err">停止</span>
+<span class="err">$</span><span class="n">PRESTO_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">launcher</span> <span class="n">stop</span>
+<span class="o">#</span> <span class="err">访问</span><span class="n">cassandra数据库</span>
+<span class="err">$</span><span class="n">PRESTO_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">presto</span> <span class="c1">--server localhost:8090 --catalog cassandra --schema dmp</span>
+<span class="o">#</span> <span class="err">输出</span><span class="n">csv</span>
+<span class="err">$</span><span class="n">PRESTO_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">presto</span> <span class="c1">--server localhost:8090 --catalog cassandra --schema dmp --execute &quot;select * from user_tags limit 20&quot; --output-format CSV &gt; user_tags.csv</span>
 </pre></div>
 
 
@@ -106,13 +102,13 @@ $PRESTO_HOME/bin/presto --server localhost:8090 --catalog cassandra --schema dmp
 
 <h1>连接远程hive</h1>
 <p>远程hive(192.168.11.61)启动metastore服务</p>
-<div class="highlight"><pre><span></span>hive --service metastore
+<div class="highlight"><pre><span></span><span class="n">hive</span> <span class="c1">--service metastore</span>
 </pre></div>
 
 
 <p>在presto的catalog目录放连接文件hive_online.properties</p>
-<div class="highlight"><pre><span></span>connector.name=hive-hadoop2
-hive.metastore.uri=thrift://192.168.11.61:9083
+<div class="highlight"><pre><span></span><span class="n">connector</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">hive</span><span class="o">-</span><span class="n">hadoop2</span>
+<span class="n">hive</span><span class="p">.</span><span class="n">metastore</span><span class="p">.</span><span class="n">uri</span><span class="o">=</span><span class="n">thrift</span><span class="p">:</span><span class="o">//</span><span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">61</span><span class="p">:</span><span class="mi">9083</span>
 </pre></div>
 
 

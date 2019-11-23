@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>draw.io tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -40,28 +36,28 @@
 <p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/drawio.html">draw.io</a> </p>
 </footer><!-- /.post-info -->      <h1>下载相关代码</h1>
 <p>从"https://github.com/fjudith/docker-draw.io"下载"Dockerfile"，并生成以下"docker-compose.yml"文件</p>
-<div class="highlight"><pre><span></span>version: &#39;3&#39;
+<div class="highlight"><pre><span></span><span class="k">version</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span>
 
-services:
+<span class="n">services</span><span class="p">:</span>
 
-  host:
-    image: hnlaomie/draw.io
-    hostname: draw_host
-    networks:
-      dev-net:
-        ipv4_address: 172.19.0.10
-    ports:
-      - 8002:8080
+  <span class="k">host</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">hnlaomie</span><span class="o">/</span><span class="n">draw</span><span class="p">.</span><span class="n">io</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="n">draw_host</span>
+    <span class="n">networks</span><span class="p">:</span>
+      <span class="n">dev</span><span class="o">-</span><span class="n">net</span><span class="p">:</span>
+        <span class="n">ipv4_address</span><span class="p">:</span> <span class="mi">172</span><span class="p">.</span><span class="mi">19</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">10</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8002</span><span class="p">:</span><span class="mi">8080</span>
 
-networks:
-  dev-net:
-    external: true
+<span class="n">networks</span><span class="p">:</span>
+  <span class="n">dev</span><span class="o">-</span><span class="n">net</span><span class="p">:</span>
+    <span class="k">external</span><span class="p">:</span> <span class="k">true</span>
 </pre></div>
 
 
 <h1>安装，启动</h1>
-<div class="highlight"><pre><span></span>docker build -t hnlaomie/draw.io:latest ./
-docker-compose up
+<div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">hnlaomie</span><span class="o">/</span><span class="n">draw</span><span class="p">.</span><span class="n">io</span><span class="p">:</span><span class="n">latest</span> <span class="p">.</span><span class="o">/</span>
+<span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span>
 </pre></div>
 
 

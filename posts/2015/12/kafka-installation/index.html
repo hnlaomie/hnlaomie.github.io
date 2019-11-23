@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>kafka installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -39,99 +35,99 @@
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201512.html">201512</a> <a href="/tag/kafka.html">kafka</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->      <h1>代码编译</h1>
-<div class="highlight"><pre><span></span>gradle
-gradle releaseTarGzAll
+<div class="highlight"><pre><span></span><span class="n">gradle</span>
+<span class="n">gradle</span> <span class="n">releaseTarGzAll</span>
 </pre></div>
 
 
 <p>安装包在./core/build/distributions/</p>
 <h1>安装</h1>
 <p><a href="http://hnlaomie.github.io/posts/2015/07/zookeeper-installation/">安装zookeeper</a>，然后修改"config/server.properties"设置zookeeper</p>
-<div class="highlight"><pre><span></span>zookeeper.connect=localhost:2181
+<div class="highlight"><pre><span></span><span class="nv">zookeeper</span>.<span class="k">connect</span><span class="o">=</span><span class="nv">localhost</span>:<span class="mi">2181</span>
 </pre></div>
 
 
 <p>在"bin/kafka-run-class.sh"中修改日志路径（否则日志将写到安装路径的"logs"目录）</p>
-<div class="highlight"><pre><span></span>LOG_DIR=&quot;/data/hadoop/kafka/log4j/logs&quot;
+<div class="highlight"><pre><span></span><span class="n">LOG_DIR</span><span class="o">=</span><span class="ss">&quot;/data/hadoop/kafka/log4j/logs&quot;</span>
 </pre></div>
 
 
 <h1>快速指南</h1>
 <div class="highlight"><pre><span></span># 启动
-kafka-server-start –daemon config/server.properties &amp;
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">server</span><span class="o">-</span><span class="nv">start</span> –<span class="nv">daemon</span> <span class="nv">config</span><span class="o">/</span><span class="nv">server</span>.<span class="nv">properties</span> <span class="o">&amp;</span>
 # 停止
-kafka-server-stop config/server.properties
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">server</span><span class="o">-</span><span class="nv">stop</span> <span class="nv">config</span><span class="o">/</span><span class="nv">server</span>.<span class="nv">properties</span>
 # 新建主题
-kafka-topics --create --zookeeper 192.168.11.82:2181 --replication-factor 2 --partitions 18 --topic test
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">topics</span> <span class="o">--</span><span class="nv">create</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">replication</span><span class="o">-</span><span class="nv">factor</span> <span class="mi">2</span> <span class="o">--</span><span class="nv">partitions</span> <span class="mi">18</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">test</span>
 # 显示主题
-kafka-topics --list --zookeeper 192.168.11.82:2181
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">topics</span> <span class="o">--</span><span class="nv">list</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span>
 # 查看主题
-kafka-topics --describe --zookeeper 192.168.11.82:2181 --topic test 
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">topics</span> <span class="o">--</span><span class="nv">describe</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">test</span> 
 # 修改数据保存时间
-kafka-configs --zookeeper 192.168.11.82:2181 --alter --entity-type topics --entity-name test --add-config retention.ms=86400000
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">configs</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">alter</span> <span class="o">--</span><span class="nv">entity</span><span class="o">-</span><span class="nv">type</span> <span class="nv">topics</span> <span class="o">--</span><span class="nv">entity</span><span class="o">-</span><span class="nv">name</span> <span class="nv">test</span> <span class="o">--</span><span class="nv">add</span><span class="o">-</span><span class="nv">config</span> <span class="nv">retention</span>.<span class="nv">ms</span><span class="o">=</span><span class="mi">86400000</span>
 # 发送消息
-kafka-console-producer --broker-list 192.168.11.82:9092 --topic test
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">console</span><span class="o">-</span><span class="nv">producer</span> <span class="o">--</span><span class="nv">broker</span><span class="o">-</span><span class="nv">list</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">test</span>
 # 接收消息
-kafka-console-consumer --bootstrap-server 192.168.11.81:9092,192.168.11.82:9092 --topic test --from-beginning
-kafka-avro-console-consumer --bootstrap-server localhost:9092 --property schema.registry.url=http://localhost:8091 --topic test --from-beginning
-# 删除消息(修改过期时间)
-kafka-topics --zookeeper localhost:2181 --alter --topic connect-test --config retention.ms=1000
-# 删除消息(各分区到指定offset数据, -1为所有)
-kafka-delete-records --bootstrap-server localhost:9092 --offset-json-file ./delete.json
-# delete.json格式如下
-{&quot;partitions&quot;: [{&quot;topic&quot;: “test&quot;, &quot;partition&quot;: 0, &quot;offset&quot;: -1}, ...], &quot;version&quot;:1 }
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">console</span><span class="o">-</span><span class="nv">consumer</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">81</span>:<span class="mi">9092</span>,<span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">test</span> <span class="o">--</span><span class="nv">from</span><span class="o">-</span><span class="nv">beginning</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">avro</span><span class="o">-</span><span class="nv">console</span><span class="o">-</span><span class="nv">consumer</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="nv">localhost</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">property</span> <span class="nv">schema</span>.<span class="nv">registry</span>.<span class="nv">url</span><span class="o">=</span><span class="nv">http</span>:<span class="o">//</span><span class="nv">localhost</span>:<span class="mi">8091</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">test</span> <span class="o">--</span><span class="nv">from</span><span class="o">-</span><span class="nv">beginning</span>
+# 删除消息<span class="ss">(</span>修改过期时间<span class="ss">)</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">topics</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="nv">localhost</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">alter</span> <span class="o">--</span><span class="nv">topic</span> <span class="k">connect</span><span class="o">-</span><span class="nv">test</span> <span class="o">--</span><span class="nv">config</span> <span class="nv">retention</span>.<span class="nv">ms</span><span class="o">=</span><span class="mi">1000</span>
+# 删除消息<span class="ss">(</span>各分区到指定<span class="nv">offset</span>数据, <span class="o">-</span><span class="mi">1</span>为所有<span class="ss">)</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">delete</span><span class="o">-</span><span class="nv">records</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="nv">localhost</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">offset</span><span class="o">-</span><span class="nv">json</span><span class="o">-</span><span class="nv">file</span> .<span class="o">/</span><span class="nv">delete</span>.<span class="nv">json</span>
+# <span class="nv">delete</span>.<span class="nv">json</span>格式如下
+{<span class="s2">&quot;</span><span class="s">partitions</span><span class="s2">&quot;</span>: [{<span class="s2">&quot;</span><span class="s">topic</span><span class="s2">&quot;</span>: “<span class="nv">test</span><span class="s2">&quot;</span><span class="s">, </span><span class="s2">&quot;</span><span class="nv">partition</span><span class="s2">&quot;</span><span class="s">: 0, </span><span class="s2">&quot;</span><span class="nv">offset</span><span class="s2">&quot;</span><span class="s">: -1}, ...], </span><span class="s2">&quot;</span><span class="nv">version</span><span class="s2">&quot;</span><span class="s">:1 }</span>
 
-# 修改replication-factor
-kafka-topics --zookeeper 192.168.11.82:2181 --alter --topic dsp39 --config replication-factor=2
-# 修改partitions
-kafka-reassign-partitions.sh --zookeeper 192.168.11.82:2181 --reassignment-json-file rep.json --execute
-# rep.json格式如下
-{&quot;partitions&quot;: [{&quot;topic&quot;: “dsp39&quot;, &quot;partition&quot;: 0, &quot;replicas&quot;:[0,1]}, ...], &quot;version&quot;:1 }
+# 修改<span class="nv">replication</span><span class="o">-</span><span class="nv">factor</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">topics</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">alter</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">dsp39</span> <span class="o">--</span><span class="nv">config</span> <span class="nv">replication</span><span class="o">-</span><span class="nv">factor</span><span class="o">=</span><span class="mi">2</span>
+# 修改<span class="nv">partitions</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">reassign</span><span class="o">-</span><span class="nv">partitions</span>.<span class="nv">sh</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">reassignment</span><span class="o">-</span><span class="nv">json</span><span class="o">-</span><span class="nv">file</span> <span class="nv">rep</span>.<span class="nv">json</span> <span class="o">--</span><span class="nv">execute</span>
+# <span class="nv">rep</span>.<span class="nv">json</span>格式如下
+{<span class="s2">&quot;</span><span class="s">partitions</span><span class="s2">&quot;</span>: [{<span class="s2">&quot;</span><span class="s">topic</span><span class="s2">&quot;</span>: “<span class="nv">dsp39</span><span class="s2">&quot;</span><span class="s">, </span><span class="s2">&quot;</span><span class="nv">partition</span><span class="s2">&quot;</span><span class="s">: 0, </span><span class="s2">&quot;</span><span class="nv">replicas</span><span class="s2">&quot;</span><span class="s">:[0,1]}, ...], </span><span class="s2">&quot;</span><span class="nv">version</span><span class="s2">&quot;</span><span class="s">:1 }</span>
 
-# consumer group
-kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --list
-kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group groupid --describe
-kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group groupid --delete
-# 重置offset(不实际修改offset)
-kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group csv-group --topic dsps --reset-offsets --to-earliest
-# 重置offset(修改offset)
-kafka-consumer-groups --bootstrap-server 192.168.11.82:9092 --group csv-group --topic dsps --reset-offsets --to-earliest --execute
+# <span class="nv">consumer</span> <span class="nv">group</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">consumer</span><span class="o">-</span><span class="nv">groups</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">list</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">consumer</span><span class="o">-</span><span class="nv">groups</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">group</span> <span class="nv">groupid</span> <span class="o">--</span><span class="nv">describe</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">consumer</span><span class="o">-</span><span class="nv">groups</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">group</span> <span class="nv">groupid</span> <span class="o">--</span><span class="nv">delete</span>
+# 重置<span class="nv">offset</span><span class="ss">(</span>不实际修改<span class="nv">offset</span><span class="ss">)</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">consumer</span><span class="o">-</span><span class="nv">groups</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">group</span> <span class="nv">csv</span><span class="o">-</span><span class="nv">group</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">dsps</span> <span class="o">--</span><span class="nv">reset</span><span class="o">-</span><span class="nv">offsets</span> <span class="o">--</span><span class="nv">to</span><span class="o">-</span><span class="nv">earliest</span>
+# 重置<span class="nv">offset</span><span class="ss">(</span>修改<span class="nv">offset</span><span class="ss">)</span>
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">consumer</span><span class="o">-</span><span class="nv">groups</span> <span class="o">--</span><span class="nv">bootstrap</span><span class="o">-</span><span class="nv">server</span> <span class="mi">192</span>.<span class="mi">168</span>.<span class="mi">11</span>.<span class="mi">82</span>:<span class="mi">9092</span> <span class="o">--</span><span class="nv">group</span> <span class="nv">csv</span><span class="o">-</span><span class="nv">group</span> <span class="o">--</span><span class="nv">topic</span> <span class="nv">dsps</span> <span class="o">--</span><span class="nv">reset</span><span class="o">-</span><span class="nv">offsets</span> <span class="o">--</span><span class="nv">to</span><span class="o">-</span><span class="nv">earliest</span> <span class="o">--</span><span class="nv">execute</span>
 
-kafka-run-class kafka.admin.ConsumerGroupCommand --group onlineKafka --zookeeper node3:2181 --describe
+<span class="nv">kafka</span><span class="o">-</span><span class="nv">run</span><span class="o">-</span><span class="nv">class</span> <span class="nv">kafka</span>.<span class="nv">admin</span>.<span class="nv">ConsumerGroupCommand</span> <span class="o">--</span><span class="nv">group</span> <span class="nv">onlineKafka</span> <span class="o">--</span><span class="nv">zookeeper</span> <span class="nv">node3</span>:<span class="mi">2181</span> <span class="o">--</span><span class="nv">describe</span>
 
-# 启动schema-registry,需要confluent
-schema-registry-start ./etc/schema-registry/schema-registry.properties
-# Start Connect in distributed mode. Run this command in its own terminal.
-$ connect-distributed ./etc/schema-registry/connect-avro-distributed.properties
-# start ksql
-$ ksql-server-start ./etc/ksql/ksql-server.properties
+# 启动<span class="nv">schema</span><span class="o">-</span><span class="nv">registry</span>,需要<span class="nv">confluent</span>
+<span class="nv">schema</span><span class="o">-</span><span class="nv">registry</span><span class="o">-</span><span class="nv">start</span> .<span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">schema</span><span class="o">-</span><span class="nv">registry</span><span class="o">/</span><span class="nv">schema</span><span class="o">-</span><span class="nv">registry</span>.<span class="nv">properties</span>
+# <span class="nv">Start</span> <span class="k">Connect</span> <span class="nv">in</span> <span class="nv">distributed</span> <span class="nv">mode</span>. <span class="nv">Run</span> <span class="nv">this</span> <span class="nv">command</span> <span class="nv">in</span> <span class="nv">its</span> <span class="nv">own</span> <span class="nv">terminal</span>.
+$ <span class="k">connect</span><span class="o">-</span><span class="nv">distributed</span> .<span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">schema</span><span class="o">-</span><span class="nv">registry</span><span class="o">/</span><span class="k">connect</span><span class="o">-</span><span class="nv">avro</span><span class="o">-</span><span class="nv">distributed</span>.<span class="nv">properties</span>
+# <span class="nv">start</span> <span class="nv">ksql</span>
+$ <span class="nv">ksql</span><span class="o">-</span><span class="nv">server</span><span class="o">-</span><span class="nv">start</span> .<span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">ksql</span><span class="o">/</span><span class="nv">ksql</span><span class="o">-</span><span class="nv">server</span>.<span class="nv">properties</span>
 </pre></div>
 
 
 <h1>kafka和spark整合</h1>
-<div class="highlight"><pre><span></span>cd $SPARK_HOME
-bin/run-example org.apache.spark.examples.streaming.KafkaWordCountProducer localhost:9092 test 3 5
-bin/run-example org.apache.spark.examples.streaming.KafkaWordCount localhost:2181 test-consumer-group test 1
-bin/run-example org.apache.spark.examples.streaming.DirectKafkaWordCount localhost:9092 test
+<div class="highlight"><pre><span></span><span class="n">cd</span> <span class="err">$</span><span class="n">SPARK_HOME</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">example</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">examples</span><span class="p">.</span><span class="n">streaming</span><span class="p">.</span><span class="n">KafkaWordCountProducer</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">9092</span> <span class="n">test</span> <span class="mi">3</span> <span class="mi">5</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">example</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">examples</span><span class="p">.</span><span class="n">streaming</span><span class="p">.</span><span class="n">KafkaWordCount</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">2181</span> <span class="n">test</span><span class="o">-</span><span class="n">consumer</span><span class="o">-</span><span class="k">group</span> <span class="n">test</span> <span class="mi">1</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">run</span><span class="o">-</span><span class="n">example</span> <span class="n">org</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">spark</span><span class="p">.</span><span class="n">examples</span><span class="p">.</span><span class="n">streaming</span><span class="p">.</span><span class="n">DirectKafkaWordCount</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">9092</span> <span class="n">test</span>
 </pre></div>
 
 
 <h1>idea开发环境设置</h1>
 <p>kafka, spark streaming相关例子，只需启动kafka，然后在运行环境里做如下设置</p>
-<div class="highlight"><pre><span></span>VM options: -Dspark.master=local[2]
-Environment variables: MASTER=localh[2]
+<div class="highlight"><pre><span></span><span class="n">VM</span> <span class="k">options</span><span class="p">:</span> <span class="o">-</span><span class="n">Dspark</span><span class="p">.</span><span class="n">master</span><span class="o">=</span><span class="k">local</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Environment</span> <span class="n">variables</span><span class="p">:</span> <span class="n">MASTER</span><span class="o">=</span><span class="n">localh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 
 
 <p>scala2.10使用jkd7，gradle需做以下设置兼容jdk7</p>
-<div class="highlight"><pre><span></span>sourceCompatibility = &quot;1.7&quot;
-targetCompatibility = &quot;1.7&quot;
+<div class="highlight"><pre><span></span><span class="n">sourceCompatibility</span> <span class="o">=</span> <span class="ss">&quot;1.7&quot;</span>
+<span class="n">targetCompatibility</span> <span class="o">=</span> <span class="ss">&quot;1.7&quot;</span>
 </pre></div>
 
 
 <h1>删除主题内容</h1>
 <p>设置server.properties</p>
-<div class="highlight"><pre><span></span>delete.topic.enable=true
+<div class="highlight"><pre><span></span><span class="k">delete</span><span class="p">.</span><span class="n">topic</span><span class="p">.</span><span class="n">enable</span><span class="o">=</span><span class="k">true</span>
 </pre></div>
 
 
@@ -158,27 +154,27 @@ rmr /brokers/topics/<span class="s">&lt;&lt;topic&gt;&gt; and rmr /admin/delete_
 </ol>
 <h1>复制错误处理</h1>
 <p>报"Number of alive brokers '1' does not meet the required replication factor"，需要设置"server.properties"</p>
-<div class="highlight"><pre><span></span>offsets.topic.replication.factor=1
+<div class="highlight"><pre><span></span><span class="n">offsets</span><span class="p">.</span><span class="n">topic</span><span class="p">.</span><span class="n">replication</span><span class="p">.</span><span class="n">factor</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 
 
 <h1>跨集群复制</h1>
 <p>低版本集群数据复制到高版本集群，低版本应用能读写高版本集群，反之不行</p>
 <p>消费低版本集群的配置"consumer.properties"</p>
-<div class="highlight"><pre><span></span>zookeeper.connect=node3:2181,node6:2181,node7:2181
-group.id=onlineKafka
-auto.offset.reset=smallest
-partition.assignment.strategy=roundrobin
+<div class="highlight"><pre><span></span><span class="nv">zookeeper</span>.<span class="k">connect</span><span class="o">=</span><span class="nv">node3</span>:<span class="mi">2181</span>,<span class="nv">node6</span>:<span class="mi">2181</span>,<span class="nv">node7</span>:<span class="mi">2181</span>
+<span class="nv">group</span>.<span class="nv">id</span><span class="o">=</span><span class="nv">onlineKafka</span>
+<span class="nv">auto</span>.<span class="nv">offset</span>.<span class="nv">reset</span><span class="o">=</span><span class="nv">smallest</span>
+<span class="nv">partition</span>.<span class="nv">assignment</span>.<span class="nv">strategy</span><span class="o">=</span><span class="nv">roundrobin</span>
 </pre></div>
 
 
 <p>往高版本集群产生数据的配置"producer.properties"</p>
-<div class="highlight"><pre><span></span>bootstrap.servers=192.168.11.81:9092,192.168.11.82:9092,192.168.11.83:9092
+<div class="highlight"><pre><span></span><span class="n">bootstrap</span><span class="p">.</span><span class="n">servers</span><span class="o">=</span><span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">81</span><span class="p">:</span><span class="mi">9092</span><span class="p">,</span><span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">82</span><span class="p">:</span><span class="mi">9092</span><span class="p">,</span><span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">83</span><span class="p">:</span><span class="mi">9092</span>
 </pre></div>
 
 
 <p>复制主题内容的命令</p>
-<div class="highlight"><pre><span></span>$KAFKA_HOME/bin/kafka-mirror-maker.sh --consumer.config consumer.properties --producer.config producer.properties --num.streams=2 --whitelist &quot;test&quot;
+<div class="highlight"><pre><span></span><span class="err">$</span><span class="n">KAFKA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">kafka</span><span class="o">-</span><span class="n">mirror</span><span class="o">-</span><span class="n">maker</span><span class="p">.</span><span class="n">sh</span> <span class="c1">--consumer.config consumer.properties --producer.config producer.properties --num.streams=2 --whitelist &quot;test&quot;</span>
 </pre></div>
 
 
@@ -187,9 +183,9 @@ partition.assignment.strategy=roundrobin
 <ol>
 <li>add follow content to config/server.properties</li>
 </ol>
-<div class="highlight"><pre><span></span># for upgrade
-inter.broker.protocol.version=1.0
-message.format.version=1.0
+<div class="highlight"><pre><span></span># <span class="k">for</span> <span class="nv">upgrade</span>
+<span class="nv">inter</span>.<span class="nv">broker</span>.<span class="nv">protocol</span>.<span class="nv">version</span><span class="o">=</span><span class="mi">1</span>.<span class="mi">0</span>
+<span class="nv">message</span>.<span class="nv">format</span>.<span class="nv">version</span><span class="o">=</span><span class="mi">1</span>.<span class="mi">0</span>
 </pre></div>
 
 

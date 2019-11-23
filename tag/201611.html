@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - 201611</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -35,7 +31,7 @@
 <p>tags: <a href="/tag/201611.html">201611</a> <a href="/tag/pgsql.html">pgsql</a> </p>
 </footer><!-- /.post-info --><h1>centos 6.5上安装postgresql 9.5</h1>
 <p>/etc/yum.repos.d/CentOS-Base.repo的[base] and [updates] 部分加入以下内容</p>
-<div class="highlight"><pre><span></span>exclude=postgresql*
+<div class="highlight"><pre><span></span><span class="n">exclude</span><span class="o">=</span><span class="n">postgresql</span><span class="o">*</span>
 </pre></div>
 
 
@@ -65,17 +61,17 @@ SHOW data_directory<span class="p">;</span>
 
 
 <p>卸载老版postgresql</p>
-<div class="highlight"><pre><span></span>yum erase postgresql-libs*
-vim /etc/profile.d/pgsql.sh
-#############
-export PGSQL_HOME=/usr/pgsql-9.5
-export PATH=$PGSQL_HOME/bin:$PATH
-#############
+<div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">erase</span> <span class="n">postgresql</span><span class="o">-</span><span class="n">libs</span><span class="o">*</span>
+<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">pgsql</span><span class="p">.</span><span class="n">sh</span>
+<span class="o">#############</span>
+<span class="n">export</span> <span class="n">PGSQL_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">pgsql</span><span class="o">-</span><span class="mi">9</span><span class="p">.</span><span class="mi">5</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PGSQL_HOME</span><span class="o">/</span><span class="n">bin</span><span class="p">:</span><span class="err">$</span><span class="n">PATH</span>
+<span class="o">#############</span>
 </pre></div>
 
 
 <p>安装后切换到postgres用户就能直接使用psql，因为pg_hba.conf有以下默认配置</p>
-<div class="highlight"><pre><span></span>local   all              all                                     peer
+<div class="highlight"><pre><span></span><span class="k">local</span>   <span class="k">all</span>              <span class="k">all</span>                                     <span class="n">peer</span>
 </pre></div>
 
 
@@ -89,18 +85,18 @@ psql
 
 
 <p>设置远程登录</p>
-<div class="highlight"><pre><span></span>vim /data/pgsql/data/postgresql.conf
-#########
-listen_addresses = &#39;*&#39;
-#########
-vim /data/pgsql/data/pg_hba.conf
-#########
-# IPv4 local connections:
-host    all             all             127.0.0.1/32            md5
-# IPv6 local connections:
-host    all             all             ::1/128                 md5
-host    all             all             192.168.11.1/24         md5 
-#########
+<div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">pgsql</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">postgresql</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">#########</span>
+<span class="n">listen_addresses</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+<span class="o">#########</span>
+<span class="n">vim</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">pgsql</span><span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">pg_hba</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">#########</span>
+<span class="o">#</span> <span class="n">IPv4</span> <span class="k">local</span> <span class="n">connections</span><span class="p">:</span>
+<span class="k">host</span>    <span class="k">all</span>             <span class="k">all</span>             <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="o">/</span><span class="mi">32</span>            <span class="n">md5</span>
+<span class="o">#</span> <span class="n">IPv6</span> <span class="k">local</span> <span class="n">connections</span><span class="p">:</span>
+<span class="k">host</span>    <span class="k">all</span>             <span class="k">all</span>             <span class="p">::</span><span class="mi">1</span><span class="o">/</span><span class="mi">128</span>                 <span class="n">md5</span>
+<span class="k">host</span>    <span class="k">all</span>             <span class="k">all</span>             <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">1</span><span class="o">/</span><span class="mi">24</span>         <span class="n">md5</span> 
+<span class="o">#########</span>
 </pre></div>
 
 
@@ -114,30 +110,30 @@ host    all             all             192.168.11.1/24         md5
 
 
 <p>安装pgsql，配置文件默认路径为"/etc/postgresql/9.6/main"</p>
-<div class="highlight"><pre><span></span>sudo apt install wget ca-certificates
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo apt update
-sudo apt install postgresql-9.6
-sudo service postgresql start
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">wget</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span>
+<span class="n">wget</span> <span class="c1">--quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="k">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">postgresql</span><span class="o">-</span><span class="mi">9</span><span class="p">.</span><span class="mi">6</span>
+<span class="n">sudo</span> <span class="n">service</span> <span class="n">postgresql</span> <span class="k">start</span>
 </pre></div>
 
 
 <h1>postgresql建用户建库</h1>
 <p>用以下命令建库和建用户，并把库权限给用户</p>
-<div class="highlight"><pre><span></span>create database adwo;
-\c adwo;
-create role dw_yingguang login password &#39;bidev&#39;;
-create schema dw_yingguang authorization dw_yingguang;
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">database</span> <span class="n">adwo</span><span class="p">;</span>
+<span class="err">\</span><span class="k">c</span> <span class="n">adwo</span><span class="p">;</span>
+<span class="k">create</span> <span class="k">role</span> <span class="n">dw_yingguang</span> <span class="n">login</span> <span class="n">password</span> <span class="s1">&#39;bidev&#39;</span><span class="p">;</span>
+<span class="k">create</span> <span class="k">schema</span> <span class="n">dw_yingguang</span> <span class="k">authorization</span> <span class="n">dw_yingguang</span><span class="p">;</span>
 
-create schema dw_dsp;
-create role dw_dsp login password &#39;bidev&#39;;
-grant all on schema dw_dsp to dw_dsp;
+<span class="k">create</span> <span class="k">schema</span> <span class="n">dw_dsp</span><span class="p">;</span>
+<span class="k">create</span> <span class="k">role</span> <span class="n">dw_dsp</span> <span class="n">login</span> <span class="n">password</span> <span class="s1">&#39;bidev&#39;</span><span class="p">;</span>
+<span class="k">grant</span> <span class="k">all</span> <span class="k">on</span> <span class="k">schema</span> <span class="n">dw_dsp</span> <span class="k">to</span> <span class="n">dw_dsp</span><span class="p">;</span>
 
--- 设置schema查询
-set search_path to dw_yingguang;
+<span class="c1">-- 设置schema查询</span>
+<span class="k">set</span> <span class="n">search_path</span> <span class="k">to</span> <span class="n">dw_yingguang</span><span class="p">;</span>
 
--- psql登录
-PGPASSWORD=bidev psql -h 192.168.11.83 -U dw_yingguang adwo
+<span class="c1">-- psql登录</span>
+<span class="n">PGPASSWORD</span><span class="o">=</span><span class="n">bidev</span> <span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">83</span> <span class="o">-</span><span class="n">U</span> <span class="n">dw_yingguang</span> <span class="n">adwo</span>
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">

@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>hbase installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -138,13 +134,13 @@ hbase&gt; quit
 
 
 <h1>编译源码</h1>
-<div class="highlight"><pre><span></span>mvn clean install assembly:single -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.5.2
+<div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span> <span class="n">assembly</span><span class="p">:</span><span class="n">single</span> <span class="o">-</span><span class="n">DskipTests</span> <span class="o">-</span><span class="n">Dmaven</span><span class="p">.</span><span class="n">javadoc</span><span class="p">.</span><span class="n">skip</span><span class="o">=</span><span class="k">true</span> <span class="o">-</span><span class="n">Dhadoop</span><span class="o">-</span><span class="n">two</span><span class="p">.</span><span class="k">version</span><span class="o">=</span><span class="mi">2</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span><span class="mi">2</span>
 </pre></div>
 
 
 <h1>安装phoenix</h1>
 <p>编译</p>
-<div class="highlight"><pre><span></span>mvn package -DskipTests -Dmaven.javadoc.skip=true -Dhadoop-two.version=2.5.2
+<div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">package</span> <span class="o">-</span><span class="n">DskipTests</span> <span class="o">-</span><span class="n">Dmaven</span><span class="p">.</span><span class="n">javadoc</span><span class="p">.</span><span class="n">skip</span><span class="o">=</span><span class="k">true</span> <span class="o">-</span><span class="n">Dhadoop</span><span class="o">-</span><span class="n">two</span><span class="p">.</span><span class="k">version</span><span class="o">=</span><span class="mi">2</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span><span class="mi">2</span>
 </pre></div>
 
 

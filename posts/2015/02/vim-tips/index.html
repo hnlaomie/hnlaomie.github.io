@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>vim tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -39,28 +35,28 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201502.html">201502</a> <a href="/tag/vim.html">vim</a> </p>
 </footer><!-- /.post-info -->      <h1>复制粘贴</h1>
-<div class="highlight"><pre><span></span>&quot;ay          复制到a寄存器
-&quot;ap          是从a寄存器粘贴
-&quot;+p          从粘贴板粘贴
-&quot;+y          复制到粘贴板
+<div class="highlight"><pre><span></span><span class="ss">&quot;ay          复制到a寄存器</span>
+<span class="ss">&quot;</span><span class="n">ap</span>          <span class="err">是从</span><span class="n">a寄存器粘贴</span>
+<span class="ss">&quot;+p          从粘贴板粘贴</span>
+<span class="ss">&quot;</span><span class="o">+</span><span class="n">y</span>          <span class="err">复制到粘贴板</span>
 </pre></div>
 
 
 <h1>vim和终端间切换</h1>
-<div class="highlight"><pre><span></span>ctrl + z     切换到终端
-fg           从终端返回vim
+<div class="highlight"><pre><span></span><span class="n">ctrl</span> <span class="o">+</span> <span class="n">z</span>     <span class="err">切换到终端</span>
+<span class="n">fg</span>           <span class="err">从终端返回</span><span class="n">vim</span>
 </pre></div>
 
 
 <h1>nerdtree使用</h1>
-<div class="highlight"><pre><span></span>,nn          打开nerdtree
-shift + i    显示隐藏目录
-ctrl + ww    nerdtree和vim间切换
+<div class="highlight"><pre><span></span><span class="p">,</span><span class="n">nn</span>          <span class="err">打开</span><span class="n">nerdtree</span>
+<span class="n">shift</span> <span class="o">+</span> <span class="n">i</span>    <span class="err">显示隐藏目录</span>
+<span class="n">ctrl</span> <span class="o">+</span> <span class="n">ww</span>    <span class="n">nerdtree和vim间切换</span>
 </pre></div>
 
 
 <h1>格式化代码</h1>
-<div class="highlight"><pre><span></span>gg=G
+<div class="highlight"><pre><span></span><span class="n">gg</span><span class="o">=</span><span class="k">G</span>
 </pre></div>
 
 
@@ -78,9 +74,9 @@ ctrl + ww    nerdtree和vim间切换
 
 
 <h1>vim8安装</h1>
-<div class="highlight"><pre><span></span>sudo add-apt-repository ppa:jonathonf/vim
-# 删除
-sudo apt install ppa-purge &amp;&amp; sudo ppa-purge ppa:jonathonf/vim
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="k">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="p">:</span><span class="n">jonathonf</span><span class="o">/</span><span class="n">vim</span>
+<span class="o">#</span> <span class="err">删除</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ppa</span><span class="o">-</span><span class="n">purge</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">ppa</span><span class="o">-</span><span class="n">purge</span> <span class="n">ppa</span><span class="p">:</span><span class="n">jonathonf</span><span class="o">/</span><span class="n">vim</span>
 </pre></div>
 
 

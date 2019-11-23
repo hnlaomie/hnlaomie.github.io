@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>hive tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -61,68 +57,68 @@ hive --database game -e <span class="s1">&#39;select * from android_init&#39;</s
 
 
 <h1>hive的slf4j</h1>
-<div class="highlight"><pre><span></span>rm -fr $HADOOP_HOME/share/hadoop/common/lib/slf4j*
-mv $HBASE_HOME/lib/slf4j* $HADOOP_HOME/share/hadoop/common/lib
-jar -xvf $SPARK_HOME/lib/spark-assembly*.jar
-# delete slf4j path and zip the directory
-jar -cvf $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0.jar $SPARK_HOME/lib/spark-assembly-1.4.0-hadoop2.6.0/
+<div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">fr</span> <span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="k">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">common</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">slf4j</span><span class="o">*</span>
+<span class="n">mv</span> <span class="err">$</span><span class="n">HBASE_HOME</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">slf4j</span><span class="o">*</span> <span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="k">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">common</span><span class="o">/</span><span class="n">lib</span>
+<span class="n">jar</span> <span class="o">-</span><span class="n">xvf</span> <span class="err">$</span><span class="n">SPARK_HOME</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">assembly</span><span class="o">*</span><span class="p">.</span><span class="n">jar</span>
+<span class="o">#</span> <span class="k">delete</span> <span class="n">slf4j</span> <span class="n">path</span> <span class="k">and</span> <span class="n">zip</span> <span class="n">the</span> <span class="n">directory</span>
+<span class="n">jar</span> <span class="o">-</span><span class="n">cvf</span> <span class="err">$</span><span class="n">SPARK_HOME</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">assembly</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="o">-</span><span class="n">hadoop2</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">jar</span> <span class="err">$</span><span class="n">SPARK_HOME</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">assembly</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="o">-</span><span class="n">hadoop2</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span>
 </pre></div>
 
 
 <h1>hive的timestamp时间差</h1>
-<div class="highlight"><pre><span></span>CREATE TABLE ts (txt string, st Timestamp, et Timestamp) 
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY &#39;,&#39;;
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ts</span> <span class="p">(</span><span class="n">txt</span> <span class="n">string</span><span class="p">,</span> <span class="n">st</span> <span class="k">Timestamp</span><span class="p">,</span> <span class="n">et</span> <span class="k">Timestamp</span><span class="p">)</span> 
+<span class="k">ROW</span> <span class="n">FORMAT</span> <span class="n">DELIMITED</span>
+<span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;,&#39;</span><span class="p">;</span>
 
-select 
-  txt, 
-  cast(
-    round(
-      cast((e-s) as double) * 1000
-    ) as int
-  ) latency 
-from (select txt, cast(st as double) s, cast(et as double) e from ts) q;
+<span class="k">select</span> 
+  <span class="n">txt</span><span class="p">,</span> 
+  <span class="k">cast</span><span class="p">(</span>
+    <span class="n">round</span><span class="p">(</span>
+      <span class="k">cast</span><span class="p">((</span><span class="n">e</span><span class="o">-</span><span class="n">s</span><span class="p">)</span> <span class="k">as</span> <span class="n">double</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="nb">int</span>
+  <span class="p">)</span> <span class="n">latency</span> 
+<span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="n">txt</span><span class="p">,</span> <span class="k">cast</span><span class="p">(</span><span class="n">st</span> <span class="k">as</span> <span class="n">double</span><span class="p">)</span> <span class="n">s</span><span class="p">,</span> <span class="k">cast</span><span class="p">(</span><span class="n">et</span> <span class="k">as</span> <span class="n">double</span><span class="p">)</span> <span class="n">e</span> <span class="k">from</span> <span class="n">ts</span><span class="p">)</span> <span class="n">q</span><span class="p">;</span>
 </pre></div>
 
 
 <h1>hive删除表</h1>
-<div class="highlight"><pre><span></span>truncate table table_name;
-truncate table table_name partition (dt = &#39;2015-12-02&#39;);
-alter table table_name drop if exists partition (dt = &#39;2015-12-02&#39;);
+<div class="highlight"><pre><span></span><span class="nv">truncate</span> <span class="nv">table</span> <span class="nv">table_name</span><span class="c1">;</span>
+<span class="nv">truncate</span> <span class="nv">table</span> <span class="nv">table_name</span> <span class="nv">partition</span> <span class="ss">(</span><span class="nv">dt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">2015-12-02</span><span class="s1">&#39;</span><span class="ss">)</span><span class="c1">;</span>
+<span class="nv">alter</span> <span class="nv">table</span> <span class="nv">table_name</span> <span class="nv">drop</span> <span class="k">if</span> <span class="nv">exists</span> <span class="nv">partition</span> <span class="ss">(</span><span class="nv">dt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">2015-12-02</span><span class="s1">&#39;</span><span class="ss">)</span><span class="c1">;</span>
 </pre></div>
 
 
 <h1>变更机器名</h1>
 <p>因为hive的metadata中包括机器名，当机器名变更后，需要改metadata里的机器名。可用以下命令查找并修改机器名</p>
-<div class="highlight"><pre><span></span><span class="err">#</span> <span class="nt">查找表的hdfs路径</span><span class="err">（</span><span class="nt">包括机器名</span><span class="err">）</span>
-<span class="nt">hive</span><span class="o">&gt;</span> <span class="nt">describe</span> <span class="nt">formatted</span> <span class="cp">[</span><span class="nx">tablename</span><span class="cp">]</span><span class="o">;</span>
-<span class="err">#</span> <span class="nt">修改表的hdfs路径</span>
-<span class="nt">hive</span><span class="o">&gt;</span> <span class="nt">alter</span> <span class="nt">table</span> <span class="cp">[</span><span class="nx">tablename</span><span class="cp">]</span> <span class="nt">set</span> <span class="nt">location</span> <span class="s2">&quot;hdfs://</span><span class="cp">[</span><span class="nx">newhostname</span><span class="cp">]</span><span class="s2">:8020/user/hive/warehouse/</span><span class="cp">[</span><span class="nx">tablename</span><span class="cp">]</span><span class="s2">&quot;</span><span class="o">;</span> 
+<div class="highlight"><pre><span></span><span class="err">#</span><span class="w"> </span><span class="n">查找表的hdfs路径</span><span class="err">（</span><span class="n">包括机器名</span><span class="err">）</span><span class="w"></span>
+<span class="n">hive</span><span class="o">&gt;</span><span class="w"> </span><span class="k">describe</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">[</span><span class="n">tablename</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">修改表的hdfs路径</span><span class="w"></span>
+<span class="n">hive</span><span class="o">&gt;</span><span class="w"> </span><span class="k">alter</span><span class="w"> </span><span class="nc">table</span><span class="w"> </span><span class="o">[</span><span class="n">tablename</span><span class="o">]</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="ss">&quot;hdfs://[newhostname]:8020/user/hive/warehouse/[tablename]&quot;</span><span class="p">;</span><span class="w"> </span>
 </pre></div>
 
 
 <h1>建外部表</h1>
 <p>将spark的dataframe保存orc文件</p>
-<div class="highlight"><pre><span></span>df.write.mode(SaveMode.Overwrite).format(&quot;orc&quot;).save(&quot;/user/laomie/country&quot;)
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="p">.</span><span class="k">write</span><span class="p">.</span><span class="k">mode</span><span class="p">(</span><span class="n">SaveMode</span><span class="p">.</span><span class="n">Overwrite</span><span class="p">).</span><span class="n">format</span><span class="p">(</span><span class="ss">&quot;orc&quot;</span><span class="p">).</span><span class="n">save</span><span class="p">(</span><span class="ss">&quot;/user/laomie/country&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>hive用外部表关联orc文件</p>
-<div class="highlight"><pre><span></span>CREATE EXTERNAL TABLE country_temp (country_id int, country string, last_update timestamp)
-STORED AS ORC LOCATION &quot;/user/laomie/country&quot;;
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">country_temp</span> <span class="p">(</span><span class="n">country_id</span> <span class="nb">int</span><span class="p">,</span> <span class="n">country</span> <span class="n">string</span><span class="p">,</span> <span class="n">last_update</span> <span class="k">timestamp</span><span class="p">)</span>
+<span class="n">STORED</span> <span class="k">AS</span> <span class="n">ORC</span> <span class="k">LOCATION</span> <span class="ss">&quot;/user/laomie/country&quot;</span><span class="p">;</span>
 </pre></div>
 
 
 <h1>移动表</h1>
-<div class="highlight"><pre><span></span>alter table table_name rename to new_database.table_name
+<div class="highlight"><pre><span></span><span class="k">alter</span> <span class="k">table</span> <span class="k">table_name</span> <span class="k">rename</span> <span class="k">to</span> <span class="n">new_database</span><span class="p">.</span><span class="k">table_name</span>
 </pre></div>
 
 
 <h1>变更列</h1>
-<div class="highlight"><pre><span></span>ALTER TABLE table_name CHANGE old_col_name new_col_name new_data_type
--- 变更分区列
-ALTER TABLE {table_name} PARTITION COLUMN ({column_name} {column_type});
-MSCK REPAIR TABLE &lt;tablename&gt;;
+<div class="highlight"><pre><span></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="n">CHANGE</span> <span class="n">old_col_name</span> <span class="n">new_col_name</span> <span class="n">new_data_type</span>
+<span class="c1">-- 变更分区列</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="err">{</span><span class="k">table_name</span><span class="err">}</span> <span class="n">PARTITION</span> <span class="k">COLUMN</span> <span class="p">(</span><span class="err">{</span><span class="k">column_name</span><span class="err">}</span> <span class="err">{</span><span class="n">column_type</span><span class="err">}</span><span class="p">);</span>
+<span class="n">MSCK</span> <span class="n">REPAIR</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="n">tablename</span><span class="o">&gt;</span><span class="p">;</span>
 </pre></div>
 
 
@@ -142,15 +138,15 @@ MSCK REPAIR TABLE &lt;tablename&gt;;
 
 
 <p>node1结点启动服务</p>
-<div class="highlight"><pre><span></span>hive --service metastore
+<div class="highlight"><pre><span></span><span class="n">hive</span> <span class="c1">--service metastore</span>
 </pre></div>
 
 
 <h1>hive删除空分区</h1>
 <p>需要将分区列转为字符型才能删除</p>
-<div class="highlight"><pre><span></span>ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour STRING);
-ALTER TABLE ssp_log_data DROP PARTITION (log_hour=&#39;__HIVE_DEFAULT_PARTITION__&#39;);
-ALTER TABLE ssp_log_data PARTITION COLUMN (log_hour INT);
+<div class="highlight"><pre><span></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ssp_log_data</span> <span class="n">PARTITION</span> <span class="k">COLUMN</span> <span class="p">(</span><span class="n">log_hour</span> <span class="n">STRING</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ssp_log_data</span> <span class="k">DROP</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">log_hour</span><span class="o">=</span><span class="s1">&#39;__HIVE_DEFAULT_PARTITION__&#39;</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ssp_log_data</span> <span class="n">PARTITION</span> <span class="k">COLUMN</span> <span class="p">(</span><span class="n">log_hour</span> <span class="nb">INT</span><span class="p">);</span>
 </pre></div>
 
 
@@ -164,16 +160,16 @@ sparkAssemblyPath=`ls <span class="cp">${</span><span class="n">SPARK_HOME</span
 
 <h1>hive on spark</h1>
 <p>hive链接spark相关jar</p>
-<div class="highlight"><pre><span></span>ln -sf /home/laomie/tools/spark/jars/scala-library-2.11.8.jar /home/laomie/tools/hive/lib/scala-library-2.11.8.jar
-ln -sf /home/laomie/tools/spark/jars/spark-core_2.11-2.2.2.jar /home/laomie/tools/hive/lib/spark-core_2.11-2.2.2.jar
-ln -sf /home/laomie/tools/spark/jars/spark-network-common_2.11-2.2.2.jar /home/laomie/tools/hive/lib/spark-network-common_2.11-2.2.2.jar
+<div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">jars</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="n">library</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="n">jar</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">hive</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="n">library</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="n">jar</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">jars</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">core_2</span><span class="p">.</span><span class="mi">11</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="n">jar</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">hive</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">core_2</span><span class="p">.</span><span class="mi">11</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="n">jar</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">jars</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="n">common_2</span><span class="p">.</span><span class="mi">11</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="n">jar</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">hive</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="n">common_2</span><span class="p">.</span><span class="mi">11</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="n">jar</span>
 </pre></div>
 
 
 <p>spark-defaults.conf复制到hive目录</p>
 <p>上传spark的jar到hdfs</p>
-<div class="highlight"><pre><span></span>hdfs dfs -mkdir /spark-jars
-hdfs dfs -put /home/laomie/tools/spark/jars/*.jar /spark-jars/
+<div class="highlight"><pre><span></span><span class="n">hdfs</span> <span class="n">dfs</span> <span class="o">-</span><span class="n">mkdir</span> <span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">jars</span>
+<span class="n">hdfs</span> <span class="n">dfs</span> <span class="o">-</span><span class="n">put</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">jars</span><span class="cm">/*.jar /spark-jars/</span>
 </pre></div>
 
 
@@ -186,7 +182,7 @@ hdfs dfs -put /home/laomie/tools/spark/jars/*.jar /spark-jars/
 
 
 <p>hive on spark</p>
-<div class="highlight"><pre><span></span>set hive.execution.engine=spark;
+<div class="highlight"><pre><span></span><span class="k">set</span> <span class="n">hive</span><span class="p">.</span><span class="n">execution</span><span class="p">.</span><span class="n">engine</span><span class="o">=</span><span class="n">spark</span><span class="p">;</span>
 </pre></div>
     </div><!-- /.entry-content -->
 

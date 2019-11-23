@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - ruby</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -86,12 +82,12 @@ gem install redis
 
 <h1>ruby本地镜像安装</h1>
 <p>下载"ruby-2.5.1.tar.bz2"到本地目录，到目录下如下操作</p>
-<div class="highlight"><pre><span></span># 启动http服务
-python3 -m http.server
-# 设置本地镜像
-export RUBY_BUILD_MIRROR_URL=&quot;http://127.0.0.1:8000/&quot;
-# rbenv安装python时找不到本地文件，需要将&quot;ruby-2.5.1.tar.bz2&quot;重命名为&quot;http.server&quot;输出的请求64位字符
-rbenv install 2.5.1
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">启动</span><span class="n">http服务</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">http</span><span class="p">.</span><span class="n">server</span>
+<span class="o">#</span> <span class="err">设置本地镜像</span>
+<span class="n">export</span> <span class="n">RUBY_BUILD_MIRROR_URL</span><span class="o">=</span><span class="ss">&quot;http://127.0.0.1:8000/&quot;</span>
+<span class="o">#</span> <span class="n">rbenv安装python时找不到本地文件</span><span class="err">，需要将</span><span class="ss">&quot;ruby-2.5.1.tar.bz2&quot;</span><span class="err">重命名为</span><span class="ss">&quot;http.server&quot;</span><span class="err">输出的请求</span><span class="mi">64</span><span class="err">位字符</span>
+<span class="n">rbenv</span> <span class="n">install</span> <span class="mi">2</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span><span class="mi">1</span>
 </pre></div>
 
 

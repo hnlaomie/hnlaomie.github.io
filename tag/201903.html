@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+        <meta charset="utf-8" />
+        <title>laomie's blog - 201903</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">laomie's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/database.html">database</a></li>
+                    <li><a href="/category/programming.html">programming</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/posts/2019/03/dnscrypt-proxy/">dnscrypt proxy</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-03-22T08:30:00+08:00">
+                Published: 2019-03-22(五)
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/laomie.html">laomie</a>
+        </address>
+<p>In <a href="/category/tools.html">tools</a>.</p>
+<p>tags: <a href="/tag/201903.html">201903</a> <a href="/tag/dnscrypt.html">dnscrypt</a> </p>
+</footer><!-- /.post-info --><h1>Preface</h1>
+<blockquote>
+<p>因为众所周知的原因，DNS缓存投毒(aka: DNS Spoofing) 的出现是因为DNS查询通信协议的设计缺陷导致的，因为DNS查询协议的设计者当时并没有预料到现在的网络环境这么糟糕。利用这个缺陷可以实现一些特技，比如：</p>
+<p>用浏览器打开Google然后跳转到了Baidu.
+ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告.
+这里没能列举出的一些特技.
+为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 dnscrypt(GitHub项目主页)，相比传统的DNS查询有如下优点：</p>
+<p>与DNS服务器通信过程中使用SSL加密.
+可以强制使用TCP，避免因UDP丢包而浪费时间.
+有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站.
+有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果.
+不过使用dnscrypt的缺点也是有的：相比ISP提供的DNS，dnscrypt的查询会慢上最少300ms。导致这个问题的原因包括但不限于：</p>
+<p>UDP丢包.
+强制使用TCP的话，TCP握手也要很久.
+SSL握手.
+城门口堵车了.
+不过这个问题也是可以解决的，那就是在本地搭建一个DNS服务器来缓存dnscrypt的查询结果。
+接下来，我就简单的写一下 dnscrypt-proxy 和 bind(用来缓存DNS查询结果) 的安装和配置.</p>
+<p>注1：下面的内容适用于Ubuntu及其衍生Distro，其他Linux Distro可能需要做些修改。
+注2：我之所以没用 dnsmasq，是因为无论怎么配置它 它都不缓存向本地请求的记录，但会缓存非本地地址的记录 比如用8.8.8.8它就会缓存。</p>
+</blockquote>
+<h1>dnscrypt-proxy</h1>
+<blockquote>
+<p>DNSCrypt 主页
+dnscrypt-proxy GitHub 主页
+dnscrypt-proxy launchpad.net PPA</p>
+</blockquote>
+<h1>安装 dnscrypt-proxy</h1>
+<div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">dnscrypt</span><span class="o">-</span><span class="n">proxy</span>
+</pre></div>
+
+
+<h1>配置 dnscrypt-proxy</h1>
+<p>配置dnscrypt-proxy，配置文件在 /etc/default/dnscrypt-proxy：</p>
+<div class="highlight"><pre><span></span><span class="c1"># What local IP the daemon will listen to, with an optional port.</span>
+<span class="c1"># The default port is 53. If using systemd, this is not used and must be</span>
+<span class="c1"># specified in dnscrypt-proxy.socket.</span>
+<span class="c1"># 设置dnscrypt-proxy监听哪个地址的哪个端口。</span>
+<span class="c1"># 然而这个配置项并不管用，请参考下面的配置方法。</span>
+<span class="nv">DNSCRYPT_PROXY_LOCAL_ADDRESS1</span><span class="o">=</span><span class="m">127</span>.0.2.1:53
+<span class="c1">#DNSCRYPT_PROXY_LOCAL_ADDRESS2=127.0.2.2:53</span>
+
+<span class="c1"># Remote DNS(Crypt) resolver.</span>
+<span class="c1"># You can find a list of resolvers at</span>
+<span class="c1"># /usr/share/dnscrypt-proxy/dnscrypt-resolvers.csv.</span>
+<span class="c1"># 从 dnscrypt-resolvers.csv 的 &#39;name&#39; 列里挑选自己想要的dns服务器.</span>
+<span class="c1"># 这里给几个例子：&quot;cisco&quot; 访问速度最快，&quot;dnscrypt.eu-dk&quot; 不会记录查询日志.</span>
+<span class="nv">DNSCRYPT_PROXY_RESOLVER_NAME1</span><span class="o">=</span>dnscrypt.eu-nl
+<span class="c1">#DNSCRYPT_PROXY_RESOLVER_NAME2=dnscrypt.eu-dk</span>
+
+<span class="c1"># Extra flags to pass to dnscrypt-proxy</span>
+<span class="c1"># dnscrypt-proxy 的其他命令行参数，这里简单解释下：</span>
+<span class="c1"># --tcp-only：只使用TCP连接.</span>
+<span class="c1"># --logfile=/path/logfile：设置日志的存放位置.</span>
+<span class="c1"># --loglevel=7：7为DEBUG级别的日志输出级别, 能看到查询超时的日志信息.</span>
+<span class="nv">DNSCRYPT_PROXY_OPTIONS</span><span class="o">=</span><span class="s2">&quot;--tcp-only --logfile=/var/log/dnscrypt-proxy/dnscrypt-proxy.log --loglevel=7&quot;</span>
+</pre></div>
+
+
+<p>DNSCRYPT_PROXY_LOCAL_ADDRESS1 无效的原因是因为 使用systemd的话会在另一个地方配置这个参数，这篇博文 提到了解决这个问题的方法。
+执行命令来覆盖 dnscrypt-proxy.socket 的配置：systemctl edit dnscrypt-proxy.socket，然后写入如下内容（假设让dnscrypt监听 127.0.2.1:53）：</p>
+<div class="highlight"><pre><span></span><span class="o">[</span>Socket<span class="o">]</span>
+<span class="nv">ListenStream</span><span class="o">=</span>
+<span class="nv">ListenDatagram</span><span class="o">=</span>
+<span class="nv">ListenStream</span><span class="o">=</span><span class="m">127</span>.0.2.1:53
+<span class="nv">ListenDatagram</span><span class="o">=</span><span class="m">127</span>.0.2.1:53
+</pre></div>
+
+
+<p>注：systemctl 会使用 emacs 作为文本编辑器，如果想用别的（比如 vim）就执行 export SYSTEMD_EDITOR="vim" 即可。
+配置完成后执行命令 systemctl restart dnscrypt-proxy，使配置文件生效。</p>
+<h1>安装 bind9</h1>
+<div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">bind9</span> <span class="n">bind9</span><span class="o">-</span><span class="n">doc</span>
+</pre></div>
+
+
+<h1>配置 bind9</h1>
+<p>编辑文件 /etc/bind/named.conf.options：</p>
+<div class="highlight"><pre><span></span><span class="k">options</span> <span class="err">{</span>
+        <span class="n">directory</span> <span class="ss">&quot;/var/cache/bind&quot;</span><span class="p">;</span>
+
+        <span class="o">//</span> <span class="err">禁用</span><span class="n">dnssec</span>
+        <span class="n">dnssec</span><span class="o">-</span><span class="n">enable</span> <span class="k">no</span><span class="p">;</span>
+        <span class="n">dnssec</span><span class="o">-</span><span class="n">validation</span> <span class="k">no</span><span class="p">;</span>
+
+        <span class="n">auth</span><span class="o">-</span><span class="n">nxdomain</span> <span class="k">no</span><span class="p">;</span>    <span class="o">#</span> <span class="n">conform</span> <span class="k">to</span> <span class="n">RFC1035</span>
+        <span class="k">listen</span><span class="o">-</span><span class="k">on</span><span class="o">-</span><span class="n">v6</span> <span class="err">{</span> <span class="k">any</span><span class="p">;</span> <span class="err">}</span><span class="p">;</span>
+
+        <span class="o">//</span> <span class="err">启用递归查询</span>
+        <span class="n">recursion</span> <span class="n">yes</span><span class="p">;</span>
+        <span class="o">//</span> <span class="err">允许指定的地址向</span><span class="n">bind9请求dns查询</span><span class="p">,</span> <span class="err">参考下面的</span> <span class="ss">&quot;acl goodclients&quot;</span><span class="p">.</span>
+        <span class="n">allow</span><span class="o">-</span><span class="n">query</span> <span class="err">{</span> <span class="n">goodclients</span><span class="p">;</span> <span class="err">}</span><span class="p">;</span>
+
+        <span class="o">//</span> <span class="err">将</span><span class="n">dns请求转发到指定地址</span>
+        <span class="n">forwarders</span> <span class="err">{</span>
+                <span class="o">//</span> <span class="err">这里我们把它转发到</span> <span class="n">dnscrypt</span><span class="o">-</span><span class="n">proxy</span><span class="p">.</span>
+                <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
+        <span class="err">}</span><span class="p">;</span>
+        <span class="o">//</span> <span class="n">bind9</span> <span class="err">只做</span><span class="n">dns转发工作而不做解析工作</span><span class="p">.</span>
+        <span class="k">forward</span> <span class="k">only</span><span class="p">;</span>
+
+        <span class="o">//</span> <span class="err">缓存</span><span class="n">dns记录最多占用多少内存</span><span class="p">,</span> <span class="err">单位</span> <span class="n">bytes</span><span class="p">.</span>
+        <span class="o">//</span> <span class="mi">64</span><span class="n">MiB</span> <span class="o">=</span> <span class="mi">65536</span><span class="n">Bytes</span>
+        <span class="k">max</span><span class="o">-</span><span class="k">cache</span><span class="o">-</span><span class="k">size</span> <span class="mi">65536</span><span class="p">;</span>
+<span class="err">}</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="k">Access</span> <span class="n">Control</span> <span class="n">List</span><span class="err">，这里用来配置成</span> <span class="err">允许向</span><span class="n">bind9查询的客户端</span><span class="p">.</span>
+<span class="n">acl</span> <span class="n">goodclients</span> <span class="err">{</span>
+        <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">localhost</span><span class="p">;</span>
+        <span class="n">localnets</span><span class="p">;</span>
+<span class="err">}</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">bind9</span> <span class="err">日志</span>
+<span class="n">logging</span> <span class="err">{</span>
+        <span class="o">//</span> <span class="err">配置一个</span><span class="n">channel</span><span class="err">，该</span><span class="n">channel会记录详细的dns请求和响应</span><span class="p">.</span>
+        <span class="n">channel</span> <span class="n">channel_debug</span> <span class="err">{</span>
+                <span class="o">//</span> <span class="k">size</span> <span class="mi">10</span><span class="n">m</span><span class="p">:</span> <span class="err">每个日志文件最大</span> <span class="mi">10</span><span class="n">MiB</span><span class="p">.</span>
+                <span class="o">//</span> <span class="n">versions</span> <span class="mi">3</span><span class="p">:</span> <span class="err">超过</span><span class="mi">10</span><span class="n">MiB就创建新的日志文件</span><span class="p">.</span>
+                <span class="n">file</span> <span class="ss">&quot;/var/log/named/channel_debug.log&quot;</span> <span class="n">versions</span> <span class="mi">3</span> <span class="k">size</span> <span class="mi">10</span><span class="n">m</span><span class="p">;</span>
+                <span class="n">severity</span> <span class="n">debug</span> <span class="mi">3</span><span class="p">;</span>
+                <span class="n">print</span><span class="o">-</span><span class="n">time</span> <span class="n">yes</span><span class="p">;</span>
+                <span class="n">print</span><span class="o">-</span><span class="n">severity</span> <span class="n">yes</span><span class="p">;</span>
+        <span class="err">}</span><span class="p">;</span>
+        <span class="o">//</span> <span class="err">配置一个</span><span class="n">channel</span><span class="err">，该</span><span class="n">channel不会记录dns请求和响应</span><span class="p">.</span>
+        <span class="n">channel</span> <span class="n">channel_default</span> <span class="err">{</span>
+                <span class="n">file</span> <span class="ss">&quot;/var/log/named/channel_debug.log&quot;</span> <span class="n">versions</span> <span class="mi">3</span> <span class="k">size</span> <span class="mi">10</span><span class="n">m</span><span class="p">;</span>
+                <span class="n">severity</span> <span class="n">info</span><span class="p">;</span>
+                <span class="n">print</span><span class="o">-</span><span class="n">time</span> <span class="n">yes</span><span class="p">;</span>
+                <span class="n">print</span><span class="o">-</span><span class="n">severity</span> <span class="n">yes</span><span class="p">;</span>
+        <span class="err">}</span><span class="p">;</span>
+        <span class="o">//</span> <span class="err">默认使用</span> <span class="n">channel_default</span><span class="p">.</span>
+        <span class="n">category</span> <span class="k">default</span> <span class="err">{</span>
+                <span class="n">channel_default</span><span class="p">;</span>
+        <span class="err">}</span><span class="p">;</span>
+<span class="err">}</span><span class="p">;</span>
+</pre></div>
+
+
+<p>为部分网站使用大陆DNS
+如果所有DNS请求都通过dnscrypt-proxy的话 就没法享受大陆CDN加速了，一个明显的现象就是 dns解析完了但网页得等好久才打开。
+为了解决这个问题，GitHub上有个项目 felixonmars/dnsmasq-china-list 用来配置dnsmasq专门为大陆网站指定大陆的dns。但dnsmasq的配置文件没法用在bind9上，所以我写了个py脚本，用来把 dnsmasq配置文件 转成 bind9 zone配置文件。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+
+<span class="k">def</span> <span class="nf">__dnsmasqconf2bind9zone</span><span class="p">(</span><span class="n">dnsmasq_conf</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dns_server</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">TEMPLATE_BIND9_ZONE</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;zone </span><span class="se">\&quot;</span><span class="si">{DOMAIN}</span><span class="se">\&quot;</span><span class="s2"> IN {{</span><span class="se">\n</span><span class="s2">&quot;</span>
+                           <span class="s2">&quot;    type forward;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                           <span class="s2">&quot;    forwarders {{</span><span class="se">\n</span><span class="s2">&quot;</span>
+                           <span class="s2">&quot;        </span><span class="si">{DNS_SERVER}</span><span class="s2">;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                           <span class="s2">&quot;    }};</span><span class="se">\n</span><span class="s2">&quot;</span>
+                           <span class="s2">&quot;}};</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">lSetBind9zone</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dnsmasq_conf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">lStrSplit</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lStrSplit</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">lSetBind9zone</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TEMPLATE_BIND9_ZONE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DOMAIN</span><span class="o">=</span><span class="n">lStrSplit</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">DNS_SERVER</span><span class="o">=</span><span class="n">dns_server</span><span class="p">))</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lSetBind9zone</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__init_argparse</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawTextHelpFormatter</span><span class="p">,</span>
+                                     <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;dnsmasqconf2bind9zone.py&quot;</span><span class="p">,</span>
+                                     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;dnsmasq.conf to bind9 zone utility.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                 <span class="s2">&quot;This utility will read dnsmasq.con from stdin then output put to stdout.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                 <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                 <span class="s2">&quot;For accelerated domains for china check out: </span><span class="se">\&quot;</span><span class="s2">https://github.com/felixonmars/dnsmasq-china-list</span><span class="se">\&quot;</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                 <span class="s2">&quot;Quick download url: https://github.com/felixonmars/dnsmasq-china-list/blob/master/accelerated-domains.china.conf?raw=true&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--forward-to&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;223.5.5.5&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Where forward DNS request to. The default is </span><span class="se">\&quot;</span><span class="s2">223.5.5.5</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">__init_argparse</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">__dnsmasqconf2bind9zone</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">args</span><span class="o">.</span><span class="n">forward_to</span><span class="p">))</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<ol>
+<li>
+<p>将上面的代码保存到 dnsmasqconf2bind9zone.py.</p>
+</li>
+<li>
+<p>到 felixonmars/dnsmasq-china-list 下载 accelerated-domains.china.conf 文件.</p>
+</li>
+<li>
+<p>执行命令，将 dnsmasq conf 文件转为 bind 9 zone 配置文件.</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">accelerated</span><span class="o">-</span><span class="n">domains</span><span class="p">.</span><span class="n">china</span><span class="p">.</span><span class="n">conf</span> <span class="o">|</span> <span class="n">python3</span> <span class="n">dnsmasqconf2bind9zone</span><span class="p">.</span><span class="n">py</span> <span class="o">&gt;</span> <span class="n">named</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="n">accelerated</span><span class="o">-</span><span class="n">domains</span><span class="o">-</span><span class="n">china</span><span class="o">-</span><span class="k">zone</span>
+<span class="o">#</span> <span class="err">也可以单独指定使用哪个</span><span class="n">DNS服务器</span><span class="err">，加个参数即可：</span>
+<span class="n">python3</span> <span class="n">dnsmasqconf2bind9zone</span><span class="p">.</span><span class="n">py</span> <span class="c1">--forward-to &lt;DNS服务器IP地址&gt;</span>
+</pre></div>
+
+
+<ol>
+<li>配置 named.conf，在它结尾加一行:</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">include</span> <span class="s2">&quot;</span><span class="s">/etc/bind/named.conf.accelerated-domains-china-zone</span>
+</pre></div>
+
+
+<ol>
+<li>执行命令重启 bind9 服务：systemctl restart bind9.</li>
+</ol>
+<p>自定义 bind 9 zone</p>
+<p>felixonmars/dnsmasq-china-list 项目内的 accelerated-domains.china.conf 里难免有漏网之鱼，通过自己配置 named.conf.accelerated-domains-china-zone 把漏掉的添加进去就好了。格式大概是这样：</p>
+<div class="highlight"><pre><span></span><span class="k">zone</span> <span class="ss">&quot;&lt;域名&gt;&quot;</span> <span class="k">IN</span> <span class="err">{</span>
+    <span class="k">type</span> <span class="k">forward</span><span class="p">;</span>
+    <span class="n">forwarders</span> <span class="err">{</span>
+        <span class="o">&lt;</span><span class="n">DNS服务器IP地址</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="err">}</span><span class="p">;</span>
+<span class="err">}</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后使用 systemctl reload bind9 使配置生效。</p>
+<h1>References</h1>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04</a>
+<a href="https://github.com/felixonmars/dnsmasq-china-list">https://github.com/felixonmars/dnsmasq-china-list</a>
+<a href="https://www.dommyet.me/dnsmasq-dnscrypt-smart-dns">https://www.dommyet.me/dnsmasq-dnscrypt-smart-dns</a></p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="https://hnlaomie.github.io">laomie's blog</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - cassandra</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -111,8 +107,8 @@ cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)<
 
 <h1>ThreadPriorityPolicy出错问题</h1>
 <p>报"Improperly specified VM option 'ThreadPriorityPolicy=42'", 修改"conf/jvm.options"</p>
-<div class="highlight"><pre><span></span># see http://tech.stolsvik.com/2010/01/linux-java-thread-priorities-workar                                                          
-#-XX:ThreadPriorityPolicy=42
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">see</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">tech</span><span class="p">.</span><span class="n">stolsvik</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="mi">2010</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">linux</span><span class="o">-</span><span class="n">java</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">priorities</span><span class="o">-</span><span class="n">workar</span>                                                          
+<span class="o">#-</span><span class="n">XX</span><span class="p">:</span><span class="n">ThreadPriorityPolicy</span><span class="o">=</span><span class="mi">42</span>
 </pre></div>
 
 
@@ -129,13 +125,13 @@ cqlsh:&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)<
 <li>logback.xml</li>
 </ul>
 <p>2. 每个结点停止写操作</p>
-<div class="highlight"><pre><span></span>nodetool drain
+<div class="highlight"><pre><span></span><span class="n">nodetool</span> <span class="n">drain</span>
 </pre></div>
 
 
 <p>3. 每个结点停止老版的服务，启动新版的服务</p>
 <p>4. 如果是大版本升级，则每个结点用以下命令升级sstable</p>
-<div class="highlight"><pre><span></span>nohup nodetool upgradesstables &amp;
+<div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">nodetool</span> <span class="n">upgradesstables</span> <span class="o">&amp;</span>
 </pre></div>
 
 

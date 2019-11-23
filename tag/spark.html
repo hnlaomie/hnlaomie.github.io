@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - spark</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -68,22 +64,22 @@
 
 
 <p>If you encounter other closure-related issues, make sure that</p>
-<div class="highlight"><pre><span></span>all captured references are serializable
-all captured references are immutable
-all captured references are either local vals, or in a static object
+<div class="highlight"><pre><span></span><span class="k">all</span> <span class="n">captured</span> <span class="k">references</span> <span class="k">are</span> <span class="k">serializable</span>
+<span class="k">all</span> <span class="n">captured</span> <span class="k">references</span> <span class="k">are</span> <span class="k">immutable</span>
+<span class="k">all</span> <span class="n">captured</span> <span class="k">references</span> <span class="k">are</span> <span class="n">either</span> <span class="k">local</span> <span class="n">vals</span><span class="p">,</span> <span class="k">or</span> <span class="k">in</span> <span class="n">a</span> <span class="k">static</span> <span class="k">object</span>
 </pre></div>
 
 
 <p>As a specific example, don't extend App:</p>
-<div class="highlight"><pre><span></span>object MyApp extends App {
-  // start running
+<div class="highlight"><pre><span></span><span class="k">object</span> <span class="n">MyApp</span> <span class="n">extends</span> <span class="n">App</span> <span class="err">{</span>
+  <span class="o">//</span> <span class="k">start</span> <span class="n">running</span>
 </pre></div>
 
 
 <p>Use an explicit main method instead</p>
-<div class="highlight"><pre><span></span>object MyApp {
-  def main(args: Array[String]) {
-    // start running
+<div class="highlight"><pre><span></span><span class="k">object</span><span class="w"> </span><span class="n">MyApp</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">def</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="nl">args</span><span class="p">:</span><span class="w"> </span><span class="k">Array</span><span class="o">[</span><span class="n">String</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="n">running</span><span class="w"></span>
 </pre></div>
 
 
@@ -133,13 +129,13 @@ all captured references are either local vals, or in a static object
 
 
 <p>Even though spark has no way of knowing it (yet), Cassandra RDDs are partitioned such that a given row of values for a rowkey will all be in the same partition, in order. </p>
-<div class="highlight"><pre><span></span>// So instead of doing
-visits.reduceByKey { value =&gt;
-    SomePerItemAggregationFunction(value)
+<div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">So</span> <span class="nv">instead</span> <span class="nv">of</span> <span class="nv">doing</span>
+<span class="nv">visits</span>.<span class="nv">reduceByKey</span> { <span class="nv">value</span> <span class="o">=&gt;</span>
+    <span class="nv">SomePerItemAggregationFunction</span><span class="ss">(</span><span class="nv">value</span><span class="ss">)</span>
 }
-// You can do
-visits.mapPartitions { lotsOfValues =&gt;
-    SomePerPartitionAggregationFunction(lotsOfValues)
+<span class="o">//</span> <span class="nv">You</span> <span class="nv">can</span> <span class="k">do</span>
+<span class="nv">visits</span>.<span class="nv">mapPartitions</span> { <span class="nv">lotsOfValues</span> <span class="o">=&gt;</span>
+    <span class="nv">SomePerPartitionAggregationFunction</span><span class="ss">(</span><span class="nv">lotsOfValues</span><span class="ss">)</span>
 }
 </pre></div>
 

@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>gradle tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -55,14 +51,14 @@
 
 <h1>jvm options</h1>
 <p>gradle.properties内的org.gradle.jvmargs加入以下内容</p>
-<div class="highlight"><pre><span></span>-DconfigPath=/home/laomie/projects/working/biconfig
+<div class="highlight"><pre><span></span><span class="o">-</span><span class="n">DconfigPath</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">laomie</span><span class="o">/</span><span class="n">projects</span><span class="o">/</span><span class="n">working</span><span class="o">/</span><span class="n">biconfig</span>
 </pre></div>
 
 
 <p>build.gradle内加入以下内容</p>
-<div class="highlight"><pre><span></span>test {
-    systemProperties = System.properties
-}
+<div class="highlight"><pre><span></span><span class="n">test</span> <span class="err">{</span>
+    <span class="n">systemProperties</span> <span class="o">=</span> <span class="k">System</span><span class="p">.</span><span class="n">properties</span>
+<span class="err">}</span>
 </pre></div>
     </div><!-- /.entry-content -->
 

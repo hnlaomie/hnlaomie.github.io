@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - mysql</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -99,20 +95,20 @@ mysql&gt; exit<span class="p">;</span>
 
 <p>参考：<a href="http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/">http://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/</a></p>
 <h1>修改表</h1>
-<div class="highlight"><pre><span></span>alter table t1 rename t2;
-alter table t add col1 int;
-alter table t drop column col1;
-alter table t modify column col1 varchar(50) after col2;
-alter table t change col1 col2 int;
-alter table t change col1 col1 bigint not null;
-alter table t add index idx_name (col1, col2);
-alter table t drop index idx_name;
+<div class="highlight"><pre><span></span><span class="k">alter</span> <span class="k">table</span> <span class="n">t1</span> <span class="k">rename</span> <span class="n">t2</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">add</span> <span class="n">col1</span> <span class="nb">int</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">drop</span> <span class="k">column</span> <span class="n">col1</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">modify</span> <span class="k">column</span> <span class="n">col1</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">after</span> <span class="n">col2</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="n">change</span> <span class="n">col1</span> <span class="n">col2</span> <span class="nb">int</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="n">change</span> <span class="n">col1</span> <span class="n">col1</span> <span class="nb">bigint</span> <span class="k">not</span> <span class="k">null</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">add</span> <span class="k">index</span> <span class="n">idx_name</span> <span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">);</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">drop</span> <span class="k">index</span> <span class="n">idx_name</span><span class="p">;</span>
 </pre></div>
 
 
 <h1>不能初始化"tc log"导致服务不启动</h1>
 <p>删除"/var/lib/mysql/tc.log"，然后重启服务</p>
-<div class="highlight"><pre><span></span>sudo service mysql start
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">mysql</span> <span class="k">start</span>
 </pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">

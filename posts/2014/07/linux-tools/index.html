@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>linux tools</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -41,13 +37,13 @@
 </footer><!-- /.post-info -->      <h1>linux下音乐播放器比较</h1>
 <p><a href="http://thesimplecomputer.info/choosing-a-linux-music-player">Choosing a Linux Music Player</a></p>
 <h1>pdf拆分合并</h1>
-<div class="highlight"><pre><span></span># pdf拆分
-pdftk ORIG_FILE.pdf cat 1 5 7 10-12 output NEW_FILE.pdf
-# pdf合并
-convert -density 300x300 -quality 100 mine1.pdf mine2.pdf merged.pdf
-gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merged.pdf mine1.pdf mine2.pdf
-# low resolution
-gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=merged.pdf mine1.pdf mine2.pdf
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">pdf拆分</span>
+<span class="n">pdftk</span> <span class="n">ORIG_FILE</span><span class="p">.</span><span class="n">pdf</span> <span class="n">cat</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">7</span> <span class="mi">10</span><span class="o">-</span><span class="mi">12</span> <span class="k">output</span> <span class="n">NEW_FILE</span><span class="p">.</span><span class="n">pdf</span>
+<span class="o">#</span> <span class="n">pdf合并</span>
+<span class="k">convert</span> <span class="o">-</span><span class="n">density</span> <span class="mi">300</span><span class="n">x300</span> <span class="o">-</span><span class="n">quality</span> <span class="mi">100</span> <span class="n">mine1</span><span class="p">.</span><span class="n">pdf</span> <span class="n">mine2</span><span class="p">.</span><span class="n">pdf</span> <span class="n">merged</span><span class="p">.</span><span class="n">pdf</span>
+<span class="n">gs</span> <span class="o">-</span><span class="n">dBATCH</span> <span class="o">-</span><span class="n">dNOPAUSE</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">sDEVICE</span><span class="o">=</span><span class="n">pdfwrite</span> <span class="o">-</span><span class="n">sOutputFile</span><span class="o">=</span><span class="n">merged</span><span class="p">.</span><span class="n">pdf</span> <span class="n">mine1</span><span class="p">.</span><span class="n">pdf</span> <span class="n">mine2</span><span class="p">.</span><span class="n">pdf</span>
+<span class="o">#</span> <span class="n">low</span> <span class="n">resolution</span>
+<span class="n">gs</span> <span class="o">-</span><span class="n">dBATCH</span> <span class="o">-</span><span class="n">dNOPAUSE</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">sDEVICE</span><span class="o">=</span><span class="n">pdfwrite</span> <span class="o">-</span><span class="n">dPDFSETTINGS</span><span class="o">=/</span><span class="n">prepress</span> <span class="o">-</span><span class="n">sOutputFile</span><span class="o">=</span><span class="n">merged</span><span class="p">.</span><span class="n">pdf</span> <span class="n">mine1</span><span class="p">.</span><span class="n">pdf</span> <span class="n">mine2</span><span class="p">.</span><span class="n">pdf</span>
 </pre></div>
     </div><!-- /.entry-content -->
 

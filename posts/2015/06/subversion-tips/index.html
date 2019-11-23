@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>subversion tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -39,125 +35,125 @@
 <p>In <a href="/category/tools.html">tools</a>.</p>
 <p>tags: <a href="/tag/201506.html">201506</a> <a href="/tag/svn.html">svn</a> </p>
 </footer><!-- /.post-info -->      <h1>检出</h1>
-<div class="highlight"><pre><span></span>svn co http://路径(目录或文件的全路径) [本地目录全路径] --username 用户名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">co</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="err">路径</span><span class="p">(</span><span class="err">目录或文件的全路径</span><span class="p">)</span> <span class="p">[</span><span class="err">本地目录全路径</span><span class="p">]</span> <span class="c1">--username 用户名</span>
 </pre></div>
 
 
 <h1>SVN回滚</h1>
-<div class="highlight"><pre><span></span># 正统方法一
-svn merge --dry-run -r73:68 http://my.repository.com/my/project/trunk
-svn merge -r73:68 http://my.repository.com/my/project/trunk
-svn commit -m &quot;Reverted to revision 68.&quot;
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">正统方法一</span>
+<span class="n">svn</span> <span class="n">merge</span> <span class="c1">--dry-run -r73:68 http://my.repository.com/my/project/trunk</span>
+<span class="n">svn</span> <span class="n">merge</span> <span class="o">-</span><span class="n">r73</span><span class="p">:</span><span class="mi">68</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="p">.</span><span class="n">repository</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">trunk</span>
+<span class="n">svn</span> <span class="k">commit</span> <span class="o">-</span><span class="n">m</span> <span class="ss">&quot;Reverted to revision 68.&quot;</span>
 
-# 正统方法二
-svn merge -c -{rev} http://svn.example.com/repos/calc/trunk
-svn commit -m &#39;undo&#39;
+<span class="o">#</span> <span class="err">正统方法二</span>
+<span class="n">svn</span> <span class="n">merge</span> <span class="o">-</span><span class="k">c</span> <span class="o">-</span><span class="err">{</span><span class="n">rev</span><span class="err">}</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">svn</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">repos</span><span class="o">/</span><span class="n">calc</span><span class="o">/</span><span class="n">trunk</span>
+<span class="n">svn</span> <span class="k">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s1">&#39;undo&#39;</span>
 
-# 直观方法
-svn cat -r {rev} filename &gt; filename
+<span class="o">#</span> <span class="err">直观方法</span>
+<span class="n">svn</span> <span class="n">cat</span> <span class="o">-</span><span class="n">r</span> <span class="err">{</span><span class="n">rev</span><span class="err">}</span> <span class="n">filename</span> <span class="o">&gt;</span> <span class="n">filename</span>
 </pre></div>
 
 
 <h1>导出</h1>
-<div class="highlight"><pre><span></span>svn export [-r 版本号] http://路径(目录或文件的全路径)[本地目录全路径] --username 用户名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">export</span> <span class="p">[</span><span class="o">-</span><span class="n">r</span> <span class="err">版本号</span><span class="p">]</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="err">路径</span><span class="p">(</span><span class="err">目录或文件的全路径</span><span class="p">)[</span><span class="err">本地目录全路径</span><span class="p">]</span> <span class="c1">--username 用户名</span>
 </pre></div>
 
 
 <h1>添加新文件</h1>
-<div class="highlight"><pre><span></span>svn add 文件名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="k">add</span> <span class="err">文件名</span>
 </pre></div>
 
 
 <h1>提交</h1>
-<div class="highlight"><pre><span></span>svn commit -m “提交备注信息文本“ [-N] [--no-unlock] 文件名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="k">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">“提交备注信息文本“</span> <span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">]</span> <span class="p">[</span><span class="c1">--no-unlock] 文件名</span>
 </pre></div>
 
 
 <h1>更新文件</h1>
-<div class="highlight"><pre><span></span>svn update
-#将版本库中的文件 Test.java还原到修正版本
-svn update -r 200 Test.java
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="k">update</span>
+<span class="o">#</span><span class="err">将版本库中的文件</span> <span class="n">Test</span><span class="p">.</span><span class="n">java还原到修正版本</span>
+<span class="n">svn</span> <span class="k">update</span> <span class="o">-</span><span class="n">r</span> <span class="mi">200</span> <span class="n">Test</span><span class="p">.</span><span class="n">java</span>
 </pre></div>
 
 
 <h1>删除文件</h1>
-<div class="highlight"><pre><span></span>svn delete 文件名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="k">delete</span> <span class="err">文件名</span>
 </pre></div>
 
 
 <h1>加锁/解锁</h1>
-<div class="highlight"><pre><span></span>svn lock -m “加锁备注信息文本“ [--force] 文件名 
-svn unlock
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="k">lock</span> <span class="o">-</span><span class="n">m</span> <span class="err">“加锁备注信息文本“</span> <span class="p">[</span><span class="c1">--force] 文件名 </span>
+<span class="n">svn</span> <span class="n">unlock</span>
 </pre></div>
 
 
 <h1>比较差异</h1>
-<div class="highlight"><pre><span></span>svn diff 文件名
-# 修正版本号200和修正版本号201比较差异
-svn diff -r 200:201 Test.java
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">diff</span> <span class="err">文件名</span>
+<span class="o">#</span> <span class="err">修正版本号</span><span class="mi">200</span><span class="err">和修正版本号</span><span class="mi">201</span><span class="err">比较差异</span>
+<span class="n">svn</span> <span class="n">diff</span> <span class="o">-</span><span class="n">r</span> <span class="mi">200</span><span class="p">:</span><span class="mi">201</span> <span class="n">Test</span><span class="p">.</span><span class="n">java</span>
 </pre></div>
 
 
 <h1>查看文件或者目录状态</h1>
-<div class="highlight"><pre><span></span># ?：不在svn的控制中；M：内容被修改；C：发生冲突
-svn status [-v] [目录/文件]
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="o">?</span><span class="err">：不在</span><span class="n">svn的控制中</span><span class="err">；</span><span class="n">M</span><span class="err">：内容被修改；</span><span class="k">C</span><span class="err">：发生冲突</span>
+<span class="n">svn</span> <span class="n">status</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="err">目录</span><span class="o">/</span><span class="err">文件</span><span class="p">]</span>
 </pre></div>
 
 
 <h1>查看日志</h1>
-<div class="highlight"><pre><span></span>svn log 文件名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">log</span> <span class="err">文件名</span>
 </pre></div>
 
 
 <h1>查看文件详细信息</h1>
-<div class="highlight"><pre><span></span>svn info 文件名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">info</span> <span class="err">文件名</span>
 </pre></div>
 
 
 <h1>查看版本库下的文件和目录列表</h1>
-<div class="highlight"><pre><span></span>svn list svn:// 路径(目录或文件的全路径)
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">list</span> <span class="n">svn</span><span class="p">:</span><span class="o">//</span> <span class="err">路径</span><span class="p">(</span><span class="err">目录或文件的全路径</span><span class="p">)</span>
 </pre></div>
 
 
 <h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre><span></span>svn mkdir 目录名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">mkdir</span> <span class="err">目录名</span>
 </pre></div>
 
 
 <h1>创建纳入版本控制下的新目录</h1>
-<div class="highlight"><pre><span></span>svn mkdir 目录名
-svn add --non-recursive 目录名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">mkdir</span> <span class="err">目录名</span>
+<span class="n">svn</span> <span class="k">add</span> <span class="c1">--non-recursive 目录名</span>
 </pre></div>
 
 
 <h1>恢复本地修改</h1>
-<div class="highlight"><pre><span></span>svn revert [--recursive] 文件名
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">revert</span> <span class="p">[</span><span class="c1">--recursive] 文件名</span>
 </pre></div>
 
 
 <h1>解决冲突</h1>
-<div class="highlight"><pre><span></span>svn resolved [本地目录全路径]
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">resolved</span> <span class="p">[</span><span class="err">本地目录全路径</span><span class="p">]</span>
 </pre></div>
 
 
 <h1>不checkout而查看输出特定文件或URL的内容</h1>
-<div class="highlight"><pre><span></span>svn cat http://文件全路径
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">cat</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="err">文件全路径</span>
 </pre></div>
 
 
 <h1>忽略文件</h1>
-<div class="highlight"><pre><span></span>svn propedit svn:ignore .
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">propedit</span> <span class="n">svn</span><span class="p">:</span><span class="k">ignore</span> <span class="p">.</span>
 </pre></div>
 
 
 <h1>查看删除的文件</h1>
-<div class="highlight"><pre><span></span>svn log -r2080:HEAD -v | grep &quot;^   D&quot;
-svn log -v . | awk &#39;/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION&quot;: &quot;$0; }&#39;
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">log</span> <span class="o">-</span><span class="n">r2080</span><span class="p">:</span><span class="n">HEAD</span> <span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="n">grep</span> <span class="ss">&quot;^   D&quot;</span>
+<span class="n">svn</span> <span class="n">log</span> <span class="o">-</span><span class="n">v</span> <span class="p">.</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;/^r[0-9]* \|/ { REVISION=$1; } /  D/ { print REVISION&quot;: &quot;$0; }&#39;</span>
 </pre></div>
 
 
 <h1>签出指定时间之前的版本</h1>
-<div class="highlight"><pre><span></span>svn checkout --revision {2016-02-23} http://文件全路径
+<div class="highlight"><pre><span></span><span class="n">svn</span> <span class="n">checkout</span> <span class="c1">--revision {2016-02-23} http://文件全路径</span>
 </pre></div>
     </div><!-- /.entry-content -->
 

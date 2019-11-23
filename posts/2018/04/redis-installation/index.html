@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>redis installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -40,29 +36,29 @@
 <p>tags: <a href="/tag/201804.html">201804</a> <a href="/tag/redis.html">redis</a> </p>
 </footer><!-- /.post-info -->      <h1>安装redis</h1>
 <p>下载并编译redis，编译完成后会在src目录下生成Redis服务端程序redis-server和客户端程序redis-cli</p>
-<div class="highlight"><pre><span></span>wget http://download.redis.io/releases/redis-4.0.9.tar.gz
-tar zxvf redis-4.0.9.tar.gz
-cd redis-4.0.9
-make
+<div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="p">.</span><span class="n">redis</span><span class="p">.</span><span class="n">io</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">9</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">zxvf</span> <span class="n">redis</span><span class="o">-</span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">9</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">redis</span><span class="o">-</span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">9</span>
+<span class="n">make</span>
 </pre></div>
 
 
 <h1>安装ruby</h1>
 <p>通过"rbenv"安装ruby和相关依赖包</p>
-<div class="highlight"><pre><span></span>gem install redis
+<div class="highlight"><pre><span></span><span class="n">gem</span> <span class="n">install</span> <span class="n">redis</span>
 </pre></div>
 
 
 <h1>设置redis和ruby</h1>
 <p>将ruby和redis加入系统路径</p>
-<div class="highlight"><pre><span></span># rbenv
-export RBENV_ROOT=&quot;/data/apache/tools/rbenv&quot;
-export PATH=&quot;$RBENV_ROOT/bin:$RBENV_ROOT/plugins/ruby-build/bin:$PATH&quot;
-eval &quot;$(rbenv init -)&quot;
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">rbenv</span>
+<span class="n">export</span> <span class="n">RBENV_ROOT</span><span class="o">=</span><span class="ss">&quot;/data/apache/tools/rbenv&quot;</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="ss">&quot;$RBENV_ROOT/bin:$RBENV_ROOT/plugins/ruby-build/bin:$PATH&quot;</span>
+<span class="n">eval</span> <span class="ss">&quot;$(rbenv init -)&quot;</span>
 
-# redis
-export REDIS_HOME=&quot;/data/apache/tools/redis-4.0.9/src&quot;
-export PATH=&quot;$REDIS_HOME:$PATH&quot;
+<span class="o">#</span> <span class="n">redis</span>
+<span class="n">export</span> <span class="n">REDIS_HOME</span><span class="o">=</span><span class="ss">&quot;/data/apache/tools/redis-4.0.9/src&quot;</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="ss">&quot;$REDIS_HOME:$PATH&quot;</span>
 </pre></div>
 
 
@@ -70,66 +66,66 @@ export PATH=&quot;$REDIS_HOME:$PATH&quot;
 <p>在"192.168.11.61"和"192.168.11.62"两台机的三个端口"6386,6387,6388"启动redis</p>
 <h1>redis配置</h1>
 <p>在集群机器建不同端口的redis配置文件</p>
-<div class="highlight"><pre><span></span>mkdir -p /data/hadoop/redis/config/6386
-mkdir -p /data/hadoop/redis/config/6387
-mkdir -p /data/hadoop/redis/config/6388
+<div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">redis</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="mi">6386</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">redis</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="mi">6387</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">redis</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="mi">6388</span>
 </pre></div>
 
 
 <p>配置文件"redis-6386.conf"内容如下</p>
-<div class="highlight"><pre><span></span># redis后台运行
-daemonize yes
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">redis后台运行</span>
+<span class="n">daemonize</span> <span class="n">yes</span>
 
-port 6386
-pidfile  /var/run/redis_6386.pid
+<span class="n">port</span> <span class="mi">6386</span>
+<span class="n">pidfile</span>  <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">redis_6386</span><span class="p">.</span><span class="n">pid</span>
 
-# 开启集群
-cluster-enabled yes
-# 集群的配置文件首次启动自动生成
-cluster-config-file nodes-6386.conf
-# 请求超时，默认15秒
-cluster-node-timeout 15000
+<span class="o">#</span> <span class="err">开启集群</span>
+<span class="k">cluster</span><span class="o">-</span><span class="n">enabled</span> <span class="n">yes</span>
+<span class="o">#</span> <span class="err">集群的配置文件首次启动自动生成</span>
+<span class="k">cluster</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">nodes</span><span class="o">-</span><span class="mi">6386</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">#</span> <span class="err">请求超时，默认</span><span class="mi">15</span><span class="err">秒</span>
+<span class="k">cluster</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="n">timeout</span> <span class="mi">15000</span>
 
-# aof日志开启  有需要就开启，它会每次写操作都记录一条日志
-appendonly yes
-# 可以指定日志的目录
-logfile &quot;/data/hadoop/redis/data/6386/redis-6386.log&quot;
+<span class="o">#</span> <span class="n">aof日志开启</span>  <span class="err">有需要就开启，它会每次写操作都记录一条日志</span>
+<span class="n">appendonly</span> <span class="n">yes</span>
+<span class="o">#</span> <span class="err">可以指定日志的目录</span>
+<span class="n">logfile</span> <span class="ss">&quot;/data/hadoop/redis/data/6386/redis-6386.log&quot;</span>
 
-# 关闭保护模式
-protected-mode no
+<span class="o">#</span> <span class="err">关闭保护模式</span>
+<span class="n">protected</span><span class="o">-</span><span class="k">mode</span> <span class="k">no</span>
 </pre></div>
 
 
 <h1>redis启动</h1>
 <p>到每个配置文件目录下启动redis</p>
-<div class="highlight"><pre><span></span>cd /data/hadoop/redis/config/6386
-redis-server redis-6386.conf
+<div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">redis</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="mi">6386</span>
+<span class="n">redis</span><span class="o">-</span><span class="n">server</span> <span class="n">redis</span><span class="o">-</span><span class="mi">6386</span><span class="p">.</span><span class="n">conf</span>
 </pre></div>
 
 
 <h1>redis集群启动，利用redis-trib创建cluster的操作，只需要一次即可，假设系统关机，把所有6个节点全关闭后，下次重启后，即自动进入cluster模式，不用再次redis-trib.rb create。</h1>
-<div class="highlight"><pre><span></span>redis-trib.rb create --replicas 1 192.168.11.61:6386 192.168.11.61:6387 192.168.11.61:6388 192.168.11.62:6386 192.168.11.62:6387 192.168.11.62:6388
+<div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">-</span><span class="n">trib</span><span class="p">.</span><span class="n">rb</span> <span class="k">create</span> <span class="c1">--replicas 1 192.168.11.61:6386 192.168.11.61:6387 192.168.11.61:6388 192.168.11.62:6386 192.168.11.62:6387 192.168.11.62:6388</span>
 </pre></div>
 
 
 <h1>redis验证</h1>
 <p>查看进程，端口，集群</p>
-<div class="highlight"><pre><span></span>ps aux | grep redis
-ps -ef | grep 6386
-redis-trib.rb check 192.168.11.61:6386
+<div class="highlight"><pre><span></span><span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">redis</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">6386</span>
+<span class="n">redis</span><span class="o">-</span><span class="n">trib</span><span class="p">.</span><span class="n">rb</span> <span class="k">check</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">61</span><span class="p">:</span><span class="mi">6386</span>
 </pre></div>
 
 
 <h1>集群扩容，删除</h1>
-<div class="highlight"><pre><span></span># 增加主节点
-redis-trib.rb add-node [host]:[port]
-# 为新增主节点分配slots
-redis-trib.rb reshard [host]:[port]
-# 增加从节点
-redis-trib.rb add-node --slave --master-id $[nodeid] 192.168.210.128:7007 192.168.210.128:7000
-# 删除节点
-redis-trib.rb reshard 192.168.210.128:7002
-edis-trib del-node 192.168.210.128:7002  <span class="cp">${</span><span class="n">node</span><span class="o">-</span><span class="nb">id</span><span class="cp">}</span>
+<div class="highlight"><pre><span></span><span class="err">#</span><span class="w"> </span><span class="n">增加主节点</span><span class="w"></span>
+<span class="n">redis</span><span class="o">-</span><span class="n">trib</span><span class="p">.</span><span class="n">rb</span><span class="w"> </span><span class="k">add</span><span class="o">-</span><span class="n">node</span><span class="w"> </span><span class="o">[</span><span class="n">host</span><span class="o">]</span><span class="err">:</span><span class="o">[</span><span class="n">port</span><span class="o">]</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">为新增主节点分配slots</span><span class="w"></span>
+<span class="n">redis</span><span class="o">-</span><span class="n">trib</span><span class="p">.</span><span class="n">rb</span><span class="w"> </span><span class="n">reshard</span><span class="w"> </span><span class="o">[</span><span class="n">host</span><span class="o">]</span><span class="err">:</span><span class="o">[</span><span class="n">port</span><span class="o">]</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">增加从节点</span><span class="w"></span>
+<span class="n">redis</span><span class="o">-</span><span class="n">trib</span><span class="p">.</span><span class="n">rb</span><span class="w"> </span><span class="k">add</span><span class="o">-</span><span class="n">node</span><span class="w"> </span><span class="c1">--slave --master-id $[nodeid] 192.168.210.128:7007 192.168.210.128:7000</span>
+<span class="err">#</span><span class="w"> </span><span class="n">删除节点</span><span class="w"></span>
+<span class="n">redis</span><span class="o">-</span><span class="n">trib</span><span class="p">.</span><span class="n">rb</span><span class="w"> </span><span class="n">reshard</span><span class="w"> </span><span class="mf">192.168.210.128</span><span class="err">:</span><span class="mi">7002</span><span class="w"></span>
+<span class="n">edis</span><span class="o">-</span><span class="n">trib</span><span class="w"> </span><span class="n">del</span><span class="o">-</span><span class="n">node</span><span class="w"> </span><span class="mf">192.168.210.128</span><span class="err">:</span><span class="mi">7002</span><span class="w">  </span><span class="err">${</span><span class="n">node</span><span class="o">-</span><span class="n">id</span><span class="err">}</span><span class="w"></span>
 </pre></div>
 
 

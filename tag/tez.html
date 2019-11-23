@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - tez</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -45,27 +41,27 @@
 
 
 <p>编译代码（需要预先编译Protocol Buffers 2.5.0）</p>
-<div class="highlight"><pre><span></span>mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true
+<div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">clean</span> <span class="n">package</span> <span class="o">-</span><span class="n">DskipTests</span><span class="o">=</span><span class="k">true</span> <span class="o">-</span><span class="n">Dmaven</span><span class="p">.</span><span class="n">javadoc</span><span class="p">.</span><span class="n">skip</span><span class="o">=</span><span class="k">true</span>
 </pre></div>
 
 
 <h1>安装</h1>
 <p>在hdfs建目录，并将tez复制到新建的目录</p>
-<div class="highlight"><pre><span></span>hdfs dfs -mkdir /apps/tez
-hdfs dfs -copyFromLocal tez-dist/target/tez-0.8.4.tar.gz /apps/tez/
+<div class="highlight"><pre><span></span><span class="n">hdfs</span> <span class="n">dfs</span> <span class="o">-</span><span class="n">mkdir</span> <span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">tez</span>
+<span class="n">hdfs</span> <span class="n">dfs</span> <span class="o">-</span><span class="n">copyFromLocal</span> <span class="n">tez</span><span class="o">-</span><span class="n">dist</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">tez</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">tez</span><span class="o">/</span>
 </pre></div>
 
 
 <p>所有结点本地安装tez</p>
-<div class="highlight"><pre><span></span>mkdir -p /data/apache/tez
-tar -xvzf tez-dist/target/tez-0.8.4-minimal.tar.gz -C /data/apache/tez
+<div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">tez</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xvzf</span> <span class="n">tez</span><span class="o">-</span><span class="n">dist</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">tez</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">4</span><span class="o">-</span><span class="n">minimal</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="o">-</span><span class="k">C</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">tez</span>
 </pre></div>
 
 
 <h1>环境变量设置（所有结点）</h1>
 <p>~/.bashrc设置"TEZ_HOME"和"TEZ_CONF_DIR"</p>
-<div class="highlight"><pre><span></span>export TEZ_HOME=/data/apache/tez
-export TEZ_CONF_DIR=$TEZ_HOME/conf
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">TEZ_HOME</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">tez</span>
+<span class="n">export</span> <span class="n">TEZ_CONF_DIR</span><span class="o">=</span><span class="err">$</span><span class="n">TEZ_HOME</span><span class="o">/</span><span class="n">conf</span>
 </pre></div>
 
 
@@ -123,8 +119,8 @@ export TEZ_CONF_DIR=$TEZ_HOME/conf
 <p>将$TEZ_HOME/conf/tez-site.xml复制到所有结点的"$HADOOP_HOME/etc/hadoop"目录</p>
 <h1>tez测试</h1>
 <p>运行测试例子</p>
-<div class="highlight"><pre><span></span>hadoop jar $TEZ_HOME/tez-examples.jar orderedwordcount &lt;input&gt; &lt;output&gt;
-hadoop jar $TEZ_HOME/tez-tests.jar testorderedwordcount &lt;input1&gt; &lt;output1&gt; &lt;input2&gt; &lt;output2&gt; ...
+<div class="highlight"><pre><span></span><span class="n">hadoop</span> <span class="n">jar</span> <span class="err">$</span><span class="n">TEZ_HOME</span><span class="o">/</span><span class="n">tez</span><span class="o">-</span><span class="n">examples</span><span class="p">.</span><span class="n">jar</span> <span class="n">orderedwordcount</span> <span class="o">&lt;</span><span class="k">input</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="k">output</span><span class="o">&gt;</span>
+<span class="n">hadoop</span> <span class="n">jar</span> <span class="err">$</span><span class="n">TEZ_HOME</span><span class="o">/</span><span class="n">tez</span><span class="o">-</span><span class="n">tests</span><span class="p">.</span><span class="n">jar</span> <span class="n">testorderedwordcount</span> <span class="o">&lt;</span><span class="n">input1</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">output1</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">input2</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">output2</span><span class="o">&gt;</span> <span class="p">...</span>
 </pre></div>
 
 

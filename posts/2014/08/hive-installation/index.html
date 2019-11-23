@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>hive installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -39,7 +35,7 @@
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201408.html">201408</a> <a href="/tag/hadoop.html">hadoop</a> <a href="/tag/hive.html">hive</a> </p>
 </footer><!-- /.post-info -->      <h1>编译hive</h1>
-<div class="highlight"><pre><span></span>mvn clean install -Phadoop-2,dist -DskipTests
+<div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span> <span class="o">-</span><span class="n">Phadoop</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="n">dist</span> <span class="o">-</span><span class="n">DskipTests</span>
 </pre></div>
 
 
@@ -51,17 +47,17 @@
 
 
 <h1>设置mysql，用于保存hive的元数据</h1>
-<div class="highlight"><pre><span></span>-- 匹配所有用&quot;%&quot;，例如&quot;192.168.1.%&quot;
-create user &#39;hive&#39;@&#39;localhost&#39; identified by &#39;hive&#39;;
--- 修改用户密码
--- set password for &#39;hive&#39;@&#39;localhost&#39; = password(&#39;hive&#39;);
-grant all privileges on hive2.* to &#39;hive&#39;@&#39;localhost&#39; with grant option;
--- 删除用户权限
-revoke all privileges on *.* from &#39;hive&#39;@&#39;localhost&#39;;
-drop user &#39;hive&#39;@&#39;localhost&#39;;
-flush privileges;
-create database hive2 default character set utf8 default collate utf8_general_ci;
-alter database hive2 character set latin1;
+<div class="highlight"><pre><span></span><span class="o">--</span> 匹配所有用<span class="s2">&quot;</span><span class="s">%</span><span class="s2">&quot;</span>，例如<span class="s2">&quot;</span><span class="s">192.168.1.%</span><span class="s2">&quot;</span>
+<span class="nv">create</span> <span class="nv">user</span> <span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span>@<span class="s1">&#39;</span><span class="s">localhost</span><span class="s1">&#39;</span> <span class="nv">identified</span> <span class="nv">by</span> <span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span><span class="c1">;</span>
+<span class="o">--</span> 修改用户密码
+<span class="o">--</span> <span class="nv">set</span> <span class="nv">password</span> <span class="k">for</span> <span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span>@<span class="s1">&#39;</span><span class="s">localhost</span><span class="s1">&#39;</span> <span class="o">=</span> <span class="nv">password</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span><span class="ss">)</span><span class="c1">;</span>
+<span class="nv">grant</span> <span class="nv">all</span> <span class="nv">privileges</span> <span class="nv">on</span> <span class="nv">hive2</span>.<span class="o">*</span> <span class="nv">to</span> <span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span>@<span class="s1">&#39;</span><span class="s">localhost</span><span class="s1">&#39;</span> <span class="nv">with</span> <span class="nv">grant</span> <span class="nv">option</span><span class="c1">;</span>
+<span class="o">--</span> 删除用户权限
+<span class="nv">revoke</span> <span class="nv">all</span> <span class="nv">privileges</span> <span class="nv">on</span> <span class="o">*</span>.<span class="o">*</span> <span class="nv">from</span> <span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span>@<span class="s1">&#39;</span><span class="s">localhost</span><span class="s1">&#39;</span><span class="c1">;</span>
+<span class="nv">drop</span> <span class="nv">user</span> <span class="s1">&#39;</span><span class="s">hive</span><span class="s1">&#39;</span>@<span class="s1">&#39;</span><span class="s">localhost</span><span class="s1">&#39;</span><span class="c1">;</span>
+<span class="nv">flush</span> <span class="nv">privileges</span><span class="c1">;</span>
+<span class="nv">create</span> <span class="nv">database</span> <span class="nv">hive2</span> <span class="nv">default</span> <span class="nv">character</span> <span class="nv">set</span> <span class="nv">utf8</span> <span class="nv">default</span> <span class="nv">collate</span> <span class="nv">utf8_general_ci</span><span class="c1">;</span>
+<span class="nv">alter</span> <span class="nv">database</span> <span class="nv">hive2</span> <span class="nv">character</span> <span class="nv">set</span> <span class="nv">latin1</span><span class="c1">;</span>
 </pre></div>
 
 
@@ -76,7 +72,7 @@ hdfs dfs -chmod <span class="m">777</span> /hive/scratchdir
 
 
 <p>初始化元数据</p>
-<div class="highlight"><pre><span></span>schematool -dbType mysql -initSchema
+<div class="highlight"><pre><span></span><span class="n">schematool</span> <span class="o">-</span><span class="n">dbType</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">initSchema</span>
 </pre></div>
 
 
@@ -180,10 +176,10 @@ hdfs dfs -chmod <span class="m">777</span> /hive/scratchdir
 
 
 <h1>hive建表导入数据</h1>
-<div class="highlight"><pre><span></span>create table employs(empid int, name string, surname string)
-row format delimited
-fields terminated by &#39;\t&#39;;
-load data local inpath &#39;/home/hduser/tools/data/employs.csv&#39; overwrite into table employs;
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">table</span> <span class="n">employs</span><span class="p">(</span><span class="n">empid</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span> <span class="n">string</span><span class="p">,</span> <span class="n">surname</span> <span class="n">string</span><span class="p">)</span>
+<span class="k">row</span> <span class="n">format</span> <span class="n">delimited</span>
+<span class="n">fields</span> <span class="n">terminated</span> <span class="k">by</span> <span class="s1">&#39;\t&#39;</span><span class="p">;</span>
+<span class="k">load</span> <span class="k">data</span> <span class="k">local</span> <span class="n">inpath</span> <span class="s1">&#39;/home/hduser/tools/data/employs.csv&#39;</span> <span class="n">overwrite</span> <span class="k">into</span> <span class="k">table</span> <span class="n">employs</span><span class="p">;</span>
 </pre></div>
 
 
@@ -244,8 +240,8 @@ define-all.hive</p>
 <p>将软件放在"/data/apache/hivemall/"目录，并用以下命令将jar上传hdfs</p>
 </li>
 </ol>
-<div class="highlight"><pre><span></span>hdfs dfs -put /data/apache/hivemall/hivemall-core-0.4.2-rc.2-with-dependencies.jar /hive/hivemall/
-(注：hdfs没有hivemall目录则先建目录）
+<div class="highlight"><pre><span></span><span class="n">hdfs</span> <span class="n">dfs</span> <span class="o">-</span><span class="n">put</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">hivemall</span><span class="o">/</span><span class="n">hivemall</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">2</span><span class="o">-</span><span class="n">rc</span><span class="p">.</span><span class="mi">2</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">dependencies</span><span class="p">.</span><span class="n">jar</span> <span class="o">/</span><span class="n">hive</span><span class="o">/</span><span class="n">hivemall</span><span class="o">/</span>
+<span class="p">(</span><span class="err">注：</span><span class="n">hdfs没有hivemall目录则先建目录</span><span class="err">）</span>
 </pre></div>
 
 
@@ -253,7 +249,7 @@ define-all.hive</p>
 <li>建hivemall库
 进入hive后，执行以下hive命令</li>
 </ol>
-<div class="highlight"><pre><span></span>CREATE DATABASE IF NOT EXISTS hivemall;
+<div class="highlight"><pre><span></span><span class="nv">CREATE</span> <span class="nv">DATABASE</span> <span class="k">IF</span> <span class="nv">NOT</span> <span class="nv">EXISTS</span> <span class="nv">hivemall</span><span class="c1">;</span>
 </pre></div>
 
 
@@ -269,7 +265,7 @@ define-all.hive</p>
 
 <h1>问题一览</h1>
 <p>hive2.1.0，在运行spark，导致修改hive的metastore的版本为1.2.0，再次运行hive，报以下错误</p>
-<div class="highlight"><pre><span></span>MetaException(message:Hive Schema version 2.1.0 does not match metastore&#39;s schema version 1.2.0 Metastore is not upgraded or corrupt)
+<div class="highlight"><pre><span></span><span class="n">MetaException</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">Hive</span> <span class="k">Schema</span> <span class="k">version</span> <span class="mi">2</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="n">does</span> <span class="k">not</span> <span class="k">match</span> <span class="n">metastore</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">schema</span> <span class="k">version</span> <span class="mi">1</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">0</span> <span class="n">Metastore</span> <span class="k">is</span> <span class="k">not</span> <span class="n">upgraded</span> <span class="k">or</span> <span class="n">corrupt</span><span class="p">)</span>
 </pre></div>
 
 

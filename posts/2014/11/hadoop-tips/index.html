@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>hadoop tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -67,17 +63,17 @@ mapred job -list
 <h1>hadoop(spark)无法停止</h1>
 <p>当临时目录设置到"/tmp"目录下时，因为linux定期清理临时目录，导致信息不完整，hadoop无法停止</p>
 <p>在"hadoop-env.sh"做如下设置</p>
-<div class="highlight"><pre><span></span>export HADOOP_PID_DIR=/data/hadoop/hdfs/pids
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">HADOOP_PID_DIR</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">hdfs</span><span class="o">/</span><span class="n">pids</span>
 </pre></div>
 
 
 <p>在"yarn-env.sh"做如下设置</p>
-<div class="highlight"><pre><span></span>export YARN_PID_DIR=/data/hadoop/hdfs/pids
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">YARN_PID_DIR</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">hdfs</span><span class="o">/</span><span class="n">pids</span>
 </pre></div>
 
 
 <p>spark类似，需要在"spark-env.sh"做如下设置</p>
-<div class="highlight"><pre><span></span>export SPARK_PID_DIR=/data/hadoop/spark/pids
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">SPARK_PID_DIR</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">pids</span>
 </pre></div>
 
 
@@ -85,24 +81,24 @@ mapred job -list
 <p>当磁盘剩余空间小于10%时，reduce任务无法启动</p>
 <h1>hadoop升级</h1>
 <p>备份</p>
-<div class="highlight"><pre><span></span># 进入安全模式
-hdfs dfsadmin -safemode enter
-# fsck检查
-hdfs fsck / -files -blocks -locations |grep -v -E &#39;^.&#39; &gt; /home/hadoop/dfs-v-old-fs
-# 离开安全模式
-hdfs dfsadmin -safemode leave
-# 关闭history-server
-mr-jobhistory-daemon.sh stop historyserver
-# 关闭集群
-$HADOOP_HOME/sbin/stop-all.sh
-# 备份namenode信息（fs.default.name）
-cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">进入安全模式</span>
+<span class="n">hdfs</span> <span class="n">dfsadmin</span> <span class="o">-</span><span class="n">safemode</span> <span class="n">enter</span>
+<span class="o">#</span> <span class="n">fsck检查</span>
+<span class="n">hdfs</span> <span class="n">fsck</span> <span class="o">/</span> <span class="o">-</span><span class="n">files</span> <span class="o">-</span><span class="n">blocks</span> <span class="o">-</span><span class="n">locations</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;^.&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">dfs</span><span class="o">-</span><span class="n">v</span><span class="o">-</span><span class="k">old</span><span class="o">-</span><span class="n">fs</span>
+<span class="o">#</span> <span class="err">离开安全模式</span>
+<span class="n">hdfs</span> <span class="n">dfsadmin</span> <span class="o">-</span><span class="n">safemode</span> <span class="n">leave</span>
+<span class="o">#</span> <span class="err">关闭</span><span class="n">history</span><span class="o">-</span><span class="n">server</span>
+<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">stop</span> <span class="n">historyserver</span>
+<span class="o">#</span> <span class="err">关闭集群</span>
+<span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">stop</span><span class="o">-</span><span class="k">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="o">#</span> <span class="err">备份</span><span class="n">namenode信息</span><span class="err">（</span><span class="n">fs</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">name</span><span class="err">）</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">hdfs</span><span class="o">/</span><span class="n">namenode</span><span class="o">/</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">backup</span>
 </pre></div>
 
 
 <p>namenode升级</p>
-<div class="highlight"><pre><span></span>start-dfs.sh –upgrade
-# hadoop-daemon.sh start namenode -upgrade
+<div class="highlight"><pre><span></span><span class="k">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span> <span class="err">–</span><span class="n">upgrade</span>
+<span class="o">#</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="k">start</span> <span class="n">namenode</span> <span class="o">-</span><span class="n">upgrade</span>
 </pre></div>
 
 
@@ -114,7 +110,7 @@ cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup
 <li><a href="http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/">http://www.michael-noll.com/blog/2011/08/23/performing-an-hdfs-upgrade-of-an-hadoop-cluster/</a></li>
 </ul>
 <p>升级后的hadoop删文件不减空间，这是因为升完级，稳定运行后，需要运行以下完成升级的命令并重启namenode</p>
-<div class="highlight"><pre><span></span>hdfs dfsadmin -finalizeUpgrade
+<div class="highlight"><pre><span></span><span class="n">hdfs</span> <span class="n">dfsadmin</span> <span class="o">-</span><span class="n">finalizeUpgrade</span>
 </pre></div>
 
 
@@ -122,7 +118,7 @@ cp -r /home/hadoop/hdfs/namenode/ /home/hadoop/backup
 <li><a href="http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space">http://stackoverflow.com/questions/23058229/deleting-files-from-hdfs-does-not-free-up-disk-space</a></li>
 </ul>
 <h1>查看逻辑cpu个数</h1>
-<div class="highlight"><pre><span></span>grep &quot;^processor&quot; /proc/cpuinfo | wc -l
+<div class="highlight"><pre><span></span><span class="n">grep</span> <span class="ss">&quot;^processor&quot;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">cpuinfo</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
 </pre></div>
 
 

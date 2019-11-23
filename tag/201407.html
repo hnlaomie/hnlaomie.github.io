@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - 201407</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -53,10 +49,10 @@ cat <span class="nv">$HOME</span>/.ssh/id_rsa.pub &gt;&gt; <span class="nv">$HOM
 
 <h2>禁用ipv6</h2>
 <p>在"/etc/sysctl.conf"加入以下内容（注：archlinux为"/etc/sysctl.d/99-sysctl.conf"）</p>
-<div class="highlight"><pre><span></span>#disable ipv6
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.default.disable_ipv6 = 1
-net.ipv6.conf.lo.disable_ipv6 = 1
+<div class="highlight"><pre><span></span><span class="o">#</span><span class="n">disable</span> <span class="n">ipv6</span>
+<span class="n">net</span><span class="p">.</span><span class="n">ipv6</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="k">all</span><span class="p">.</span><span class="n">disable_ipv6</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">net</span><span class="p">.</span><span class="n">ipv6</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">disable_ipv6</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">net</span><span class="p">.</span><span class="n">ipv6</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="n">lo</span><span class="p">.</span><span class="n">disable_ipv6</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 
 
@@ -342,8 +338,8 @@ hadoop-daemon.sh stop namenode<span class="p">|</span>secondarynamenode<span cla
 </ul>
 <h2>多节点hadoop设置</h2>
 <p>在"/etc/hosts"设置主从节点机</p>
-<div class="highlight"><pre><span></span>192.168.1.12  laomie-pc
-192.168.1.11  slave01
+<div class="highlight"><pre><span></span><span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">12</span>  <span class="n">laomie</span><span class="o">-</span><span class="n">pc</span>
+<span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">11</span>  <span class="n">slave01</span>
 </pre></div>
 
 
@@ -353,7 +349,7 @@ hadoop-daemon.sh stop namenode<span class="p">|</span>secondarynamenode<span cla
 
 
 <p>在主节点机的hadoop配置"$HADOOP_CONF_DIR/slaves"中添加从节点机</p>
-<div class="highlight"><pre><span></span>slave01
+<div class="highlight"><pre><span></span><span class="n">slave01</span>
 </pre></div>
 
 

@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>ubuntu tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -45,8 +41,8 @@ system settings -&gt; mouse &amp; touchpad</p>
 <p>/usr/share/applications</p>
 <h1>取消ssh远程连接键盘失灵</h1>
 <p>在"~/.ssh/config"中加入以下内容</p>
-<div class="highlight"><pre><span></span>Host *
-ServerAliveInterval 180
+<div class="highlight"><pre><span></span><span class="k">Host</span> <span class="o">*</span>
+<span class="n">ServerAliveInterval</span> <span class="mi">180</span>
 </pre></div>
 
 
@@ -69,32 +65,32 @@ sudo teamviewer --passwd password
 
 <h1>ibus-googlepinyin托板单词数</h1>
 <p>修改 /usr/share/ibus-googlepinyin/engine.py</p>
-<div class="highlight"><pre><span></span>self.__lookup_table.set_page_size(9)
+<div class="highlight"><pre><span></span><span class="k">self</span><span class="p">.</span><span class="n">__lookup_table</span><span class="p">.</span><span class="n">set_page_size</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
 </pre></div>
 
 
 <h1>16.04 ssh 问题</h1>
 <p>sign_and_send_pubkey: signing failed: agent refused operation</p>
-<div class="highlight"><pre><span></span>sudo apt-get autoremove gnome-keyring
-ssh-add -D
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">autoremove</span> <span class="n">gnome</span><span class="o">-</span><span class="n">keyring</span>
+<span class="n">ssh</span><span class="o">-</span><span class="k">add</span> <span class="o">-</span><span class="n">D</span>
 </pre></div>
 
 
 <h1>vcd dat to mpeg</h1>
-<div class="highlight"><pre><span></span>sudo apt-get install handbrake
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">handbrake</span>
 </pre></div>
 
 
 <h1>git ssl errors</h1>
-<div class="highlight"><pre><span></span>export GIT_SSL_NO_VERIFY=1
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">GIT_SSL_NO_VERIFY</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 
 
 <h1>thinkpad E431 安装双系统</h1>
 <p>BIOS做以下设置</p>
-<div class="highlight"><pre><span></span>Security -&gt; Secure Boot -&gt; Disabled
-Startup -&gt; Boot -&gt; Network Boot -&gt; USB HDD
-Startup -&gt; Boot -&gt; UEFI/Legacy Boot -&gt; Both / Legacy First
+<div class="highlight"><pre><span></span><span class="k">Security</span> <span class="o">-&gt;</span> <span class="n">Secure</span> <span class="n">Boot</span> <span class="o">-&gt;</span> <span class="n">Disabled</span>
+<span class="n">Startup</span> <span class="o">-&gt;</span> <span class="n">Boot</span> <span class="o">-&gt;</span> <span class="n">Network</span> <span class="n">Boot</span> <span class="o">-&gt;</span> <span class="n">USB</span> <span class="n">HDD</span>
+<span class="n">Startup</span> <span class="o">-&gt;</span> <span class="n">Boot</span> <span class="o">-&gt;</span> <span class="n">UEFI</span><span class="o">/</span><span class="n">Legacy</span> <span class="n">Boot</span> <span class="o">-&gt;</span> <span class="k">Both</span> <span class="o">/</span> <span class="n">Legacy</span> <span class="k">First</span>
 </pre></div>
 
 
@@ -121,87 +117,87 @@ Startup -&gt; Boot -&gt; UEFI/Legacy Boot -&gt; Both / Legacy First
 </ol>
 <h1>下载youtube</h1>
 <p>安装youtube-dl</p>
-<div class="highlight"><pre><span></span>pip install youtube-dl
+<div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">youtube</span><span class="o">-</span><span class="n">dl</span>
 </pre></div>
 
 
 <p>下载</p>
-<div class="highlight"><pre><span></span># 查看媒体输出格式
-youtube-dl --proxy http://127.0.0.1:8087 --no-check-certificate -F https://www.youtube.com/watch?v=R92Gr-c0Vfo&amp;index=2&amp;list=PLuJmmKtsV1dNE5y1gu1xpbIl3M2b7AW4D
-# 从url列表文件下载
-youtube-dl -f 22 --proxy http://127.0.0.1:8087 --no-check-certificate --batch-file=&#39;pg2016.txt&#39;
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">查看媒体输出格式</span>
+<span class="n">youtube</span><span class="o">-</span><span class="n">dl</span> <span class="c1">--proxy http://127.0.0.1:8087 --no-check-certificate -F https://www.youtube.com/watch?v=R92Gr-c0Vfo&amp;index=2&amp;list=PLuJmmKtsV1dNE5y1gu1xpbIl3M2b7AW4D</span>
+<span class="o">#</span> <span class="err">从</span><span class="n">url列表文件下载</span>
+<span class="n">youtube</span><span class="o">-</span><span class="n">dl</span> <span class="o">-</span><span class="n">f</span> <span class="mi">22</span> <span class="c1">--proxy http://127.0.0.1:8087 --no-check-certificate --batch-file=&#39;pg2016.txt&#39;</span>
 </pre></div>
 
 
 <h1>lubuntu的fcitx输入法黑屏</h1>
-<div class="highlight"><pre><span></span>sudo apt install qtdeclarative5-qtquick2-plugin
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">qtdeclarative5</span><span class="o">-</span><span class="n">qtquick2</span><span class="o">-</span><span class="n">plugin</span>
 </pre></div>
 
 
 <h1>视频转换</h1>
-<div class="highlight"><pre><span></span>HandBrakeCLI -Z &quot;High Profile&quot; -i a_movie.iso -o a_movie.mp4
+<div class="highlight"><pre><span></span><span class="n">HandBrakeCLI</span> <span class="o">-</span><span class="n">Z</span> <span class="ss">&quot;High Profile&quot;</span> <span class="o">-</span><span class="n">i</span> <span class="n">a_movie</span><span class="p">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">o</span> <span class="n">a_movie</span><span class="p">.</span><span class="n">mp4</span>
 </pre></div>
 
 
 <h1>查看，关闭端口</h1>
-<div class="highlight"><pre><span></span>netstat -tln | grep 7077
-lsof -i :7077
-kill -9 进程id
-kill -9 $(netstat -tlnp|grep 7077|awk &#39;{print $7}&#39;|awk -F &#39;/&#39; &#39;{print $1}&#39;)
+<div class="highlight"><pre><span></span><span class="n">netstat</span> <span class="o">-</span><span class="n">tln</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">7077</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="p">:</span><span class="mi">7077</span>
+<span class="n">kill</span> <span class="o">-</span><span class="mi">9</span> <span class="err">进程</span><span class="n">id</span>
+<span class="n">kill</span> <span class="o">-</span><span class="mi">9</span> <span class="err">$</span><span class="p">(</span><span class="n">netstat</span> <span class="o">-</span><span class="n">tlnp</span><span class="o">|</span><span class="n">grep</span> <span class="mi">7077</span><span class="o">|</span><span class="n">awk</span> <span class="s1">&#39;{print $7}&#39;</span><span class="o">|</span><span class="n">awk</span> <span class="o">-</span><span class="n">F</span> <span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="p">)</span>
 </pre></div>
 
 
 <h1>编译emacs</h1>
-<div class="highlight"><pre><span></span>sudo apt install build-essential checkinstall
-sudo apt-get install texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev libxpm-dev automake autoconf -y
-sudo apt-get build-dep emacs24
-./configure
-make
-sudo checkinstall
-sudo dpkg -r emacs-25
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">checkinstall</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">texinfo</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxpm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libjpeg</span><span class="o">-</span><span class="n">dev</span> <span class="n">libpng</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgif</span><span class="o">-</span><span class="n">dev</span> <span class="n">libtiff</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgtk2</span><span class="p">.</span><span class="mi">0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libncurses</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxpm</span><span class="o">-</span><span class="n">dev</span> <span class="n">automake</span> <span class="n">autoconf</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">build</span><span class="o">-</span><span class="n">dep</span> <span class="n">emacs24</span>
+<span class="p">.</span><span class="o">/</span><span class="n">configure</span>
+<span class="n">make</span>
+<span class="n">sudo</span> <span class="n">checkinstall</span>
+<span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">r</span> <span class="n">emacs</span><span class="o">-</span><span class="mi">25</span>
 </pre></div>
 
 
 <h1>查看磁盘uuid</h1>
-<div class="highlight"><pre><span></span>sudo blkid
-# ls -al /dev/disk/by-uuid
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">blkid</span>
+<span class="o">#</span> <span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk</span><span class="o">/</span><span class="k">by</span><span class="o">-</span><span class="n">uuid</span>
 </pre></div>
 
 
 <h1>增加sudo权限用户</h1>
-<div class="highlight"><pre><span></span>adduser laomie
-usermod -aG sudo laomie
-# su - root
+<div class="highlight"><pre><span></span><span class="n">adduser</span> <span class="n">laomie</span>
+<span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">sudo</span> <span class="n">laomie</span>
+<span class="o">#</span> <span class="n">su</span> <span class="o">-</span> <span class="n">root</span>
 </pre></div>
 
 
 <h1>使用ufw</h1>
-<div class="highlight"><pre><span></span>ufw default deny 
-ufw allow 22
-ufw enable
+<div class="highlight"><pre><span></span><span class="n">ufw</span> <span class="k">default</span> <span class="n">deny</span> 
+<span class="n">ufw</span> <span class="n">allow</span> <span class="mi">22</span>
+<span class="n">ufw</span> <span class="n">enable</span>
 </pre></div>
 
 
 <h1>修改locale</h1>
-<div class="highlight"><pre><span></span># vim /etc/default/locale
-LANG=&quot;zh_CN.UTF-8&quot;
-LANGUAGE=&quot;zh_CN:zh:en_US:en&quot;
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="k">default</span><span class="o">/</span><span class="n">locale</span>
+<span class="n">LANG</span><span class="o">=</span><span class="ss">&quot;zh_CN.UTF-8&quot;</span>
+<span class="k">LANGUAGE</span><span class="o">=</span><span class="ss">&quot;zh_CN:zh:en_US:en&quot;</span>
 
-# vim /var/lib/locales/supported.d/zh-hans
-zh_CN.UTF-8 UTF-8
-zh_SG.UTF-8 UTF-8
+<span class="o">#</span> <span class="n">vim</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">locales</span><span class="o">/</span><span class="n">supported</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">zh</span><span class="o">-</span><span class="n">hans</span>
+<span class="n">zh_CN</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">zh_SG</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
 
-# run command
-sudo locale-gen
+<span class="o">#</span> <span class="n">run</span> <span class="n">command</span>
+<span class="n">sudo</span> <span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
 </pre></div>
 
 
 <h1>安装代理</h1>
-<div class="highlight"><pre><span></span>sudo apt install miredo
-# 启动后重启服务
-sudo service miredo restart
-# firefox导入证书
-高级,证书,查看证书,证书机构,导入
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">miredo</span>
+<span class="o">#</span> <span class="err">启动后重启服务</span>
+<span class="n">sudo</span> <span class="n">service</span> <span class="n">miredo</span> <span class="k">restart</span>
+<span class="o">#</span> <span class="n">firefox导入证书</span>
+<span class="err">高级</span><span class="p">,</span><span class="err">证书</span><span class="p">,</span><span class="err">查看证书</span><span class="p">,</span><span class="err">证书机构</span><span class="p">,</span><span class="err">导入</span>
 </pre></div>
     </div><!-- /.entry-content -->
 

@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - 201709</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -36,20 +32,20 @@
 </footer><!-- /.post-info --><h1>texlive安装</h1>
 <p>将texlive装到"/usr/local/data/tools"目录</p>
 <div class="highlight"><pre><span></span># 下载安装
-wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive.iso 
-sudo apt install libdigest-perl-md5-perl perl-tk
-sudo mount -o loop texlive.iso /mnt
-/mnt/install-tl --gui
-sudo umount /mnt
+<span class="nv">wget</span> <span class="nv">https</span>:<span class="o">//</span><span class="nv">mirrors</span>.<span class="nv">tuna</span>.<span class="nv">tsinghua</span>.<span class="nv">edu</span>.<span class="nv">cn</span><span class="o">/</span><span class="nv">CTAN</span><span class="o">/</span><span class="nv">systems</span><span class="o">/</span><span class="nv">texlive</span><span class="o">/</span><span class="nv">Images</span><span class="o">/</span><span class="nv">texlive</span>.<span class="nv">iso</span> 
+<span class="nv">sudo</span> <span class="nv">apt</span> <span class="nv">install</span> <span class="nv">libdigest</span><span class="o">-</span><span class="nv">perl</span><span class="o">-</span><span class="nv">md5</span><span class="o">-</span><span class="nv">perl</span> <span class="nv">perl</span><span class="o">-</span><span class="nv">tk</span>
+<span class="nv">sudo</span> <span class="nv">mount</span> <span class="o">-</span><span class="nv">o</span> <span class="k">loop</span> <span class="nv">texlive</span>.<span class="nv">iso</span> <span class="o">/</span><span class="nv">mnt</span>
+<span class="o">/</span><span class="nv">mnt</span><span class="o">/</span><span class="nv">install</span><span class="o">-</span><span class="nv">tl</span> <span class="o">--</span><span class="nv">gui</span>
+<span class="nv">sudo</span> <span class="nv">umount</span> <span class="o">/</span><span class="nv">mnt</span>
 
 # 设置环境变量
-export TeXLiveMANPATH=/urs/local/data/tools/texlive/2017/texmf-dist/doc/man
-export TeXLiveINFOPATH=/usr/local/data/tools/texlive/2017/texmf-dist/doc/info
-export TeXLivePATH=/usr/local/data/tools/texlive/2017/bin/x86_64-linux
-export PATH=$PATH:$TeXLivePATH
+<span class="nv">export</span> <span class="nv">TeXLiveMANPATH</span><span class="o">=/</span><span class="nv">urs</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">data</span><span class="o">/</span><span class="nv">tools</span><span class="o">/</span><span class="nv">texlive</span><span class="o">/</span><span class="mi">2017</span><span class="o">/</span><span class="nv">texmf</span><span class="o">-</span><span class="nv">dist</span><span class="o">/</span><span class="nv">doc</span><span class="o">/</span><span class="nv">man</span>
+<span class="nv">export</span> <span class="nv">TeXLiveINFOPATH</span><span class="o">=/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">data</span><span class="o">/</span><span class="nv">tools</span><span class="o">/</span><span class="nv">texlive</span><span class="o">/</span><span class="mi">2017</span><span class="o">/</span><span class="nv">texmf</span><span class="o">-</span><span class="nv">dist</span><span class="o">/</span><span class="nv">doc</span><span class="o">/</span><span class="nv">info</span>
+<span class="nv">export</span> <span class="nv">TeXLivePATH</span><span class="o">=/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">data</span><span class="o">/</span><span class="nv">tools</span><span class="o">/</span><span class="nv">texlive</span><span class="o">/</span><span class="mi">2017</span><span class="o">/</span><span class="nv">bin</span><span class="o">/</span><span class="nv">x86_64</span><span class="o">-</span><span class="nv">linux</span>
+<span class="nv">export</span> <span class="nv">PATH</span><span class="o">=</span>$<span class="nv">PATH</span>:$<span class="nv">TeXLivePATH</span>
 
 # 更新字体
-sudo fc-cache -fsv
+<span class="nv">sudo</span> <span class="nv">fc</span><span class="o">-</span><span class="nv">cache</span> <span class="o">-</span><span class="nv">fsv</span>
 </pre></div>
 
 

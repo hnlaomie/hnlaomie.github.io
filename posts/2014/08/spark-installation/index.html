@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>spark installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -100,22 +96,22 @@ mvn -Pyarn -Phadoop-2.7 -Dhadoop.version<span class="o">=</span><span class="m">
 
 
 <h1>spark-env.sh设置</h1>
-<div class="highlight"><pre><span></span>export JAVA_HOME=/usr/local/devtools/jdk
-export SCALA_HOME=/usr/share/scala
-export SPARK_HOME=/data/apache/spark
-export SPARK_PID_DIR=/data/hadoop/spark/pids
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">devtools</span><span class="o">/</span><span class="n">jdk</span>
+<span class="n">export</span> <span class="n">SCALA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="k">share</span><span class="o">/</span><span class="n">scala</span>
+<span class="n">export</span> <span class="n">SPARK_HOME</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">spark</span>
+<span class="n">export</span> <span class="n">SPARK_PID_DIR</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">pids</span>
 
-export SPARK_LOCAL_IP=192.168.11.82
-export SPARK_PUBLIC_DNS=test-master
-export SPARK_CLASSPATH=$SPARK_CLASSPATH:$SPARK_HOME/lib/mysql-connector-java-5.1.35.jar
-export SPARK_LOCAL_DIRS=/data/hadoop/spark/data
+<span class="n">export</span> <span class="n">SPARK_LOCAL_IP</span><span class="o">=</span><span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">11</span><span class="p">.</span><span class="mi">82</span>
+<span class="n">export</span> <span class="n">SPARK_PUBLIC_DNS</span><span class="o">=</span><span class="n">test</span><span class="o">-</span><span class="n">master</span>
+<span class="n">export</span> <span class="n">SPARK_CLASSPATH</span><span class="o">=</span><span class="err">$</span><span class="n">SPARK_CLASSPATH</span><span class="p">:</span><span class="err">$</span><span class="n">SPARK_HOME</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="o">-</span><span class="mi">5</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">35</span><span class="p">.</span><span class="n">jar</span>
+<span class="n">export</span> <span class="n">SPARK_LOCAL_DIRS</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="k">data</span>
 
-export HADOOP_CONF_DIR=/data/apache/hadoop/etc/hadoop
+<span class="n">export</span> <span class="n">HADOOP_CONF_DIR</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span>
 
-export SPARK_MASTER_IP=test-master
-export SPARK_WORKER_CORES=2
-export SPARK_WORKER_INSTANCES=6
-export SPARK_WORKER_DIR=/data/hadoop/spark/worker
+<span class="n">export</span> <span class="n">SPARK_MASTER_IP</span><span class="o">=</span><span class="n">test</span><span class="o">-</span><span class="n">master</span>
+<span class="n">export</span> <span class="n">SPARK_WORKER_CORES</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">export</span> <span class="n">SPARK_WORKER_INSTANCES</span><span class="o">=</span><span class="mi">6</span>
+<span class="n">export</span> <span class="n">SPARK_WORKER_DIR</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">spark</span><span class="o">/</span><span class="n">worker</span>
 </pre></div>
 
 
@@ -127,13 +123,13 @@ export SPARK_WORKER_DIR=/data/hadoop/spark/worker
 
 
 <p>add jars in conf/spark-defaults.conf</p>
-<div class="highlight"><pre><span></span>spark.driver.extraClassPath /fullpath/firs.jar:/fullpath/second.jar
-spark.executor.extraClassPath /fullpath/firs.jar:/fullpath/second.jar
+<div class="highlight"><pre><span></span><span class="n">spark</span><span class="p">.</span><span class="n">driver</span><span class="p">.</span><span class="n">extraClassPath</span> <span class="o">/</span><span class="n">fullpath</span><span class="o">/</span><span class="n">firs</span><span class="p">.</span><span class="n">jar</span><span class="p">:</span><span class="o">/</span><span class="n">fullpath</span><span class="o">/</span><span class="k">second</span><span class="p">.</span><span class="n">jar</span>
+<span class="n">spark</span><span class="p">.</span><span class="n">executor</span><span class="p">.</span><span class="n">extraClassPath</span> <span class="o">/</span><span class="n">fullpath</span><span class="o">/</span><span class="n">firs</span><span class="p">.</span><span class="n">jar</span><span class="p">:</span><span class="o">/</span><span class="n">fullpath</span><span class="o">/</span><span class="k">second</span><span class="p">.</span><span class="n">jar</span>
 </pre></div>
 
 
 <p>add jars with spark-submit</p>
-<div class="highlight"><pre><span></span>./bin/spark-submit --class &quot;SparkTest&quot; --master local[*] --jars /fullpath/first.jar,/fullpath/second.jar /fullpath/your-program.jar
+<div class="highlight"><pre><span></span><span class="p">.</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">spark</span><span class="o">-</span><span class="n">submit</span> <span class="c1">--class &quot;SparkTest&quot; --master local[*] --jars /fullpath/first.jar,/fullpath/second.jar /fullpath/your-program.jar</span>
 </pre></div>
 
 

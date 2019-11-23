@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - wordpress</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -35,11 +31,11 @@
 <p>tags: <a href="/tag/201707.html">201707</a> <a href="/tag/wordpress.html">wordpress</a> </p>
 </footer><!-- /.post-info --><h1>google字体加载慢</h1>
 <p>查找出google字体加载代码，修改加载链接</p>
-<div class="highlight"><pre><span></span>grep -rnw &#39;wp_html&#39; -e &#39;googleapis&#39;
+<div class="highlight"><pre><span></span><span class="n">grep</span> <span class="o">-</span><span class="n">rnw</span> <span class="s1">&#39;wp_html&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;googleapis&#39;</span>
 
-# 替换找到的链接
-https://fonts.googleapis.com -&gt; https://fonts.cat.net
-https://ajax.googleapis.com -&gt; https://ajax.cat.net
+<span class="o">#</span> <span class="err">替换找到的链接</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fonts</span><span class="p">.</span><span class="n">googleapis</span><span class="p">.</span><span class="n">com</span> <span class="o">-&gt;</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fonts</span><span class="p">.</span><span class="n">cat</span><span class="p">.</span><span class="n">net</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">ajax</span><span class="p">.</span><span class="n">googleapis</span><span class="p">.</span><span class="n">com</span> <span class="o">-&gt;</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">ajax</span><span class="p">.</span><span class="n">cat</span><span class="p">.</span><span class="n">net</span>
 </pre></div>
 
 
@@ -56,7 +52,7 @@ https://ajax.googleapis.com -&gt; https://ajax.cat.net
 <span class="err">}</span>
 
 <span class="nl">.page.page-one-column:</span><span class="nf">not</span><span class="p">(.</span><span class="no">twentyseventeen-front-page</span><span class="p">)</span> <span class="c">#primary {</span>
-<span class="no">max-width</span><span class="p">:</span> <span class="mi">80</span><span class="err">%</span><span class="c">;</span>
+<span class="nl">max-width:</span> <span class="err">80%</span><span class="c">;</span>
 <span class="err">}</span>
 
 <span class="err">@</span><span class="nf">media</span> <span class="no">screen</span> <span class="no">and</span> <span class="p">(</span><span class="no">min-width</span><span class="p">:</span> <span class="mi">30</span><span class="no">em</span><span class="p">)</span> <span class="err">{</span>
@@ -67,7 +63,7 @@ https://ajax.googleapis.com -&gt; https://ajax.cat.net
 <span class="err">}</span>
 
 <span class="na">.has-sidebar</span> <span class="c">#secondary {</span>
-<span class="no">width</span><span class="p">:</span> <span class="mi">26</span><span class="err">%</span> <span class="p">!</span><span class="no">important</span><span class="c">;</span>
+<span class="nl">width:</span> <span class="err">26%</span> <span class="err">!</span><span class="nf">important</span><span class="c">;</span>
 <span class="err">}</span>
 
 <span class="na">.site-info</span> <span class="err">{</span> <span class="no">display</span><span class="p">:</span> <span class="no">none</span><span class="c">; }</span>

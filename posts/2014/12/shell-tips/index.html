@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>shell tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -44,7 +40,7 @@
 
 
 <h2>在目录中查找带有某内容的文件</h2>
-<div class="highlight"><pre><span></span>egrep -ir --include=*.{java,js} &quot;(document.cookie|setcookie)&quot; .
+<div class="highlight"><pre><span></span><span class="nv">egrep</span> <span class="o">-</span><span class="nv">ir</span> <span class="o">--</span><span class="k">include</span><span class="o">=*</span>.{<span class="nv">java</span>,<span class="nv">js</span>} <span class="s2">&quot;</span><span class="s">(document.cookie|setcookie)</span><span class="s2">&quot;</span> .
 </pre></div>
     </div><!-- /.entry-content -->
 

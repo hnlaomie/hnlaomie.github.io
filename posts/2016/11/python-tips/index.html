@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>python tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -46,22 +42,22 @@ pip install pyspider
 
 <h1>jupyter安装</h1>
 <p>安装python时，需要先安装sqlite相关包</p>
-<div class="highlight"><pre><span></span>apt install libsqlite3-dev
+<div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">install</span> <span class="n">libsqlite3</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
 
 
 <p>jupyter相关配置</p>
-<div class="highlight"><pre><span></span># 生成配置文件
-jupyter notebook --generate-config
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">生成配置文件</span>
+<span class="n">jupyter</span> <span class="n">notebook</span> <span class="c1">--generate-config</span>
 
-# 在~/.jupyter/jupyter_notebook_config.py追加
-c.NotebookApp.ip = &#39;*&#39;
-c.NotebookApp.notebook_dir = &#39;/data/jupyter/notebook&#39;
-c.NotebookApp.open_browser = False
-c.NotebookApp.port = 10002
+<span class="o">#</span> <span class="err">在</span><span class="o">~/</span><span class="p">.</span><span class="n">jupyter</span><span class="o">/</span><span class="n">jupyter_notebook_config</span><span class="p">.</span><span class="n">py追加</span>
+<span class="k">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+<span class="k">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">notebook_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/jupyter/notebook&#39;</span>
+<span class="k">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">open_browser</span> <span class="o">=</span> <span class="k">False</span>
+<span class="k">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">10002</span>
 
-# 启动
-jupyter notebook
+<span class="o">#</span> <span class="err">启动</span>
+<span class="n">jupyter</span> <span class="n">notebook</span>
 </pre></div>
 
 

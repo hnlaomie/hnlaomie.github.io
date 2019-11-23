@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - pelican</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -56,12 +52,12 @@ $ sudo python -m http.server <span class="m">80</span>
 
 <h2>配置日期目录放博客</h2>
 <p>pelicanconf.py中设置做以下设置</p>
-<div class="highlight"><pre><span></span>ARTICLE_URL = &#39;posts/{date:%Y}/{date:%m}/{slug}/&#39;
-ARTICLE_SAVE_AS = &#39;posts/{date:%Y}/{date:%m}/{slug}/index.html&#39;
-PAGE_URL = &#39;pages/{slug}/&#39;
-PAGE_SAVE_AS = &#39;pages/{slug}/index.html&#39;
-TAG_URL = &#39;tag/{slug}.html&#39;
-TAG_SAVE_AS = &#39;tag/{slug}.html&#39;
+<div class="highlight"><pre><span></span><span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;posts/{date:%Y}/{date:%m}/{slug}/&#39;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;posts/{date:%Y}/{date:%m}/{slug}/index.html&#39;</span>
+<span class="n">PAGE_URL</span> <span class="o">=</span> <span class="s1">&#39;pages/{slug}/&#39;</span>
+<span class="n">PAGE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;pages/{slug}/index.html&#39;</span>
+<span class="n">TAG_URL</span> <span class="o">=</span> <span class="s1">&#39;tag/{slug}.html&#39;</span>
+<span class="n">TAG_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;tag/{slug}.html&#39;</span>
 </pre></div>
 
 

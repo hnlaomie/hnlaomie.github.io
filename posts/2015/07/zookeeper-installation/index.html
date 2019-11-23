@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>zookeeper installation</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -40,56 +36,56 @@
 <p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/zookeeper.html">zookeeper</a> <a href="/tag/hbase.html">hbase</a> <a href="/tag/hadoop.html">hadoop</a> </p>
 </footer><!-- /.post-info -->      <h1>单结点(standalone mode)安装</h1>
 <p>设置环境变量</p>
-<div class="highlight"><pre><span></span>export ZK_HOME=/data/apache/zookeeper
-export $PATH:$ZK_HOME/bin
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ZK_HOME</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">zookeeper</span>
+<span class="n">export</span> <span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="err">$</span><span class="n">ZK_HOME</span><span class="o">/</span><span class="n">bin</span>
 </pre></div>
 
 
 <p>设置配置文件（用默认的修改）</p>
-<div class="highlight"><pre><span></span>tickTime=2000
-initLimit=10
-syncLimit=5
-dataDir=/data/hadoop/zookeeper
-clientPort=2181
+<div class="highlight"><pre><span></span><span class="n">tickTime</span><span class="o">=</span><span class="mi">2000</span>
+<span class="n">initLimit</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">syncLimit</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">dataDir</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">zookeeper</span>
+<span class="n">clientPort</span><span class="o">=</span><span class="mi">2181</span>
 </pre></div>
 
 
 <h1>多结点(multinode cluster)安装</h1>
 <p>设置环境变量</p>
-<div class="highlight"><pre><span></span>export ZK_HOME=/data/apache/zookeeper
-export $PATH:$ZK_HOME/bin
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ZK_HOME</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">zookeeper</span>
+<span class="n">export</span> <span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="err">$</span><span class="n">ZK_HOME</span><span class="o">/</span><span class="n">bin</span>
 </pre></div>
 
 
 <p>设置配置文件zoo.cfg（用默认的修改）</p>
-<div class="highlight"><pre><span></span>tickTime=2000
-initLimit=10
-syncLimit=5
-dataDir=/data/hadoop/zookeeper
-clientPort=2181
-server.1=master:2888:3888
-server.2=node1:2888:3888
-server.3=noee2:2888:3888
+<div class="highlight"><pre><span></span><span class="n">tickTime</span><span class="o">=</span><span class="mi">2000</span>
+<span class="n">initLimit</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">syncLimit</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">dataDir</span><span class="o">=/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">zookeeper</span>
+<span class="n">clientPort</span><span class="o">=</span><span class="mi">2181</span>
+<span class="n">server</span><span class="p">.</span><span class="mi">1</span><span class="o">=</span><span class="n">master</span><span class="p">:</span><span class="mi">2888</span><span class="p">:</span><span class="mi">3888</span>
+<span class="n">server</span><span class="p">.</span><span class="mi">2</span><span class="o">=</span><span class="n">node1</span><span class="p">:</span><span class="mi">2888</span><span class="p">:</span><span class="mi">3888</span>
+<span class="n">server</span><span class="p">.</span><span class="mi">3</span><span class="o">=</span><span class="n">noee2</span><span class="p">:</span><span class="mi">2888</span><span class="p">:</span><span class="mi">3888</span>
 </pre></div>
 
 
 <p>注：分别各结点上安装</p>
 <p>设置日志路径zookeeper-env.sh</p>
-<div class="highlight"><pre><span></span>export ZOO_LOG_DIR=$ZK_HOME/logs
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ZOO_LOG_DIR</span><span class="o">=</span><span class="err">$</span><span class="n">ZK_HOME</span><span class="o">/</span><span class="n">logs</span>
 </pre></div>
 
 
 <p>设置myid</p>
-<div class="highlight"><pre><span></span>echo 1 &gt; /data/hadoop/zookeeper/myid
+<div class="highlight"><pre><span></span><span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">zookeeper</span><span class="o">/</span><span class="n">myid</span>
 </pre></div>
 
 
 <p>注：分别在各结点上安装，node1为２，node2为３</p>
 <h1>软件升级</h1>
 <p>分别在follower, leader上停服务并更新</p>
-<div class="highlight"><pre><span></span>zkServer.sh stop
-./zk-upgrade.sh
-zkServer.sh start
+<div class="highlight"><pre><span></span><span class="n">zkServer</span><span class="p">.</span><span class="n">sh</span> <span class="n">stop</span>
+<span class="p">.</span><span class="o">/</span><span class="n">zk</span><span class="o">-</span><span class="n">upgrade</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">zkServer</span><span class="p">.</span><span class="n">sh</span> <span class="k">start</span>
 </pre></div>
 
 

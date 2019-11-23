@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>laomie's blog - hbase</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -35,41 +31,41 @@
 <p>tags: <a href="/tag/201507.html">201507</a> <a href="/tag/hbase.html">hbase</a> </p>
 </footer><!-- /.post-info --><h1>hbase优化</h1>
 <p>术语</p>
-<div class="highlight"><pre><span></span>Memory type                                Abbr
-Physical memory available for HBase RS     Total
-Memory size for memstore                   MSize
-Memory for block cache (L1) cache          L1Size
-Memory for JVM related components          JHSize
+<div class="highlight"><pre><span></span><span class="nv">Memory</span> <span class="nv">type</span>                                <span class="nv">Abbr</span>
+<span class="nv">Physical</span> <span class="nv">memory</span> <span class="nv">available</span> <span class="k">for</span> <span class="nv">HBase</span> <span class="nv">RS</span>     <span class="nv">Total</span>
+<span class="nv">Memory</span> <span class="nv">size</span> <span class="k">for</span> <span class="nv">memstore</span>                   <span class="nv">MSize</span>
+<span class="nv">Memory</span> <span class="k">for</span> <span class="nv">block</span> <span class="nv">cache</span> <span class="ss">(</span><span class="nv">L1</span><span class="ss">)</span> <span class="nv">cache</span>          <span class="nv">L1Size</span>
+<span class="nv">Memory</span> <span class="k">for</span> <span class="nv">JVM</span> <span class="nv">related</span> <span class="nv">components</span>          <span class="nv">JHSize</span>
 </pre></div>
 
 
 <p>hbase_env.sh HBASE_REGIONSERVER_OPTS</p>
-<div class="highlight"><pre><span></span>-Xmx                        Xmx = MSize + L1Size + JHSize
--XX:MaxDirectMemorySize     DMen = Total - Xmx
+<div class="highlight"><pre><span></span><span class="o">-</span><span class="n">Xmx</span>                        <span class="n">Xmx</span> <span class="o">=</span> <span class="n">MSize</span> <span class="o">+</span> <span class="n">L1Size</span> <span class="o">+</span> <span class="n">JHSize</span>
+<span class="o">-</span><span class="n">XX</span><span class="p">:</span><span class="n">MaxDirectMemorySize</span>     <span class="n">DMen</span> <span class="o">=</span> <span class="n">Total</span> <span class="o">-</span> <span class="n">Xmx</span>
 </pre></div>
 
 
 <p>hbase_site.xml</p>
-<div class="highlight"><pre><span></span>hbase.regionserver.global.memstore.size              ULimit = MSize / Xmx
-hfile.block.cache.size                               blksz = 0.8 - ULimit
-hbase.bucketcache.size                               bucsz = DMen + (blksz * Xmx)
-hbase.bucketcache.percentage.in.combinedcache        ccsz = 1 - ((blksz * Xmx) / bucsz)
-hbase.bucketcache.ioengine                           ioeng = offheap or file:/localfile
+<div class="highlight"><pre><span></span><span class="n">hbase</span><span class="p">.</span><span class="n">regionserver</span><span class="p">.</span><span class="k">global</span><span class="p">.</span><span class="n">memstore</span><span class="p">.</span><span class="k">size</span>              <span class="n">ULimit</span> <span class="o">=</span> <span class="n">MSize</span> <span class="o">/</span> <span class="n">Xmx</span>
+<span class="n">hfile</span><span class="p">.</span><span class="n">block</span><span class="p">.</span><span class="k">cache</span><span class="p">.</span><span class="k">size</span>                               <span class="n">blksz</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">8</span> <span class="o">-</span> <span class="n">ULimit</span>
+<span class="n">hbase</span><span class="p">.</span><span class="n">bucketcache</span><span class="p">.</span><span class="k">size</span>                               <span class="n">bucsz</span> <span class="o">=</span> <span class="n">DMen</span> <span class="o">+</span> <span class="p">(</span><span class="n">blksz</span> <span class="o">*</span> <span class="n">Xmx</span><span class="p">)</span>
+<span class="n">hbase</span><span class="p">.</span><span class="n">bucketcache</span><span class="p">.</span><span class="n">percentage</span><span class="p">.</span><span class="k">in</span><span class="p">.</span><span class="n">combinedcache</span>        <span class="n">ccsz</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">((</span><span class="n">blksz</span> <span class="o">*</span> <span class="n">Xmx</span><span class="p">)</span> <span class="o">/</span> <span class="n">bucsz</span><span class="p">)</span>
+<span class="n">hbase</span><span class="p">.</span><span class="n">bucketcache</span><span class="p">.</span><span class="n">ioengine</span>                           <span class="n">ioeng</span> <span class="o">=</span> <span class="n">offheap</span> <span class="k">or</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">localfile</span>
 </pre></div>
 
 
 <p>用例</p>
-<div class="highlight"><pre><span></span>Total      20480
-MSize      1024 
-L1Size     1024
-JHSize     512
-Xmx        2560       
-DMen       17920
-ULimit     0.4
-blksz      0.4
-bucsz      18944
-ccsz       0.946
-ioeng      offheap
+<div class="highlight"><pre><span></span><span class="n">Total</span>      <span class="mi">20480</span>
+<span class="n">MSize</span>      <span class="mi">1024</span> 
+<span class="n">L1Size</span>     <span class="mi">1024</span>
+<span class="n">JHSize</span>     <span class="mi">512</span>
+<span class="n">Xmx</span>        <span class="mi">2560</span>       
+<span class="n">DMen</span>       <span class="mi">17920</span>
+<span class="n">ULimit</span>     <span class="mi">0</span><span class="p">.</span><span class="mi">4</span>
+<span class="n">blksz</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">4</span>
+<span class="n">bucsz</span>      <span class="mi">18944</span>
+<span class="n">ccsz</span>       <span class="mi">0</span><span class="p">.</span><span class="mi">946</span>
+<span class="n">ioeng</span>      <span class="n">offheap</span>
 </pre></div>
 
 

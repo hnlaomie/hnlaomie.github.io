@@ -4,10 +4,6 @@
         <meta charset="utf-8" />
         <title>sqlite tips</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 </head>
 
 <body id="index" class="home">
@@ -39,11 +35,11 @@
 <p>In <a href="/category/database.html">database</a>.</p>
 <p>tags: <a href="/tag/201706.html">201706</a> <a href="/tag/sqlite.html">sqlite</a> </p>
 </footer><!-- /.post-info -->      <h1>sqlite 数据类型</h1>
-<div class="highlight"><pre><span></span>INTEGER (INT, TINYINT, BIGINT)
-TEXT (VARCHAR, TEXT, CLOB)
-BLOB (BLOB)
-REAL (FLOAT, DOUBLE)
-NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
+<div class="highlight"><pre><span></span><span class="nb">INTEGER</span> <span class="p">(</span><span class="nb">INT</span><span class="p">,</span> <span class="n">TINYINT</span><span class="p">,</span> <span class="nb">BIGINT</span><span class="p">)</span>
+<span class="nb">TEXT</span> <span class="p">(</span><span class="nb">VARCHAR</span><span class="p">,</span> <span class="nb">TEXT</span><span class="p">,</span> <span class="k">CLOB</span><span class="p">)</span>
+<span class="nb">BLOB</span> <span class="p">(</span><span class="nb">BLOB</span><span class="p">)</span>
+<span class="nb">REAL</span> <span class="p">(</span><span class="nb">FLOAT</span><span class="p">,</span> <span class="n">DOUBLE</span><span class="p">)</span>
+<span class="nb">NUMERIC</span> <span class="p">(</span><span class="nb">DECIMAL</span><span class="p">,</span> <span class="nb">BOOLEAN</span><span class="p">,</span> <span class="nb">DATE</span><span class="p">,</span> <span class="n">DATETIME</span><span class="p">)</span>
 </pre></div>
 
 
@@ -78,17 +74,17 @@ NUMERIC (DECIMAL, BOOLEAN, DATE, DATETIME)
 
 
 <p>命令行方式</p>
-<div class="highlight"><pre><span></span>sqlite3 -header -csv /path/file.db &quot;select * from tbl1;&quot; &gt; data.csv
-sqlite3 -header -csv /path/file.db &lt; query.sql &gt; data.csv
+<div class="highlight"><pre><span></span><span class="n">sqlite3</span> <span class="o">-</span><span class="n">header</span> <span class="o">-</span><span class="n">csv</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">file</span><span class="p">.</span><span class="n">db</span> <span class="ss">&quot;select * from tbl1;&quot;</span> <span class="o">&gt;</span> <span class="k">data</span><span class="p">.</span><span class="n">csv</span>
+<span class="n">sqlite3</span> <span class="o">-</span><span class="n">header</span> <span class="o">-</span><span class="n">csv</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">file</span><span class="p">.</span><span class="n">db</span> <span class="o">&lt;</span> <span class="n">query</span><span class="p">.</span><span class="k">sql</span> <span class="o">&gt;</span> <span class="k">data</span><span class="p">.</span><span class="n">csv</span>
 </pre></div>
 
 
 <h1>数据转化</h1>
-<div class="highlight"><pre><span></span>-- time format 
-datetime(&#39;now&#39;, &#39;localtime&#39;)
--- format now strftime(&#39;%Y-%m-%d %H:%M:%S&#39;, ...)
-cast(strftime(&#39;%Y%m%d&#39;,&#39;now&#39;) as integer);
-cast(strftime(&#39;%H&#39;,&#39;now&#39;) as integer);
+<div class="highlight"><pre><span></span><span class="c1">-- time format </span>
+<span class="n">datetime</span><span class="p">(</span><span class="s1">&#39;now&#39;</span><span class="p">,</span> <span class="s1">&#39;localtime&#39;</span><span class="p">)</span>
+<span class="c1">-- format now strftime(&#39;%Y-%m-%d %H:%M:%S&#39;, ...)</span>
+<span class="k">cast</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m%d&#39;</span><span class="p">,</span><span class="s1">&#39;now&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">integer</span><span class="p">);</span>
+<span class="k">cast</span><span class="p">(</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H&#39;</span><span class="p">,</span><span class="s1">&#39;now&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">integer</span><span class="p">);</span>
 </pre></div>
     </div><!-- /.entry-content -->
 
